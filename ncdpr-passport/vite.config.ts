@@ -29,7 +29,7 @@ export default defineConfig({
 				clientsClaim: true,
 				runtimeCaching: [
 					{
-						urlPattern: new RegExp("/offline-test"),
+						urlPattern: /\/offline-test/,
 						handler: "StaleWhileRevalidate",
 					},
 				],
