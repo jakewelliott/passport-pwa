@@ -1,0 +1,23 @@
+.offline-test {
+	padding: 2rem;
+	text-align: center;
+}
+
+.status-card {
+	background-color: #1a1a1a;
+	border-radius: 8px;
+	padding: 2rem;
+	margin: 2rem auto;
+	max-width: 500px;
+}
+
+.redirect-message {
+	color: #646cff;
+	font-weight: bold;
+}
+
+@media (prefers-color-scheme: light) {
+	.status-card {
+		background-color: #f9f9f9;
+	}
+}
