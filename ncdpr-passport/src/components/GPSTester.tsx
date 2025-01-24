@@ -45,22 +45,51 @@ export const GPSTester = () => {
 	};
 
 	return (
-		<div className="gps-tester">
-			<h2>GPS Location Tester</h2>
+		<div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+			<h2 className="text-2xl font-bold text-gray-800 mb-6">
+				GPS Location Tester
+			</h2>
 
-			<button type="button" onClick={getCurrentLocation} disabled={loading}>
+			<button
+				type="button"
+				onClick={getCurrentLocation}
+				disabled={loading}
+				className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+			>
 				{loading ? "Getting Location..." : "Get Current Location"}
 			</button>
 
-			{error && <div className="error">Error: {error}</div>}
+			{error && (
+				<div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+					Error: {error}
+				</div>
+			)}
 
 			{location && (
-				<div className="location-info">
-					<h3>Current Location:</h3>
-					<p>Latitude: {location.latitude}</p>
-					<p>Longitude: {location.longitude}</p>
-					<p>Accuracy: ±{Math.round(location.accuracy)} meters</p>
-					<p>Timestamp: {new Date(location.timestamp).toLocaleString()}</p>
+				<div className="mt-6 p-4 bg-gray-50 rounded-lg">
+					<h3 className="text-lg font-semibold text-gray-800 mb-3">
+						Current Location:
+					</h3>
+					<div className="space-y-2 text-gray-600">
+						<p>
+							Latitude: <span className="font-mono">{location.latitude}</span>
+						</p>
+						<p>
+							Longitude: <span className="font-mono">{location.longitude}</span>
+						</p>
+						<p>
+							Accuracy:{" "}
+							<span className="font-mono">
+								±{Math.round(location.accuracy)} meters
+							</span>
+						</p>
+						<p>
+							Timestamp:{" "}
+							<span className="font-mono">
+								{new Date(location.timestamp).toLocaleString()}
+							</span>
+						</p>
+					</div>
 				</div>
 			)}
 		</div>
