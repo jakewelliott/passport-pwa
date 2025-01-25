@@ -8,7 +8,7 @@ const TabBar = () => {
 
   const tabs = [
     { name: 'Stamps', path: '/stamps', icon: <FaStamp size={'24px'} /> },
-    { name: 'Locations', path: '/', icon: <TbMap size={'24px'} /> },
+    { name: 'Locations', path: '/locations', icon: <TbMap size={'24px'} /> },
     { name: 'More', path: '/more', icon: <MdMoreHoriz size={'24px'} /> }
   ];
 
@@ -19,7 +19,7 @@ const TabBar = () => {
           <li key={tab.name}>
             <Link to={tab.path} style={{textDecoration: 'none'}}>
               <div className={`flex flex-col items-center p-2 ${
-                location.pathname === tab.path 
+                location.pathname.startsWith(tab.path)
                 ? 'text-system_white' 
                 : 'text-supporting_inactiveblue'
               }`}>

@@ -10,9 +10,8 @@ interface ButtonProps {
 }
 
 const RoundedButton: React.FC<ButtonProps> = ({ title, color = 'secondary_darkteal' }) => {
-
     return (
-        <div className={`bg-${color} text-center justify-center items-center flex`} style={{width: '146px', height: '50px', borderRadius: '25px'}}>
+        <div className={`bg-${color} text-center justify-center items-center flex select-none cursor-pointer`} style={{width: '146px', height: '50px', borderRadius: '25px'}}>
             <p className="button-text text-system_white">{title}</p>
         </div>
     );

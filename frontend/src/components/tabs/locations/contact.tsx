@@ -19,6 +19,11 @@ interface Address {
     zip: string;
 }
 
+interface ParkPhoto {
+    url: string;
+    caption?: string;
+}
+
 interface Park {
     name: string;
     address: Address[];
@@ -28,6 +33,12 @@ interface Park {
     website: string;
     stamp?: StampDetails;
     bucketList?: BucketListItemDetails;
+    established?: string;
+    landmark?: string;
+    youCanFind?: string;
+    trails?: string;
+    parkIcons: string[];
+    parkPhotos: ParkPhoto[];
 }
 
 interface LocationContactProps {
@@ -36,7 +47,7 @@ interface LocationContactProps {
 
 export const LocationContact: React.FC<LocationContactProps> = ({ park }) => {
     return (
-        <div className='flex flex-col gap-3'>
+        <div className='flex flex-col gap-3 m-4'>
             <h2 style={{ width: '100%' }}>{park.name}</h2>
             {park.address.map((address, index) => (
                 <div className="flex top-0" key={`address-${index}`}>

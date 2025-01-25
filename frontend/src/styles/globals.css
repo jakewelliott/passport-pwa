@@ -20,6 +20,16 @@
   
     padding-bottom: env(safe-area-inset-bottom);
   }
+
+  .icon-scroll-container {
+    -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .icon-scroll-container::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+  }  
   
   @layer base {
     h1 {
@@ -72,5 +82,9 @@
   
     .warning {
       @apply text-system_red italic;
+    }
+
+    .green-text {
+      @apply text-main_green;
     }
   }
