@@ -1,24 +1,28 @@
-# Frontend: /ncdpr-passport
+# Frontend: /frontend
 
-## Setup
+## Getting Started
+
+First, install the packages on your local machine.
 
 ```bash
 npm install
 ```
 
-## Run
+Before running the server, you will need to create some certificates.
+
+```bash
+./setup-dev-certs.sh
+```
+
+Next, run the development server on your local machine
 
 ```bash
 npm run dev
 ```
 
-## Certificates
+Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
 
-We need to generate certificates for HTTPS to use geolocation in the browser.
-
-```bash
-./setup-dev-certs.sh
-```
+The page auto-updates as you edit the files. See the README in the frontend folder for more information on styling and the file/folder structure
 
 ## Notes
 
