@@ -1,8 +1,5 @@
 import type React from "react";
-import {
-	type Park,
-	userStamps,
-} from "../../../lib/utils/StampsOverviewService";
+import { type Park, userStamps } from "../../../lib/stamps-overview";
 import { IoClose } from "react-icons/io5";
 
 interface StampsDetailProps {
