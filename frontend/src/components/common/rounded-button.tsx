@@ -5,16 +5,19 @@
 // ex: <RoundedButton title="TEXT_ONE" color="system_black" />
 
 interface ButtonProps {
-    title: string;
-    color?: string;
+  title: string;
+  color?: string;
 }
 
 const RoundedButton: React.FC<ButtonProps> = ({ title, color = 'secondary_darkteal' }) => {
-    return (
-        <div className={`bg-${color} text-center justify-center items-center flex select-none cursor-pointer`} style={{width: '146px', height: '50px', borderRadius: '25px'}}>
-            <p className="button-text text-system_white">{title}</p>
-        </div>
-    );
-}
+  return (
+    <div
+      className={`bg-${color} flex cursor-pointer select-none items-center justify-center text-center`}
+      style={{ width: '146px', height: '50px', borderRadius: '25px' }}
+    >
+      <p className='button-text text-system_white'>{title}</p>
+    </div>
+  );
+};
 
 export default RoundedButton;

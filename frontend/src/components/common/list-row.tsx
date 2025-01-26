@@ -5,16 +5,15 @@
 // </ListRow>
 
 interface RowProps {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 const ListRow: React.FC<RowProps> = ({ children }) => {
-
-    return (
-        <div className={`bg-supporting_lightblue items-center flex p-3 shadow-md`} style={{borderRadius: '15px'}}>
-            {children}
-        </div>
-    );
-}
+  return (
+    <div className={'flex items-center bg-supporting_lightblue p-3 shadow-md'} style={{ borderRadius: '15px' }}>
+      {children}
+    </div>
+  );
+};
 
 export default ListRow;

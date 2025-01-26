@@ -1,45 +1,53 @@
-import { FiNavigation, FiPhone, FiGlobe, FiMail } from "react-icons/fi";
+import { FiNavigation, FiPhone, FiGlobe, FiMail } from 'react-icons/fi';
 
 interface StampDetails {
-    time: string;
-    method: string;
+  time: string;
+  method: string;
 }
 
 interface BucketListItemDetails {
-    text: string;
-    status: boolean;
+  text: string;
+  status: boolean;
 }
 
 interface Address {
-    name: string;
-    addressLineOne: string;
-    city: string;
-    state: string;
-    zip: string;
+  name: string;
+  addressLineOne: string;
+  city: string;
+  state: string;
+  zip: string;
 }
 
 interface Park {
-    name: string;
-    address: Address[];
-    coordinates: string;
-    phone: string;
-    email: string;
-    website: string;
-    stamp?: StampDetails;
-    bucketList?: BucketListItemDetails;
+  name: string;
+  address: Address[];
+  coordinates: string;
+  phone: string;
+  email: string;
+  website: string;
+  stamp?: StampDetails;
+  bucketList?: BucketListItemDetails;
 }
 
 interface LocationActionBarProps {
-    park: Park;
+  park: Park;
 }
 
 export const LocationActionBar: React.FC<LocationActionBarProps> = ({ park }) => {
-    return (
-        <div className='flex flex-row items-center justify-evenly p-2.5 bg-secondary_darkteal'>
-            <a href={"https://www.google.com/maps/place/" + park.coordinates} className="text-supporting_inactiveblue"><FiNavigation size={24} strokeWidth={4} /></a>
-            <a href={"tel://" + park.phone} className="text-supporting_inactiveblue"><FiPhone size={24} strokeWidth={4} /></a>
-            <a href={'https://www.ncparks.gov/state-parks/pettigrew-state-park'} className="text-supporting_inactiveblue"><FiGlobe size={24} strokeWidth={3} /></a>
-            <a href={"mailto:" + park.email} className="text-supporting_inactiveblue"><FiMail size={24} strokeWidth={4} /></a>
-        </div>
-    );
-}
+  return (
+    <div className='flex flex-row items-center justify-evenly bg-secondary_darkteal p-2.5'>
+      <a href={`https://www.google.com/maps/place/${park.coordinates}`} className='text-supporting_inactiveblue'>
+        <FiNavigation size={24} strokeWidth={4} />
+      </a>
+      <a href={`tel://${park.phone}`} className='text-supporting_inactiveblue'>
+        <FiPhone size={24} strokeWidth={4} />
+      </a>
+      <a href={'https://www.ncparks.gov/state-parks/pettigrew-state-park'} className='text-supporting_inactiveblue'>
+        <FiGlobe size={24} strokeWidth={3} />
+      </a>
+      <a href={`mailto:${park.email}`} className='text-supporting_inactiveblue'>
+        <FiMail size={24} strokeWidth={4} />
+      </a>
+    </div>
+  );
+};
