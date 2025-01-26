@@ -1,54 +1,71 @@
-import { useEffect, useState } from "react";
-import { useTitle } from "../../context/title-context";
-import { LocationTabBar } from "../../components/tabs/locations/tab-bar";
-import { LocationContact } from "../../components/tabs/locations/contact";
-import { LocationActionBar } from "../../components/tabs/locations/action-bar";
-import { LocationDetails } from "../../components/tabs/locations/details-tab";
-import { PhotoGallery } from "../../components/tabs/locations/photos-tab";
-import { LocationNotes } from "../../components/tabs/locations/notes-tab";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from 'react';
+import { useTitle } from '../../context/title-context';
+import { LocationTabBar } from '../../components/tabs/locations/tab-bar';
+import { LocationContact } from '../../components/tabs/locations/contact';
+import { LocationActionBar } from '../../components/tabs/locations/action-bar';
+import { LocationDetails } from '../../components/tabs/locations/details-tab';
+import { PhotoGallery } from '../../components/tabs/locations/photos-tab';
+import { LocationNotes } from '../../components/tabs/locations/notes-tab';
+import { useParams } from 'react-router-dom';
 
 export default function LocationDetail() {
   const { locationAbbreviation } = useParams();
   const { setTitle } = useTitle();
   const [choice, setChoice] = useState(0);
   const [park, setPark] = useState({
-    name: "Sample Data",
+    name: 'Sample Data',
     address: [
       {
         name: 'Main Address:',
-        addressLineOne: "1234 Main St",
-        city: "Raleigh",
-        state: "NC",
-        zip: "27606",
+        addressLineOne: '1234 Main St',
+        city: 'Raleigh',
+        state: 'NC',
+        zip: '27606',
       },
       {
         name: 'Secondary Address:',
-        addressLineOne: "1234 Main St",
-        city: "Raleigh",
-        state: "NC",
-        zip: "27606",
+        addressLineOne: '1234 Main St',
+        city: 'Raleigh',
+        state: 'NC',
+        zip: '27606',
       },
     ],
-    coordinates: "35.2023, -78.9761",
-    phone: "(555) 555-5555",
-    email: "email@ncparks.gov",
-    website: "ncparks.gov",
+    coordinates: '35.2023, -78.9761',
+    phone: '(555) 555-5555',
+    email: 'email@ncparks.gov',
+    website: 'ncparks.gov',
     stamp: {
-      time: "1/1/25",
-      method: "manual",
+      time: '1/1/25',
+      method: 'manual',
     },
     bucketList: {
-      text: "random bucket list item",
-      status: false
+      text: 'random bucket list item',
+      status: false,
     },
-    established: "2003",
-    landmark: "My House",
-    youCanFind: "My items",
-    trails: "The driveway",
+    established: '2003',
+    landmark: 'My House',
+    youCanFind: 'My items',
+    trails: 'The driveway',
     parkIcons: ['Paddling-Red.svg', 'RVCamping-Green.svg', 'Playground-Blue.svg'],
-    parkPhotos: [{ url: './photos/CABE.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }, { url: './photos/CACR.jpg' }],
-    parkNotes:""
+    parkPhotos: [
+      { url: './photos/CABE.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+      { url: './photos/CACR.jpg' },
+    ],
+    parkNotes: '',
   });
 
   useEffect(() => {
@@ -60,9 +77,9 @@ export default function LocationDetail() {
   };
 
   const handleSaveNotes = (notes: string) => {
-    setPark(prevPark => ({
+    setPark((prevPark) => ({
       ...prevPark,
-      parkNotes: notes
+      parkNotes: notes,
     }));
   };
 
