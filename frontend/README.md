@@ -103,3 +103,12 @@ src/ houses the source files for the functionality of the app
 > src/utils/ holds other random utility files such as the file that registers our service worker.
 
 There are several other files at this level (inside root but not inside public or src subdirectories). These files are used to set up the project and generally do not need to be messed with unless configuring a specific package.
+
+
+## Biome
+
+Biome is a tool that helps us keep our code clean and consistent. It is a linter and formatter that is run automatically when you run `npm run fix`. It will fix most of the issues that are reported by the linter. If you want to run it manually, you can use `npx @biomejs/biome check --write --unsafe ./src`.
+
+Biome has a VSCode extension that you can install to get inline feedback on your code as you are writing it.
+
+Rules for Biome are in the `biome.json` file.
