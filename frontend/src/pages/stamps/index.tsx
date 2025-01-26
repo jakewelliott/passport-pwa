@@ -1,3 +1,4 @@
+import { StampsOverview } from "../../components/tabs/stamps/stamps-overview";
 import { useTitle } from "../../context/title-context";
 import { useEffect } from "react";
 
@@ -11,7 +12,7 @@ export default function Stamps() {
 
   return (
     <>
-      <h1>Stamps</h1>
+      <StampsOverview />
     </>
   );
 }
