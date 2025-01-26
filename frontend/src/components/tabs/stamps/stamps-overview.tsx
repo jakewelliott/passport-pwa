@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-	type Park,
-	parks,
-	userStamps,
-} from "../../../lib/utils/StampsOverviewService";
+import { type Park, parks, userStamps } from "../../../lib/stamps-overview";
 import { StampsDetail } from "./stamp-detail";
 
 export const StampsOverview = () => {
