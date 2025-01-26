@@ -57,7 +57,7 @@ export default {
 			'h5': '14px',
 			'script': '96px',
 			'p': '18px',
-			'pm': '12px',
+			'pm': '14px',
 			'pl': '40px',
 			'b': '24px',
 		},
