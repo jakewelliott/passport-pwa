@@ -1,3 +1,4 @@
+// ADAM: I think this should work since e is special in react.
 export const a11yOnClick = (func: () => void) => {
 	return {
 		onClick: func,

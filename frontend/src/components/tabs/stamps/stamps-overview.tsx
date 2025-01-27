@@ -1,54 +1,54 @@
-import React, { useState } from "react";
-import { type Park, parks, userStamps } from "../../../lib/stamps-overview";
-import { StampsDetail } from "./stamp-detail";
+import { useMemo, useState } from "react";
+import { userStamps } from "@/lib/mock/user";
+import { StampDetails } from "./stamp-details";
+import type { UserStamp, Park } from "@/lib/mock/types";
+import parks from "@/lib/mock/parks";
+import { stampURL } from "@/lib/mock/stamps";
 
+const isAchieved = (code: string) =>
+	userStamps.some((stamp: UserStamp) => stamp.code === code);
+
+const sortByName = (a: Park, b: Park) => a.name.localeCompare(b.name);
+
+// TODO: make this use a query instead of directly accessing dummy data
 export const StampsOverview = () => {
 	const [selectedPark, setSelectedPark] = useState<Park | null>(null);
 
-	const isAchieved = (parkCode: string) =>
-		userStamps.some((achievement) => achievement.code === parkCode);
+	const sortedParks: Park[] = useMemo(() => {
+		const achieved = parks
+			.filter((park: Park) => isAchieved(park.code))
+			.sort(sortByName);
 
-	const sortedParks = parks.sort((a, b) => {
-		const aAchieved = isAchieved(a.code);
-		const bAchieved = isAchieved(b.code);
-		if (aAchieved && !bAchieved) return -1;
-		if (!aAchieved && bAchieved) return 1;
-		return a.name.localeCompare(b.name);
-	});
+		const notAchieved = parks
+			.filter((park: Park) => !isAchieved(park.code))
+			.sort(sortByName);
 
-	const rows = [];
-	for (let i = 0; i < sortedParks.length; i += 3) {
-		rows.push(sortedParks.slice(i, i + 3));
-	}
+		return [...achieved, ...notAchieved];
+	}, []);
 
 	return (
 		<div className="mx-auto my-4">
-			{rows.map((row, rowIndex) => (
-				<React.Fragment key={rowIndex}>
-					<div className="mx-9 my-4 flex justify-evenly">
-						{row.map((park, parkIndex) => (
-							<button
-								key={parkIndex}
-								onClick={() => setSelectedPark(park)}
-								className="mx-3"
-							>
-								<img
-									className={`h-24 w-24 object-contain ${isAchieved(park.code) ? "opacity-100" : "opacity-25"}`}
-									src={park.stamp}
-									alt={`${park.name} stamp`}
-								/>
-							</button>
-						))}
-					</div>
-
-					{selectedPark && row.some((p) => p.code === selectedPark.code) && (
-						<StampsDetail
-							park={selectedPark}
-							isAchieved={isAchieved}
-							onClose={() => setSelectedPark(null)}
+			{selectedPark ? (
+				<StampDetails
+					code={selectedPark.code}
+					handleClose={() => setSelectedPark(null)}
+				/>
+			) : null}
+			{sortedParks.map((park: Park) => (
+				<div className="mx-9 my-4 flex justify-evenly" key={park.code}>
+					<button
+						key={park.code}
+						onClick={() => setSelectedPark(park)}
+						className="mx-3"
+						type="button"
+					>
+						<img
+							className={`h-24 w-24 object-contain ${isAchieved(park.code) ? "opacity-100" : "opacity-25"}`}
+							src={stampURL(park.code)}
+							alt={`${park.name} stamp`}
 						/>
-					)}
-				</React.Fragment>
+					</button>
+				</div>
 			))}
 		</div>
 	);

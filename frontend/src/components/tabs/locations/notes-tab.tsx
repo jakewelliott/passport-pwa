@@ -1,76 +1,26 @@
-import type React from "react";
-import { useState, useEffect } from "react";
 import RoundedButton from "../../common/rounded-button";
 import { a11yOnClick } from "../../../lib/a11y";
+import useNotesStore from "@/hooks/store/useNotesStore";
+import type { ParkCode } from "@/lib/mock/types";
 
-interface StampDetails {
-	time: string;
-	method: string;
-}
+export const LocationNotes = ({ park_code }: { park_code: ParkCode }) => {
+	const { notes, setNotes } = useNotesStore();
 
-interface BucketListItemDetails {
-	text: string;
-	status: boolean;
-}
-
-interface Address {
-	name: string;
-	addressLineOne: string;
-	city: string;
-	state: string;
-	zip: string;
-}
-
-interface ParkPhoto {
-	url: string;
-	caption?: string;
-}
-
-interface Park {
-	name: string;
-	address: Address[];
-	coordinates: string;
-	phone: string;
-	email: string;
-	website: string;
-	stamp?: StampDetails;
-	bucketList?: BucketListItemDetails;
-	established?: string;
-	landmark?: string;
-	youCanFind?: string;
-	trails?: string;
-	parkIcons: string[];
-	parkPhotos: ParkPhoto[];
-	parkNotes: string;
-}
-
-interface LocationNotesProps {
-	park: Park;
-	onSaveNotes: (notes: string) => void;
-}
-
-// TODO: make use zustand
-
-export const LocationNotes: React.FC<LocationNotesProps> = ({
-	park,
-	onSaveNotes,
-}) => {
-	const [notes, setNotes] = useState(park.parkNotes || "");
+	const handleClick = () => {
+		// TODO: the global store is already saved so we should prolly navigate or something
+		console.log(notes);
+		alert("Notes saved!");
+	};
 
 	return (
 		<div className="flex h-full flex-col">
 			<textarea
 				className="h-72 w-full flex-grow resize-none border border-secondary_darkteal p-4 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
-				value={notes}
-				onChange={(e) => setNotes(e.target.value)}
+				value={notes[park_code]}
+				onChange={(e) => setNotes({ ...notes, [park_code]: e.target.value })}
 				placeholder="Add some personal notes about this park!"
 			/>
-			<div
-				className="flex justify-center p-3"
-				{...a11yOnClick(() => {
-					onSaveNotes(notes);
-				})}
-			>
+			<div className="flex justify-center p-3" {...a11yOnClick(handleClick)}>
 				<RoundedButton title={"Save"} />
 			</div>
 		</div>

@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { queryClient } from "./lib/old/queryClient.ts";
+import { queryClient } from "./lib/tanstack-local-storage.ts";
 import App from "./App.tsx";
 import { register as registerServiceWorker } from "./lib/service-worker.ts";
 import "./styles/globals.css";
