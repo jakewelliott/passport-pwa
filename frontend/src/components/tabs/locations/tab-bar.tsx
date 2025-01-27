@@ -5,6 +5,7 @@ interface LocationTabBarProps {
 	onChoiceChange: (newChoice: number) => void;
 }
 
+// TODO: replace with a library (react-tabs)
 export const LocationTabBar: React.FC<LocationTabBarProps> = ({
 	choice,
 	onChoiceChange,
