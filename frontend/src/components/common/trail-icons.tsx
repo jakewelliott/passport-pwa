@@ -1,18 +1,19 @@
 import type { Trail } from "@/lib/mock/types";
-import trailIconsJson from "public/trail-icons.json";
-
-const TRAIL_ICON_PATH = (iconName: string) => `/park-icons/${iconName}.svg`;
+import trailIconsJson from "public/icons/trail/_icons.json";
+const TRAIL_ICON_PATH = "/public/icons/trail/";
 
 const TrailIcon = ({ iconName }: { iconName: string }) => {
-	// Find the icon data to get the proper title
 	const iconData = trailIconsJson.find((icon) => icon.f === iconName);
 
+	if (!iconData) {
+		console.error(`Icon data not found for ${iconName}`);
+		return null;
+	}
+
+	const iconPath = `${TRAIL_ICON_PATH}${iconName}.svg`;
+
 	return (
-		<img
-			src={TRAIL_ICON_PATH(iconName)}
-			alt={iconData?.t || iconName}
-			className="w-6 h-6"
-		/>
+		<img src={iconPath} alt={iconData?.t || iconName} className="w-6 h-6" />
 	);
 };
 
