@@ -1,44 +1,28 @@
-import type { Park, UserStamp, UserProfile, Geopoint, ParkCode } from './types';
+import parks from "./parks";
+import { userStamps, userParkVisits, userProfile } from "./user";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+import type { Geopoint, ParkCode } from "./types";
 
-export type APIError = {
-  status: number;
-  message: string;
-};
-
-async function fetchAPI<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-    ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    },
-  });
-
-  if (!response.ok) {
-    throw {
-      status: response.status,
-      message: await response.text(),
-    };
-  }
-
-  return response.json();
-}
+// ADAM: We should design our API to allow us to do as much on the client side as possible.
+// Can't rely on the service layer if you're offline!
+// For now, this will do as a mock API.
 
 export const api = {
-  // Parks
-  getParks: () => fetchAPI<Park[]>('/parks'),
-  getPark: (code: ParkCode) => fetchAPI<Park>(`/parks/${code}`),
+	// Parks
+	getParks: () => parks,
+	getPark: (code: ParkCode) => parks.find((park) => park.code === code),
 
-  // Users
-  getUser: (userId: string) => fetchAPI<UserProfile>(`/users/${userId}`),
+	// Users
+	getUserByID: (userId: string) => userProfile,
+	getUserStampsByID: (userId: string) => userStamps,
 
-  getUserStamps: (userId: string) => fetchAPI<UserStamp[]>(`/users/${userId}/stamps`),
-
-  collectStamp: (userId: string, stampId: string, location: Geopoint | null) =>
-    fetchAPI<UserStamp>(`/users/${userId}/stamps/${stampId}/collect`, {
-      method: 'POST',
-      body: JSON.stringify({ location }),
-    }),
+	// Stamps
+	collectStamp: (
+		userId: string,
+		stampId: string,
+		location: Geopoint | null,
+	) => {
+		console.log(stampId, userId, location);
+		console.error("Not mocked yet");
+	},
 };
