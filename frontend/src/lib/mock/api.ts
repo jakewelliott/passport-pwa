@@ -10,7 +10,9 @@ import type { Geopoint, Park, ParkCode } from "./types";
 export const api = {
 	// Parks
 	getParks: () => parks,
-	getPark: (code: ParkCode) => parks.find((park: Park) => park.code === code),
+
+	// biome-ignore lint/style/noNonNullAssertion: dangerous but we r just mocking
+	getPark: (code: ParkCode) => parks.find((park: Park) => park.code === code)!,
 
 	// Users
 	getUserByID: (userId: string) => userProfile,
