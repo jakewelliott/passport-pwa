@@ -9,23 +9,28 @@ import LocationDetail from './app/locations/location-detail';
 import { AppInfo } from './app/more/app-info';
 import { IconLegend } from './app/more/icon-legend';
 import { BucketList } from './app/more/bucket-list';
+import { SplashScreenWrapper } from './components/splash-screen';
 
 export default function App() {
+  console.log('hi from app!');
+
   return (
-    <div className='app'>
-      <Header />
-      <TabBar />
-      <main className='flex-grow pb-16'>
-        <Routes>
-          <Route path='/locations' element={<Locations />} />
-          <Route path='/stamps' element={<Stamps />} />
-          <Route path='/more' element={<More />} />
-          <Route path='/more/app-info' element={<AppInfo />} />
-          <Route path='/more/bucket-list' element={<BucketList />} />
-          <Route path='/more/icon-legend' element={<IconLegend />} />
-          <Route path='/locations/location-detail/:locationAbbreviation' element={<LocationDetail />} />
-        </Routes>
-      </main>
-    </div>
+    <SplashScreenWrapper>
+      <div className='app'>
+        <Header />
+        <TabBar />
+        <main className='flex-grow pb-16'>
+          <Routes>
+            <Route path='/locations' element={<Locations />} />
+            <Route path='/stamps' element={<Stamps />} />
+            <Route path='/more' element={<More />} />
+            <Route path='/more/app-info' element={<AppInfo />} />
+            <Route path='/more/bucket-list' element={<BucketList />} />
+            <Route path='/more/icon-legend' element={<IconLegend />} />
+            <Route path='/locations/location-detail/:locationAbbreviation' element={<LocationDetail />} />
+          </Routes>
+        </main>
+      </div>
+    </SplashScreenWrapper>
   );
 }

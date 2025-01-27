@@ -8,7 +8,6 @@ import App from './App.tsx';
 import { register as registerServiceWorker } from './lib/service-worker.ts';
 import './styles/globals.css';
 import './styles/fonts.css';
-import SplashScreen from './components/splash-screen.tsx';
 
 const rootElement = document.getElementById('root');
 
@@ -16,18 +15,13 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-// TODO: Implement splash screen, lives here for now
-let loaded = false;
-setTimeout(() => {
-  loaded = true;
-}, 2000);
-const AppSplash = () => (loaded ? <App /> : <SplashScreen />);
+console.log('hi from main!');
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
-        <AppSplash />
+        <App />
         <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
     </QueryClientProvider>

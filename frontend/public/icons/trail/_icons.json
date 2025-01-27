@@ -1,0 +1,112 @@
+[
+	{
+		"f": "Biking-Red",
+		"t": "Biking",
+		"c": "activity"
+	},
+	{
+		"f": "BoatRamp-Blue",
+		"t": "Boat Ramp",
+		"c": "amenity"
+	},
+	{
+		"f": "CamperCabins-Green",
+		"t": "Camper Cabins",
+		"c": "camping"
+	},
+	{
+		"f": "EquestrianCamping-Green",
+		"t": "Equestrian Camping",
+		"c": "camping"
+	},
+	{
+		"f": "Exhibits-Blue",
+		"t": "Exhibits",
+		"c": "amenity"
+	},
+	{
+		"f": "Fishing-Red",
+		"t": "Fishing",
+		"c": "activity"
+	},
+	{
+		"f": "GroupCabins-Green",
+		"t": "Group Cabins",
+		"c": "camping"
+	},
+	{
+		"f": "GroupCamp-Green",
+		"t": "Group Camping",
+		"c": "camping"
+	},
+	{
+		"f": "Hiking-Red",
+		"t": "Hiking",
+		"c": "activity"
+	},
+	{
+		"f": "HorsebackRiding-Red",
+		"t": "Horseback Riding",
+		"c": "activity"
+	},
+	{
+		"f": "Paddling-Red",
+		"t": "Paddling",
+		"c": "activity"
+	},
+	{
+		"f": "CanoeinCamping-Green",
+		"t": "Paddle-in Camping",
+		"c": "camping"
+	},
+	{
+		"f": "BoatRental-Blue",
+		"t": "Paddle Equipment Rental",
+		"c": "amenity"
+	},
+	{
+		"f": "Picnicking-Red",
+		"t": "Picnicking",
+		"c": "activity"
+	},
+	{
+		"f": "Playground-Blue",
+		"t": "Playground",
+		"c": "amenity"
+	},
+	{
+		"f": "PrimitiveCabin-Green",
+		"t": "Primitive Cabins",
+		"c": "camping"
+	},
+	{
+		"f": "RockClimbing-Red",
+		"t": "Rock Climbing",
+		"c": "activity"
+	},
+	{
+		"f": "RVCamping-Green",
+		"t": "RV Hookup Camping",
+		"c": "camping"
+	},
+	{
+		"f": "Swimming-Red",
+		"t": "Swimming",
+		"c": "activity"
+	},
+	{
+		"f": "Camping-Green",
+		"t": "Tent Camping",
+		"c": "camping"
+	},
+	{
+		"f": "VacationCabin-Green",
+		"t": "Vacation Cabins",
+		"c": "camping"
+	},
+	{
+		"f": "VisitorCenter-Blue",
+		"t": "Visitor Center",
+		"c": "amenity"
+	}
+]

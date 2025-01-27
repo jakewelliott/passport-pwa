@@ -16,14 +16,14 @@ import { api, type APIError } from '@/lib/mock/api';
 export const useParks = () => {
   return useQuery<Park[], APIError>({
     queryKey: ['parks'],
-    queryFn: () => api.getParks(),
+    queryFn: (): Park[] => api.getParks(),
   });
 };
 
 export const usePark = (code: ParkCode) => {
   return useQuery<Park, APIError>({
     queryKey: ['park', code],
-    queryFn: () => api.getPark(code),
+    queryFn: (): Park => api.getPark(code),
     enabled: !!code,
   });
 };

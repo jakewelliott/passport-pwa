@@ -1,0 +1,286 @@
+[
+	{
+		"f": "Hiking",
+		"t": "Hiking"
+	},
+	{
+		"f": "Hiking-Green",
+		"t": "Hiking"
+	},
+	{
+		"f": "4WDBeach",
+		"t": "4WD Beach"
+	},
+	{
+		"f": "Accessible",
+		"t": "Accessible"
+	},
+	{
+		"f": "Amphiteater",
+		"t": "Amphitheater"
+	},
+	{
+		"f": "BackpackCamping",
+		"t": "Backpack Camping"
+	},
+	{
+		"f": "Bathhouse",
+		"t": "Bathhouse"
+	},
+	{
+		"f": "Biking-Red",
+		"t": "Biking"
+	},
+	{
+		"f": "Biking",
+		"t": "Biking"
+	},
+	{
+		"f": "BoatRamp-Blue",
+		"t": "Boat Ramp"
+	},
+	{
+		"f": "BoatRamp",
+		"t": "Boat Ramp"
+	},
+	{
+		"f": "BoatRental-Blue",
+		"t": "Boat Rental"
+	},
+	{
+		"f": "Boating",
+		"t": "Boating"
+	},
+	{
+		"f": "CamperCabin",
+		"t": "Camper Cabin"
+	},
+	{
+		"f": "CamperCabins-Green",
+		"t": "Camper Cabins"
+	},
+	{
+		"f": "Camping-Green",
+		"t": "Camping"
+	},
+	{
+		"f": "Camping",
+		"t": "Camping"
+	},
+	{
+		"f": "CanoeinCamping-Green",
+		"t": "Canoe-in Camping"
+	},
+	{
+		"f": "DumpStation",
+		"t": "Dump Station"
+	},
+	{
+		"f": "ElectricHookup",
+		"t": "Electric Hookup"
+	},
+	{
+		"f": "ElectricWaterHookups",
+		"t": "Electric & Water Hookups"
+	},
+	{
+		"f": "EquestrianCamping-Green",
+		"t": "Equestrian Camping"
+	},
+	{
+		"f": "EquestrianCamping",
+		"t": "Equestrian Camping"
+	},
+	{
+		"f": "Exhibits-Blue",
+		"t": "Exhibits"
+	},
+	{
+		"f": "FBST-Blaze",
+		"t": "FBST Blaze"
+	},
+	{
+		"f": "FFST-Blaze",
+		"t": "FFST Blaze"
+	},
+	{
+		"f": "Firewood",
+		"t": "Firewood"
+	},
+	{
+		"f": "Fishing-Red",
+		"t": "Fishing"
+	},
+	{
+		"f": "Fishing",
+		"t": "Fishing"
+	},
+	{
+		"f": "GroupCabins-Green",
+		"t": "Group Cabins"
+	},
+	{
+		"f": "GroupCamp-Green",
+		"t": "Group Camp"
+	},
+	{
+		"f": "GroupCamp",
+		"t": "Group Camp"
+	},
+	{
+		"f": "HGST-Blaze",
+		"t": "HGST Blaze"
+	},
+	{
+		"f": "Hiking-Red",
+		"t": "Hiking"
+	},
+	{
+		"f": "Hiking",
+		"t": "Hiking"
+	},
+	{
+		"f": "HorseTrailerParking",
+		"t": "Horse Trailer Parking"
+	},
+	{
+		"f": "HorsebackRiding-Red",
+		"t": "Horseback Riding"
+	},
+	{
+		"f": "HorsebackRiding",
+		"t": "Horseback Riding"
+	},
+	{
+		"f": "Hospital",
+		"t": "Hospital"
+	},
+	{
+		"f": "IE_Exhibits",
+		"t": "IE Exhibits"
+	},
+	{
+		"f": "Information",
+		"t": "Information"
+	},
+	{
+		"f": "MST-Blaze",
+		"t": "MST Blaze"
+	},
+	{
+		"f": "Marina",
+		"t": "Marina"
+	},
+	{
+		"f": "PaddleInCamping",
+		"t": "Paddle-In Camping"
+	},
+	{
+		"f": "Paddling-Red",
+		"t": "Paddling"
+	},
+	{
+		"f": "Paddling",
+		"t": "Paddling"
+	},
+	{
+		"f": "ParkGate",
+		"t": "Park Gate"
+	},
+	{
+		"f": "Picnic",
+		"t": "Picnic"
+	},
+	{
+		"f": "PicnicShelter",
+		"t": "Picnic Shelter"
+	},
+	{
+		"f": "Picnicking-Red",
+		"t": "Picnicking"
+	},
+	{
+		"f": "Playground-Blue",
+		"t": "Playground"
+	},
+	{
+		"f": "PointofInterest",
+		"t": "Point of Interest"
+	},
+	{
+		"f": "PrimitiveCabin-Green",
+		"t": "Primitive Cabin"
+	},
+	{
+		"f": "PrimitiveCabin",
+		"t": "Primitive Cabin"
+	},
+	{
+		"f": "RVCamping-Green",
+		"t": "RV Camping"
+	},
+	{
+		"f": "Restroom",
+		"t": "Restroom"
+	},
+	{
+		"f": "RockClimbing-Red",
+		"t": "Rock Climbing"
+	},
+	{
+		"f": "RockClimbing",
+		"t": "Rock Climbing"
+	},
+	{
+		"f": "SewerHookup",
+		"t": "Sewer Hookup"
+	},
+	{
+		"f": "Swimming-Red",
+		"t": "Swimming"
+	},
+	{
+		"f": "Swimming",
+		"t": "Swimming"
+	},
+	{
+		"f": "TRACKTrail",
+		"t": "TRACK Trail"
+	},
+	{
+		"f": "TentTrailerCamping",
+		"t": "Tent/Trailer Camping"
+	},
+	{
+		"f": "VacationCabin-Green",
+		"t": "Vacation Cabin"
+	},
+	{
+		"f": "VacationCabin",
+		"t": "Vacation Cabin"
+	},
+	{
+		"f": "ViewingSymbol",
+		"t": "Viewing Area"
+	},
+	{
+		"f": "VisitorCenter-Blue",
+		"t": "Visitor Center"
+	},
+	{
+		"f": "VisitorCenter",
+		"t": "Visitor Center"
+	},
+	{
+		"f": "WaterHookup",
+		"t": "Water Hookup"
+	},
+	{
+		"f": "WaterSpigot",
+		"t": "Water Spigot"
+	},
+	{
+		"f": "YRST-Blaze",
+		"t": "YRST Blaze"
+	}
+]
