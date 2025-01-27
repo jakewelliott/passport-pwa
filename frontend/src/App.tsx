@@ -11,6 +11,7 @@ import LocationDetail from "./pages/locations/location-detail.tsx";
 import { AppInfo } from "./pages/more/app-info.tsx";
 import { BucketList } from "./pages/more/bucket-list.tsx";
 import { IconLegend } from "./pages/more/icon-legend.tsx";
+import { Trails } from "./pages/more/trails.tsx";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
             <Route path="/more/app-info" element={<AppInfo />} />
             <Route path="/more/bucket-list" element={<BucketList />} />
             <Route path="/more/icon-legend" element={<IconLegend />} />
+            <Route path="/more/trails" element={<Trails />} />
           </Routes>
         </main>
       </div>
