@@ -1,4 +1,5 @@
 export type ParkCode = Uppercase<string>;
+import type { TrailIconName } from '@/components/common/trail-icon';
 
 export interface Geopoint {
   latitude: number;
@@ -56,4 +57,11 @@ export interface Park {
   parkIcons: string[];
   parkPhotos: ParkPhoto[];
   parkNotes: string;
+}
+
+export interface Trail {
+  trailName: string;
+  trailIcons: TrailIconName[];
+  distance: string;
+  description: string;
 }
