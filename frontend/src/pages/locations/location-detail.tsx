@@ -6,10 +6,11 @@ import { LocationActionBar } from '../../components/tabs/locations/action-bar';
 import { LocationDetails } from '../../components/tabs/locations/details-tab';
 import { PhotoGallery } from '../../components/tabs/locations/photos-tab';
 import { LocationNotes } from '../../components/tabs/locations/notes-tab';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 export default function LocationDetail() {
   const { locationAbbreviation } = useParams();
+  const [searchParams] = useSearchParams();
   const { setTitle } = useTitle();
   const [choice, setChoice] = useState(0);
   const [park, setPark] = useState({
@@ -70,7 +71,12 @@ export default function LocationDetail() {
 
   useEffect(() => {
     setTitle('Locations');
-  }, [setTitle]);
+    // Handle the tab query parameter
+    const tab = searchParams.get('tab');
+    if (tab === 'notes') {
+      setChoice(2); // Index 2 corresponds to Notes tab
+    }
+  }, [setTitle, searchParams]);
 
   const handleChoiceChange = (newChoice: number) => {
     setChoice(newChoice);
