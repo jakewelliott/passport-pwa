@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
-import SplashScreen from "../splash-screen";
+import { useState, useEffect } from 'react';
+import SplashScreen from '../splash-screen';
 
 interface SplashScreenWrapperProps {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }
 
 export function SplashScreenWrapper({ children }: SplashScreenWrapperProps) {
-	const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setLoading(false);
-		}, 2000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
 
-		return () => clearTimeout(timer);
-	}, []);
+    return () => clearTimeout(timer);
+  }, []);
 
-	return loading ? <SplashScreen /> : <>{children}</>;
+  return loading ? <SplashScreen /> : <>{children}</>;
 }

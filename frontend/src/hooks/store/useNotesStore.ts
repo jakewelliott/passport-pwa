@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
 // ADAM:
 // This is a very primitive global store pattern.
@@ -12,13 +12,13 @@ import { create } from "zustand";
 // Sometimes you can invert your data flow to share state between components.
 
 interface NotesState {
-	notes: Record<string, string>;
-	setNotes: (notes: Record<string, string>) => void;
+  notes: Record<string, string>;
+  setNotes: (notes: Record<string, string>) => void;
 }
 
 const useNotesStore = create<NotesState>((set) => ({
-	notes: {},
-	setNotes: (notes) => set({ notes }),
+  notes: {},
+  setNotes: (notes) => set({ notes }),
 }));
 
 export default useNotesStore;
