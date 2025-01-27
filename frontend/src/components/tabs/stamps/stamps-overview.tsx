@@ -10,6 +10,13 @@ const isAchieved = (code: string) =>
 
 const sortByName = (a: Park, b: Park) => a.name.localeCompare(b.name);
 
+const GRID_COLS = {
+	default: 3,
+	sm: 5,
+	md: 6,
+	lg: 8,
+} as const;
+
 // TODO: make this use a query instead of directly accessing dummy data
 export const StampsOverview = () => {
 	const [selectedPark, setSelectedPark] = useState<Park | null>(null);
@@ -26,30 +33,53 @@ export const StampsOverview = () => {
 		return [...achieved, ...notAchieved];
 	}, []);
 
+	// Group parks into rows
+	const rows = useMemo(() => {
+		const result = [];
+		for (let i = 0; i < sortedParks.length; i += GRID_COLS.default) {
+			result.push(sortedParks.slice(i, i + GRID_COLS.default));
+		}
+		return result;
+	}, [sortedParks]);
+
 	return (
 		<div className="mx-auto my-4">
-			{selectedPark ? (
-				<StampDetails
-					code={selectedPark.code}
-					handleClose={() => setSelectedPark(null)}
-				/>
-			) : null}
-			{sortedParks.map((park: Park) => (
-				<div className="mx-9 my-4 flex justify-evenly" key={park.code}>
-					<button
-						key={park.code}
-						onClick={() => setSelectedPark(park)}
-						className="mx-3"
-						type="button"
-					>
-						<img
-							className={`h-24 w-24 object-contain ${isAchieved(park.code) ? "opacity-100" : "opacity-25"}`}
-							src={stampSVG(park.code)}
-							alt={`${park.name} stamp`}
-						/>
-					</button>
-				</div>
-			))}
+			<div className="grid gap-4 px-4">
+				{rows.map((row, rowIndex) => (
+					<div key={`row-${rowIndex}`}>
+						<div className="grid grid-cols-3 gap-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8">
+							{row.map((park: Park) => (
+								<button
+									key={park.code}
+									onClick={() => setSelectedPark(park)}
+									className="flex items-center justify-center p-2"
+									type="button"
+								>
+									<img
+										className={`h-24 w-24 min-h-[6rem] min-w-[6rem] object-contain transition-opacity ${
+											isAchieved(park.code) ? "opacity-100" : "opacity-25"
+										}`}
+										src={stampSVG(park.code)}
+										alt={`${park.name} stamp`}
+									/>
+								</button>
+							))}
+						</div>
+						{selectedPark &&
+							sortedParks.indexOf(selectedPark) <
+								(rowIndex + 1) * GRID_COLS.default &&
+							sortedParks.indexOf(selectedPark) >=
+								rowIndex * GRID_COLS.default && (
+								<div className="mt-4">
+									<StampDetails
+										code={selectedPark.code}
+										handleClose={() => setSelectedPark(null)}
+									/>
+								</div>
+							)}
+					</div>
+				))}
+			</div>
 		</div>
 	);
 };
