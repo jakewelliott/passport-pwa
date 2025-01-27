@@ -37,11 +37,11 @@ const LoadingPlaceholder = () => (
 
 export const StampDetails = ({ code, handleClose }: StampsDetailProps) => {
 	// Get our data from hooks
-	const stamp = useUserStamp(code);
-	const { data: park } = usePark(code);
+	const { stamp, isLoading: stampLoading } = useUserStamp(code);
+	const { data: park, isLoading: parkLoading } = usePark(code);
 
 	// If we're loading, show a loading placeholder
-	if (park === undefined || stamp === undefined) return <LoadingPlaceholder />;
+	if (parkLoading || stampLoading || !park) return <LoadingPlaceholder />;
 
 	return (
 		<article className="relative bg-supporting_lightblue p-4">
