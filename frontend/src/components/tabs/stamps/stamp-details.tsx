@@ -25,9 +25,14 @@ const CollectedManually = ({ stamp }: { stamp: UserStamp | null }) =>
 	);
 
 const LoadingPlaceholder = () => (
-	<output className="relative rounded-md bg-supporting_lightblue p-4">
-		<span className="animate-pulse">Loading park details...</span>
-	</output>
+	<article className="relative bg-supporting_lightblue p-4">
+		<header>
+			<div className="flex-row justify-between items-center">
+				<h3 className="font-semibold text-xl pr-4 animate-pulse">Loading...</h3>
+				<div className="absolute top-2 right-2 w-8 h-8" />
+			</div>
+		</header>
+	</article>
 );
 
 export const StampDetails = ({ code, handleClose }: StampsDetailProps) => {
