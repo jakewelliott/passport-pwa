@@ -37,7 +37,7 @@ export default function DetailTabs() {
       <LocationTabBar choice={choice} onChoiceChange={handleChoiceChange} />
       {choice === 0 && <LocationDetails park={park} />}
       {choice === 1 && <PhotoGallery photos={park.parkPhotos} />}
-      {choice === 2 && <LocationNotes park_code={park.abbreviation} />}
+      {choice === 2 && <LocationNotes abbreviation={park.abbreviation} />}
     </>
   );
 }

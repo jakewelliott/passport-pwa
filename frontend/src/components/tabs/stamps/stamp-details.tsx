@@ -5,7 +5,7 @@ import { usePark } from '@/hooks/queries/useParks';
 import { a11yOnClick } from '@/lib/a11y';
 
 interface StampsDetailProps {
-  code: ParkAbbreviation;
+  abbreviation: ParkAbbreviation;
   handleClose: () => void;
 }
 
@@ -32,7 +32,7 @@ const LoadingPlaceholder = () => (
   </article>
 );
 
-export const StampDetails = ({ code, handleClose }: StampsDetailProps) => {
+export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailProps) => {
   // Get our data from hooks
   const { stamp, isLoading: stampLoading } = useUserStamp(code);
   const { data: park, isLoading: parkLoading } = usePark(code);
@@ -62,7 +62,7 @@ export const StampDetails = ({ code, handleClose }: StampsDetailProps) => {
         <p>{park.city}</p>
         <CollectedOn stamp={stamp} />
         <a
-          href={`/locations/location-detail/${park.abbreviation}`}
+          href={`/locations/${park.abbreviation}`}
           className='inline-block text-blue-600 transition-colors hover:text-blue-800 hover:underline'
         >
           View More Park Details <span aria-hidden='true'>&gt;</span>

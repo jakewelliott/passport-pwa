@@ -20,7 +20,7 @@ export const useParks = () => {
   });
 };
 
-export const usePark = (code: ParkAbbreviation | 'ERRR') => {
+export const usePark = (code: ParkAbbreviation) => {
   const query = useParks();
   const park = query.data?.find((park) => park.abbreviation === code);
   return { ...query, data: park };
