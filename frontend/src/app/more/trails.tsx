@@ -1,8 +1,9 @@
-import { TrailDetails } from '@/components/tabs/more/trail-details';
+import { TrailDetailView } from '@/components/tabs/more/trail-details';
 import { TrailMap } from '@/components/tabs/more/trail-map';
+import type { Trail } from '@/lib/mock/types';
 
 export const Trails = () => {
-  const trailDetails: TrailDetails[] = [
+  const trailDetails: Trail[] = [
     {
       trailName: 'Dan River State Trail',
       trailIcons: ['Hiking'],
@@ -93,9 +94,9 @@ export const Trails = () => {
   return (
     <div className='m-6'>
       {trailDetails.map((trail, index) => (
-        <TrailDetails trail={trail} key={index} />
+        <TrailDetailView trail={trail} key={index} />
       ))}
-      <img src='/TrailsLogo.svg' />
+      <img src='/TrailsLogo.svg' alt='Trails Logo' />
       <p className='text-center'>
         For maps and additional information on these state trails, please visit{' '}
         <a href='https://trails.nc.gov/state-trails' className='text-main_blue'>
