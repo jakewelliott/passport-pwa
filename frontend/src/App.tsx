@@ -1,19 +1,21 @@
 import { Routes, Route } from 'react-router-dom';
-import './styles/globals.css';
-import Header from './components/layout/header';
-import TabBar from './components/layout/tab-bar';
-import Locations from './app/locations/index';
-import Stamps from './app/stamps/index';
-import More from './app/more/index';
-import LocationDetail from './app/locations/location-detail';
-import { AppInfo } from './app/more/app-info';
-import { IconLegend } from './app/more/icon-legend';
-import { BucketList } from './app/more/bucket-list';
-import { Trails } from './pages/more/trails';
-import { SplashScreenWrapper } from './components/splash-screen';
-import WelcomeMessage from './app/more/welcome-message';
-import StayingSafe from './app/more/staying-safe';
-import { HikingEssentials } from './app/more/hiking-essentials';
+import { SplashScreenWrapper } from '@/components/splash-screen';
+import '@/styles/globals.css';
+import Header from '@/components/layout/header.tsx';
+import TabBar from '@/components/layout/tab-bar.tsx';
+import Locations from '@/app/locations/index.tsx';
+import Stamps from '@/app/stamps/index.tsx';
+import More from '@/app/more/index.tsx';
+import LocationDetail from '@/app/locations/location-detail.tsx';
+import { AppInfo } from '@/app/more/app-info.tsx';
+import { BucketList } from '@/app/more/bucket-list.tsx';
+import { IconLegend } from '@/app/more/icon-legend.tsx';
+import { MyNotes } from '@/app/more/my-notes.tsx';
+import { EditGeneralNotes } from '@/app/more/general-notes.tsx';
+import { Trails } from '@/app/more/trails.tsx';
+import { HikingEssentials } from './app/more/hiking-essentials.tsx';
+import StayingSafe from './app/more/staying-safe.tsx';
+import WelcomeMessage from './app/more/welcome-message.tsx';
 
 export default function App() {
   return (
@@ -34,6 +36,8 @@ export default function App() {
             <Route path='/more/welcome-message' element={<WelcomeMessage />} />
             <Route path='/more/staying-safe' element={<StayingSafe />} />
             <Route path='/more/hiking-essentials' element={<HikingEssentials />} />
+            <Route path='/more/my-notes' element={<MyNotes />} />
+            <Route path='/more/my-notes/general-notes' element={<EditGeneralNotes />} />
           </Routes>
         </main>
       </div>
