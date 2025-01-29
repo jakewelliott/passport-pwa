@@ -52,7 +52,7 @@ So a bit about our sponsor. NCDPR was established in 1916 and has since grown to
 ---
 
 # PWA Solution
-- NCDPR build a progressive web app to replace the paper passport
+- Build a progressive web app to replace the paper passport
 - Not possible with paper
 	- Dynamic content
 	- Real-time updates
