@@ -31,7 +31,7 @@ export default function App() {
             {/* Main tab routes */}
             <Route path='/locations'>
               <Route index element={<Locations />} />
-              <Route path='/locations/:locationAbbreviation' element={<LocationDetail />} />
+              <Route path='/locations/:abbreviation' element={<LocationDetail />} />
             </Route>
             <Route path='/stamps' element={<Stamps />} />
 

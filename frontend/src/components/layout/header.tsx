@@ -17,7 +17,6 @@ const BackButton = ({ hidden }: { hidden: boolean }) => {
 const Header = () => {
   const location = useLocation();
   const locationName = location.pathname.split('/').pop()?.toUpperCase();
-  console.log(location.pathname.split('/'));
 
   return (
     <div className='sticky top-0 right-0 left-0' style={{ zIndex: 9999 }}>
