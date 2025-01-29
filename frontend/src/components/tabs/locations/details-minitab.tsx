@@ -1,6 +1,6 @@
 import type { Park } from '@/lib/mock/types';
 
-export const LocationDetails = ({ park }: { park: Park }) => {
+export const DetailsMiniTab = ({ park }: { park: Park }) => {
   return (
     <div className='mt-6 mb-6 flex flex-col'>
       <p className='pr-6 pl-6'>
