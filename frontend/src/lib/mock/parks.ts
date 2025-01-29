@@ -3,7 +3,7 @@ import parksJson from './parks.json';
 import dummyMapper from '../dummy-mapper';
 
 const dummy: Park = {
-  abbreviation: 'FOBR',
+  abbreviation: 'CABE',
   name: 'Foobar Park',
   city: 'Foobar City',
   address: {
