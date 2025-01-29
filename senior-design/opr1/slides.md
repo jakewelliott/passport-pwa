@@ -53,14 +53,27 @@ So a bit about our sponsor. NCDPR was established in 1916 and has since grown to
 
 # PWA Solution
 - NCDPR build a progressive web app to replace the paper passport
-- No reversion from paper functionality
-	- View park information entirely offline
-	- Add personal notes to parks
-- Additional features not possible with paper
-	- Merging passport progress
+- Not possible with paper
+	- Dynamic content
+	- Real-time updates
 	- Interactive map
 	- Community notes
+	- Visitor analytics
+	- Merging passport progress
 
 ![bg opacity:0.2](./img/pwalogo.svg)
+
+---
+
+# Constraints
+- PWA with majority of functionality available offline
+- Uses the same design language as the paper passport
+- Include all features of the paper passport
+- Database must be MariaDB
+- Roll our own auth
+
+---
+
+![bg](./img/system-design.jpg)
 
 ---
