@@ -9,7 +9,7 @@ export interface Geopoint {
 export interface UserStamp {
   code: ParkCode;
   timestamp: Date;
-  location: Geopoint | null; // If a user manually collects a stamp while outside of a park, the location will be null.
+  location: Geopoint | null; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
 }
 
 export interface UserParkVisit {
