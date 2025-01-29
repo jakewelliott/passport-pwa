@@ -32,8 +32,6 @@ export default function SplashScreen() {
 export function SplashScreenWrapper(props: React.PropsWithChildren) {
   const [loading, setLoading] = useState(true);
 
-  console.log('SS: ', loading);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);

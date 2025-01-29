@@ -20,7 +20,6 @@ export const api = {
 
   // Stamps
   collectStamp: (userId: string, stampId: string, location: Geopoint | null) => {
-    console.log(stampId, userId, location);
-    console.error('Not mocked yet');
+    console.error('Not mocked yet', userId, stampId, location);
   },
 };

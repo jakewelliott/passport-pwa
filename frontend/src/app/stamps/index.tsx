@@ -40,8 +40,6 @@ export default function Stamps() {
     return [...achieved, ...notAchieved];
   }, [parks]);
 
-  console.log(sortedParks);
-
   const rows = useMemo(() => {
     return sortedParks.reduce((acc: Park[][], park, index) => {
       const rowIndex = Math.floor(index / GRID_COLS.default);

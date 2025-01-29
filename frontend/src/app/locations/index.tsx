@@ -17,10 +17,7 @@ export default function Locations() {
     <>
       {parks.map((park) => (
         <div className='m-3' key={park.abbreviation}>
-          <Link
-            to={`/locations/location-detail/${park.abbreviation}`}
-            className='text-supporting_inactiveblue no-underline'
-          >
+          <Link to={`/locations/${park.abbreviation}`} className='text-supporting_inactiveblue no-underline'>
             <ListRow>
               <div className='flex flex-col gap-1'>
                 <h3>{park.name}</h3>

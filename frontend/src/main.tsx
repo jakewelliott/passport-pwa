@@ -15,8 +15,6 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-console.log('hi from main!');
-
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>

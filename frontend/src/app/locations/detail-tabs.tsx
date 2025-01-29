@@ -6,7 +6,7 @@ import { LocationDetails } from '@/components/tabs/locations/details-tab';
 import { PhotoGallery } from '@/components/tabs/locations/photos-tab';
 import { LocationNotes } from '@/components/tabs/locations/notes-tab';
 import type { Park } from '@/lib/mock/types';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { usePark } from '@/hooks/queries/useParks';
 
 const LoadingPlaceholder = () => {
@@ -14,20 +14,13 @@ const LoadingPlaceholder = () => {
   return <div>Loading...</div>;
 };
 
-export default function LocationDetail() {
-  const [searchParams] = useSearchParams();
+export default function DetailTabs() {
   const [choice, setChoice] = useState(0);
-  const { data: park, isLoading } = usePark(params.code);
+  const { abbreviation } = useParams();
+  const parkAbbreviation = abbreviation as Uppercase<string>;
+  const { data: park, isLoading } = usePark(parkAbbreviation);
 
   if (isLoading || !park) return <LoadingPlaceholder />;
-
-  useEffect(() => {
-    // Handle the tab query parameter
-    const tab = searchParams.get('tab');
-    if (tab === 'notes') {
-      setChoice(2); // Index 2 corresponds to Notes tab
-    }
-  }, [searchParams]);
 
   const handleChoiceChange = (newChoice: number) => {
     setChoice(newChoice);
