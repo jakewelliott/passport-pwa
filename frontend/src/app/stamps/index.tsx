@@ -76,7 +76,7 @@ export default function Stamps() {
             {shouldShowDetails(rowIndex) && sortedParks[selectedIndex || 0] && (
               <div className='mt-4'>
                 <StampDetails
-                  code={sortedParks[selectedIndex || 0].abbreviation}
+                  abbreviation={sortedParks[selectedIndex || 0].abbreviation}
                   handleClose={() => setSelectedIndex(null)}
                 />
               </div>
