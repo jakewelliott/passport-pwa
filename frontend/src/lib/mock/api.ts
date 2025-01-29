@@ -1,7 +1,7 @@
 import parks from './parks';
 import { userStamps, userProfile } from './user';
 
-import type { Geopoint, Park, ParkCode } from './types';
+import type { Geopoint, Park, ParkAbbreviation } from './types';
 
 // ADAM: We should design our API to allow us to do as much on the client side as possible.
 // Can't rely on the service layer if you're offline!
@@ -12,7 +12,7 @@ export const api = {
   getParks: () => parks,
 
   // biome-ignore lint/style/noNonNullAssertion: dangerous but we r just mocking
-  getPark: (code: ParkCode) => parks.find((park: Park) => park.code === code)!,
+  getPark: (code: ParkAbbreviation) => parks.find((park: Park) => park.abbreviation === code)!,
 
   // Users
   getUserByID: (userId: string) => userProfile,

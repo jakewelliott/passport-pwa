@@ -1,11 +1,11 @@
-import type { ParkCode, UserStamp } from '@/lib/mock/types';
+import type { ParkAbbreviation, UserStamp } from '@/lib/mock/types';
 import DateHelper from '@/lib/date-helper';
 import { useUserStamp } from '@/hooks/useUserStamp';
 import { usePark } from '@/hooks/queries/useParks';
 import { a11yOnClick } from '@/lib/a11y';
 
 interface StampsDetailProps {
-  code: ParkCode;
+  code: ParkAbbreviation;
   handleClose: () => void;
 }
 
@@ -62,7 +62,7 @@ export const StampDetails = ({ code, handleClose }: StampsDetailProps) => {
         <p>{park.city}</p>
         <CollectedOn stamp={stamp} />
         <a
-          href={`/locations/location-detail/${park.code}`}
+          href={`/locations/location-detail/${park.abbreviation}`}
           className='inline-block text-blue-600 transition-colors hover:text-blue-800 hover:underline'
         >
           View More Park Details <span aria-hidden='true'>&gt;</span>

@@ -1,8 +1,9 @@
-import ListRow from '../../components/common/list-row';
+import { Park } from '@/lib/mock/types';
+import ListRow from '@/components/common/list-row';
 import { Link } from 'react-router-dom';
 
 export default function Locations() {
-  const parks = [
+  const parks: Park[] = [
     {
       name: 'Sample Data',
       abbreviation: 'ABCD',
@@ -22,7 +23,7 @@ export default function Locations() {
           zip: '27606',
         },
       ],
-      coordinates: '35.2023, -78.9761',
+      coordinates: { latitude: 35.2023, longitude: -78.9761 },
       phone: '(555) 555-5555',
       email: 'email@ncparks.gov',
       website: 'ncparks.gov',
@@ -78,7 +79,7 @@ export default function Locations() {
           zip: '27606',
         },
       ],
-      coordinates: '35.2023, -78.9761',
+      coordinates: { latitude: 35.2023, longitude: -78.9761 },
       phone: '(555) 555-5555',
       email: 'email@ncparks.gov',
       website: 'ncparks.gov',
@@ -134,7 +135,7 @@ export default function Locations() {
           zip: '27606',
         },
       ],
-      coordinates: '35.2023, -78.9761',
+      coordinates: { latitude: 35.2023, longitude: -78.9761 },
       phone: '(555) 555-5555',
       email: 'email@ncparks.gov',
       website: 'ncparks.gov',
@@ -190,7 +191,7 @@ export default function Locations() {
           zip: '27606',
         },
       ],
-      coordinates: '35.2023, -78.9761',
+      coordinates: { latitude: 35.2023, longitude: -78.9761 },
       phone: '(555) 555-5555',
       email: 'email@ncparks.gov',
       website: 'ncparks.gov',

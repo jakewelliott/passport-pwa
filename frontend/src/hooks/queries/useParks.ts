@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Park, ParkCode } from '@/lib/mock/types';
-import { api, type APIError } from '@/lib/mock/api';
+import type { Park, ParkAbbreviation } from '@/lib/mock/types';
+import { api } from '@/lib/mock/api';
 
 // ADAM:
 // This is a very simple query hook.
@@ -14,14 +14,14 @@ import { api, type APIError } from '@/lib/mock/api';
 // - error: the error returned from the query
 
 export const useParks = () => {
-  return useQuery<Park[], APIError>({
+  return useQuery<Park[]>({
     queryKey: ['parks'],
     queryFn: (): Park[] => api.getParks(),
   });
 };
 
-export const usePark = (code: ParkCode) => {
-  return useQuery<Park, APIError>({
+export const usePark = (code: ParkAbbreviation) => {
+  return useQuery<Park>({
     queryKey: ['park', code],
     queryFn: (): Park => api.getPark(code),
     enabled: !!code,

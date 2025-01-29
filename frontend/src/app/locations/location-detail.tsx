@@ -1,14 +1,15 @@
 import { useState } from 'react';
-import { LocationTabBar } from '../../components/tabs/locations/tab-bar';
-import { LocationContact } from '../../components/tabs/locations/contact';
-import { LocationActionBar } from '../../components/tabs/locations/action-bar';
-import { LocationDetails } from '../../components/tabs/locations/details-tab';
-import { PhotoGallery } from '../../components/tabs/locations/photos-tab';
-import { LocationNotes } from '../../components/tabs/locations/notes-tab';
+import { LocationTabBar } from '@/components/tabs/locations/tab-bar';
+import { LocationContact } from '@/components/tabs/locations/contact';
+import { LocationActionBar } from '@/components/tabs/locations/action-bar';
+import { LocationDetails } from '@/components/tabs/locations/details-tab';
+import { PhotoGallery } from '@/components/tabs/locations/photos-tab';
+import { LocationNotes } from '@/components/tabs/locations/notes-tab';
+import { Park } from '@/lib/mock/types';
 
 export default function LocationDetail() {
   const [choice, setChoice] = useState(0);
-  const [park, setPark] = useState({
+  const [park, setPark] = useState<Park>({
     name: 'Sample Data',
     address: [
       {
@@ -26,7 +27,7 @@ export default function LocationDetail() {
         zip: '27606',
       },
     ],
-    coordinates: '35.2023, -78.9761',
+    coordinates: { latitude: 35.2023, longitude: -78.9761 },
     phone: '(555) 555-5555',
     email: 'email@ncparks.gov',
     website: 'ncparks.gov',
@@ -82,7 +83,7 @@ export default function LocationDetail() {
       <LocationTabBar choice={choice} onChoiceChange={handleChoiceChange} />
       {choice === 0 && <LocationDetails park={park} />}
       {choice === 1 && <PhotoGallery photos={park.parkPhotos} />}
-      {choice === 2 && <LocationNotes park={park} onSaveNotes={handleSaveNotes} />}
+      {choice === 2 && <LocationNotes park={park.abbreviation} onSaveNotes={handleSaveNotes} />}
     </>
   );
 }
