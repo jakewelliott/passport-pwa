@@ -1,22 +1,24 @@
-import { Routes, Route } from 'react-router-dom';
-import './styles/globals.css';
-import Header from './components/layout/header';
-import TabBar from './components/layout/tab-bar';
-import Locations from './app/locations/index';
-import Stamps from './app/stamps/index';
-import More from './app/more/index';
-import LocationDetail from './app/locations/location-detail';
-import { AppInfo } from './app/more/app-info';
-import { IconLegend } from './app/more/icon-legend';
-import { BucketList } from './app/more/bucket-list';
-import { SplashScreenWrapper } from './components/splash-screen';
-import WelcomeMessage from './app/more/welcome-message';
-import StayingSafe from './app/more/staying-safe';
-import { HikingEssentials } from './app/more/hiking-essentials';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { SplashScreenWrapper } from '@/components/splash-screen';
+import '@/styles/globals.css';
+import Header from '@/components/layout/header.tsx';
+import TabBar from '@/components/layout/tab-bar.tsx';
+import Locations from '@/app/locations/index.tsx';
+import Stamps from '@/app/stamps/index.tsx';
+import More from '@/app/more/index.tsx';
+import LocationDetail from '@/app/locations/detail-tabs.tsx';
+import { Scratchpad } from '@/components/scratchpad.tsx';
+import { AppInfo } from '@/app/more/app-info.tsx';
+import { BucketList } from '@/app/more/bucket-list.tsx';
+import { IconLegend } from '@/app/more/icon-legend.tsx';
+import { MyNotes } from '@/app/more/my-notes.tsx';
+import { EditGeneralNotes } from '@/app/more/general-notes.tsx';
+import { Trails } from '@/app/more/trails.tsx';
+import { HikingEssentials } from './app/more/hiking-essentials.tsx';
+import StayingSafe from './app/more/staying-safe.tsx';
+import WelcomeMessage from './app/more/welcome-message.tsx';
 
 export default function App() {
-  console.log('hi from app!');
-
   return (
     <SplashScreenWrapper>
       <div className='app'>
@@ -24,16 +26,38 @@ export default function App() {
         <TabBar />
         <main className='flex-grow pb-16'>
           <Routes>
-            <Route path='/locations' element={<Locations />} />
+            {/* Default redirect */}
+            <Route path='/' element={<Navigate to='/locations' replace />} />
+
+            {/* Main tab routes */}
+            <Route path='/locations'>
+              <Route index element={<Locations />} />
+              <Route path='/locations/:abbreviation' element={<LocationDetail />} />
+            </Route>
             <Route path='/stamps' element={<Stamps />} />
-            <Route path='/more' element={<More />} />
-            <Route path='/more/app-info' element={<AppInfo />} />
-            <Route path='/more/bucket-list' element={<BucketList />} />
-            <Route path='/more/icon-legend' element={<IconLegend />} />
-            <Route path='/locations/location-detail/:locationAbbreviation' element={<LocationDetail />} />
-            <Route path='/more/welcome-message' element={<WelcomeMessage />} />
-            <Route path='/more/staying-safe' element={<StayingSafe />} />
-            <Route path='/more/hiking-essentials' element={<HikingEssentials />} />
+
+            {/* More section routes */}
+            <Route path='/more'>
+              <Route index element={<More />} />
+
+              {/* Information routes */}
+              <Route path='app-info' element={<AppInfo />} />
+              <Route path='icon-legend' element={<IconLegend />} />
+              <Route path='welcome-message' element={<WelcomeMessage />} />
+
+              {/* Hiking related routes */}
+              <Route path='trails' element={<Trails />} />
+              <Route path='staying-safe' element={<StayingSafe />} />
+              <Route path='hiking-essentials' element={<HikingEssentials />} />
+
+              {/* User content routes */}
+              <Route path='bucket-list' element={<BucketList />} />
+              <Route path='my-notes'>
+                <Route index element={<MyNotes />} />
+                <Route path='general-notes' element={<EditGeneralNotes />} />
+              </Route>
+            </Route>
+            <Route path='/scratchpad' element={<Scratchpad />} />
           </Routes>
         </main>
       </div>
