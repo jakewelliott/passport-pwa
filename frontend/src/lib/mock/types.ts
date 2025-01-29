@@ -1,4 +1,4 @@
-export type ParkCode = Uppercase<string>;
+export type ParkAbbreviation = Uppercase<string>;
 import type { TrailIconName } from '@/components/common/trail-icon';
 
 export interface Geopoint {
@@ -7,13 +7,13 @@ export interface Geopoint {
 }
 
 export interface UserStamp {
-  code: ParkCode;
+  code: ParkAbbreviation;
   timestamp: Date;
-  location: Geopoint | null; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
+  location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
 }
 
 export interface UserParkVisit {
-  code: ParkCode;
+  code: ParkAbbreviation;
   timestamp: Date;
 }
 
@@ -40,7 +40,7 @@ export interface ParkPhoto {
 }
 
 export interface Park {
-  code: ParkCode;
+  abbreviation: ParkAbbreviation;
   name: string;
   city: string;
   address: Address;
@@ -52,11 +52,13 @@ export interface Park {
   established?: string;
   landmark?: string;
   youCanFind?: string;
-  trails?: unknown[];
+  trails?: string;
   // TODO: model some types for icons and whatnot
   parkIcons: string[];
   parkPhotos: ParkPhoto[];
   parkNotes: string;
+  stamp?: { time: string, method: string };
+  bucketList?: { status: boolean; text: string };
 }
 
 export interface Trail {

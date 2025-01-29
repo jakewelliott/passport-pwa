@@ -1,4 +1,4 @@
-import { BucketListItem } from '../../components/tabs/more/bucket-list-item';
+import { BucketListItem } from '@/components/tabs/more/bucket-list-item';
 
 export const BucketList = () => {
   return (
