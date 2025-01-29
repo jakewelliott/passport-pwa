@@ -1,3 +1,3 @@
-import type { ParkCode } from '@/lib/mock/types';
+import type { ParkAbbreviation } from '@/lib/mock/types';
 
-export const stampSVG = (code: ParkCode) => `/stamps/${code}.svg`;
+export const stampSVG = (code: ParkAbbreviation) => `/stamps/${code}.svg`;

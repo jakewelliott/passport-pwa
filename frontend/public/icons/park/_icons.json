@@ -108,5 +108,15 @@
 		"f": "VisitorCenter-Blue",
 		"t": "Visitor Center",
 		"c": "amenity"
+	},
+	{
+		"f": "Camping-Black",
+		"t": "Camping",
+		"c": "camping"
+	},
+	{
+		"f": "PicnicShelter-Black",
+		"t": "Picnic Shelter",
+		"c": "amenity"
 	}
 ]

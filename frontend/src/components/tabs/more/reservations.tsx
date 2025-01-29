@@ -4,7 +4,7 @@ export const Reservations = () => {
   return (
     <div className='p-4'>
       <div className='mb-3 flex items-center'>
-        <img src='../../park-icons/Camping.svg' alt='' className='mr-2 h-[50px] w-[50px]' />
+        <img src='/icons/misc/Camping-Black.svg' alt='' className='mr-2 h-[50px] w-[50px]' />
         <div className='flex w-full flex-col justify-center'>
           <h4 className='pb-1 text-center text-main_green'>MAKE A RESERVATION</h4>
           <div className='flex flex-wrap items-center justify-between gap-2'>
@@ -16,7 +16,7 @@ export const Reservations = () => {
         </div>
       </div>
       <div className='mt-3 flex items-center'>
-        <img src='../../park-icons/PicnicShelter.svg' alt='' className='mr-2 h-[50px] w-[50px]' />
+        <img src='/icons/misc/PicnicShelter-Black.svg' alt='' className='mr-2 h-[50px] w-[50px]' />
         <p className='p-mini'>Reserve campsites, picnic shelters and other park facilities online or over the phone.</p>
       </div>
     </div>

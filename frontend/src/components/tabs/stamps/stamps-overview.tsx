@@ -21,9 +21,9 @@ export const StampsOverview = () => {
   const [selectedPark, setSelectedPark] = useState<Park | null>(null);
 
   const sortedParks: Park[] = useMemo(() => {
-    const achieved = parks.filter((park: Park) => isAchieved(park.code)).sort(sortByName);
+    const achieved = parks.filter((park: Park) => isAchieved(park.abbreviation)).sort(sortByName);
 
-    const notAchieved = parks.filter((park: Park) => !isAchieved(park.code)).sort(sortByName);
+    const notAchieved = parks.filter((park: Park) => !isAchieved(park.abbreviation)).sort(sortByName);
 
     return [...achieved, ...notAchieved];
   }, []);
@@ -45,16 +45,16 @@ export const StampsOverview = () => {
             <div className='grid grid-cols-3 gap-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8'>
               {row.map((park: Park) => (
                 <button
-                  key={park.code}
+                  key={park.abbreviation}
                   onClick={() => setSelectedPark(park)}
                   className='flex items-center justify-center p-2'
                   type='button'
                 >
                   <img
                     className={`h-24 min-h-[6rem] w-24 min-w-[6rem] object-contain transition-opacity ${
-                      isAchieved(park.code) ? 'opacity-100' : 'opacity-25'
+                      isAchieved(park.abbreviation) ? 'opacity-100' : 'opacity-25'
                     }`}
-                    src={stampSVG(park.code)}
+                    src={stampSVG(park.abbreviation)}
                     alt={`${park.name} stamp`}
                   />
                 </button>
@@ -64,7 +64,7 @@ export const StampsOverview = () => {
               sortedParks.indexOf(selectedPark) < (rowIndex + 1) * GRID_COLS.default &&
               sortedParks.indexOf(selectedPark) >= rowIndex * GRID_COLS.default && (
                 <div className='mt-4'>
-                  <StampDetails code={selectedPark.code} handleClose={() => setSelectedPark(null)} />
+                  <StampDetails code={selectedPark.abbreviation} handleClose={() => setSelectedPark(null)} />
                 </div>
               )}
           </div>
