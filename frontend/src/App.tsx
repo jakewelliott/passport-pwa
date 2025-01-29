@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { SplashScreenWrapper } from '@/components/splash-screen';
 import '@/styles/globals.css';
 import Header from '@/components/layout/header.tsx';
@@ -25,19 +25,37 @@ export default function App() {
         <TabBar />
         <main className='flex-grow pb-16'>
           <Routes>
-            <Route path='/locations' element={<Locations />} />
+            {/* Default redirect */}
+            <Route path='/' element={<Navigate to='/locations' replace />} />
+
+            {/* Main tab routes */}
+            <Route path='/locations'>
+              <Route index element={<Locations />} />
+              <Route path='location-detail/:locationAbbreviation' element={<LocationDetail />} />
+            </Route>
             <Route path='/stamps' element={<Stamps />} />
-            <Route path='/more' element={<More />} />
-            <Route path='/more/app-info' element={<AppInfo />} />
-            <Route path='/more/bucket-list' element={<BucketList />} />
-            <Route path='/more/icon-legend' element={<IconLegend />} />
-            <Route path='/locations/location-detail/:locationAbbreviation' element={<LocationDetail />} />
-            <Route path='/more/trails' element={<Trails />} />
-            <Route path='/more/welcome-message' element={<WelcomeMessage />} />
-            <Route path='/more/staying-safe' element={<StayingSafe />} />
-            <Route path='/more/hiking-essentials' element={<HikingEssentials />} />
-            <Route path='/more/my-notes' element={<MyNotes />} />
-            <Route path='/more/my-notes/general-notes' element={<EditGeneralNotes />} />
+
+            {/* More section routes */}
+            <Route path='/more'>
+              <Route index element={<More />} />
+
+              {/* Information routes */}
+              <Route path='app-info' element={<AppInfo />} />
+              <Route path='icon-legend' element={<IconLegend />} />
+              <Route path='welcome-message' element={<WelcomeMessage />} />
+
+              {/* Hiking related routes */}
+              <Route path='trails' element={<Trails />} />
+              <Route path='staying-safe' element={<StayingSafe />} />
+              <Route path='hiking-essentials' element={<HikingEssentials />} />
+
+              {/* User content routes */}
+              <Route path='bucket-list' element={<BucketList />} />
+              <Route path='my-notes'>
+                <Route index element={<MyNotes />} />
+                <Route path='general-notes' element={<EditGeneralNotes />} />
+              </Route>
+            </Route>
           </Routes>
         </main>
       </div>
