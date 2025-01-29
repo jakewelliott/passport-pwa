@@ -1,5 +1,5 @@
 export type ParkAbbreviation = Uppercase<string>;
-import type { TrailIconName } from '@/components/common/trail-icon';
+import type { TrailIconName } from '@/components/common/trail-icons';
 
 export interface Geopoint {
   latitude: number;
