@@ -20,10 +20,8 @@ export const useParks = () => {
   });
 };
 
-export const usePark = (code: ParkAbbreviation) => {
-  return useQuery<Park>({
-    queryKey: ['park', code],
-    queryFn: (): Park => api.getPark(code),
-    enabled: !!code,
-  });
+export const usePark = (code: ParkAbbreviation | 'ERRR') => {
+  const query = useParks();
+  const park = query.data?.find((park) => park.abbreviation === code);
+  return { ...query, data: park };
 };

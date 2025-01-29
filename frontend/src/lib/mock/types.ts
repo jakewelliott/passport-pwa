@@ -1,5 +1,4 @@
 export type ParkAbbreviation = Uppercase<string>;
-import type { TrailIconName } from '@/components/common/trail-icon';
 
 export interface Geopoint {
   latitude: number;
@@ -40,6 +39,7 @@ export interface ParkPhoto {
 }
 
 export interface Park {
+  slug: string;
   abbreviation: ParkAbbreviation;
   name: string;
   city: string;
@@ -52,18 +52,18 @@ export interface Park {
   established?: string;
   landmark?: string;
   youCanFind?: string;
-  trails?: string;
+  trails?: string[];
   // TODO: model some types for icons and whatnot
   parkIcons: string[];
   parkPhotos: ParkPhoto[];
   parkNotes: string;
-  stamp?: { time: string, method: string };
+  stamp?: { time: string; method: string };
   bucketList?: { status: boolean; text: string };
 }
 
 export interface Trail {
   trailName: string;
-  trailIcons: TrailIconName[];
+  trailIcons: string[];
   distance: string;
   description: string;
 }

@@ -41,6 +41,7 @@ export default {
 			supporting_bluegray: "#94B2B7",
 			supporting_lightgray: "#D9D9D9",
 			supporting_lightorange: "#E3C7B4",
+			supporting_terracotta: "#C15728",
 
 			// System colors
 			system_black: "#000000",
