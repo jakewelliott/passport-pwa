@@ -4,7 +4,6 @@ import dummyMapper from '../dummy-mapper';
 
 const dummy: Park = {
   abbreviation: 'DUMM',
-  slug: 'foobar',
   name: 'Foobar Park',
   city: 'Foobar City',
   address: {

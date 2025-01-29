@@ -39,7 +39,6 @@ export interface ParkPhoto {
 }
 
 export interface Park {
-  slug: string;
   abbreviation: ParkAbbreviation;
   name: string;
   city: string;
