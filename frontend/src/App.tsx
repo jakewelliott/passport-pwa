@@ -9,11 +9,10 @@ import LocationDetail from './app/locations/location-detail';
 import { AppInfo } from './app/more/app-info';
 import { IconLegend } from './app/more/icon-legend';
 import { BucketList } from './app/more/bucket-list';
+import { Trails } from './pages/more/trails';
 import { SplashScreenWrapper } from './components/splash-screen';
 
 export default function App() {
-  console.log('hi from app!');
-
   return (
     <SplashScreenWrapper>
       <div className='app'>
@@ -28,6 +27,7 @@ export default function App() {
             <Route path='/more/bucket-list' element={<BucketList />} />
             <Route path='/more/icon-legend' element={<IconLegend />} />
             <Route path='/locations/location-detail/:locationAbbreviation' element={<LocationDetail />} />
+            <Route path='/more/trails' element={<Trails />} />
           </Routes>
         </main>
       </div>
