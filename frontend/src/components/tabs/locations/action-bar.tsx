@@ -10,7 +10,7 @@ export const LocationActionBar = ({ park }: { park: Park }) => {
       <a href={`tel://${park.phone}`} className='text-supporting_inactiveblue'>
         <FiPhone size={24} strokeWidth={4} />
       </a>
-      <a href={'https://www.ncparks.gov/state-parks/pettigrew-state-park'} className='text-supporting_inactiveblue'>
+      <a href={park.website} className='text-supporting_inactiveblue'>
         <FiGlobe size={24} strokeWidth={3} />
       </a>
       <a href={`mailto:${park.email}`} className='text-supporting_inactiveblue'>

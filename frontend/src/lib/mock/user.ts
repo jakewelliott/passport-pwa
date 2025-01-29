@@ -21,7 +21,10 @@ const dummyProfile: UserProfile = {
 const dummyStamp: UserStamp = {
   code: 'DUMM',
   timestamp: new Date(),
-  location: null,
+  location: {
+    latitude: 0,
+    longitude: 0
+  },
 };
 
 export const userStamps = userStampsJson.map(dummyMapper(dummyStamp));

@@ -1,9 +1,9 @@
 import RoundedButton from '@/components/common/rounded-button';
 import { a11yOnClick } from '@/lib/a11y';
 import useNotesStore from '@/hooks/store/useNotesStore';
-import type { ParkCode } from '@/lib/mock/types';
+import type { ParkAbbreviation } from '@/lib/mock/types';
 
-export const LocationNotes = ({ park_code }: { park_code: ParkCode }) => {
+export const LocationNotes = ({ park_code }: { park_code: ParkAbbreviation }) => {
   const { notes, setNotes } = useNotesStore();
 
   const handleClick = () => {

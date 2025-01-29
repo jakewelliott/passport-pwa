@@ -1,4 +1,4 @@
-import ListRow from '../../components/common/list-row';
+import ListRow from '@/components/common/list-row';
 import { Link } from 'react-router-dom';
 
 export default function More() {
