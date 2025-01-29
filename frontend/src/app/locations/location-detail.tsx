@@ -7,68 +7,19 @@ import { PhotoGallery } from '@/components/tabs/locations/photos-tab';
 import { LocationNotes } from '@/components/tabs/locations/notes-tab';
 import type { Park } from '@/lib/mock/types';
 import { useParams, useSearchParams } from 'react-router-dom';
+import { usePark } from '@/hooks/queries/useParks';
+
+const LoadingPlaceholder = () => {
+  // TODO: add a loading placeholder (blank grey boxes)
+  return <div>Loading...</div>;
+};
 
 export default function LocationDetail() {
   const [searchParams] = useSearchParams();
   const [choice, setChoice] = useState(0);
-  const [park, setPark] = useState<Park>({
-    abbreviation: 'CABE',
-    name: 'Sample Data',
-    address: {
-      description: 'Main Address:',
-      addressLineOne: '1234 Main St',
-      city: 'Raleigh',
-      state: 'NC',
-      zip: '27606',
-    },
-    additionalAddress: [
-      {
-        description: 'Secondary Address:',
-        addressLineOne: '1234 Main St',
-        city: 'Raleigh',
-        state: 'NC',
-        zip: '27606',
-      },
-    ],
-    coordinates: { latitude: 35.2023, longitude: -78.9761 },
-    phone: '(555) 555-5555',
-    email: 'email@ncparks.gov',
-    website: 'ncparks.gov',
-    stamp: {
-      time: '1/1/25',
-      method: 'manual',
-    },
-    bucketList: {
-      text: 'random bucket list item',
-      status: false,
-    },
-    established: '2003',
-    landmark: 'My House',
-    youCanFind: 'My items',
-    trails: ['The driveway'],
-    parkIcons: ['Paddling-Red.svg', 'RVCamping-Green.svg', 'Playground-Blue.svg'],
-    parkPhotos: [
-      { url: '/photos/CABE.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-      { url: '/photos/CACR.jpg' },
-    ],
-    parkNotes: '',
+  const { data: park, isLoading } = usePark(params.code);
 
-    city: 'Raleigh',
-  });
+  if (isLoading || !park) return <LoadingPlaceholder />;
 
   useEffect(() => {
     // Handle the tab query parameter

@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react';
-import { userStamps } from '@/lib/mock/user';
 import { StampDetails } from './stamp-details';
-import type { UserStamp, Park } from '@/lib/mock/types';
-import parks from '@/lib/mock/parks';
-import { stampSVG } from '@/lib/strings';
+import type { Park } from '@/lib/mock/types';
+import { useParks } from '@/hooks/queries/useParks';
 
-const isAchieved = (code: string) => userStamps.some((stamp: UserStamp) => stamp.code === code);
+// TODO: fix scrolling bug when selecting stamp in last row
 
+const isVisited = (code: string) => !code && false;
 const sortByName = (a: Park, b: Park) => a.name.localeCompare(b.name);
 
 const GRID_COLS = {
@@ -16,17 +15,32 @@ const GRID_COLS = {
   lg: 8,
 } as const;
 
+const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean }) => {
+  return (
+    <button onClick={handleClick} className='flex items-center justify-center p-2' type='button'>
+      <img
+        src={`/stamps/${code}.svg`}
+        alt={`${code} - ${greyed ? 'greyed out' : 'achieved'}`}
+        className={greyed ? 'opacity-50 grayscale' : ''}
+      />
+    </button>
+  );
+};
+
 // TODO: make this use a query instead of directly accessing dummy data
 export const StampsOverview = () => {
-  const [selectedPark, setSelectedPark] = useState<Park | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
+  const { data: parks, isLoading } = useParks();
+
+  // TODO: toggle sort a/z, date visited,
   const sortedParks: Park[] = useMemo(() => {
-    const achieved = parks.filter((park) => isAchieved(park.abbreviation)).sort(sortByName);
-
-    const notAchieved = parks.filter((park) => !isAchieved(park.abbreviation)).sort(sortByName);
-
+    const achieved = parks?.filter((park) => isVisited(park.abbreviation)).sort(sortByName) || [];
+    const notAchieved = parks?.filter((park) => !isVisited(park.abbreviation)).sort(sortByName) || [];
     return [...achieved, ...notAchieved];
-  }, []);
+  }, [parks]);
+
+  console.log(sortedParks);
 
   const rows = useMemo(() => {
     return sortedParks.reduce((acc: Park[][], park, index) => {
@@ -37,41 +51,36 @@ export const StampsOverview = () => {
     }, []);
   }, [sortedParks]);
 
-  const renderParkButton = (park: Park) => (
-    <button
-      key={park.abbreviation}
-      onClick={() => setSelectedPark(park)}
-      className='flex items-center justify-center p-2'
-      type='button'
-    >
-      <img
-        className={`h-24 min-h-[6rem] w-24 min-w-[6rem] object-contain transition-opacity ${
-          isAchieved(park.abbreviation) ? 'opacity-100' : 'opacity-25'
-        }`}
-        src={stampSVG('CABE')}
-        alt={`${park.name} stamp`}
-      />
-    </button>
-  );
-
   const shouldShowDetails = (rowIndex: number) => {
-    if (!selectedPark) return false;
-    const parkIndex = sortedParks.indexOf(selectedPark);
+    if (selectedIndex === null) return false;
+    const parkIndex = selectedIndex;
     return parkIndex >= rowIndex * GRID_COLS.default && parkIndex < (rowIndex + 1) * GRID_COLS.default;
   };
+
+  // TODO: add a loading state, its down here b/c rules of hooks
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <div className='mx-auto my-4'>
       <div className='grid gap-4 px-4'>
-        <StampDetails code={selectedPark?.abbreviation || 'CABE'} handleClose={() => setSelectedPark(null)} />
         {rows.map((row, rowIndex) => (
           <div key={`row-${rowIndex}`}>
             <div className='grid grid-cols-3 gap-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8'>
-              {row.map(renderParkButton)}
+              {row.map((park, i) => (
+                <Stamp
+                  key={park.abbreviation}
+                  code={park.abbreviation}
+                  greyed={!isVisited(park.abbreviation)}
+                  handleClick={() => setSelectedIndex(rowIndex * GRID_COLS.default + i)}
+                />
+              ))}
             </div>
-            {shouldShowDetails(rowIndex) && selectedPark && (
+            {shouldShowDetails(rowIndex) && sortedParks[selectedIndex || 0] && (
               <div className='mt-4'>
-                <StampDetails code={selectedPark.abbreviation} handleClose={() => setSelectedPark(null)} />
+                <StampDetails
+                  code={sortedParks[selectedIndex || 0].abbreviation}
+                  handleClose={() => setSelectedIndex(null)}
+                />
               </div>
             )}
           </div>

@@ -3,7 +3,8 @@ import parksJson from './parks.json';
 import dummyMapper from '../dummy-mapper';
 
 const dummy: Park = {
-  abbreviation: 'CABE',
+  abbreviation: 'DUMM',
+  slug: 'foobar',
   name: 'Foobar Park',
   city: 'Foobar City',
   address: {
@@ -23,4 +24,4 @@ const dummy: Park = {
   parkNotes: 'Not a real park',
 };
 
-export default parksJson.map(dummyMapper(dummy));
+export default parksJson.map(dummyMapper<Park>(dummy));
