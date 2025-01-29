@@ -10,27 +10,25 @@ import type { Park } from '@/lib/mock/types';
 export default function LocationDetail() {
   const [choice, setChoice] = useState(0);
   const [park, setPark] = useState<Park>({
+    abbreviation: 'CABE',
     name: 'Sample Data',
-    addresses: [
+    address: {
+      description: 'Main Address:',
+      addressLineOne: '1234 Main St',
+      city: 'Raleigh',
+      state: 'NC',
+      zip: '27606',
+    },
+    additionalAddress: [
       {
-        name: 'Main Address:',
-        addressLineOne: '1234 Main St',
-        city: 'Raleigh',
-        state: 'NC',
-        zip: '27606',
-      },
-      {
-        name: 'Secondary Address:',
+        description: 'Secondary Address:',
         addressLineOne: '1234 Main St',
         city: 'Raleigh',
         state: 'NC',
         zip: '27606',
       },
     ],
-    coordinates: {
-      latitude: 35.2023,
-      longitude: -78.9761,
-    },
+    coordinates: { latitude: 35.2023, longitude: -78.9761 },
     phone: '(555) 555-5555',
     email: 'email@ncparks.gov',
     website: 'ncparks.gov',
@@ -48,35 +46,30 @@ export default function LocationDetail() {
     trails: ['The driveway'],
     parkIcons: ['Paddling-Red.svg', 'RVCamping-Green.svg', 'Playground-Blue.svg'],
     parkPhotos: [
-      { url: './photos/CABE.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
+      { url: '/photos/CABE.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
+      { url: '/photos/CACR.jpg' },
     ],
     parkNotes: '',
+
+    city: 'Raleigh',
   });
 
   const handleChoiceChange = (newChoice: number) => {
     setChoice(newChoice);
-  };
-
-  const handleSaveNotes = (notes: string) => {
-    setPark((prevPark) => ({
-      ...prevPark,
-      parkNotes: notes,
-    }));
   };
 
   return (
@@ -86,7 +79,7 @@ export default function LocationDetail() {
       <LocationTabBar choice={choice} onChoiceChange={handleChoiceChange} />
       {choice === 0 && <LocationDetails park={park} />}
       {choice === 1 && <PhotoGallery photos={park.parkPhotos} />}
-      {choice === 2 && <LocationNotes park_code={park.code} />}
+      {choice === 2 && <LocationNotes park_code={park.abbreviation} />}
     </>
   );
 }

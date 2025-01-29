@@ -11,6 +11,9 @@ import { IconLegend } from './app/more/icon-legend';
 import { BucketList } from './app/more/bucket-list';
 import { Trails } from './pages/more/trails';
 import { SplashScreenWrapper } from './components/splash-screen';
+import WelcomeMessage from './app/more/welcome-message';
+import StayingSafe from './app/more/staying-safe';
+import { HikingEssentials } from './app/more/hiking-essentials';
 
 export default function App() {
   return (
@@ -28,6 +31,9 @@ export default function App() {
             <Route path='/more/icon-legend' element={<IconLegend />} />
             <Route path='/locations/location-detail/:locationAbbreviation' element={<LocationDetail />} />
             <Route path='/more/trails' element={<Trails />} />
+            <Route path='/more/welcome-message' element={<WelcomeMessage />} />
+            <Route path='/more/staying-safe' element={<StayingSafe />} />
+            <Route path='/more/hiking-essentials' element={<HikingEssentials />} />
           </Routes>
         </main>
       </div>

@@ -1,8 +1,7 @@
-import { useState } from 'react';
 import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
-
+import type { Park } from '@/lib/mock/types';
 export const BucketListItem = () => {
-  const [park, setPark] = useState({
+  const park:Park = {
     name: 'Sample Data',
     address: [
       {
@@ -20,7 +19,7 @@ export const BucketListItem = () => {
         zip: '27606',
       },
     ],
-    coordinates: '35.2023, -78.9761',
+    coordinates: { latitude: 35.2023, longitude: -78.9761 },
     phone: '(555) 555-5555',
     email: 'email@ncparks.gov',
     website: 'ncparks.gov',
@@ -56,11 +55,11 @@ export const BucketListItem = () => {
       { url: './photos/CACR.jpg' },
     ],
     parkNotes: '',
-  });
+  };
 
   return (
     <div className='my-2.5 flex items-start'>
-      {park.bucketList.status ? (
+      {park.bucketList?.status ? (
         <FaRegCheckSquare size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
       ) : (
         <FaRegSquare size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />

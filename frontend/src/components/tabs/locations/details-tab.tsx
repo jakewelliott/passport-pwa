@@ -31,7 +31,7 @@ export const LocationDetails = ({ park }: { park: Park }) => {
         {park.trails && (
           <>
             <span className='green-text'>Trails: </span>
-            {park.trails}
+            {String(park.trails)}
             <br />
             <br />
           </>
@@ -40,7 +40,7 @@ export const LocationDetails = ({ park }: { park: Park }) => {
       <div className='icon-scroll-container overflow-x-auto'>
         <div className='inline-flex gap-6 px-6'>
           {park.parkIcons.map((icon, index) => (
-            <img src={`../../park-icons/${icon}`} width={55} height={55} key={icon} alt={`Park icon ${index + 1}`} />
+            <img src={`/icons/park/${icon}`} width={55} height={55} key={icon} alt={`Park icon ${index + 1}`} />
           ))}
           <div className='w-px flex-shrink-0' />
         </div>
