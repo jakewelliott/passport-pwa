@@ -18,7 +18,11 @@ export default function DetailTabs() {
   const [choice, setChoice] = useState(0);
   const { abbreviation } = useParams();
   const parkAbbreviation = abbreviation as Uppercase<string>;
+  console.log(parkAbbreviation);
   const { data: park, isLoading } = usePark(parkAbbreviation);
+
+  console.log(park);
+  console.log(isLoading);
 
   if (isLoading || !park) return <LoadingPlaceholder />;
 
