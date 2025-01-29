@@ -8,7 +8,6 @@ export const LocationNotes = ({ park_code }: { park_code: ParkAbbreviation }) =>
 
   const handleClick = () => {
     // TODO: the global store is already saved so we should prolly navigate or something
-    console.log(notes);
     alert('Notes saved!');
   };
 
