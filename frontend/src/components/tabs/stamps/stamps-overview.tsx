@@ -21,52 +21,59 @@ export const StampsOverview = () => {
   const [selectedPark, setSelectedPark] = useState<Park | null>(null);
 
   const sortedParks: Park[] = useMemo(() => {
-    const achieved = parks.filter((park: Park) => isAchieved(park.abbreviation)).sort(sortByName);
+    const achieved = parks.filter((park) => isAchieved(park.abbreviation)).sort(sortByName);
 
-    const notAchieved = parks.filter((park: Park) => !isAchieved(park.abbreviation)).sort(sortByName);
+    const notAchieved = parks.filter((park) => !isAchieved(park.abbreviation)).sort(sortByName);
 
     return [...achieved, ...notAchieved];
   }, []);
 
-  // Group parks into rows
   const rows = useMemo(() => {
-    const result = [];
-    for (let i = 0; i < sortedParks.length; i += GRID_COLS.default) {
-      result.push(sortedParks.slice(i, i + GRID_COLS.default));
-    }
-    return result;
+    return sortedParks.reduce((acc: Park[][], park, index) => {
+      const rowIndex = Math.floor(index / GRID_COLS.default);
+      acc[rowIndex] = acc[rowIndex] || [];
+      acc[rowIndex].push(park);
+      return acc;
+    }, []);
   }, [sortedParks]);
+
+  const renderParkButton = (park: Park) => (
+    <button
+      key={park.abbreviation}
+      onClick={() => setSelectedPark(park)}
+      className='flex items-center justify-center p-2'
+      type='button'
+    >
+      <img
+        className={`h-24 min-h-[6rem] w-24 min-w-[6rem] object-contain transition-opacity ${
+          isAchieved(park.abbreviation) ? 'opacity-100' : 'opacity-25'
+        }`}
+        src={stampSVG('CABE')}
+        alt={`${park.name} stamp`}
+      />
+    </button>
+  );
+
+  const shouldShowDetails = (rowIndex: number) => {
+    if (!selectedPark) return false;
+    const parkIndex = sortedParks.indexOf(selectedPark);
+    return parkIndex >= rowIndex * GRID_COLS.default && parkIndex < (rowIndex + 1) * GRID_COLS.default;
+  };
 
   return (
     <div className='mx-auto my-4'>
       <div className='grid gap-4 px-4'>
+        <StampDetails code={selectedPark?.abbreviation || 'CABE'} handleClose={() => setSelectedPark(null)} />
         {rows.map((row, rowIndex) => (
           <div key={`row-${rowIndex}`}>
             <div className='grid grid-cols-3 gap-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8'>
-              {row.map((park: Park) => (
-                <button
-                  key={park.abbreviation}
-                  onClick={() => setSelectedPark(park)}
-                  className='flex items-center justify-center p-2'
-                  type='button'
-                >
-                  <img
-                    className={`h-24 min-h-[6rem] w-24 min-w-[6rem] object-contain transition-opacity ${
-                      isAchieved(park.abbreviation) ? 'opacity-100' : 'opacity-25'
-                    }`}
-                    src={stampSVG(park.abbreviation)}
-                    alt={`${park.name} stamp`}
-                  />
-                </button>
-              ))}
+              {row.map(renderParkButton)}
             </div>
-            {selectedPark &&
-              sortedParks.indexOf(selectedPark) < (rowIndex + 1) * GRID_COLS.default &&
-              sortedParks.indexOf(selectedPark) >= rowIndex * GRID_COLS.default && (
-                <div className='mt-4'>
-                  <StampDetails code={selectedPark.abbreviation} handleClose={() => setSelectedPark(null)} />
-                </div>
-              )}
+            {shouldShowDetails(rowIndex) && selectedPark && (
+              <div className='mt-4'>
+                <StampDetails code={selectedPark.abbreviation} handleClose={() => setSelectedPark(null)} />
+              </div>
+            )}
           </div>
         ))}
       </div>
