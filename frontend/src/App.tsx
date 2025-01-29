@@ -7,6 +7,7 @@ import Locations from '@/app/locations/index.tsx';
 import Stamps from '@/app/stamps/index.tsx';
 import More from '@/app/more/index.tsx';
 import LocationDetail from '@/app/locations/detail-tabs.tsx';
+import { Scratchpad } from '@/components/scratchpad.tsx';
 import { AppInfo } from '@/app/more/app-info.tsx';
 import { BucketList } from '@/app/more/bucket-list.tsx';
 import { IconLegend } from '@/app/more/icon-legend.tsx';
@@ -56,6 +57,7 @@ export default function App() {
                 <Route path='general-notes' element={<EditGeneralNotes />} />
               </Route>
             </Route>
+            <Route path='/scratchpad' element={<Scratchpad />} />
           </Routes>
         </main>
       </div>
