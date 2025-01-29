@@ -3,7 +3,7 @@ import { a11yOnClick } from '@/lib/a11y';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import type { ParkAbbreviation } from '@/lib/mock/types';
 
-export const LocationNotes = ({ abbreviation }: { abbreviation: ParkAbbreviation }) => {
+export const NotesMiniTab = ({ abbreviation }: { abbreviation: ParkAbbreviation }) => {
   const { getNote, setNote } = useParkNotesStore();
 
   const handleClick = () => {

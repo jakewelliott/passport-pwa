@@ -2,7 +2,8 @@ import type { ParkAbbreviation } from '@/lib/mock/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-export type ParkNoteKey = ParkAbbreviation | 'generalNotes';
+type ParkNoteKey = ParkAbbreviation | 'generalNotes';
+const EMPTY_NOTES = { generalNotes: '' };
 
 interface NotesStore {
   notes: Record<ParkNoteKey, string>;
@@ -13,10 +14,12 @@ interface NotesStore {
   clearNotes: () => void;
 }
 
+// ADAM: Most of this file is Zustand & KV boilerplate.
+
 export const useParkNotesStore = create<NotesStore>()(
   persist(
     (set, get) => ({
-      notes: { generalNotes: '' },
+      notes: EMPTY_NOTES,
 
       setNote: (key, value) => {
         set((state) => ({
@@ -43,7 +46,7 @@ export const useParkNotesStore = create<NotesStore>()(
       },
 
       clearNotes: () => {
-        set({ notes: { generalNotes: '' } });
+        set({ notes: EMPTY_NOTES });
       },
     }),
     {

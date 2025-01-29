@@ -7,7 +7,7 @@ const NoPhotos = () => {
   return <div className='p-4 text-center'>No photos available for this location.</div>;
 };
 
-export const PhotoGallery = ({ photos }: { photos: ParkPhoto[] }) => {
+export const PhotoGalleryMiniTab = ({ photos }: { photos: ParkPhoto[] }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<ParkPhoto | null>(null);
 
   if (photos.length === 0) return <NoPhotos />;

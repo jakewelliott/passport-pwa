@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { StampDetails } from '../../components/tabs/stamps/stamp-details';
+import { StampDetails } from '@/components/tabs/stamps/stamp-details';
 import type { Park } from '@/lib/mock/types';
 import { useParks } from '@/hooks/queries/useParks';
 
