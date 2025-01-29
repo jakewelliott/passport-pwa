@@ -1,4 +1,4 @@
-import { IconSection } from '../../components/tabs/more/icon-section';
+import { IconSection } from '@/components/tabs/more/icon-section';
 
 export const IconLegend = () => {
   return (

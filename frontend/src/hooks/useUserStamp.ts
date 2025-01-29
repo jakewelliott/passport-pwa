@@ -1,7 +1,7 @@
 import { useUser } from './queries/useUser';
-import type { ParkCode } from '@/lib/mock/types';
+import type { ParkAbbreviation } from '@/lib/mock/types';
 
-export const useUserStamp = (code: ParkCode) => {
+export const useUserStamp = (code: ParkAbbreviation) => {
   // re-use our query hooks whenever possible
   const { data: user, isLoading } = useUser();
 
