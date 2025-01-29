@@ -158,10 +158,10 @@ export const IconSection = ({ sectionName }: IconSectionProps) => {
       <h4 className={`pb-3 text-icon_${sectionName.toLowerCase()}`}>{sectionName}</h4>
       {section.icons.map((icon) => (
         <div key={icon.fileName} className='my-1 flex items-center'>
-          <img src={`../park-icons/${icon.fileName}`} alt={icon.iconName} width={'36px'} height={'36px'} />
+          <img src={`/icons/park/${icon.fileName}`} alt={icon.iconName} width={'36px'} height={'36px'} />
           <div className='ml-2 flex w-full flex-col justify-center'>
             <p>{icon.iconName}</p>
-            {icon.extraText && <p className='p-mini'>{icon.extraText}</p>}
+            {icon.extraText && <p className='p-mini max-w-56'>{icon.extraText}</p>}
           </div>
         </div>
       ))}
