@@ -2,253 +2,211 @@
   {
     "abbreviation": "CABE",
     "name": "Carolina Beach State Park",
-    "slug": "carolina-beach",
     "city": "Carolina Beach"
   },
   {
     "abbreviation": "CACR",
     "name": "Carvers Creek State Park",
-    "slug": "carvers-creek",
     "city": "Spring Lake"
   },
   {
     "abbreviation": "CHRO",
     "name": "Chimney Rock State Park",
-    "slug": "chimney-rock",
     "city": "Chimney Rock"
   },
   {
     "abbreviation": "CLNE",
     "name": "Cliffs of the Neuse State Park",
-    "slug": "cliffs-of-the-neuse",
     "city": "Seven Springs"
   },
   {
     "abbreviation": "CRMO",
     "name": "Crowders Mountain State Park",
-    "slug": "crowders-mountain",
     "city": "Kings Mountain"
   },
   {
     "abbreviation": "DISW",
     "name": "Dismal Swamp State Park",
-    "slug": "dismal-swamp",
     "city": "South Mills"
   },
   {
     "abbreviation": "ELKN",
     "name": "Elk Knob State Park",
-    "slug": "elk-knob",
     "city": "Todd"
   },
   {
     "abbreviation": "ENRI",
     "name": "Eno River State Park",
-    "slug": "eno-river",
     "city": "Durham"
   },
   {
     "abbreviation": "FALA",
     "name": "Falls Lake State Recreation Area",
-    "slug": "falls-lake",
     "city": "Wake Forest"
   },
   {
     "abbreviation": "FOFI",
     "name": "Fort Fisher State Recreation Area",
-    "slug": "fort-fisher",
     "city": "Kure Beach"
   },
   {
     "abbreviation": "FOMA",
     "name": "Fort Macon State Park",
-    "slug": "fort-macon",
     "city": "Atlantic Beach"
   },
   {
     "abbreviation": "GOCR",
     "name": "Goose Creek State Park",
-    "slug": "goose-creek",
     "city": "Washington"
   },
   {
     "abbreviation": "GORG",
     "name": "Gorges State Park",
-    "slug": "gorges",
     "city": "Sapphire"
   },
   {
     "abbreviation": "GRMO",
     "name": "Grandfather Mountain State Park",
-    "slug": "grandfather-mountain",
     "city": "Banner Elk"
   },
   {
     "abbreviation": "HABE",
     "name": "Hammocks Beach State Park",
-    "slug": "hammocks-beach",
     "city": "Swansboro"
   },
   {
     "abbreviation": "HARO",
     "name": "Hanging Rock State Park",
-    "slug": "hanging-rock",
     "city": "Danbury"
   },
   {
     "abbreviation": "HARI",
     "name": "Haw River State Park",
-    "slug": "haw-river",
     "city": "Browns Summit"
   },
   {
     "abbreviation": "JORI",
     "name": "Jockey's Ridge State Park",
-    "slug": "jockey's-ridge",
     "city": "Nags Head"
   },
   {
     "abbreviation": "JONE",
     "name": "Jones Lake State Park",
-    "slug": "jones-lake",
     "city": "Elizabethtown"
   },
   {
     "abbreviation": "JORD",
     "name": "Jordan Lake State Recreation Area",
-    "slug": "jordan-lake",
     "city": "Apex"
   },
   {
     "abbreviation": "KELA",
     "name": "Kerr Lake State Recreation Area",
-    "slug": "kerr-lake",
     "city": "Henderson"
   },
   {
     "abbreviation": "LAJA",
     "name": "Lake James State Park",
-    "slug": "lake-james",
     "city": "Nebo"
   },
   {
     "abbreviation": "LANO",
     "name": "Lake Norman State Park",
-    "slug": "lake-norman",
     "city": "Troutman"
   },
   {
     "abbreviation": "LAWA",
     "name": "Lake Waccamaw State Park",
-    "slug": "lake-waccamaw",
     "city": "Lake Waccamaw"
   },
   {
     "abbreviation": "LURI",
     "name": "Lumber River State Park",
-    "slug": "lumber-river",
     "city": "Orrum"
   },
   {
     "abbreviation": "MARI",
     "name": "Mayo River State Park",
-    "slug": "mayo-river",
     "city": "Mayodan"
   },
   {
     "abbreviation": "MEMO",
     "name": "Medoc Mountain State Park",
-    "slug": "medoc-mountain",
     "city": "Hollister"
   },
   {
     "abbreviation": "MEMI",
     "name": "Merchants Millpond State Park",
-    "slug": "merchants-millpond",
     "city": "Gatesville"
   },
   {
     "abbreviation": "MOMO",
     "name": "Morrow Mountain State Park",
-    "slug": "morrow-mountain",
     "city": "Albemarle"
   },
   {
     "abbreviation": "MOJE",
     "name": "Mount Jefferson State Natural Area",
-    "slug": "mount-jefferson",
     "city": "West Jefferson"
   },
   {
     "abbreviation": "MOMI",
     "name": "Mount Mitchell State Park",
-    "slug": "mount-mitchell",
     "city": "Burnsville"
   },
   {
     "abbreviation": "NERI",
     "name": "New River State Park",
-    "slug": "new-river",
     "city": "Laurel Springs"
   },
   {
     "abbreviation": "OCMO",
     "name": "Occoneechee Mountain State Natural Area",
-    "slug": "occoneechee-mountain",
     "city": "Hillsborough"
   },
   {
     "abbreviation": "PETT",
     "name": "Pettigrew State Park",
-    "slug": "pettigrew",
     "city": "Creswell"
   },
   {
     "abbreviation": "PIMO",
     "name": "Pilot Mountain State Park",
-    "slug": "pilot-mountain",
     "city": "Pinnacle"
   },
   {
     "abbreviation": "RARO",
     "name": "Raven Rock State Park",
-    "slug": "raven-rock",
     "city": "Lillington"
   },
   {
     "abbreviation": "REMO",
     "name": "Rendezvous Mountain",
-    "slug": "rendezvous-mountain",
     "city": "Purlear"
   },
   {
     "abbreviation": "SILA",
     "name": "Singletary Lake State Park",
-    "slug": "singletary-lake",
     "city": "Kelly"
   },
   {
     "abbreviation": "SOMO",
     "name": "South Mountains State Park",
-    "slug": "south-mountains",
     "city": "Connelly Springs"
   },
   {
     "abbreviation": "STMO",
     "name": "Stone Mountain State Park",
-    "slug": "stone-mountain",
     "city": "Roaring Gap"
   },
   {
     "abbreviation": "WEWO",
     "name": "Weymouth Woods Sandhills Nature Preserve",
-    "slug": "weymouth-woods",
     "city": "Southern Pines"
   },
   {
     "abbreviation": "WIUM",
     "name": "William B. Umstead State Park",
-    "slug": "william-b-umstead",
     "city": "Raleigh"
   }
 ]
