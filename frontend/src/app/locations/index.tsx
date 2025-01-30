@@ -1,4 +1,3 @@
-import { Park } from '@/lib/mock/types';
 import ListRow from '@/components/common/list-row';
 import { Link } from 'react-router-dom';
 import { useParks } from '@/hooks/queries/useParks';

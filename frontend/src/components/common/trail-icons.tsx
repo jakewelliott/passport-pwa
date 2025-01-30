@@ -1,5 +1,4 @@
 import type { Trail } from '@/lib/mock/types';
-import { clsx } from 'clsx';
 
 const ICON_SVG = [
   'Biking-Red',
