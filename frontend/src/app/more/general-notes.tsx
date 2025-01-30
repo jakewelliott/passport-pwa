@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import RoundedButton from '../../components/common/rounded-button';
 import { a11yOnClick } from '@/lib/a11y';

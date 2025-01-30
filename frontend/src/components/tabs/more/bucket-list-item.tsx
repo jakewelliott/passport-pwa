@@ -1,7 +1,7 @@
 import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
 import type { Park } from '@/lib/mock/types';
 export const BucketListItem = () => {
-  const park:Park = {
+  const park: Park = {
     name: 'Sample Data',
     address: [
       {

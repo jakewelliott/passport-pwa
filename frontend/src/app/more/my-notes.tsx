@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ListRow from '../../components/common/list-row';
 import { a11yOnClick } from '@/lib/a11y';

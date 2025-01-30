@@ -3,7 +3,7 @@ import { BucketListItem } from '@/components/tabs/more/bucket-list-item';
 export const BucketList = () => {
   return (
     <div className='p-7'>
-      <div className='max-w-96 mx-auto m-7'>
+      <div className='m-7 mx-auto max-w-96'>
         <BucketListItem />
         <BucketListItem />
         <BucketListItem />
@@ -16,6 +16,6 @@ export const BucketList = () => {
         <BucketListItem />
         <BucketListItem />
       </div>
-    </div >
+    </div>
   );
 };
