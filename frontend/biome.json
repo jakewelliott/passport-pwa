@@ -1,5 +1,8 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"files": {
+		"ignore": ["src/lib/mock/geojson.json"]
+	},
 	"organizeImports": {
 		"enabled": true,
 		"include": ["src/**/*.{js,ts,jsx,tsx}"]
@@ -10,15 +13,10 @@
 		"rules": {
 			"recommended": true,
 			"correctness": {
-				"noUnusedImports": "warn",
-				"useExhaustiveDependencies": "off"
+				"noUnusedImports": "warn"
 			},
 			"suspicious": {
-				"noExplicitAny": "off",
-				"noArrayIndexKey": "off"
-			},
-			"complexity": {
-				"noUselessFragments": "off"
+				"noExplicitAny": "off"
 			},
 			"nursery": {
 				"useSortedClasses": {
@@ -28,9 +26,6 @@
 						"attributes": ["class", "className"]
 					}
 				}
-			},
-			"style": {
-				"useNumberNamespace": "off"
 			}
 		}
 	},

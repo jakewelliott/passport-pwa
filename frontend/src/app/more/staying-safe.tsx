@@ -31,8 +31,8 @@ export default function StayingSafe() {
       </p>
 
       <ul className='space-y-1'>
-        {safetyRules.map((rule, index) => (
-          <li key={index} className='flex items-start'>
+        {safetyRules.map((rule) => (
+          <li key={rule} className='flex items-start'>
             <span className='mr-2'>•</span>
             <span>{rule}</span>
           </li>

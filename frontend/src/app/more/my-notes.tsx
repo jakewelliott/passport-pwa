@@ -36,9 +36,9 @@ export const MyNotes = () => {
         {parksWithNotes.length === 0 ? (
           <p className='text-gray-600'>No park notes found.</p>
         ) : (
-          parksWithNotes.map((park, index) => (
+          parksWithNotes.map((park) => (
             <div
-              key={index}
+              key={park.abbreviation}
               {...a11yOnClick(() => navigate(`/locations/${park.abbreviation}?tab=notes`))}
               className='cursor-pointer'
             >
