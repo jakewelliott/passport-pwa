@@ -18,7 +18,7 @@ Next, run the development server on your local machine
 npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) with your browser to see the result.
+Open [https://localhost:5173](https://localhost:5173) with your browser to see the result.
 
 The page auto-updates as you edit the files.
 
