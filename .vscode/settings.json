@@ -1,0 +1,9 @@
+{
+    "rest-client.environmentVariables": {
+        "$shared": {
+            "host": "http://localhost:5001",
+            "admin-token": "replace this text",
+            "visitor-token": "replace this text"
+        }
+    }
+}
