@@ -15,8 +15,14 @@ export const api = {
   getPark: (code: ParkAbbreviation) => parks.find((park: Park) => park.abbreviation === code)!,
 
   // Users
-  getUserByID: (userId: string) => userProfile,
-  getUserStampsByID: (userId: string) => userStamps,
+  getUserByID: (userId: string) => {
+    console.log(userId);
+    return userProfile;
+  },
+  getUserStampsByID: (userId: string) => {
+    console.log(userId);
+    return userStamps;
+  },
 
   // Stamps
   collectStamp: (userId: string, stampId: string, location: Geopoint | null) => {
