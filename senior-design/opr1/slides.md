@@ -23,14 +23,12 @@ style: |
 
 # Agenda
 
-- Background & Problem Summary
-- Project Goals & Benefits
-- Requirements
-- System Design & Wireframes
-- Risks & Mitigation
-- Resources Needed
-- Team Member Contributions
-- Action Steps
+- Intro & Sponsors (1 min)
+- Problem Background & Solution (1 min)
+- Requirements & Design (1 min)
+- Wireframe Demo (1 min)
+- Progress Overview (1 min)
+- Action Items (1 min)
 
 ---
 
@@ -185,7 +183,7 @@ The backend is written in C# with .NET and uses Entity Framework to interact wit
 
 <!--
 
-As of right now for iteration 1 we've implemented a lot of the frontend. We have a Vite project setup, we've got the PWA working, and we've got a few of the wireframes implemented. We've also got a prototype of the stamp feature working. Our state management is handled with Tanstack Query, and the offline caching is working as well. On Monday, we just setup our MariaDB database and started working on the backend. For testing we just have some Jest snapshot tests
+As of right now for iteration 1 we've implemented a lot of the frontend. We have a Vite project setup, we've got the PWA working, and we've got a few of the wireframes implemented. We've also got a prototype of the stamp feature working. Our state management is handled with Tanstack Query, and the offline caching is working as well. On Monday, we setup our MariaDB database migrations and started working on a backend controller. For testing so far we just have some Jest snapshot tests.
 
 -->
 
@@ -220,7 +218,7 @@ As of right now for iteration 1 we've implemented a lot of the frontend. We have
 
 <!--
 
-Here's a more exhaustive list of the resources and technologies we'll need. Not previously mentioned is Vite as our local development server & bundler, React Router for routing, and of course styling with Tailwind CSS.
+Here's a more exhaustive list of the resources and technologies we'll need. The only thing we are waiting on from our sponsors is an AWS account, but this won't impact our ability to continue working on the project for a while.
 
 -->
 
@@ -253,7 +251,7 @@ Jake spearheaded getting the wireframes done and doing most of the heavy lifting
 
 <!--
 
-For the rest of iteration 1, we're going to be implementing the remaining wireframes, creating a low level design for the backend, and have fully functioning auth. We still need to figure out how exactly we're going to be testing this thing, and we'd like it to be as automatic as possible. Our deadline for all of this is February 12th, which marks the end of Iteration 1.
+For the rest of iteration 1, we're going to be implementing the remaining wireframes, creating a low level design for the backend, and have fully functioning auth. We still need to flesh out a descriptive testing plan, and we'd like any testing to be as automatic as possible. Completing this marks the end of iteration 1, and we hope to achieve this by February 12th.
 
 And with that comes the end of our presentation. Thank you for listening!
 
