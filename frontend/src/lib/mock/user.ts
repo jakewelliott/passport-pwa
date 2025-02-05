@@ -23,7 +23,7 @@ const dummyStamp: UserStamp = {
   timestamp: new Date(),
   location: {
     latitude: 0,
-    longitude: 0
+    longitude: 0,
   },
 };
 

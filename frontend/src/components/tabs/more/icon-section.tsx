@@ -161,7 +161,7 @@ export const IconSection = ({ sectionName }: IconSectionProps) => {
           <img src={`/icons/park/${icon.fileName}`} alt={icon.iconName} width={'36px'} height={'36px'} />
           <div className='ml-2 flex w-full flex-col justify-center'>
             <p>{icon.iconName}</p>
-            {icon.extraText && <p className='p-mini max-w-56'>{icon.extraText}</p>}
+            {icon.extraText && <p className='max-w-56 p-mini'>{icon.extraText}</p>}
           </div>
         </div>
       ))}
