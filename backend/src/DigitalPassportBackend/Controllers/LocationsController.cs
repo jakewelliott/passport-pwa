@@ -7,10 +7,10 @@ namespace DigitalPassportBackend.Controllers;
 
 [ApiController]
 [Route("/api/locations")]
-public class LocationsController(LocationsService locationsService) : ControllerBase
+public class LocationsController(ILocationsService locationsService) : ControllerBase
 {
 
-    private readonly LocationsService _locationsService = locationsService;
+    private readonly ILocationsService _locationsService = locationsService;
 
     [HttpGet("{locationAbbrev}")]
     public IActionResult Get(string locationAbbrev)
@@ -25,10 +25,7 @@ public class LocationsController(LocationsService locationsService) : Controller
         var icons = _locationsService.GetIconsByLocationId(location.id);
         var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
         var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
-        Console.WriteLine("Got all park data");
-
         var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
-        Console.WriteLine("Converted Entire Location");
         // return 200 ok
         return Ok(locationDataResponse);
     }
@@ -136,7 +133,7 @@ public class LocationsController(LocationsService locationsService) : Controller
 
             return new LocationResponse(
                 location.id,
-                location.park_name,
+                location.parkName,
                 lonLatObject,
                 location.phone,
                 location.email,

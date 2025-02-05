@@ -12,8 +12,20 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<LocationsService>();  
         
-        
+        return services;
+    }
 
+    public static IServiceCollection AddGlobalErrorHandling(
+        this IServiceCollection services)
+    {
+        services.AddProblemDetails(options => 
+        {
+            options.CustomizeProblemDetails = context => 
+            {
+                context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
+            };
+        });
+        
         return services;
     }
 
@@ -39,7 +51,6 @@ public static class ServiceCollectionExtensions
                                $"user id=root;" +
                                $"password={configuration["DB_PASSWORD"]};" +
                                $"database={configuration["DB_PROD_DATABASE"]};";
-        Console.WriteLine(connectionString);
         services.AddDbContext<DigitalPassportDbContext>(options => 
             options.UseMySql(
                 connectionString, 

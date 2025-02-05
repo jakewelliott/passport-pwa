@@ -2,14 +2,28 @@ using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Persistence.Repository;
 
 namespace DigitalPassportBackend.Services;
-public class LocationsService(LocationsRepository locationsRepository, ParkAddressRepository addressRepository, BucketListItemRepository bucketListItemRepository, ParkIconRepository parkIconRepository, ParkPhotoRepository parkPhotoRepository)
-{
 
-    private readonly LocationsRepository _locationsRepository = locationsRepository;
-    private readonly ParkAddressRepository _addressRepository = addressRepository;
-    private readonly BucketListItemRepository _bucketListItemRepository = bucketListItemRepository;
-    private readonly ParkIconRepository _parkIconRepository = parkIconRepository;
-    private readonly ParkPhotoRepository _parkPhotoRepository = parkPhotoRepository;
+public class LocationsService : ILocationsService
+{
+    private readonly LocationsRepository _locationsRepository;
+    private readonly ParkAddressRepository _addressRepository;
+    private readonly BucketListItemRepository _bucketListItemRepository;
+    private readonly ParkIconRepository _parkIconRepository;
+    private readonly ParkPhotoRepository _parkPhotoRepository;
+
+    public LocationsService(
+        LocationsRepository locationsRepository,
+        ParkAddressRepository addressRepository,
+        BucketListItemRepository bucketListItemRepository,
+        ParkIconRepository parkIconRepository,
+        ParkPhotoRepository parkPhotoRepository)
+    {
+        _locationsRepository = locationsRepository;
+        _addressRepository = addressRepository;
+        _bucketListItemRepository = bucketListItemRepository;
+        _parkIconRepository = parkIconRepository;
+        _parkPhotoRepository = parkPhotoRepository;
+    }
     
     public List<ParkAddress> GetAddressesByLocationId(int id)
     {
