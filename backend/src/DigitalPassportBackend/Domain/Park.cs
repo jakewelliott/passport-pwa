@@ -7,9 +7,12 @@ namespace DigitalPassportBackend.Domain;
 public class Park
 {
     public int id { get; init; }
-    public required string park_abbreviation { get; set; }
-    public required ParkType park_type { get; set; }
-    public required string park_name { get; set; }
+    [Column("park_abbreviation")]
+    public required string parkAbbreviation { get; set; }
+    [Column("park_type")]
+    public required ParkType parkType { get; set; }
+    [Column("park_name")]
+    public required string parkName { get; set; }
     public string? city { get; set; }
     [Column(TypeName = "point")]
     public Point? coordinates { get; set; }
@@ -30,8 +33,10 @@ public class Park
     [Column(TypeName="longtext")]
     public string? accesses { get; set; }
     public required string website { get; set; } = "https://www.ncparks.gov/state-parks";
-    public DateTime created_at { get; set; } = DateTime.UtcNow;
-    public DateTime updated_at { get; set; } = DateTime.UtcNow;
+    [Column("created_at")]
+    public DateTime createdAt { get; set; } = DateTime.UtcNow;
+    [Column("updated_at")]
+    public DateTime updatedAt { get; set; } = DateTime.UtcNow;
 }
 
 public enum ParkType

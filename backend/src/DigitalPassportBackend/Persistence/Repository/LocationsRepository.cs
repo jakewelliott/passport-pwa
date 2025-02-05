@@ -8,6 +8,6 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
 
     public Park? GetByAbbreviation(string abbreviation)
     {
-        return _digitalPassportDbContext.Parks.Where(l => l.park_abbreviation.Equals(abbreviation)).SingleOrDefault();
+        return _digitalPassportDbContext.Parks.Where(l => l.parkAbbreviation.Equals(abbreviation)).SingleOrDefault();
     }
 }

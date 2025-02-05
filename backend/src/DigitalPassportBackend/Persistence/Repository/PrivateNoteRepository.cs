@@ -8,6 +8,6 @@ public class PrivateNoteRepository(DigitalPassportDbContext digitalPassportDbCon
 
     public Park? GetByAbbreviation(string abbreviation)
     {
-        return _digitalPassportDbContext.Parks.Where(l => l.park_abbreviation.Equals(abbreviation)).Single();
+        return _digitalPassportDbContext.Parks.Where(l => l.parkAbbreviation.Equals(abbreviation)).Single();
     }
 }
