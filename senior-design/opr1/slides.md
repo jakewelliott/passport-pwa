@@ -203,7 +203,6 @@ As of right now for iteration 1 we've implemented a lot of the frontend. We have
       • Entity Framework<br/>
       • MariaDB<br/>
       • Docker<br/>
-      • AWS
     </td>
     <td>
       • React<br/>
@@ -218,7 +217,7 @@ As of right now for iteration 1 we've implemented a lot of the frontend. We have
 
 <!--
 
-Here's a more exhaustive list of the resources and technologies we'll need. The only thing we are waiting on from our sponsors is an AWS account, but this won't impact our ability to continue working on the project for a while.
+Here's a more exhaustive list of the resources and technologies we'll need. Not included in the design diagram is React Router for page routing, Tailwind CSS for styling, and Vite for the build process and dev server.
 
 -->
 
