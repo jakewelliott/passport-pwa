@@ -13,8 +13,8 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Migrations
 {
     [DbContext(typeof(DigitalPassportDbContext))]
-    [Migration("20250203214008_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250205003406_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

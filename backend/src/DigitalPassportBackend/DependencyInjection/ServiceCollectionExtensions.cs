@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServices(
         this IServiceCollection services)
     {
-        services.AddScoped<ProductService>();  
+        services.AddScoped<LocationsService>();  
         
         
 
@@ -21,14 +21,24 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddScoped<ProductsRepository>();
+        services.AddScoped<BucketListItemRepository>();
+        services.AddScoped<CollectedStampRepository>();
+        services.AddScoped<CompletedBucketListItemRepository>();
+        services.AddScoped<LocationsRepository>();
+        services.AddScoped<ParkAddressRepository>();
+        services.AddScoped<ParkIconRepository>();
+        services.AddScoped<ParkPhotoRepository>();
+        services.AddScoped<ParkVisitRepository>();
+        services.AddScoped<PrivateNoteRepository>();
+        services.AddScoped<TrailIconRepository>();
+        services.AddScoped<TrailRepository>();
+        services.AddScoped<UserRepository>();
 
         var connectionString = $"host={configuration["DB_HOST"]};" +
                                $"port=3306;" +
                                $"user id=root;" +
                                $"password={configuration["DB_PASSWORD"]};" +
                                $"database={configuration["DB_PROD_DATABASE"]};";
-        // var connectionString = "host=db;port=3306;user id=root;password=strong_password;database=test;";
         Console.WriteLine(connectionString);
         services.AddDbContext<DigitalPassportDbContext>(options => 
             options.UseMySql(

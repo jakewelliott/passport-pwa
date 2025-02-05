@@ -1,4 +1,3 @@
-using DigitalPassportBackend.Services;
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.DependencyInjection;
 using Microsoft.EntityFrameworkCore;

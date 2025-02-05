@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Numerics;
 using NetTopologySuite.Geometries;
 
 namespace DigitalPassportBackend.Domain;

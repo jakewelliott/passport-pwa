@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-
 namespace DigitalPassportBackend;
 
 public static class DotEnv

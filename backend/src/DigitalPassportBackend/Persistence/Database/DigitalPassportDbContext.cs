@@ -1,5 +1,4 @@
 using DigitalPassportBackend.Domain;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.Persistence.Database;
@@ -47,5 +46,4 @@ public class DigitalPassportDbContext : DbContext
     public DbSet<Trail> Trails { get; set; }
     public DbSet<TrailIcon> TrailIcons { get; set; }
     public DbSet<User> Users { get; set; }
-    public DbSet<Product> Products{ get; set; }
 }
