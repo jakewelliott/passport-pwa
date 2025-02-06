@@ -30,7 +30,8 @@ jobs:
     - name: Build and run Docker Compose
       run: |
         cd backend
-        docker compose up --build -d
+        docker-compose build
+        docker-compose up -d
       
     - name: Wait for containers to be healthy
       run: |
@@ -38,7 +39,7 @@ jobs:
         timeout=120
         elapsed=0
         while [ $elapsed -lt $timeout ]; do
-          if docker compose ps --format json | jq -s '.[] | if type=="array" then . else [.] end | .[] | .State' | grep -qv "running"; then
+          if docker-compose ps --format json | jq -s '.[] | if type=="array" then . else [.] end | .[] | .State' | grep -qv "running"; then
             echo "Waiting for containers to be ready..."
             sleep 5
             elapsed=$((elapsed+5))
@@ -48,11 +49,11 @@ jobs:
           fi
         done
         echo "Timeout reached. Not all containers are running."
-        docker compose logs
+        docker-compose logs
         exit 1
 
     - name: Shut down Docker Compose
       if: always()
       run: |
         cd backend
-        docker compose down
+        docker-compose down
