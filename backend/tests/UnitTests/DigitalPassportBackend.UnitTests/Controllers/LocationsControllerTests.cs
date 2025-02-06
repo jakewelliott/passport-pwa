@@ -56,30 +56,28 @@ public class LocationsControllerTests
     }
 
     [Fact]
-public void Get_ReturnsProblemResult_WhenLocationNotFound()
-{
-    // Arrange
-    var locationAbbrev = "XYZ";
-    _mockLocationsService.Setup(s => s.GetByAbbreviation(locationAbbrev)).Returns((Park)null);
+    public void Get_ReturnsProblemResult_WhenLocationNotFound()
+    {
+        // Arrange
+        var locationAbbrev = "XYZ";
+        _mockLocationsService.Setup(s => s.GetByAbbreviation(locationAbbrev)).Returns((Park)null);
 
-    // Act
-    var result = _controller.Get(locationAbbrev);
+        // Act
+        var result = _controller.Get(locationAbbrev);
 
-    // Assert
-    var objectResult = Assert.IsType<ObjectResult>(result);
-    Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
+        // Assert
+        var objectResult = Assert.IsType<ObjectResult>(result);
+        Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
 
-    var problemDetails = Assert.IsType<ProblemDetails>(objectResult.Value);
-    
-    // Debug output
-    Console.WriteLine($"Status: {problemDetails.Status}");
-    Console.WriteLine($"Detail: {problemDetails.Detail}");
-    Console.WriteLine($"Type: {problemDetails.Type}");
+        var problemDetails = Assert.IsType<ProblemDetails>(objectResult.Value);
 
-    // Assertions
-    Assert.Equal(404, problemDetails.Status);
-    Assert.Equal($"Location not found {locationAbbrev}", problemDetails.Detail);
-}
+        // Debug output
+        Console.WriteLine($"Status: {problemDetails.Status}");
+        Console.WriteLine($"Detail: {problemDetails.Detail}");
+        Console.WriteLine($"Type: {problemDetails.Type}");
 
-
+        // Assertions
+        Assert.Equal(404, problemDetails.Status);
+        Assert.Equal($"Location not found {locationAbbrev}", problemDetails.Detail);
+    }
 }
