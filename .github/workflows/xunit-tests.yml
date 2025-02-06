@@ -13,7 +13,7 @@ on:
 
 jobs:
   Run-DotNet-Tests:
-    runs-on: windows-latest
+    runs-on: [self-hosted]
     steps:
       - name: Publish reminder
         uses: actions/github-script@v4.0.2
