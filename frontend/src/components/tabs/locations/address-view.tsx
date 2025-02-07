@@ -7,10 +7,10 @@ interface AddressViewProps {
 
 export const AddressView = ({ address }: AddressViewProps) => {
   return (
-    <div className='top-0 flex' key={address.description}>
+    <div className='top-0 flex' key={address.name}>
       <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
       <p>
-        {address.description}
+        {address.name}
         <br />
         {address.addressLineOne}
         {address.addressLineTwo && <br />}

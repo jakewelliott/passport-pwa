@@ -25,7 +25,7 @@ export interface UserProfile {
 }
 
 export interface Address {
-  description?: string;
+  name?: string;
   addressLineOne: string;
   addressLineTwo?: string;
   city: string;
@@ -42,7 +42,7 @@ export interface Park {
   abbreviation: ParkAbbreviation;
   name: string;
   city: string;
-  address: Address;
+  address: Address[];
   additionalAddress?: Address[];
   coordinates: Geopoint;
   phone: string;
@@ -51,7 +51,7 @@ export interface Park {
   established?: string;
   landmark?: string;
   youCanFind?: string;
-  trails?: string[];
+  trails?: string;
   // TODO: model some types for icons and whatnot
   parkIcons: string[];
   parkPhotos: ParkPhoto[];

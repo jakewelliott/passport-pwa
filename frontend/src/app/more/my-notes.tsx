@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ListRow from '../../components/common/list-row';
 import { a11yOnClick } from '@/lib/a11y';
@@ -46,7 +46,7 @@ export const MyNotes = () => {
               <ListRow>
                 <div className='flex flex-col gap-1'>
                   <h3>{park.name}</h3>
-                  <p>{park.address.city}</p>
+                  <p>{park.address[0].city}</p>
                   <p className='mb-2 text-gray-500 text-sm'>Last updated: Not available</p>
                   <p
                     className='overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words'

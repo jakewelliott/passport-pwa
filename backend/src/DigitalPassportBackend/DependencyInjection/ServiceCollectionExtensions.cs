@@ -31,7 +31,8 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddPersistence(
         this IServiceCollection services,
-        IConfiguration configuration)
+        IConfiguration configuration,
+        bool isDevelopment)
     {
         services.AddScoped<BucketListItemRepository>();
         services.AddScoped<CollectedStampRepository>();
@@ -46,11 +47,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<TrailRepository>();
         services.AddScoped<UserRepository>();
 
-        var connectionString = $"host={configuration["DB_HOST"]};" +
+        var envAddendum = isDevelopment ? "DEV_" : "";
+        var connectionString = $"host={configuration[$"DB_{envAddendum}HOST"]};" +
                                $"port=3306;" +
                                $"user id=root;" +
-                               $"password={configuration["DB_PASSWORD"]};" +
-                               $"database={configuration["DB_PROD_DATABASE"]};";
+                               $"password={configuration[$"DB_{envAddendum}PASSWORD"]};" +
+                               $"database={configuration[$"DB_{envAddendum}DATABASE"]};";
         services.AddDbContext<DigitalPassportDbContext>(options => 
             options.UseMySql(
                 connectionString, 

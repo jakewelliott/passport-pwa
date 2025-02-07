@@ -6,11 +6,11 @@ WORKDIR /src
 COPY [".env", ".env"]
 
 # restore
-COPY ["src/DigitalPassportBackend/DigitalPassportBackend.csproj", "DigitalPassportBackend/"]
+COPY ["backend/src/DigitalPassportBackend/DigitalPassportBackend.csproj", "DigitalPassportBackend/"]
 RUN dotnet restore 'DigitalPassportBackend/DigitalPassportBackend.csproj'
 
 # build
-COPY ["src/DigitalPassportBackend", "DigitalPassportBackend/"]
+COPY ["backend/src/DigitalPassportBackend", "DigitalPassportBackend/"]
 COPY [".env", "DigitalPassportBackend/"]
 WORKDIR /src/DigitalPassportBackend
 RUN dotnet build 'DigitalPassportBackend.csproj' -c Release -o /app/build
