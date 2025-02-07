@@ -3,6 +3,7 @@ using DigitalPassportBackend.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using DigitalPassportBackend;
 using Microsoft.AspNetCore.Diagnostics;
+using DigitalPassportBackend.Errors;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -43,7 +44,13 @@ var app = builder.Build();
         }
 
         // Custom global error handling logic
-        return Results.Problem();
+        return exception switch
+        {
+            ServiceException serviceException => Results.Problem(
+                statusCode: serviceException.StatusCode, 
+                detail: serviceException.ErrorMessage),
+            _ => Results.Problem()
+        };
     });
 
     using (var scope = app.Services.CreateScope())

@@ -17,10 +17,6 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     {
         // invoking the use case
         var location = _locationsService.GetByAbbreviation(locationAbbrev);
-        if (location == null)
-        {
-            return Problem(statusCode: StatusCodes.Status404NotFound, detail: $"Location not found {locationAbbrev}");
-        }
         var addresses = _locationsService.GetAddressesByLocationId(location.id);
         var icons = _locationsService.GetIconsByLocationId(location.id);
         var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
@@ -102,28 +98,24 @@ public class LocationsController(ILocationsService locationsService) : Controlle
             {
                 addressesArray.Add(AddressResponse.FromDomain(addy));
             }
-            Console.WriteLine("Converted addresses");
 
             var iconsArray = new List<IconResponse>();
             foreach (ParkIcon newIcon in locationIcons)
             {
                 iconsArray.Add(IconResponse.FromDomain(newIcon));
             }
-            Console.WriteLine("Converted icons");
 
             var bucketListItemsArray = new List<BucketListItemResponse>();
             foreach (BucketListItem newBLI in locationBucketListItems)
             {
                 bucketListItemsArray.Add(BucketListItemResponse.FromDomain(newBLI));
             }
-            Console.WriteLine("Converted BLIs");
 
             var photosArray = new List<PhotosResponse>();
             foreach (ParkPhoto newPhoto in locationPhotos)
             {
                 photosArray.Add(PhotosResponse.FromDomain(newPhoto));
             }
-            Console.WriteLine("Converted Photos");
 
             var lonLatObject = new
             {

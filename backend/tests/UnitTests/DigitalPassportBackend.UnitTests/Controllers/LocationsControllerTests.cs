@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using static DigitalPassportBackend.Controllers.LocationsController;
 using Microsoft.AspNetCore.Http;
 using DigitalPassportBackend.Persistence.Repository;
+using DigitalPassportBackend.Errors;
 
 namespace DigitalPassportBackend.UnitTests.Controllers;
 public class LocationsControllerTests
@@ -60,24 +61,13 @@ public class LocationsControllerTests
     {
         // Arrange
         var locationAbbrev = "XYZ";
-        _mockLocationsService.Setup(s => s.GetByAbbreviation(locationAbbrev)).Returns((Park)null);
+        _mockLocationsService.Setup(s => s.GetByAbbreviation(locationAbbrev)).Throws(new NotFoundException($"Park not found with abbreviation {locationAbbrev}"));
 
         // Act
-        var result = _controller.Get(locationAbbrev);
+        var exception = Assert.Throws<NotFoundException>(() => _controller.Get(locationAbbrev));
 
         // Assert
-        var objectResult = Assert.IsType<ObjectResult>(result);
-        Assert.Equal(StatusCodes.Status404NotFound, objectResult.StatusCode);
-
-        var problemDetails = Assert.IsType<ProblemDetails>(objectResult.Value);
-
-        // Debug output
-        Console.WriteLine($"Status: {problemDetails.Status}");
-        Console.WriteLine($"Detail: {problemDetails.Detail}");
-        Console.WriteLine($"Type: {problemDetails.Type}");
-
-        // Assertions
-        Assert.Equal(404, problemDetails.Status);
-        Assert.Equal($"Location not found {locationAbbrev}", problemDetails.Detail);
+        Assert.Equal(404, exception.StatusCode);
+        Assert.Equal($"Park not found with abbreviation {locationAbbrev}", exception.ErrorMessage);
     }
 }

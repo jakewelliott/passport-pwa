@@ -1,13 +1,14 @@
 {
     "rest-client.environmentVariables": {
         "$shared": {
-            "host": "http://localhost:5001/api",
+            "host": "http://localhost:5002/api",
             "admin-token": "replace this text",
             "visitor-token": "replace this text"
         }
     },
     "files.exclude": {
-        ".vscode": true,
+        ".github": true,
+        "**/Properties": true,
         "backend/**/.editorconfig": true,
         "backend/**/*.csproj": true,
         "backend/**/*.sln": true,
