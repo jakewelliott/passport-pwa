@@ -14,9 +14,10 @@ import { IconLegend } from '@/app/more/icon-legend.tsx';
 import { MyNotes } from '@/app/more/my-notes.tsx';
 import { EditGeneralNotes } from '@/app/more/general-notes.tsx';
 import { Trails } from '@/app/more/trails.tsx';
-import { HikingEssentials } from './app/more/hiking-essentials.tsx';
-import StayingSafe from './app/more/staying-safe.tsx';
-import WelcomeMessage from './app/more/welcome-message.tsx';
+import { HikingEssentials } from '@/app/more/hiking-essentials.tsx';
+import StayingSafe from '@/app/more/staying-safe.tsx';
+import WelcomeMessage from '@/app/more/welcome-message.tsx';
+import LoginPage from '@/app/login.tsx';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <TabBar />
         <main className='flex-grow pb-16'>
           <Routes>
+            <Route path='/login' element={<LoginPage />} />
             {/* Default redirect */}
             <Route path='/' element={<Navigate to='/locations' replace />} />
 
