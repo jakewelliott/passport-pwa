@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Diagnostics;
 var builder = WebApplication.CreateBuilder(args);
 {
     var root = Directory.GetCurrentDirectory();
-    var dotenv = Path.Combine(root, ".env");
+    var dotenv = Path.Combine(root, builder.Environment.IsDevelopment() ? "../../../.env" : ".env");
     DotEnv.Load(dotenv);
 
     builder.Configuration.AddEnvironmentVariables();
@@ -16,18 +16,23 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddGlobalErrorHandling()
         .AddServices()
-        .AddPersistence(builder.Configuration)
+        .AddPersistence(builder.Configuration, builder.Environment.IsDevelopment())
         .AddControllers();
 
     // Add Swagger to the container
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
+    builder.WebHost.ConfigureKestrel(serverOptions =>
+    {
+        serverOptions.Listen(System.Net.IPAddress.Any, int.Parse(builder.Configuration[$"API_{(builder.Environment.IsDevelopment() ? "DEV_" : "")}PORT"]!)); // Listen on all network interfaces on port 5000
+    });
 }
 var app = builder.Build();
 {
     app.MapControllers();
     app.UseExceptionHandler("/error");
-    app.Map("/error", (HttpContext httpContext) => 
+    app.Map("/error", (HttpContext httpContext) =>
     {
         Exception? exception = httpContext.Features.Get<IExceptionHandlerFeature>()?.Error;
 

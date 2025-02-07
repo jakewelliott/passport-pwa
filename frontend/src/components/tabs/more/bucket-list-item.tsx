@@ -3,6 +3,8 @@ import type { Park } from '@/lib/mock/types';
 export const BucketListItem = () => {
   const park:Park = {
     name: 'Sample Data',
+    abbreviation: 'JAKE',
+    city: 'Raleigh',
     address: [
       {
         name: 'Main Address:',

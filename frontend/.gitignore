@@ -23,9 +23,3 @@ dev-dist
 *.njsproj
 *.sln
 *.sw?
-
-# SSL Certificates
-*.pem
-rootCA.pem
-localhost+*.pem
-localhost+*-key.pem

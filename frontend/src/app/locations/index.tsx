@@ -1,4 +1,4 @@
-import { Park } from '@/lib/mock/types';
+// import { Park } from '@/lib/mock/types';
 import ListRow from '@/components/common/list-row';
 import { Link } from 'react-router-dom';
 import { useParks } from '@/hooks/queries/useParks';
@@ -21,7 +21,7 @@ export default function Locations() {
             <ListRow>
               <div className='flex flex-col gap-1'>
                 <h3>{park.name}</h3>
-                <p>{park.address.city}, NC</p>
+                <p>{park.city}, NC</p>
               </div>
             </ListRow>
           </Link>
