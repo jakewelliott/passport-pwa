@@ -11,13 +11,13 @@ export default function LoginPage() {
           type="text"
           placeholder="Username"
           required
-          className="p-2 border border-system_gray rounded-lg w-80"
+          className="p-3 border border-system_gray rounded-lg w-80 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'"
         />
         <input
           type="password"
           placeholder="Password"
           required
-          className="p-2 border border-system_gray rounded-lg w-80"
+          className="p-3 border border-system_gray rounded-lg w-80 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'"
         />
         <p className="text-center">
           By using this application, you agree to the State of NC's{" "}
