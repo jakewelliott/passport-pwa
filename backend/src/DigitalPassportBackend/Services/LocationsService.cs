@@ -35,7 +35,7 @@ public class LocationsService : ILocationsService
         return _bucketListItemRepository.GetByLocationId(id);
     }
 
-    public Park? GetByAbbreviation(string locationAbbrev)
+    public Park GetByAbbreviation(string locationAbbrev)
     {
         return _locationsRepository.GetByAbbreviation(locationAbbrev);
     }

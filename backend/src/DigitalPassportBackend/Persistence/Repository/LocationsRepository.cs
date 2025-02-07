@@ -1,4 +1,5 @@
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 
 namespace DigitalPassportBackend.Persistence.Repository;
@@ -6,8 +7,13 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
-    public Park? GetByAbbreviation(string abbreviation)
+    public Park GetByAbbreviation(string abbreviation)
     {
-        return _digitalPassportDbContext.Parks.Where(l => l.parkAbbreviation.Equals(abbreviation)).SingleOrDefault();
+        var result = _digitalPassportDbContext.Parks.Where(l => l.parkAbbreviation.Equals(abbreviation)).SingleOrDefault();
+        if (result is null)
+        {
+            throw new NotFoundException($"Park not found with abbreviation {abbreviation}");
+        }
+        return result;
     }
 }
