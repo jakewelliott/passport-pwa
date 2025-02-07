@@ -1,3 +1,6 @@
 **/.DS_Store
 
+# SSL Certificates
+**/*.pem
+
 **/.env
