@@ -4,7 +4,7 @@ import '@/styles/globals.css';
 import Header from '@/components/layout/header.tsx';
 import TabBar from '@/components/layout/tab-bar.tsx';
 import Locations from '@/app/locations/index.tsx';
-import Stamps from '@/app/stamps/index.tsx';
+import Stamps from '@/app/stamps/index';
 import More from '@/app/more/index.tsx';
 import LocationDetail from '@/app/locations/detail-tabs.tsx';
 import { Scratchpad } from '@/components/scratchpad.tsx';
@@ -25,7 +25,7 @@ export default function App() {
       <div className='app'>
         <Header />
         <TabBar />
-        <main className='flex-grow pb-16'>
+        <main className={`flex-grow pb-16`}>
           <Routes>
             <Route path='/login' element={<LoginPage />} />
             {/* Default redirect */}
