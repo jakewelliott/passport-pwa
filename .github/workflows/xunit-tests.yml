@@ -35,8 +35,12 @@ jobs:
       - run: echo "The workflow is now ready to test your code on the runner."
       - name: Setting up .NET
         uses: actions/setup-dotnet@v4
+        env:
+          DOTNET_INSTALL_DIR: "${{ github.workspace }}/.dotnet"
         with:
           dotnet-version: '8.0.x'
+      - name: Verify .NET installation
+        run: dotnet --info        
       - name: Restore dotnet dependencies
         run: dotnet restore 
         working-directory: backend
