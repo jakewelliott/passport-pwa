@@ -26,12 +26,6 @@ public class LocationsControllerTests
     }
 
     [Fact]
-    public void TestFailingTest()
-    {
-        Assert.True(false);
-    }
-
-    [Fact]
     public void Get_ReturnsOkResult_WhenLocationExists()
     {
         // Arrange
