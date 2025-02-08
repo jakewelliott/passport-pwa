@@ -10,6 +10,7 @@ using static DigitalPassportBackend.Controllers.LocationsController;
 using Microsoft.AspNetCore.Http;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Errors;
+using Xunit.Sdk;
 
 namespace DigitalPassportBackend.UnitTests.Controllers;
 public class LocationsControllerTests
@@ -22,6 +23,12 @@ public class LocationsControllerTests
     {
         _mockLocationsService = new Mock<ILocationsService>();
         _controller = new LocationsController(_mockLocationsService.Object);
+    }
+
+    [Fact]
+    public void TestFailingTest()
+    {
+        Assert.True(false);
     }
 
     [Fact]
