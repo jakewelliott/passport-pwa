@@ -1,18 +1,18 @@
-using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.UnitTests.TestUtils;
 
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.UnitTests.Persistence.Repository;
-public class BucketListItemRepositoryTests
+public class ParkAddressRepositoryTests
 {
     private readonly DigitalPassportDbContext _db;
 
-    private readonly BucketListItemRepository _repo;
+    private readonly ParkAddressRepository _repo;
 
-    public BucketListItemRepositoryTests()
+    public ParkAddressRepositoryTests()
     {
         // Initialize the testing DB.
         var options = new DbContextOptionsBuilder<DigitalPassportDbContext>()
@@ -21,11 +21,11 @@ public class BucketListItemRepositoryTests
         _db = new(options);
 
         // Populate the testing DB.
-        _db.BucketListItems.AddRange(TestData.BucketList);
+        _db.ParkAddresses.AddRange(TestData.ParkAddresses);
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new BucketListItemRepository(_db);
+        _repo = new ParkAddressRepository(_db);
     }
 
     [Fact]
@@ -35,18 +35,18 @@ public class BucketListItemRepositoryTests
         var items = _repo.GetByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.BucketList[0]);
-        Assert.Contains(items, i => i == TestData.BucketList[2]);
+        Assert.True(items.Count == 1);
+        Assert.Contains(items, i => i == TestData.ParkAddresses[1]);
     }
 
     [Fact]
-    public void GetByLocationId_ReturnsEmptyList_WhenLocationsDNE()
+    public void GetByLocationId_ReturnsEmptyList_WhenLocationDNE()
     {
         // Action.
-        var items = _repo.GetByLocationId(0);
+        var items = _repo.GetByLocationId(5);
 
         // Assert.
         Assert.False(items.Any());
     }
+
 }
