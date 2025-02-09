@@ -77,6 +77,14 @@ export const api = {
       }
     });
   },
+  logoutUser: () => {
+    Cookies.remove('token');
+    queryClient.invalidateQueries({
+      queryKey: ['user'],
+      refetchType: 'all'
+    });
+    queryClient.clear();
+  },
 
 
   // Stamps

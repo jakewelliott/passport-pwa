@@ -1,7 +1,10 @@
 import ListRow from '@/components/common/list-row';
 import { Link } from 'react-router-dom';
+import { useUser } from '@/hooks/queries/useUser';
 
-export default function More() {
+export default function More ({ onLogout }: { onLogout: () => void })  {
+  const {data: user} = useUser();
+
   return (
     <div className='mx-4 my-4 flex flex-col gap-3.5'>
       <Link to={'/more/trails'} className='text-supporting_inactiveblue no-underline'>
@@ -45,9 +48,9 @@ export default function More() {
         </ListRow>
       </Link>
       <div className='text-center'>
-        You are currently logged in as
+        You are currently logged in as '{user?.username}'
         <br />
-        Log Out
+        <button className='link' onClick={onLogout}>Log out</button>
       </div>
     </div>
   );

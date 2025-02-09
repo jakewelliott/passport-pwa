@@ -6,13 +6,9 @@ export const useUser = () => {
   return useQuery<UserProfile | null, Error>({
     queryKey: ['user'],
     queryFn: () => {
-      const cachedUser = queryClient.getQueryData<any>(['user']);
-      if (!cachedUser) {
-        throw new Error('No user is logged in');
-      }
-      return cachedUser;
+      const cachedUser = queryClient.getQueryData<UserProfile | null>(['user']);
+      return cachedUser || null; // Return null if no user data is found
     },
-    enabled: !!queryClient.getQueryData(['user']),
     staleTime: Infinity, // Prevent refetching unless explicitly invalidated
   });
 };
