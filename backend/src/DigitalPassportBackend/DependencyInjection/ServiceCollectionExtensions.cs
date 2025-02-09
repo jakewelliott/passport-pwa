@@ -38,6 +38,22 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddOrigins(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        string corsPolicyName)
+    {
+        services.AddCors(options => {
+            options.AddPolicy(corsPolicyName, builder => {
+                builder.WithOrigins("https://localhost:" + configuration["FE_PORT"], "https://localhost:" + configuration["FE_DEV_PORT"])
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
+
+        return services;
+    }
+
     public static IServiceCollection AddSecurity(
         this IServiceCollection services,
         IConfiguration configuration)

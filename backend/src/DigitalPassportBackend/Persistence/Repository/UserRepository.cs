@@ -12,7 +12,7 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext)
         var result = _digitalPassportDbContext.Users.Where(u => u.id.Equals(id)).SingleOrDefault();
         if (result is null)
         {
-            throw new NotFoundException($"User not found with id {id}");
+            throw new NotFoundException($"User not found with id {id}.");
         }
         return result;
     }
@@ -22,7 +22,7 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext)
         var result = _digitalPassportDbContext.Users.Where(u => u.username.Equals(username)).SingleOrDefault();
         if (result is null)
         {
-            throw new NotFoundException($"User not found with username {username}");
+            throw new NotFoundException($"User not found with username {username}.");
         }
         return result;
     }

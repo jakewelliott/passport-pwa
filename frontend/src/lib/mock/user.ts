@@ -12,9 +12,8 @@ export const userParkVisits = userParkVisitsJson.map(dummyMapper(dummyVisit));
 
 const dummyProfile: UserProfile = {
   username: 'dummyuser',
-  password: 'dummyuser',
-  stamps: [],
-  visits: [],
+  role: 'visitor',
+  id: 0
 };
 
 const dummyStamp: UserStamp = {

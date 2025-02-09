@@ -5,12 +5,13 @@ using DigitalPassportBackend;
 using Microsoft.AspNetCore.Diagnostics;
 using DigitalPassportBackend.Errors;
 
+const string corsPolicyName = "AllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
 {
     var root = Directory.GetCurrentDirectory();
     var dotenv = Path.Combine(root, builder.Environment.IsDevelopment() ? "../../../.env" : ".env");
     DotEnv.Load(dotenv);
-
     builder.Configuration.AddEnvironmentVariables();
 
     // configure services (DI)
@@ -19,6 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
         .AddServices()
         .AddPersistence(builder.Configuration, builder.Environment.IsDevelopment())
         .AddSecurity(builder.Configuration)
+        .AddOrigins(builder.Configuration, corsPolicyName)
         .AddControllers();
 
     // Add Swagger to the container
@@ -59,6 +61,8 @@ var app = builder.Build();
         var db = scope.ServiceProvider.GetRequiredService<DigitalPassportDbContext>();
         await db.Database.MigrateAsync();
     }
+
+    app.UseCors(corsPolicyName);
 
     app.UseAuthentication();
     app.UseAuthorization();
