@@ -2,7 +2,7 @@ using DigitalPassportBackend.Domain;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils
 {
-    public static partial class TestData
+    public static partial class RepositoryTestData
     {
         public static readonly List<Park> Parks = 
         [

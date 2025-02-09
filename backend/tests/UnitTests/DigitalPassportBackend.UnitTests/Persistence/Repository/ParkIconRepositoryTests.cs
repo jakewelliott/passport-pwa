@@ -20,7 +20,7 @@ public class ParkIconRepositoryTests
         _db = new(options);
 
         // Populate the testing DB.
-        _db.ParkIcons.AddRange(TestData.ParkIcons);
+        _db.ParkIcons.AddRange(RepositoryTestData.ParkIcons);
         _db.SaveChanges();
 
         // Initialize the repository.
@@ -31,19 +31,19 @@ public class ParkIconRepositoryTests
     public void GetByLocationId_ReturnsPopulatedList_WhenLocationExists_AndHasIcons()
     {
         // Action.
-        var items = _repo.GetByLocationId(TestData.Parks[0].id);
+        var items = _repo.GetByLocationId(RepositoryTestData.Parks[0].id);
 
         // Assert.
         Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.ParkIcons[0]);
-        Assert.Contains(items, i => i == TestData.ParkIcons[1]);
+        Assert.Contains(items, i => i == RepositoryTestData.ParkIcons[0]);
+        Assert.Contains(items, i => i == RepositoryTestData.ParkIcons[1]);
     }
 
     [Fact]
     public void GetByLocationId_ReturnsEmptyList_WhenLocationExists_AndHasNoIcons()
     {
         // Action.
-        var items = _repo.GetByLocationId(TestData.Parks[1].id);
+        var items = _repo.GetByLocationId(RepositoryTestData.Parks[1].id);
 
         // Assert.
         Assert.False(items.Any());
