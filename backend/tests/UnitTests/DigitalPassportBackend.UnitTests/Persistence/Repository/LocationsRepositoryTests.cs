@@ -1,7 +1,7 @@
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
-using DigitalPassportBackend.UnitTests.TestUtils.Constants;
+using DigitalPassportBackend.UnitTests.TestUtils;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +21,7 @@ public class LocationsRepositoryTests
             _db = new(options);
 
         // Populate the testing DB.
-        _db.Parks.AddRange(Constants.Parks);
+        _db.Parks.AddRange(TestData.Parks);
         _db.SaveChanges();
 
         // Initialize the repository.
@@ -36,8 +36,8 @@ public class LocationsRepositoryTests
         var park2 = _repo.GetByAbbreviation("EBII");
 
         // Assert.
-        Assert.Equal(Constants.Parks[0], park1);
-        Assert.Equal(Constants.Parks[1], park2);
+        Assert.Equal(TestData.Parks[0], park1);
+        Assert.Equal(TestData.Parks[1], park2);
     }
 
     [Fact]
