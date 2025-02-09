@@ -93,8 +93,8 @@ export const Trails = () => {
 
   return (
     <div className='m-6'>
-      {trailDetails.map((trail, index) => (
-        <TrailDetailView trail={trail} key={index} />
+      {trailDetails.map((trail) => (
+        <TrailDetailView trail={trail} key={trail.trailName} />
       ))}
       <img src='/TrailsLogo.svg' alt='Trails Logo' />
       <p className='text-center'>

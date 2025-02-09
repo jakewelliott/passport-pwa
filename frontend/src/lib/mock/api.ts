@@ -1,6 +1,5 @@
 import parks from './parks';
-import { userProfile } from './user';
-// import { userStamps } from './user';
+import { userProfile, userStamps } from './user';
 
 import type { Geopoint, Park, ParkAbbreviation } from './types';
 
@@ -16,9 +15,14 @@ export const api = {
   getPark: (code: ParkAbbreviation) => parks.find((park: Park) => park.abbreviation === code)!,
 
   // Users
-  // getUserByID: (userId: string) => userProfile,
-  getUserByID: () => userProfile,
-  // getUserStampsByID: (userId: string) => userStamps,
+  getUserByID: (userId: string) => {
+    console.log(userId);
+    return userProfile;
+  },
+  getUserStampsByID: (userId: string) => {
+    console.log(userId);
+    return userStamps;
+  },
 
   // Stamps
   collectStamp: (userId: string, stampId: string, location: Geopoint | null) => {
