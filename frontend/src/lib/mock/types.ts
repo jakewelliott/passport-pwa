@@ -18,7 +18,6 @@ export interface UserParkVisit {
 
 export interface UserProfile {
   username: string;
-  email: string;
   password: string;
   stamps: UserStamp[];
   visits: UserParkVisit[];
