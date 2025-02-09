@@ -20,7 +20,7 @@ public class ParkPhotoRepositoryTests
         _db = new(options);
 
         // Populate the testing DB.
-        _db.ParkPhotos.AddRange(TestData.ParkPhotos);
+        _db.ParkPhotos.AddRange(RepositoryTestData.ParkPhotos);
         _db.SaveChanges();
 
         // Initialize the repository.
@@ -31,19 +31,19 @@ public class ParkPhotoRepositoryTests
     public void GetByLocationId_ReturnsPopulatedList_WhenLocationExists_AndHasPhotos()
     {
         // Action.
-        var items = _repo.GetByLocationId(TestData.Parks[1].id);
+        var items = _repo.GetByLocationId(RepositoryTestData.Parks[1].id);
 
         // Assert.
         Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.ParkPhotos[0]);
-        Assert.Contains(items, i => i == TestData.ParkPhotos[1]);
+        Assert.Contains(items, i => i == RepositoryTestData.ParkPhotos[0]);
+        Assert.Contains(items, i => i == RepositoryTestData.ParkPhotos[1]);
     }
 
     [Fact]
     public void GetByLocationId_ReturnsEmptyList_WhenLocationExists_AndHasNoPhotos()
     {
         // Action.
-        var items = _repo.GetByLocationId(TestData.Parks[0].id);
+        var items = _repo.GetByLocationId(RepositoryTestData.Parks[0].id);
 
         // Assert.
         Assert.False(items.Any());

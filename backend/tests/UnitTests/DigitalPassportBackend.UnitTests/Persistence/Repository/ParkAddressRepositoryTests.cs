@@ -20,7 +20,7 @@ public class ParkAddressRepositoryTests
         _db = new(options);
 
         // Populate the testing DB.
-        _db.ParkAddresses.AddRange(TestData.ParkAddresses);
+        _db.ParkAddresses.AddRange(RepositoryTestData.ParkAddresses);
         _db.SaveChanges();
 
         // Initialize the repository.
@@ -31,11 +31,11 @@ public class ParkAddressRepositoryTests
     public void GetByLocationId_ReturnsPopulatedList_WhenLocationExists()
     {
         // Action.
-        var items = _repo.GetByLocationId(TestData.Parks[0].id);
+        var items = _repo.GetByLocationId(RepositoryTestData.Parks[0].id);
 
         // Assert.
         Assert.True(items.Count == 1);
-        Assert.Contains(items, i => i == TestData.ParkAddresses[1]);
+        Assert.Contains(items, i => i == RepositoryTestData.ParkAddresses[1]);
     }
 
     [Fact]
