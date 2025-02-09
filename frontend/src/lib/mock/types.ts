@@ -50,7 +50,7 @@ export interface Park {
   established?: string;
   landmark?: string;
   youCanFind?: string;
-  trails?: string;
+  trails?: string[];
   // TODO: model some types for icons and whatnot
   parkIcons: string[];
   parkPhotos: ParkPhoto[];

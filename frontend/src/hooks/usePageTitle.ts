@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation as usePathLocation } from 'react-router-dom';
+
+const DEFAULT_TITLE = 'NC Parks Passport';
 
 const routeTitles: Record<string, string> = {
   '/locations': 'Locations',
@@ -16,11 +18,23 @@ const routeTitles: Record<string, string> = {
   '/more/my-notes/general-notes': 'General Notes',
 };
 
+const topLevelCheck = (path: string) => path.split('/').length - 1 > 1; // /stamps will split into ['', 'stamps']
+
+const getTitle = (pathname: string) => {
+  if (pathname.startsWith('/locations') && !routeTitles[pathname]) return 'Park Details';
+  return routeTitles[pathname] || DEFAULT_TITLE;
+};
+
 export function usePageTitle() {
-  const location = useLocation();
+  const location = usePathLocation();
+  const [pageTitle, setPageTitle] = useState(getTitle(location.pathname));
+  const showBackButton = topLevelCheck(location.pathname);
 
   useEffect(() => {
-    const title = routeTitles[location.pathname] || 'NC Parks Passport';
-    document.title = `NC Parks Passport | ${title}`;
+    const title = getTitle(location.pathname);
+    document.title = title;
+    setPageTitle(title);
   }, [location]);
+
+  return { pageTitle, showBackButton };
 }

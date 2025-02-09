@@ -25,7 +25,7 @@ export default function App() {
       <div className='app'>
         <Header />
         <TabBar />
-        <main className={`flex-grow pb-16`}>
+        <main className={'flex-grow pb-16'}>
           <Routes>
             <Route path='/login' element={<LoginPage />} />
             {/* Default redirect */}

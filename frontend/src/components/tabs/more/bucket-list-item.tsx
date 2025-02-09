@@ -1,20 +1,20 @@
 import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
 import type { Park } from '@/lib/mock/types';
 export const BucketListItem = () => {
-  const park:Park = {
+  const park: Park = {
+    abbreviation: 'CABE',
     name: 'Sample Data',
-    abbreviation: 'JAKE',
     city: 'Raleigh',
     address: [
       {
-        name: 'Main Address:',
+        name: 'Secondary Address:',
         addressLineOne: '1234 Main St',
         city: 'Raleigh',
         state: 'NC',
         zip: '27606',
       },
       {
-        name: 'Secondary Address:',
+        name: 'Tertiary Address:',
         addressLineOne: '1234 Main St',
         city: 'Raleigh',
         state: 'NC',
@@ -36,7 +36,7 @@ export const BucketListItem = () => {
     established: '2003',
     landmark: 'My House',
     youCanFind: 'My items',
-    trails: 'The driveway',
+    trails: ['The driveway'],
     parkIcons: ['Paddling-Red.svg', 'RVCamping-Green.svg', 'Playground-Blue.svg'],
     parkPhotos: [
       { url: './photos/CABE.jpg' },
