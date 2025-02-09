@@ -2,7 +2,6 @@ using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.UnitTests.TestUtils;
 
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.UnitTests.Persistence.Repository;
