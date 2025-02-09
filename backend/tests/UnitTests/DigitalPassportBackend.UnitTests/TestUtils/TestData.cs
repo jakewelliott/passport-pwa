@@ -54,7 +54,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 city = "Raleigh",
                 state = State.NC,
                 zipcode = 27606,
-                parkId = 20,
+                parkId = Parks[1].id,
                 park = Parks[1]
             },
             new()
@@ -66,7 +66,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 city = "Carolina Beach",
                 state = State.NC,
                 zipcode = 28428,
-                parkId = 45,
+                parkId = Parks[0].id,
                 park = Parks[0]
             }
         ];
@@ -79,7 +79,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 icon = ParkIconNames.Fishing_Red,
                 created_at = DateTime.Now,
                 updated_at = DateTime.Now,
-                parkId = 45,
+                parkId = Parks[0].id,
                 park = Parks[0]
             },
             new()
@@ -88,8 +88,33 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 icon = ParkIconNames.Swimming_Red,
                 created_at = DateTime.Now,
                 updated_at = DateTime.Now,
-                parkId = 45,
+                parkId = Parks[0].id,
                 park = Parks[0]
+            }
+        ];
+
+        public static readonly List<ParkPhoto> ParkPhotos =
+        [
+            new()
+            {
+                id = 42,
+                photo = "https://facilities.ofa.ncsu.edu/files/2020/02/Engineering-II.jpg",
+                alt = "Photo of EB2 from the south.",
+                createdAt = DateTime.Now,
+                updatedAt = DateTime.Now,
+                parkId = Parks[1].id,
+                park = Parks[1]
+            },
+
+            new()
+            {
+                id = 78,
+                photo = "https://visit.ncsu.edu/wp-content/uploads/sites/27/2020/03/Engineering-Building-II.jpg",
+                alt = "Aerial photo of EB2 from the north.",
+                createdAt = DateTime.Now,
+                updatedAt = DateTime.Now,
+                parkId = Parks[1].id,
+                park = Parks[1]
             }
         ];
 
