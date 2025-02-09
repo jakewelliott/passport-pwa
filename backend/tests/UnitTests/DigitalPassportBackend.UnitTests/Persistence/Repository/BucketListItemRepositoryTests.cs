@@ -5,8 +5,6 @@ using DigitalPassportBackend.UnitTests.TestUtils.Constants;
 
 using Microsoft.EntityFrameworkCore;
 
-using Moq;
-
 namespace DigitalPassportBackend.UnitTests.Persistence.Repository;
 public class BucketListItemRepositoryTests
 {
