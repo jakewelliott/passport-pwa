@@ -71,6 +71,28 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             }
         ];
 
+        public static readonly List<ParkIcon> ParkIcons = 
+        [
+            new()
+            {
+                id = 4,
+                icon = ParkIconNames.Fishing_Red,
+                created_at = DateTime.Now,
+                updated_at = DateTime.Now,
+                parkId = 45,
+                park = Parks[0]
+            },
+            new()
+            {
+                id = 9,
+                icon = ParkIconNames.Swimming_Red,
+                created_at = DateTime.Now,
+                updated_at = DateTime.Now,
+                parkId = 45,
+                park = Parks[0]
+            }
+        ];
+
         public static readonly List<BucketListItem> BucketList =
         [
             new()
