@@ -35,8 +35,7 @@ export const useUser = (userId?: string) => {
 
   return useQuery<UserProfile, Error>({
     queryKey: ['user', uuid],
-    // queryFn: () => api.getUserByID(uuid),
-    queryFn: () => api.getUserByID(),
+    queryFn: () => api.getUserByID(uuid),
     enabled: !!uuid,
   });
 };

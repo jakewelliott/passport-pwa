@@ -12,9 +12,7 @@ export const LocationContact = ({ park }: LocationContactProps) => {
   return (
     <div className='m-4 flex flex-col gap-3'>
       <h2 style={{ width: '100%' }}>{park.name}</h2>
-      {park.address && (
-        <AddressView address={park.address[0]} />
-      )}
+      {park.address && <AddressView address={park.address[0]} />}
       <div className='top-0 flex'>
         <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
         <p>

@@ -1,4 +1,3 @@
-// import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ListRow from '../../components/common/list-row';
 import { a11yOnClick } from '@/lib/a11y';
@@ -37,9 +36,9 @@ export const MyNotes = () => {
         {parksWithNotes.length === 0 ? (
           <p className='text-gray-600'>No park notes found.</p>
         ) : (
-          parksWithNotes.map((park, index) => (
+          parksWithNotes.map((park) => (
             <div
-              key={index}
+              key={park.abbreviation}
               {...a11yOnClick(() => navigate(`/locations/${park.abbreviation}?tab=notes`))}
               className='cursor-pointer'
             >
