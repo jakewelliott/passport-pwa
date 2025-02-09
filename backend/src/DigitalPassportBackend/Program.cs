@@ -18,11 +18,12 @@ var builder = WebApplication.CreateBuilder(args);
         .AddGlobalErrorHandling()
         .AddServices()
         .AddPersistence(builder.Configuration, builder.Environment.IsDevelopment())
+        .AddSecurity(builder.Configuration)
         .AddControllers();
 
     // Add Swagger to the container
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
+    builder.Services.AddSwaggerGenWithAuth();
 
     builder.WebHost.ConfigureKestrel(serverOptions =>
     {
@@ -58,6 +59,9 @@ var app = builder.Build();
         var db = scope.ServiceProvider.GetRequiredService<DigitalPassportDbContext>();
         await db.Database.MigrateAsync();
     }
+
+    app.UseAuthentication();
+    app.UseAuthorization();
 
     app.UseSwagger();
     app.UseSwaggerUI();
