@@ -1,93 +1,57 @@
 import RoundedButton from "@/components/common/rounded-button";
 import { api } from "@/lib/mock/api";
 import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
-  const [usernameError, setUsernameError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
+  const [errors, setErrors] = useState({ username: false, password: false });
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const navigate = useNavigate();
 
   const loginMutation = api.loginUser();
   const registerMutation = api.registerUser();
 
-  const formRef = useRef<HTMLFormElement>(null);
-
   const validateFields = (username: string, password: string): boolean => {
-    let isValid = true;
+    const newErrors = { username: !username, password: !password };
+    setErrors(newErrors);
 
-    // Reset error states
-    setUsernameError(false);
-    setPasswordError(false);
-
-    if (!username && !password) {
-      setUsernameError(true);
-      setPasswordError(true);
-      alert("Username and password are required.");
-      isValid = false;
+    if (newErrors.username || newErrors.password) {
+      const missingFields = [];
+      if (newErrors.username) missingFields.push("Username");
+      if (newErrors.password) missingFields.push("Password");
+      alert(
+        `${missingFields.join(" and ")} ${
+          missingFields.length > 1 ? "are" : "is"
+        } required.`
+      );
+      return false;
     }
-
-    if (!username && password) {
-      setUsernameError(true);
-      alert("Username is required.");
-      isValid = false;
-    }
-
-    if (!password && username) {
-      setPasswordError(true);
-      alert("Password is required.");
-      isValid = false;
-    }
-
-    return isValid;
+    return true;
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleAuth = (isLogin: boolean) => (e: React.FormEvent) => {
     e.preventDefault();
-    const formData = new FormData(e.target as HTMLFormElement);
-    const username = formData.get("username") as string;
-    const password = formData.get("password") as string;
-    if (!validateFields(username, password)) return;
-
-    loginMutation.mutate(
-      { username, password },
-      {
-        onSuccess: () => alert("Login successful!"),
-        onError: (err) => {
-          const errorMessage = err.message.toLowerCase();
-          setUsernameError(false);
-          setPasswordError(false);
-          if (errorMessage.includes("username")) {
-            setUsernameError(true);
-          }
-          if (errorMessage.includes("password")) {
-            setPasswordError(true);
-          }
-          alert(err.message);
-        },
-      }
-    );
-  };
-
-  const handleRegister = () => {
     const formData = new FormData(formRef.current!);
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
     if (!validateFields(username, password)) return;
 
-    registerMutation.mutate(
+    const mutation = isLogin ? loginMutation : registerMutation;
+    mutation.mutate(
       { username, password },
       {
-        onSuccess: () => alert("Registration successful!"),
+        onSuccess: () => {
+          // Redirect to the root path after successful login or registration
+          navigate("/");
+        },
         onError: (err) => {
           const errorMessage = err.message.toLowerCase();
-          setUsernameError(false);
-          setPasswordError(false);
-          if (errorMessage.includes("username")) {
-            setUsernameError(true);
-          }
-          if (errorMessage.includes("password")) {
-            setPasswordError(true);
-          }
+          setErrors({
+            username: errorMessage.includes("username"),
+            password: errorMessage.includes("password"),
+          });
           alert(err.message);
         },
       }
@@ -111,35 +75,36 @@ export default function LoginPage() {
       <form
         ref={formRef}
         className="m-auto flex max-w-96 flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8"
-        onSubmit={handleLogin}
+        onSubmit={handleAuth(true)}
       >
         <input
           type="text"
           placeholder="Username"
-          required
           name="username"
-          className={inputClassName(usernameError)}
+          className={inputClassName(errors.username)}
         />
         <input
           type="password"
           placeholder="Password"
-          required
           name="password"
-          className={inputClassName(passwordError)}
+          className={inputClassName(errors.password)}
         />
         <p className="text-center">
           By using this application, you agree to the State of NC's{" "}
-          <a href="https://www.nc.gov/privacy" target="blank">
+          <a
+            href="https://www.nc.gov/privacy"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Privacy Policy
           </a>
         </p>
         <div className="flex flex-row gap-4">
-          <div onClick={handleRegister}>
-            <RoundedButton title={"Register"} />
-          </div>
-
+          <button type="button" onClick={handleAuth(false)}>
+            <RoundedButton title="Register" />
+          </button>
           <button type="submit">
-            <RoundedButton title={"Login"} color="secondary_orange" />
+            <RoundedButton title="Login" color="secondary_orange" />
           </button>
         </div>
       </form>
