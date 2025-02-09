@@ -9,21 +9,21 @@ import { usePark } from '@/hooks/queries/useParks';
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
 
 export default function DetailTabs() {
-	const { abbreviation } = useParams();
-	const parkAbbreviation = abbreviation as Uppercase<string>;
-	const { data: park, isLoading } = usePark(parkAbbreviation);
+  const { abbreviation } = useParams();
+  const parkAbbreviation = abbreviation as Uppercase<string>;
+  const { data: park, isLoading } = usePark(parkAbbreviation);
 
-	if (isLoading || !park) return <LoadingPlaceholder />;
+  if (isLoading || !park) return <LoadingPlaceholder />;
 
-	return (
-		<>
-			<LocationContact park={park} />
-			<LocationActionBar park={park} />
-			<LocationMiniTabBar>
-				<DetailsMiniTab park={park} />
-				<PhotoGalleryMiniTab photos={park.parkPhotos} />
-				<NotesMiniTab abbreviation={park.abbreviation} />
-			</LocationMiniTabBar>
-		</>
-	);
+  return (
+    <>
+      <LocationContact park={park} />
+      <LocationActionBar park={park} />
+      <LocationMiniTabBar>
+        <DetailsMiniTab park={park} />
+        <PhotoGalleryMiniTab photos={park.parkPhotos} />
+        <NotesMiniTab abbreviation={park.abbreviation} />
+      </LocationMiniTabBar>
+    </>
+  );
 }
