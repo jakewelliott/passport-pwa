@@ -111,7 +111,7 @@ public class ParkAddressRepositoryTests
     }
 
     [Fact]
-    public void Coutn_ReturnsNumberOfParkAddresses()
+    public void Count_ReturnsNumberOfParkAddresses()
     {
         // Action and assert.
         Assert.Equal(2, _repo.Count());
