@@ -3,7 +3,7 @@ using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 
 namespace DigitalPassportBackend.Persistence.Repository;
-public class CollectedStampRepository(DigitalPassportDbContext digitalPassportDbContext) : IRepository<CollectedStamp>
+public class CollectedStampRepository(DigitalPassportDbContext digitalPassportDbContext) : ICollectedStampRepository
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 

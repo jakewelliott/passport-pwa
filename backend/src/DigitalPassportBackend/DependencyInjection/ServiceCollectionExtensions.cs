@@ -1,6 +1,7 @@
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Services;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.DependencyInjection;
@@ -10,22 +11,22 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection AddServices(
         this IServiceCollection services)
     {
-        services.AddScoped<ILocationsService, LocationsService>();  
-        
+        services.AddScoped<ILocationsService, LocationsService>();
+
         return services;
     }
 
     public static IServiceCollection AddGlobalErrorHandling(
         this IServiceCollection services)
     {
-        services.AddProblemDetails(options => 
+        services.AddProblemDetails(options =>
         {
-            options.CustomizeProblemDetails = context => 
+            options.CustomizeProblemDetails = context =>
             {
                 context.ProblemDetails.Extensions["traceId"] = context.HttpContext.TraceIdentifier;
             };
         });
-        
+
         return services;
     }
 
@@ -34,18 +35,18 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration,
         bool isDevelopment)
     {
-        services.AddScoped<BucketListItemRepository>();
-        services.AddScoped<CollectedStampRepository>();
-        services.AddScoped<CompletedBucketListItemRepository>();
-        services.AddScoped<LocationsRepository>();
-        services.AddScoped<ParkAddressRepository>();
-        services.AddScoped<ParkIconRepository>();
-        services.AddScoped<ParkPhotoRepository>();
-        services.AddScoped<ParkVisitRepository>();
-        services.AddScoped<PrivateNoteRepository>();
-        services.AddScoped<TrailIconRepository>();
-        services.AddScoped<TrailRepository>();
-        services.AddScoped<UserRepository>();
+        services.AddScoped<IBucketListItemRepository, BucketListItemRepository>();
+        services.AddScoped<ICollectedStampRepository, CollectedStampRepository>();
+        services.AddScoped<ICompletedBucketListItemRepository, CompletedBucketListItemRepository>();
+        services.AddScoped<ILocationsRepository, LocationsRepository>();
+        services.AddScoped<IParkAddressRepository, ParkAddressRepository>();
+        services.AddScoped<IParkIconRepository, ParkIconRepository>();
+        services.AddScoped<IParkPhotoRepository, ParkPhotoRepository>();
+        services.AddScoped<IParkVisitRepository, ParkVisitRepository>();
+        services.AddScoped<IPrivateNoteRepository, PrivateNoteRepository>();
+        services.AddScoped<ITrailIconRepository, TrailIconRepository>();
+        services.AddScoped<ITrailRepository, TrailRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         var envAddendum = isDevelopment ? "DEV_" : "";
         var connectionString = $"host={configuration[$"DB_{envAddendum}HOST"]};" +
@@ -53,9 +54,9 @@ public static class ServiceCollectionExtensions
                                $"user id=root;" +
                                $"password={configuration[$"DB_{envAddendum}PASSWORD"]};" +
                                $"database={configuration[$"DB_{envAddendum}DATABASE"]};";
-        services.AddDbContext<DigitalPassportDbContext>(options => 
+        services.AddDbContext<DigitalPassportDbContext>(options =>
             options.UseMySql(
-                connectionString, 
+                connectionString,
                 new MariaDbServerVersion(new Version(11, 6, 2)),
                 options => options.UseNetTopologySuite()
                 )

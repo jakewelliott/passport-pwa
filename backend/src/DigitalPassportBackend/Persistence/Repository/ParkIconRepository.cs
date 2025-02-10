@@ -3,7 +3,7 @@ using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 
 namespace DigitalPassportBackend.Persistence.Repository;
-public class ParkIconRepository(DigitalPassportDbContext digitalPassportDbContext) : IRepository<ParkIcon>
+public class ParkIconRepository(DigitalPassportDbContext digitalPassportDbContext) : IParkIconRepository
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
