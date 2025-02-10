@@ -26,7 +26,7 @@ export default {
 	  ".*.mock.ts",
 	],
 	moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
-	coverageReporters: ["lcov", "text", "text-summary"], // Add this line
+	coverageReporters: ["lcov", "text", "text-summary", "xml"], // Add this line
 	coverageDirectory: "./coverage", // Add this line
   };
   
