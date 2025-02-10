@@ -18,6 +18,8 @@ import { HikingEssentials } from '@/app/more/hiking-essentials.tsx';
 import StayingSafe from '@/app/more/staying-safe.tsx';
 import WelcomeMessage from '@/app/more/welcome-message.tsx';
 import LoginPage from '@/app/login.tsx';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 export default function App() {
   return (
@@ -63,6 +65,7 @@ export default function App() {
           </Routes>
         </main>
       </div>
+      <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable />
     </SplashScreenWrapper>
   );
 }
