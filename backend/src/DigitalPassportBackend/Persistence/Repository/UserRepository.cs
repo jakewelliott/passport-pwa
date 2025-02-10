@@ -17,4 +17,32 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
         return result;
     }
 
+    public User Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.Users.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public User Update(User entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.Users.Count();
+    }
+
+    public User Create(User entity)
+    {
+        _digitalPassportDbContext.Users.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
 }

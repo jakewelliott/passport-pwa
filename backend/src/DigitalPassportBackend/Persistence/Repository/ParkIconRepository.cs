@@ -22,4 +22,32 @@ public class ParkIconRepository(DigitalPassportDbContext digitalPassportDbContex
     {
         return _digitalPassportDbContext.ParkIcons.Where(a => a.parkId.Equals(locationId)).ToList();
     }
+
+    public ParkIcon Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.ParkIcons.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public ParkIcon Update(ParkIcon entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.ParkIcons.Count();
+    }
+
+    public ParkIcon Create(ParkIcon entity)
+    {
+        _digitalPassportDbContext.ParkIcons.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }

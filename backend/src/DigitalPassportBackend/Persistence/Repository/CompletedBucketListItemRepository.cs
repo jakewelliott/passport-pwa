@@ -21,4 +21,32 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
         }
         return result;
     }
+
+    public CompletedBucketListItem Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.CompletedBucketListItems.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public CompletedBucketListItem Update(CompletedBucketListItem entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.CompletedBucketListItems.Count();
+    }
+
+    public CompletedBucketListItem Create(CompletedBucketListItem entity)
+    {
+        _digitalPassportDbContext.CompletedBucketListItems.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }

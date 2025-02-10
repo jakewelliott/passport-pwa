@@ -21,4 +21,32 @@ public class CollectedStampRepository(DigitalPassportDbContext digitalPassportDb
         }
         return result;
     }
+
+    public CollectedStamp Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.CollectedStamps.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public CollectedStamp Update(CollectedStamp entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.CollectedStamps.Count();
+    }
+
+    public CollectedStamp Create(CollectedStamp entity)
+    {
+        _digitalPassportDbContext.CollectedStamps.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }

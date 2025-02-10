@@ -26,4 +26,32 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
         }
         return result;
     }
+
+    public Park Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.Parks.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public Park Update(Park entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.Parks.Count();
+    }
+
+    public Park Create(Park entity)
+    {
+        _digitalPassportDbContext.Parks.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }
