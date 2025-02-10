@@ -8,7 +8,7 @@ public static class TestConfiguration
 # if DEBUG
         DotEnv.Load(Path.Combine(Directory.GetCurrentDirectory(), "../../../../../../../.env"));
 # else
-        DotEnv.Load(Path.Combine(Directory.GetCurrentDirectory(), ".env"));
+        DotEnv.Load(Path.Combine(Directory.GetCurrentDirectory(), "../.env"));
 # endif
         return new ConfigurationBuilder()
             .AddEnvironmentVariables()
