@@ -36,8 +36,8 @@ public class ParkAddressRepositoryTests
         var items = _repo.GetByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.True(items.Count == 1);
-        Assert.Contains(items, i => i == TestData.ParkAddresses[1]);
+        Assert.Single(items);
+        Assert.Contains(TestData.ParkAddresses[1], items);
     }
 
     [Fact]
@@ -47,7 +47,7 @@ public class ParkAddressRepositoryTests
         var items = _repo.GetByLocationId(5);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]

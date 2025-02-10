@@ -46,8 +46,8 @@ public class LocationsServiceTests
         var items = _locations.GetAddressesByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.True(items.Count == 1);
-        Assert.Contains(items, i => i == TestData.ParkAddresses[1]);
+        Assert.Single(items);
+        Assert.Contains(TestData.ParkAddresses[1], items);
     }
 
     [Fact]
@@ -57,7 +57,7 @@ public class LocationsServiceTests
         var items = _locations.GetAddressesByLocationId(5);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]
@@ -67,9 +67,9 @@ public class LocationsServiceTests
         var items = _locations.GetBucketListItemsByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.BucketList[0]);
-        Assert.Contains(items, i => i == TestData.BucketList[2]);
+        Assert.Equal(2, items.Count);
+        Assert.Contains(TestData.BucketList[0], items);
+        Assert.Contains(TestData.BucketList[2], items);
     }
 
     [Fact]
@@ -79,7 +79,7 @@ public class LocationsServiceTests
         var items = _locations.GetBucketListItemsByLocationId(TestData.Parks[1].id);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]
@@ -89,7 +89,7 @@ public class LocationsServiceTests
         var items = _locations.GetBucketListItemsByLocationId(5);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
     
     [Fact]
@@ -116,9 +116,9 @@ public class LocationsServiceTests
         var items = _locations.GetIconsByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.ParkIcons[0]);
-        Assert.Contains(items, i => i == TestData.ParkIcons[1]);
+        Assert.Equal(2, items.Count);
+        Assert.Contains(TestData.ParkIcons[0], items);
+        Assert.Contains(TestData.ParkIcons[1], items);
     }
 
     [Fact]
@@ -128,7 +128,7 @@ public class LocationsServiceTests
         var items = _locations.GetIconsByLocationId(TestData.Parks[1].id);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]
@@ -138,7 +138,7 @@ public class LocationsServiceTests
         var items = _locations.GetIconsByLocationId(5);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]
@@ -148,9 +148,9 @@ public class LocationsServiceTests
         var items = _locations.GetParkPhotosByLocationId(TestData.Parks[1].id);
 
         // Assert.
-        Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.ParkPhotos[0]);
-        Assert.Contains(items, i => i == TestData.ParkPhotos[1]);
+        Assert.Equal(2, items.Count);
+        Assert.Contains(TestData.ParkPhotos[0], items);
+        Assert.Contains(TestData.ParkPhotos[1], items);
     }
 
     [Fact]
@@ -160,7 +160,7 @@ public class LocationsServiceTests
         var items = _locations.GetParkPhotosByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]
@@ -170,7 +170,7 @@ public class LocationsServiceTests
         var items = _locations.GetParkPhotosByLocationId(5);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     // Park with all optional data fields except for park photos filled.

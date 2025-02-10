@@ -34,9 +34,9 @@ public class ParkPhotoRepositoryTests
         var items = _repo.GetByLocationId(TestData.Parks[1].id);
 
         // Assert.
-        Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.ParkPhotos[0]);
-        Assert.Contains(items, i => i == TestData.ParkPhotos[1]);
+        Assert.Equal(2, items.Count);
+        Assert.Contains(TestData.ParkPhotos[0], items);
+        Assert.Contains(TestData.ParkPhotos[1], items);
     }
 
     [Fact]
@@ -46,7 +46,7 @@ public class ParkPhotoRepositoryTests
         var items = _repo.GetByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]
@@ -56,6 +56,6 @@ public class ParkPhotoRepositoryTests
         var items = _repo.GetByLocationId(84);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 }

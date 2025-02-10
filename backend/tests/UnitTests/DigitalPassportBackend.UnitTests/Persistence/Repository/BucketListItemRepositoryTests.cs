@@ -36,9 +36,9 @@ public class BucketListItemRepositoryTests
         var items = _repo.GetByLocationId(TestData.Parks[0].id);
 
         // Assert.
-        Assert.True(items.Count == 2);
-        Assert.Contains(items, i => i == TestData.BucketList[0]);
-        Assert.Contains(items, i => i == TestData.BucketList[2]);
+        Assert.Equal(2, items.Count);
+        Assert.Contains(TestData.BucketList[0], items);
+        Assert.Contains(TestData.BucketList[2], items);
     }
 
     [Fact]
@@ -48,7 +48,7 @@ public class BucketListItemRepositoryTests
         var items = _repo.GetByLocationId(0);
 
         // Assert.
-        Assert.False(items.Any());
+        Assert.Empty(items);
     }
 
     [Fact]
