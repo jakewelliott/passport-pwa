@@ -100,13 +100,14 @@ public static class ServiceCollectionExtensions
                                $"user id=root;" +
                                $"password={configuration[$"DB_{envAddendum}PASSWORD"]};" +
                                $"database={configuration[$"DB_{envAddendum}DATABASE"]};";
-        services.AddDbContext<DigitalPassportDbContext>(options =>
-            options.UseMySql(
-                connectionString,
-                ServerVersion.AutoDetect(connectionString),
-                options => options.UseNetTopologySuite()
-                )
-            );
+        services.AddDbContext<DigitalPassportDbContext>((serviceProvider, options) =>
+{
+    options.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString),
+        options => options.UseNetTopologySuite()
+    );
+});
 
         return services;
     }
