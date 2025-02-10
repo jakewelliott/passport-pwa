@@ -32,7 +32,7 @@ jobs:
     - name: Run Jest tests
       run: |
         cd frontend
-        npm test
+        NODE_OPTIONS=--max-old-space-size=4096 npm test
     
     - name: Upload Coverage Report
       uses: actions/upload-artifact@v4
