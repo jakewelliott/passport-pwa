@@ -8,11 +8,11 @@ using Moq;
 namespace DigitalPassportBackend.UnitTests.Services;
 public class LocationsServiceTests
 {
-    private readonly Mock<BucketListItemRepository> _mockBucketList;
-    private readonly Mock<LocationsRepository> _mockLocations;
-    private readonly Mock<ParkAddressRepository> _mockParkAddresses;
-    private readonly Mock<ParkIconRepository> _mockParkIcons;
-    private readonly Mock<ParkPhotoRepository> _mockParkPhotos;
+    private readonly Mock<IBucketListItemRepository> _mockBucketList;
+    private readonly Mock<ILocationsRepository> _mockLocations;
+    private readonly Mock<IParkAddressRepository> _mockParkAddresses;
+    private readonly Mock<IParkIconRepository> _mockParkIcons;
+    private readonly Mock<IParkPhotoRepository> _mockParkPhotos;
 
     private readonly ILocationsService _locations;
 
