@@ -6,13 +6,15 @@ const dummy: Park = {
   abbreviation: 'DUMM',
   name: 'Foobar Park',
   city: 'Foobar City',
-  address: [{
-    addressLineOne: 'Foobar Street',
-    addressLineTwo: 'Foobar Street',
-    city: 'Foobarville',
-    state: 'Foobaria',
-    zip: '12345',
-  }],
+  address: [
+    {
+      addressLineOne: 'Foobar Street',
+      addressLineTwo: 'Foobar Street',
+      city: 'Foobarville',
+      state: 'Foobaria',
+      zip: '12345',
+    },
+  ],
   coordinates: {
     latitude: 0,
     longitude: 0,
