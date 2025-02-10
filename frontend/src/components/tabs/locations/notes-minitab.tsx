@@ -2,13 +2,14 @@ import RoundedButton from '@/components/common/rounded-button';
 import { a11yOnClick } from '@/lib/a11y';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import type { ParkAbbreviation } from '@/lib/mock/types';
+import { toast } from 'react-toastify';
 
 export const NotesMiniTab = ({ abbreviation }: { abbreviation: ParkAbbreviation }) => {
   const { getNote, setNote } = useParkNotesStore();
 
   const handleClick = () => {
     // TODO: the global store is already saved so we should prolly navigate or something
-    alert('Notes saved!');
+    toast.success('Notes saved!');
   };
 
   return (

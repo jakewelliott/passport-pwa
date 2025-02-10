@@ -21,6 +21,8 @@ import LoginPage from "@/app/login.tsx";
 import { useUser } from "@/hooks/queries/useUser";
 import { queryClient } from "./lib/tanstack-local-storage";
 import { api } from "./lib/mock/api";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 const PrivateRoute = ({
   children,
@@ -95,6 +97,13 @@ export default function App() {
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </main>
+        <ToastContainer
+        position="bottom-right"
+        theme="colored"
+        closeOnClick
+        draggable
+        style={{ zIndex: 9999 }}
+      />
       </SplashScreenWrapper>
     );
   }
@@ -113,18 +122,19 @@ export default function App() {
             <Route path="/" element={<RoleBasedRedirect />} />
 
             {/* Main tab routes */}
-            <Route
-              path="/locations"
-              element={
-                <PrivateRoute allowedRoles={["visitor", 'admin']}>
-                  <Locations />
-                </PrivateRoute>
-              }
-            >
+            <Route path="/locations">
+              <Route
+                index
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <Locations />
+                  </PrivateRoute>
+                }
+              />
               <Route
                 path="/locations/:abbreviation"
                 element={
-                  <PrivateRoute allowedRoles={["visitor"]}>
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
                     <LocationDetail />
                   </PrivateRoute>
                 }
@@ -140,29 +150,93 @@ export default function App() {
             ></Route>
 
             {/* More section routes */}
-            <Route
-              path="/more"
-              element={
-                <PrivateRoute allowedRoles={["visitor", "admin"]}>
-                  <More onLogout={handleLogout} />
-                </PrivateRoute>
-              }
-            >
+            <Route path="/more">
+              <Route
+                index
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <More onLogout={handleLogout} />
+                  </PrivateRoute>
+                }
+              />
               {/* Information routes */}
-              <Route path="app-info" element={<AppInfo />} />
-              <Route path="icon-legend" element={<IconLegend />} />
-              <Route path="welcome-message" element={<WelcomeMessage />} />
+              <Route
+                path="app-info"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <AppInfo />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="icon-legend"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <IconLegend />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="welcome-message"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <WelcomeMessage />
+                  </PrivateRoute>
+                }
+              />
 
               {/* Hiking related routes */}
-              <Route path="trails" element={<Trails />} />
-              <Route path="staying-safe" element={<StayingSafe />} />
-              <Route path="hiking-essentials" element={<HikingEssentials />} />
+              <Route
+                path="trails"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <Trails />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="staying-safe"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <StayingSafe />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="hiking-essentials"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <HikingEssentials />
+                  </PrivateRoute>
+                }
+              />
 
               {/* User content routes */}
-              <Route path="bucket-list" element={<BucketList />} />
+              <Route
+                path="bucket-list"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <BucketList />
+                  </PrivateRoute>
+                }
+              />
               <Route path="my-notes">
-                <Route index element={<MyNotes />} />
-                <Route path="general-notes" element={<EditGeneralNotes />} />
+                <Route
+                  index
+                  element={
+                    <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                      <MyNotes />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="general-notes"
+                  element={
+                    <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                      <EditGeneralNotes />
+                    </PrivateRoute>
+                  }
+                />
               </Route>
             </Route>
 
@@ -178,7 +252,13 @@ export default function App() {
           </Routes>
         </main>
       </div>
-      <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable />
+      <ToastContainer
+        position="bottom-right"
+        theme="colored"
+        closeOnClick
+        draggable
+        style={{ zIndex: 9999 }}
+      />
     </SplashScreenWrapper>
   );
 }

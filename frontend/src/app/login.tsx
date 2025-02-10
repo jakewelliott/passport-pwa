@@ -2,6 +2,7 @@ import RoundedButton from "@/components/common/rounded-button";
 import { api } from "@/lib/mock/api";
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function LoginPage() {
   const [errors, setErrors] = useState({ username: false, password: false });
@@ -20,7 +21,7 @@ export default function LoginPage() {
       const missingFields = [];
       if (newErrors.username) missingFields.push("Username");
       if (newErrors.password) missingFields.push("Password");
-      alert(
+      toast.error(
         `${missingFields.join(" and ")} ${
           missingFields.length > 1 ? "are" : "is"
         } required.`
@@ -44,6 +45,7 @@ export default function LoginPage() {
       {
         onSuccess: () => {
           // Redirect to the root path after successful login or registration
+          toast.success(`Successfully ${isLogin ? 'logged in' : 'registered'} as ${username}`)
           navigate("/");
         },
         onError: (err) => {
@@ -52,7 +54,7 @@ export default function LoginPage() {
             username: errorMessage.includes("username"),
             password: errorMessage.includes("password"),
           });
-          alert(err.message);
+          toast.error(err.message);
         },
       }
     );
