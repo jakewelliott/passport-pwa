@@ -1,3 +1,4 @@
+using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
@@ -84,4 +85,57 @@ public class ParkAddressRepositoryTests
         // Action and assert.
         Assert.Throws<NotFoundException>(() => _repo.Delete(5));
     }
+
+    [Fact]
+    public void Update_ReturnsExistingItem_WhenParkAddressExists()
+    {
+        // Prepare updated address.
+        var newAddr = TestData.ParkAddresses[0];
+        newAddr.title = "new title";
+
+        // Action.
+        var oldAddr = _repo.Update(newAddr);
+
+        // Assert.
+        Assert.Equal(2, _db.ParkAddresses.Count());
+        Assert.Equal(TestData.ParkAddresses[0], oldAddr);
+        Assert.Contains(newAddr, _db.ParkAddresses);
+    }
+
+    [Fact]
+    public void Update_ThrowsNotFoundException_WhenParkAddressDNE()
+    {
+        // Action and assert.
+        Assert.Throws<NotFoundException>(() => _repo.Update(NewAddr));
+        Assert.Equal(2, _db.ParkAddresses.Count());
+    }
+
+    [Fact]
+    public void Coutn_ReturnsNumberOfParkAddresses()
+    {
+        // Action and assert.
+        Assert.Equal(2, _repo.Count());
+    }
+
+    [Fact]
+    public void Create_ReturnsNewParkAddress_IfParkAddressDNE()
+    {
+        // Action.
+        var item = _repo.Create(NewAddr);
+        
+        // Assert.
+        Assert.Equal(3, _db.ParkAddresses.Count());
+        Assert.Equal(NewAddr, item);
+        Assert.Contains(NewAddr, _db.ParkAddresses);
+    }
+
+    private static readonly ParkAddress NewAddr = new()
+    {
+        title = "Raleigh City Hall",
+        addressLineOne = "222 W Hargett Street",
+        city = "Raleigh",
+        state = State.NC,
+        zipcode = 27601,
+        park = TestData.Parks[1]
+    };
 }
