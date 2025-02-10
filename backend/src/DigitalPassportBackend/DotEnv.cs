@@ -7,6 +7,7 @@ public static class DotEnv
 {
     public static void Load(string filePath)
     {
+        Console.WriteLine(filePath);
         if (!File.Exists(filePath))
             return;
         
