@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Security;
 
@@ -5,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.Persistence.Database;
 
+[ExcludeFromCodeCoverage]
 public class DigitalPassportDbContext : DbContext
 {
     private readonly IConfiguration _configuration;

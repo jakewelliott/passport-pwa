@@ -1,8 +1,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+
 using NetTopologySuite.Geometries;
 
 namespace DigitalPassportBackend.Domain;
 
+[ExcludeFromCodeCoverage]
 [Table("completed_bucket_list_items")]
 public class CompletedBucketListItem
 {

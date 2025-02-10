@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalPassportBackend.Domain;
 
+[ExcludeFromCodeCoverage]
 [Table("trails")]
 public class Trail
 {

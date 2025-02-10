@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalPassportBackend.Domain;
 
+[ExcludeFromCodeCoverage]
 [Table("users")]
 public class User
 {
