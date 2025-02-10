@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import SplashScreen, { SplashScreenWrapper } from "@/components/splash-screen";
 import "@/styles/globals.css";
 import Header from "@/components/layout/header.tsx";
@@ -32,6 +32,7 @@ const PrivateRoute = ({
   allowedRoles: string[];
 }) => {
   const { data: user, isLoading } = useUser(); // Fetch user data using your custom hook
+  const location = useLocation();
 
   if (isLoading) {
     return <SplashScreen />; // Show a loading spinner while fetching user data
@@ -39,7 +40,8 @@ const PrivateRoute = ({
 
   if (!user) {
     // If the user is not logged in, redirect to the login page
-    return <Navigate to="/login" replace />;
+    const redirectPath = encodeURIComponent(location.pathname + location.search);
+    return <Navigate to={`/login?redirect=${redirectPath}`} replace />;
   }
 
   if (!allowedRoles.includes(user.role)) {
@@ -53,13 +55,15 @@ const PrivateRoute = ({
 
 const RoleBasedRedirect = () => {
   const { data: user, isLoading } = useUser();
+  const location = useLocation();
 
   if (isLoading) {
     return <SplashScreen />;
   }
 
   if (!user) {
-    return <Navigate to="/login" replace />;
+    const redirectPath = encodeURIComponent(location.pathname + location.search);
+    return <Navigate to={`/login?redirect=${redirectPath}`} replace />;
   }
 
   if (user.role === "admin") {
@@ -71,6 +75,8 @@ const RoleBasedRedirect = () => {
 
 export default function App() {
   var { data: user, isLoading } = useUser();
+  const location = useLocation();
+  const redirectPath = encodeURIComponent(location.pathname + location.search);
 
   const navigate = useNavigate();
 
@@ -94,7 +100,7 @@ export default function App() {
         <main className="flex-grow">
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="*" element={<Navigate to="/login" replace />} />
+            <Route path="*" element={<Navigate to={`/login?redirect=${redirectPath}`} replace />} />
           </Routes>
         </main>
         <ToastContainer
