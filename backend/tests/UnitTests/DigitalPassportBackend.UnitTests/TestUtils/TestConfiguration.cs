@@ -5,13 +5,9 @@ public static class TestConfiguration
 {
     public static IConfiguration GetConfiguration()
     {
-        var root = Directory.GetCurrentDirectory();
-        var dotenv = Path.Combine(root, ".env");
-        DotEnv.Load(dotenv);
-        var config = new ConfigurationBuilder()
+        DotEnv.Load(Path.Combine(Directory.GetCurrentDirectory(), "../../../../../../../.env"));
+        return new ConfigurationBuilder()
             .AddEnvironmentVariables()
             .Build();
-
-        return config;
     }
 }
