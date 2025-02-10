@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Services;
@@ -6,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.DependencyInjection;
 
+[ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(
