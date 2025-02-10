@@ -75,6 +75,7 @@ public class BucketListItemRepositoryTests
         var item = _repo.Delete(TestData.BucketList[0].id);
 
         // Assert.
+        Assert.Equal(TestData.BucketList[0], item);
         Assert.Equal(2, _db.BucketListItems.Count());
         Assert.DoesNotContain(TestData.BucketList[0], _db.BucketListItems);
     }
