@@ -16,4 +16,32 @@ public class TrailRepository(DigitalPassportDbContext digitalPassportDbContext) 
         }
         return result;
     }
+
+    public Trail Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.Trails.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public Trail Update(Trail entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.Trails.Count();
+    }
+
+    public Trail Create(Trail entity)
+    {
+        _digitalPassportDbContext.Trails.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }

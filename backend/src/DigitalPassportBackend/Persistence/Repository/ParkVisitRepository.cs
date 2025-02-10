@@ -16,4 +16,32 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
         }
         return result;
     }
+
+    public ParkVisit Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.ParkVisits.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public ParkVisit Update(ParkVisit entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.ParkVisits.Count();
+    }
+
+    public ParkVisit Create(ParkVisit entity)
+    {
+        _digitalPassportDbContext.ParkVisits.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }

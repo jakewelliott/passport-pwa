@@ -21,4 +21,32 @@ public class ParkPhotoRepository(DigitalPassportDbContext digitalPassportDbConte
         }
         return result;
     }
+
+    public ParkPhoto Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.ParkPhotos.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public ParkPhoto Update(ParkPhoto entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.ParkPhotos.Count();
+    }
+
+    public ParkPhoto Create(ParkPhoto entity)
+    {
+        _digitalPassportDbContext.ParkPhotos.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }
