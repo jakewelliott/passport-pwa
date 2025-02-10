@@ -3,7 +3,7 @@ using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 
 namespace DigitalPassportBackend.Persistence.Repository;
-public class CompletedCompletedBucketListItemRepository(DigitalPassportDbContext digitalPassportDbContext) : ICompletedBucketListItemRepository
+public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalPassportDbContext) : ICompletedBucketListItemRepository
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
