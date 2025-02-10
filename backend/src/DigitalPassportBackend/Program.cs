@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using DigitalPassportBackend;
 using Microsoft.AspNetCore.Diagnostics;
 using DigitalPassportBackend.Errors;
+using DigitalPassportBackend.Security;
 
 const string corsPolicyName = "AllowSpecificOrigins";
 
@@ -13,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
     var dotenv = Path.Combine(root, builder.Environment.IsDevelopment() ? "../../../.env" : ".env");
     DotEnv.Load(dotenv);
     builder.Configuration.AddEnvironmentVariables();
+
+    
 
     // configure services (DI)
     builder.Services
