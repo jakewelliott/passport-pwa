@@ -3,7 +3,7 @@ using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 
 namespace DigitalPassportBackend.Persistence.Repository;
-public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalPassportDbContext) : IRepository<CompletedBucketListItem>
+public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalPassportDbContext) : ICompletedBucketListItemRepository
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
@@ -17,7 +17,7 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
         var result = _digitalPassportDbContext.CompletedBucketListItems.Where(a => a.id.Equals(id)).SingleOrDefault();
         if (result is null)
         {
-            throw new NotFoundException($"ParkPhoto not found with id {id}");
+            throw new NotFoundException($"Completed Bucket List Item not found with id {id}");
         }
         return result;
     }
