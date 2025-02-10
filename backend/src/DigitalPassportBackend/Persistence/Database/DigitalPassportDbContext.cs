@@ -1,6 +1,8 @@
 using System.Diagnostics.CodeAnalysis;
 
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Security;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.Persistence.Database;
@@ -8,10 +10,15 @@ namespace DigitalPassportBackend.Persistence.Database;
 [ExcludeFromCodeCoverage]
 public class DigitalPassportDbContext : DbContext
 {
-    public DigitalPassportDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
-    {
+    private readonly IConfiguration _configuration;
 
+    public DigitalPassportDbContext(DbContextOptions<DigitalPassportDbContext> options, IConfiguration configuration)
+        : base(options)
+    {
+        _configuration = configuration;
     }
+
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,6 +33,17 @@ public class DigitalPassportDbContext : DbContext
                 p.SetColumnType("varchar(255)");
                 p.SetMaxLength(255);
             });
+
+        var hashedAdminPassword = new PasswordHasher().HashPassword(_configuration["ADMIN_PASS"]!);
+
+        modelBuilder.Entity<User>().HasData(new User
+        {
+            id = 1,
+            username = "superAdmin",
+            password = hashedAdminPassword,
+            role = UserRole.admin,
+            createdAt = DateTime.UtcNow,
+        });
     }
 
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
