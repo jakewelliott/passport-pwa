@@ -32,11 +32,25 @@ public class AuthService(
 
     public string RegisterUser(User user)
     {
-        try {
+        var restrictedKeywords = new[] { "admin", "anon", "anonymous", "guest", "visitor", "test" };
+
+        // Check if the username contains any restricted keyword
+        foreach (var keyword in restrictedKeywords)
+        {
+            if (user.username.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            {
+                throw new ServiceException(StatusCodes.Status400BadRequest,
+                    $"Username cannot contain '{keyword}'.");
+            }
+        }
+        try
+        {
             var foundUser = userRepository.GetByUsername(user.username);
             throw new ServiceException(StatusCodes.Status409Conflict, "User already exists with that username.");
-        } catch (NotFoundException)
+        }
+        catch (NotFoundException)
         {
+            passwordHasher.ValidatePassword(user);
             user.password = passwordHasher.HashPassword(user.password);
             userRepository.CreateUser(user);
             return tokenProvider.Create(user);
