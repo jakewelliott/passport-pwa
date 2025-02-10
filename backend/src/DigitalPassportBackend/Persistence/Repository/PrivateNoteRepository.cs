@@ -16,4 +16,32 @@ public class PrivateNoteRepository(DigitalPassportDbContext digitalPassportDbCon
         }
         return result;
     }
+
+    public PrivateNote Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.PrivateNotes.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public PrivateNote Update(PrivateNote entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.PrivateNotes.Count();
+    }
+
+    public PrivateNote Create(PrivateNote entity)
+    {
+        _digitalPassportDbContext.PrivateNotes.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }
