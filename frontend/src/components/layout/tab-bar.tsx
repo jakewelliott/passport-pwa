@@ -2,20 +2,24 @@ import { Link, useLocation } from 'react-router-dom';
 import { TbMap } from 'react-icons/tb';
 import { MdMoreHoriz } from 'react-icons/md';
 import { FaStamp } from 'react-icons/fa';
+import { useUser } from '@/hooks/queries/useUser';
 
 const TabBar = () => {
+  const {data: user} = useUser();
   const location = useLocation();
 
-  const tabs = [
-    { name: 'Stamps', path: '/stamps', icon: <FaStamp size={'24px'} /> },
-    { name: 'Locations', path: '/locations', icon: <TbMap size={'24px'} /> },
-    { name: 'More', path: '/more', icon: <MdMoreHoriz size={'24px'} /> },
+  const allTabs = [
+    { name: 'Stamps', path: '/stamps', icon: <FaStamp size={'24px'} />, roles: ['visitor'] },
+    { name: 'Locations', path: '/locations', icon: <TbMap size={'24px'} />, roles: ['visitor', 'admin'] },
+    { name: 'More', path: '/more', icon: <MdMoreHoriz size={'24px'} />, roles: ['visitor', 'admin'] },
   ];
+
+  const visibleTabs = allTabs.filter(tab => tab.roles.includes(user?.role!));
 
   return (
     <nav className='fixed right-0 bottom-0 left-0 bg-secondary_darkteal' style={{ zIndex: '9998' }}>
       <ul className='flex h-16 items-center justify-around'>
-        {tabs.map((tab) => (
+        {visibleTabs.map((tab) => (
           <li key={tab.name}>
             <Link to={tab.path} style={{ textDecoration: 'none' }}>
               <div
