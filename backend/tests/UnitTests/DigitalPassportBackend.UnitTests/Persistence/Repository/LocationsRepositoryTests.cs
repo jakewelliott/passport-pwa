@@ -72,6 +72,7 @@ public class LocationsRepositoryTests
         var item = _repo.Delete(TestData.Parks[0].id);
 
         // Assert.
+        Assert.Equal(TestData.Parks[0], item);
         Assert.Equal(1, _db.Parks.Count());
         Assert.DoesNotContain(TestData.Parks[0], _db.Parks);
     }
