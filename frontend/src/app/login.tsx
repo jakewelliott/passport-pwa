@@ -1,11 +1,13 @@
 import RoundedButton from "@/components/common/rounded-button";
 import { api } from "@/lib/mock/api";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from 'react-toastify';
 
 export default function LoginPage() {
   const [errors, setErrors] = useState({ username: false, password: false });
+  const [ searchParams ] = useSearchParams();
+  if (!searchParams.get('redirect')) searchParams.set('redirect', '/');
   const formRef = useRef<HTMLFormElement>(null);
 
   const navigate = useNavigate();
@@ -46,7 +48,7 @@ export default function LoginPage() {
         onSuccess: () => {
           // Redirect to the root path after successful login or registration
           toast.success(`Successfully ${isLogin ? 'logged in' : 'registered'} as ${username}`)
-          navigate("/");
+          navigate(searchParams.get('redirect') || '/');
         },
         onError: (err) => {
           const errorMessage = err.message.toLowerCase();
