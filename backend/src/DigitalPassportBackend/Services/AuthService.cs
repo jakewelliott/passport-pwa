@@ -7,7 +7,7 @@ using DigitalPassportBackend.Secutiry;
 namespace DigitalPassportBackend.Services;
 
 public class AuthService(
-    UserRepository userRepository,
+    IUserRepository userRepository,
     PasswordHasher passwordHasher,
     TokenProvider tokenProvider) : IAuthService
 {
@@ -52,7 +52,7 @@ public class AuthService(
         {
             passwordHasher.ValidatePassword(user);
             user.password = passwordHasher.HashPassword(user.password);
-            userRepository.CreateUser(user);
+            userRepository.Create(user);
             return tokenProvider.Create(user);
         };
     }

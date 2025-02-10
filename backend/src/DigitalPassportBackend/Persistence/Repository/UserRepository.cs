@@ -15,6 +15,7 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
             throw new NotFoundException($"User not found with id {id}");
         }
         return result;
+    }
 
     public User? GetByUsername(string username)
     {
