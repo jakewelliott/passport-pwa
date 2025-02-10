@@ -112,37 +112,65 @@ public class LocationsServiceTests
     [Fact]
     public void GetIconsByLocationId_ReturnsIconList_WhenLocationExists()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetIconsByLocationId(TestData.Parks[0].id);
+
+        // Assert.
+        Assert.True(items.Count == 2);
+        Assert.Contains(items, i => i == TestData.ParkIcons[0]);
+        Assert.Contains(items, i => i == TestData.ParkIcons[1]);
     }
 
     [Fact]
     public void GetIconsByLocationId_ReturnsEmptyList_WhenLocationExists_AndNoIcons()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetIconsByLocationId(TestData.Parks[1].id);
+
+        // Assert.
+        Assert.False(items.Any());
     }
 
     [Fact]
     public void GetIconsByLocationId_ReturnsEmptyList_WhenLocationDNE()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetIconsByLocationId(5);
+
+        // Assert.
+        Assert.False(items.Any());
     }
 
     [Fact]
     public void GetParkPhotosByLocationId_ReturnsParkPhotoList_WhenLocationExists()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetParkPhotosByLocationId(TestData.Parks[1].id);
+
+        // Assert.
+        Assert.True(items.Count == 2);
+        Assert.Contains(items, i => i == TestData.ParkPhotos[0]);
+        Assert.Contains(items, i => i == TestData.ParkPhotos[1]);
     }
 
     [Fact]
     public void GetParkPhotosByLocationId_ReturnsEmptyList_WhenLocationExists_AndNoParkPhotos()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetParkPhotosByLocationId(TestData.Parks[0].id);
+
+        // Assert.
+        Assert.False(items.Any());
     }
 
     [Fact]
     public void GetParkPhotosByLocationId_EmptyList_WhenLocationDNE()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetParkPhotosByLocationId(5);
+
+        // Assert.
+        Assert.False(items.Any());
     }
 
     // Park with all optional data fields except for park photos filled.
