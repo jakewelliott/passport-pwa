@@ -1,8 +1,11 @@
+using System.Diagnostics.CodeAnalysis;
+
 using DigitalPassportBackend.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace DigitalPassportBackend.Persistence.Database;
 
+[ExcludeFromCodeCoverage]
 public class DigitalPassportDbContext : DbContext
 {
     public DigitalPassportDbContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
