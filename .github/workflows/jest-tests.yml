@@ -39,9 +39,3 @@ jobs:
       with:
         name: coverage-report
         path: ./frontend/coverage/lcov.info
-        
-    - name: Upload Coverage Report XML
-      uses: actions/upload-artifact@v3
-      with:
-        name: coverage-report.xml
-        path: ./frontend/coverage/**.xml
