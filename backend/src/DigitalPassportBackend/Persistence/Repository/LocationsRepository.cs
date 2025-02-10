@@ -3,7 +3,7 @@ using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 
 namespace DigitalPassportBackend.Persistence.Repository;
-public class LocationsRepository(DigitalPassportDbContext digitalPassportDbContext)
+public class LocationsRepository(DigitalPassportDbContext digitalPassportDbContext) : IRepository<Park>
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
@@ -13,6 +13,16 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
         if (result is null)
         {
             throw new NotFoundException($"Park not found with abbreviation {abbreviation}");
+        }
+        return result;
+    }
+
+    public Park GetById(int id)
+    {
+        var result = _digitalPassportDbContext.Parks.Where(a => a.id.Equals(id)).SingleOrDefault();
+        if (result is null)
+        {
+            throw new NotFoundException($"Park not found with id {id}");
         }
         return result;
     }
