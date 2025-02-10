@@ -24,7 +24,8 @@
         "frontend/**.pem": true,
         "frontend/dist": true,
         "frontend/node_modules": true,
-        "frontend/postcss.config.js": true
+        "frontend/postcss.config.js": true,
+        "frontend/coverage": true
     },
     "scm.compactFolders": true
 }
