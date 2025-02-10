@@ -30,13 +30,11 @@ jobs:
 
     - name: Build and run Docker Compose
       run: |
-        cd backend
         docker-compose build
         docker-compose up -d
       
     - name: Wait for containers to be healthy
       run: |
-        cd backend
         timeout=120
         elapsed=0
         while [ $elapsed -lt $timeout ]; do

@@ -15,6 +15,21 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
             throw new NotFoundException($"User not found with id {id}");
         }
         return result;
+
+    public User? GetByUsername(string username)
+    {
+        var result = _digitalPassportDbContext.Users.Where(u => u.username.Equals(username)).SingleOrDefault();
+        if (result is null)
+        {
+            throw new NotFoundException($"User not found with username {username}.");
+        }
+        return result;
+    }
+
+    public void CreateUser(User user)
+    {
+        _digitalPassportDbContext.Users.Add(user);
+        _digitalPassportDbContext.SaveChanges();
     }
 
     public User Delete(int id)

@@ -161,8 +161,9 @@ namespace DigitalPassportBackend.Migrations
                     b.Property<Point>("coordinates")
                         .HasColumnType("point");
 
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("email")
                         .HasMaxLength(255)
@@ -177,19 +178,22 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("park_abbreviation")
+                    b.Property<string>("parkAbbreviation")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("park_abbreviation");
 
-                    b.Property<string>("park_name")
+                    b.Property<string>("parkName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("park_name");
 
-                    b.Property<string>("park_type")
+                    b.Property<string>("parkType")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("park_type");
 
                     b.Property<long?>("phone")
                         .HasColumnType("bigint");
@@ -203,8 +207,9 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("updated_at")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime>("updatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
 
                     b.Property<string>("website")
                         .IsRequired()
@@ -515,6 +520,17 @@ namespace DigitalPassportBackend.Migrations
                     b.HasKey("id");
 
                     b.ToTable("users");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            createdAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
+                            password = "10000.W8QErvwJ94AvgfYwFpWiVw==.NBzuowM3sOx7dBKmq35kI6UZaZAR3ZLN44ehkZMcN1w=",
+                            role = "admin",
+                            updatedAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
+                            username = "superAdmin"
+                        });
                 });
 
             modelBuilder.Entity("DigitalPassportBackend.Domain.BucketListItem", b =>

@@ -1,5 +1,13 @@
 export type ParkAbbreviation = Uppercase<string>;
 
+export interface ErrorResponse {
+  type: string;
+  title: string;
+  status: number;
+  detail: string;
+  traceId: string;
+}
+
 export interface Geopoint {
   latitude: number;
   longitude: number;
@@ -17,11 +25,18 @@ export interface UserParkVisit {
 }
 
 export interface UserProfile {
+  id: number,
+  username: string,
+  role: string,
+}
+
+export interface LoginCredentials {
   username: string;
-  email: string;
   password: string;
-  stamps: UserStamp[];
-  visits: UserParkVisit[];
+}
+
+export interface LoginResponse {
+  token: string;
 }
 
 export interface Address {
@@ -51,7 +66,7 @@ export interface Park {
   established?: string;
   landmark?: string;
   youCanFind?: string;
-  trails?: string;
+  trails?: string[];
   // TODO: model some types for icons and whatnot
   parkIcons: string[];
   parkPhotos: ParkPhoto[];

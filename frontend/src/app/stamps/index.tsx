@@ -62,7 +62,7 @@ export default function Stamps() {
     <div className='mx-auto my-4'>
       <div className='grid gap-4 px-4'>
         {rows.map((row, rowIndex) => (
-          <div key={`row-${rowIndex}`}>
+          <div key={`row-${row[0].abbreviation}`}>
             <div className='grid grid-cols-3 gap-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8'>
               {row.map((park, i) => (
                 <Stamp

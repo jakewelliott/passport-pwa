@@ -1,10 +1,16 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Text;
 
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
+using DigitalPassportBackend.Security;
+using DigitalPassportBackend.Secutiry;
 using DigitalPassportBackend.Services;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace DigitalPassportBackend.DependencyInjection;
 
@@ -15,6 +21,7 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services)
     {
         services.AddScoped<ILocationsService, LocationsService>();
+        services.AddScoped<IAuthService, AuthService>();
 
         return services;
     }
@@ -30,6 +37,44 @@ public static class ServiceCollectionExtensions
             };
         });
 
+        return services;
+    }
+
+    public static IServiceCollection AddOrigins(
+        this IServiceCollection services,
+        IConfiguration configuration,
+        string corsPolicyName)
+    {
+        services.AddCors(options => {
+            options.AddPolicy(corsPolicyName, builder => {
+                builder.WithOrigins("https://localhost:" + configuration["FE_PORT"], "https://localhost:" + configuration["FE_DEV_PORT"])
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddSecurity(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddSingleton<TokenProvider>();
+        services.AddSingleton<PasswordHasher>();
+        services.AddAuthorization();
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(o =>
+            {
+                o.RequireHttpsMetadata = true;
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["API_TOKEN_KEY"]!)),
+                    ValidIssuer = configuration["API_TOKEN_ISSUER"],
+                    ValidAudience = configuration["API_TOKEN_AUDIENCE"],
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
         return services;
     }
 
@@ -57,13 +102,51 @@ public static class ServiceCollectionExtensions
                                $"user id=root;" +
                                $"password={configuration[$"DB_{envAddendum}PASSWORD"]};" +
                                $"database={configuration[$"DB_{envAddendum}DATABASE"]};";
-        services.AddDbContext<DigitalPassportDbContext>(options =>
-            options.UseMySql(
-                connectionString,
-                new MariaDbServerVersion(new Version(11, 6, 2)),
-                options => options.UseNetTopologySuite()
-                )
-            );
+        services.AddDbContext<DigitalPassportDbContext>((serviceProvider, options) =>
+{
+    options.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString),
+        options => options.UseNetTopologySuite()
+    );
+});
+
+        return services;
+    }
+
+    public static IServiceCollection AddSwaggerGenWithAuth(this IServiceCollection services)
+    {
+        services.AddSwaggerGen(o =>
+        {
+            var securityScheme = new OpenApiSecurityScheme
+            {
+                Name = "JWT Authentication",
+                Description = "Enter your JWT token in this field",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.Http,
+                Scheme = JwtBearerDefaults.AuthenticationScheme,
+                BearerFormat = "JWT"
+            };
+
+            o.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, securityScheme);
+
+            var securityRequirement = new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = JwtBearerDefaults.AuthenticationScheme
+                        }
+                    },
+                    []
+                }
+            };
+
+            o.AddSecurityRequirement(securityRequirement);
+        });
 
         return services;
     }
