@@ -1,3 +1,4 @@
+using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Services;
 using DigitalPassportBackend.UnitTests.TestUtils;
@@ -27,6 +28,7 @@ public class LocationsServiceTests
         // Add location data to mocked repositories.
         SetupLocation0();
         SetupLocation1();
+        SetupInvalidLocation();
 
         // Initialize LocationsService.
         _locations = new LocationsService(
@@ -40,43 +42,71 @@ public class LocationsServiceTests
     [Fact]
     public void GetAddressesByLocationId_ReturnsAddressList_WhenLocationExists()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetAddressesByLocationId(TestData.Parks[0].id);
+
+        // Assert.
+        Assert.True(items.Count == 1);
+        Assert.Contains(items, i => i == TestData.ParkAddresses[1]);
     }
 
     [Fact]
-    public void GetAddressesByLocationId_ThrowsNotFoundException_WhenLocationDNE()
+    public void GetAddressesByLocationId_ReturnsEmptyList_WhenLocationDNE()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetAddressesByLocationId(5);
+
+        // Assert.
+        Assert.False(items.Any());
     }
 
     [Fact]
     public void GetBucketListItemsByLocationId_ReturnsBucketListItemList_WhenLocationExists()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetBucketListItemsByLocationId(TestData.Parks[0].id);
+
+        // Assert.
+        Assert.True(items.Count == 2);
+        Assert.Contains(items, i => i == TestData.BucketList[0]);
+        Assert.Contains(items, i => i == TestData.BucketList[2]);
     }
 
     [Fact]
     public void GetBucketListItemsByLocationId_ReturnsEmptyList_WhenLocationExists_AndNoBucketListItems()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetBucketListItemsByLocationId(TestData.Parks[1].id);
+
+        // Assert.
+        Assert.False(items.Any());
     }
 
     [Fact]
-    public void GetBucketListItemsByLocationId_ThrowsNotFoundException_WhenLocationDNE()
+    public void GetBucketListItemsByLocationId_ReturnsEmptyList_WhenLocationDNE()
     {
-        //TODO
+        // Action.
+        var items = _locations.GetBucketListItemsByLocationId(5);
+
+        // Assert.
+        Assert.False(items.Any());
     }
     
     [Fact]
     public void GetByAbbreviation_ReturnsPark_WhenLocationExists()
     {
-        //TODO
+        // Action.
+        var location = _locations.GetByAbbreviation(TestData.Parks[0].parkAbbreviation);
+
+        // Assert.
+        Assert.Equal(location, TestData.Parks[0]);
     }
 
     [Fact]
     public void GetByAbbreviation_ThrowsNotFoundException_WhenLocationDNE()
     {
-        //TODO
+        // Action and assert.
+        Assert.Throws<NotFoundException>(() => _locations.GetByAbbreviation("DMV"));
     }
 
     [Fact]
@@ -92,7 +122,7 @@ public class LocationsServiceTests
     }
 
     [Fact]
-    public void GetIconsByLocationId_ThrowsNotFoundException_WhenLocationDNE()
+    public void GetIconsByLocationId_ReturnsEmptyList_WhenLocationDNE()
     {
         //TODO
     }
@@ -110,7 +140,7 @@ public class LocationsServiceTests
     }
 
     [Fact]
-    public void GetParkPhotosByLocationId_ThrowsNotFoundException_WhenLocationDNE()
+    public void GetParkPhotosByLocationId_EmptyList_WhenLocationDNE()
     {
         //TODO
     }
@@ -152,5 +182,20 @@ public class LocationsServiceTests
                 TestData.ParkPhotos[0],
                 TestData.ParkPhotos[1]
             ]);
+    }
+
+    // Nonexistent park.
+    private void SetupInvalidLocation()
+    {
+        _mockLocations.Setup(s => s.GetByAbbreviation("DMV"))
+            .Throws(new NotFoundException($"Park not found with abbreviation DMV"));
+        _mockParkAddresses.Setup(s => s.GetByLocationId(5))
+            .Returns([]);
+        _mockBucketList.Setup(s => s.GetByLocationId(5))
+            .Returns([]);
+        _mockParkIcons.Setup(s => s.GetByLocationId(5))
+            .Returns([]);
+        _mockParkPhotos.Setup(s => s.GetByLocationId(5))
+            .Returns([]);
     }
 }
