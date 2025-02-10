@@ -19,7 +19,7 @@ public class ParkIconRepositoryTests
         var options = new DbContextOptionsBuilder<DigitalPassportDbContext>()
             .UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
-        _db = new(options);
+        _db = new(options, TestConfiguration.GetConfiguration());
 
         // Populate the testing DB.
         _db.ParkIcons.AddRange(TestData.ParkIcons);
