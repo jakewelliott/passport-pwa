@@ -21,4 +21,32 @@ public class ParkAddressRepository(DigitalPassportDbContext digitalPassportDbCon
         }
         return result;
     }
+
+    public ParkAddress Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.ParkAddresses.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
+
+    public ParkAddress Update(ParkAddress entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.ParkAddresses.Count();
+    }
+
+    public ParkAddress Create(ParkAddress entity)
+    {
+        _digitalPassportDbContext.ParkAddresses.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
 }
