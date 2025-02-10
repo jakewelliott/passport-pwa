@@ -1,3 +1,4 @@
+using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.UnitTests.TestUtils;
@@ -48,4 +49,39 @@ public class ParkAddressRepositoryTests
         Assert.False(items.Any());
     }
 
+    [Fact]
+    public void GetById_ReturnsParkAddress_WhenParkAddressExists()
+    {
+        // Action.
+        var item = _repo.GetById(TestData.ParkAddresses[1].id);
+
+        // Assert.
+        Assert.Equal(TestData.ParkAddresses[1], item);
+    }
+
+    [Fact]
+    public void GetById_ThrowsNotFoundException_WhenParkAddressDNE()
+    {
+        // Action and assert.
+        Assert.Throws<NotFoundException>(() => _repo.GetById(5));
+    }
+
+    [Fact]
+    public void Delete_ReturnsDeletedParkAddress_WhenParkAddressExists()
+    {
+        // Action.
+        var item = _repo.Delete(TestData.ParkAddresses[0].id);
+
+        // Assert.
+        Assert.Equal(TestData.ParkAddresses[0], item);
+        Assert.Equal(1, _db.ParkAddresses.Count());
+        Assert.DoesNotContain(TestData.ParkAddresses[0], _db.ParkAddresses);
+    }
+
+    [Fact]
+    public void Delete_ThrowsNotFoundException_WhenParkAddressDNE()
+    {
+        // Action and assert.
+        Assert.Throws<NotFoundException>(() => _repo.Delete(5));
+    }
 }
