@@ -21,30 +21,32 @@ const CollectedManually = ({ stamp }: { stamp: UserStamp | null }) =>
     <p className='font-medium text-amber-600'>Stamp collected manually</p>
   );
 
-const LoadingPlaceholder = () => (
-  <article className='relative bg-supporting_lightblue p-4'>
-    <header>
-      <div className='flex-row items-center justify-between'>
-        <h3 className='animate-pulse pr-4 font-semibold text-xl'>Loading...</h3>
-        <div className='absolute top-2 right-2 h-8 w-8' />
-      </div>
-    </header>
-  </article>
-);
+// const LoadingPlaceholder = () => (
+//   <article className='relative bg-supporting_lightblue p-4'>
+//     <header>
+//       <div className='flex-row items-center justify-between'>
+//         <h3 className='animate-pulse pr-4 font-semibold text-xl'>Loading...</h3>
+//         <div className='absolute top-2 right-2 h-8 w-8' />
+//       </div>
+//     </header>
+//   </article>
+// );
 
 export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailProps) => {
   // Get our data from hooks
-  const { stamp, isLoading: stampLoading } = useUserStamp(code);
-  const { data: park, isLoading: parkLoading } = usePark(code);
+  // const { stamp, isLoading: stampLoading } = useUserStamp(code);
+  const { stamp } = useUserStamp();
+  // const { data: park, isLoading: parkLoading } = usePark(code);
+  const {data: park} = usePark(code);
 
   // If we're loading, show a loading placeholder
-  if (parkLoading || stampLoading || !park) return <LoadingPlaceholder />;
+  // if (parkLoading || stampLoading || !park) return <LoadingPlaceholder />;
 
   return (
     <article className='relative bg-supporting_lightblue p-4'>
       <header>
         <div className='flex-row items-center justify-between'>
-          <h3 className='pr-4 font-semibold text-xl'>{park.name}</h3>
+          <h3 className='pr-4 font-semibold text-xl'>{park!.name}</h3>
           <button
             className='absolute top-2 right-2 rounded-full p-1 transition-colors hover:bg-black/10'
             onClick={handleClose}
@@ -59,10 +61,10 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
         </div>
       </header>
       <div className=''>
-        <p>{park.city}</p>
+        <p>{park!.city}</p>
         <CollectedOn stamp={stamp} />
         <a
-          href={`/locations/${park.abbreviation}`}
+          href={`/locations/${park!.abbreviation}`}
           className='inline-block text-blue-600 transition-colors hover:text-blue-800 hover:underline'
         >
           View More Park Details <span aria-hidden='true'>&gt;</span>
