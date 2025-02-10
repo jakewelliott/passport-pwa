@@ -178,6 +178,7 @@ export default function App() {
           </Routes>
         </main>
       </div>
+      <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable />
     </SplashScreenWrapper>
   );
 }
