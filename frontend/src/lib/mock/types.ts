@@ -13,7 +13,7 @@ export interface Geopoint {
   longitude: number;
 }
 
-export interface UserStamp {
+export interface Stamp {
   code: ParkAbbreviation;
   timestamp: Date;
   location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
@@ -25,9 +25,10 @@ export interface UserParkVisit {
 }
 
 export interface UserProfile {
-  id: number,
-  username: string,
-  role: string,
+  id: number;
+  username: string;
+  role: string;
+  token?: string;
 }
 
 export interface LoginCredentials {
