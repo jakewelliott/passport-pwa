@@ -1,10 +1,21 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { NotesMiniTab } from '@/components/tabs/locations/notes-minitab';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
+import { toast } from "react-toastify";
 
 // Mock the store
 jest.mock('@/hooks/store/useParkNotesStore');
 const mockedUseParkNotesStore = useParkNotesStore as unknown as jest.Mock;
+
+// Mock react-toastify
+jest.mock("react-toastify", () => ({
+  toast: {
+    success: jest.fn(),
+    error: jest.fn(),
+    info: jest.fn(),
+    warning: jest.fn(),
+  },
+}));
 
 describe('NotesMiniTab', () => {
 	const mockGetNote = jest.fn();
@@ -57,8 +68,7 @@ describe('NotesMiniTab', () => {
 		expect(textarea).toHaveAttribute('placeholder', 'Add some personal notes about this park!');
 	});
 
-	it('shows alert when save button is clicked', () => {
-		const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => { });
+	it('shows alert when save button is clicked', async () => {
 		render(<NotesMiniTab abbreviation={mockAbbreviation} />);
 
 		const saveButton = screen.getByText('Save');
@@ -68,8 +78,7 @@ describe('NotesMiniTab', () => {
 			fireEvent.click(clickableArea);
 		}
 
-		expect(mockAlert).toHaveBeenCalledWith('Notes saved!');
-		mockAlert.mockRestore();
+		expect(toast.success).toHaveBeenCalledWith("Notes saved!");
 	});
 
 	it('applies correct styling to textarea', () => {
