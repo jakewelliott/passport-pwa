@@ -1,5 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace DigitalPassportBackend;
 
+[ExcludeFromCodeCoverage]
 public static class DotEnv
 {
     public static void Load(string filePath)
