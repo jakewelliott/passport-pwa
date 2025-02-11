@@ -2,29 +2,21 @@ import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import LoginPage from '../login';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { act } from 'react-dom/test-utils';
 
 // Mock the react-toastify
 jest.mock('react-toastify');
 
 // Mock the auth hooks
+const loginMutate = jest.fn();
+const registerMutate = jest.fn();
+
 jest.mock('@/hooks/useAuth', () => ({
 	useLogin: () => ({
-		mutate: jest.fn((data, { onSuccess, onError }) => {
-			if (data.username === 'testuser' && data.password === 'password') {
-				onSuccess();
-			} else {
-				onError(new Error('Invalid credentials'));
-			}
-		}),
+		mutate: loginMutate,
 	}),
 	useRegister: () => ({
-		mutate: jest.fn((data, { onSuccess, onError }) => {
-			if (data.username === 'newuser' && data.password === 'password') {
-				onSuccess();
-			} else {
-				onError(new Error('Username already exists'));
-			}
-		}),
+		mutate: registerMutate,
 	}),
 }));
 
@@ -66,11 +58,16 @@ describe('LoginPage', () => {
 			target: { value: 'password' },
 		});
 
-		fireEvent.click(screen.getByText('Login'));
-
-		await waitFor(() => {
-			expect(toast.success).toHaveBeenCalledWith('Successfully logged in as testuser');
+		await act(async () => {
+			fireEvent.click(screen.getByText('Login'));
 		});
+
+		expect(loginMutate).toHaveBeenCalledWith(
+			{ username: 'testuser', password: 'password' },
+			expect.objectContaining({
+				onError: expect.any(Function),
+			})
+		);
 	});
 
 	it('handles failed login', async () => {
@@ -83,10 +80,19 @@ describe('LoginPage', () => {
 			target: { value: 'wrongpass' },
 		});
 
-		fireEvent.click(screen.getByText('Login'));
+		let errorCallback: (error: Error) => void;
+		loginMutate.mockImplementation((_, options) => {
+			errorCallback = options.onError;
+		});
+
+		await act(async () => {
+			fireEvent.click(screen.getByText('Login'));
+			errorCallback!(new Error('Invalid credentials'));
+		});
 
 		await waitFor(() => {
-			expect(toast.error).toHaveBeenCalledWith('Invalid credentials');
+			expect(screen.getByPlaceholderText('Username')).toHaveClass('border-system_red');
+			expect(screen.getByPlaceholderText('Username')).toHaveClass('ring-system_red');
 		});
 	});
 
@@ -100,11 +106,16 @@ describe('LoginPage', () => {
 			target: { value: 'password' },
 		});
 
-		fireEvent.click(screen.getByText('Register'));
-
-		await waitFor(() => {
-			expect(toast.success).toHaveBeenCalledWith('Successfully registered as newuser');
+		await act(async () => {
+			fireEvent.click(screen.getByText('Register'));
 		});
+
+		expect(registerMutate).toHaveBeenCalledWith(
+			{ username: 'newuser', password: 'password' },
+			expect.objectContaining({
+				onError: expect.any(Function),
+			})
+		);
 	});
 
 	it('handles failed registration', async () => {
@@ -117,10 +128,20 @@ describe('LoginPage', () => {
 			target: { value: 'password' },
 		});
 
-		fireEvent.click(screen.getByText('Register'));
+		let errorCallback: (error: Error) => void;
+		registerMutate.mockImplementation((_, options) => {
+			errorCallback = options.onError;
+		});
+
+		await act(async () => {
+			fireEvent.click(screen.getByText('Register'));
+			errorCallback!(new Error('Username already exists'));
+		});
 
 		await waitFor(() => {
-			expect(toast.error).toHaveBeenCalledWith('Username already exists');
+			expect(screen.getByPlaceholderText('Username')).toHaveClass('border-system_red');
+			expect(screen.getByPlaceholderText('Username')).toHaveClass('focus:border-system_red');
+			expect(screen.getByPlaceholderText('Username')).toHaveClass('ring-system_red');
 		});
 	});
 
