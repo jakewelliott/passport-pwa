@@ -36,7 +36,7 @@ public class UserRepositoryTests
         var item = _repo.GetById(TestData.Users[1].id);
 
         // Assert.
-        Assert.Equal(TestData.Users[0], item);
+        Assert.Equal(TestData.Users[1], item);
     }
 
     [Fact]
