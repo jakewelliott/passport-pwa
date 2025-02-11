@@ -1,5 +1,5 @@
 import { LocationMiniTabBar } from '@/app/locations/components/minitab-bar';
-import { LocationContact } from '@/app/locations/components/contact';
+import { LocationContact } from '@/app/locations/components/location-contact';
 import { LocationActionBar } from '@/app/locations/components/action-bar';
 import { DetailsMiniTab } from '@/app/locations/components/details-minitab';
 import { PhotoGalleryMiniTab } from '@/app/locations/components/photos-minitab';
