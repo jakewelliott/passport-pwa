@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SplashScreen, { SplashScreenWrapper } from "@/components/splash-screen";
 import "@/styles/globals.css";
 import Header from "@/components/layout/header.tsx";
@@ -18,12 +18,9 @@ import StayingSafe from "@/app/more/staying-safe.tsx";
 import WelcomeMessage from "@/app/more/welcome-message.tsx";
 import LoginPage from "@/app/login.tsx";
 import { useUser } from "@/hooks/queries/useUser";
-import { queryClient } from "./lib/tanstack-local-storage";
-import { api } from "./lib/mock/api";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Stamps from "./app/stamps";
-import { useLogout } from "./hooks/useAuth";
 
 const PrivateRoute = ({
 	children,
@@ -94,12 +91,6 @@ const LoggedOutRoutes = () => {
 
 export default function App() {
   var { data: user, isLoading } = useUser();
-  const location = useLocation();
-  const redirectPath = encodeURIComponent(location.pathname + location.search);
-
-  const navigate = useNavigate();
-
-  const handleLogout = useLogout();
 
   if (isLoading) return <SplashScreen loadingMsg="user" />;
 
@@ -152,7 +143,7 @@ export default function App() {
                 index
                 element={
                   <PrivateRoute allowedRoles={["visitor", "admin"]}>
-                    <More onLogout={handleLogout} />
+                    <More />
                   </PrivateRoute>
                 }
               />
