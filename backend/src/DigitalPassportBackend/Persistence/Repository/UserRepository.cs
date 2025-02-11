@@ -27,12 +27,6 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
         return result;
     }
 
-    public void CreateUser(User user)
-    {
-        _digitalPassportDbContext.Users.Add(user);
-        _digitalPassportDbContext.SaveChanges();
-    }
-
     public User Delete(int id)
     {
         var result = GetById(id);
