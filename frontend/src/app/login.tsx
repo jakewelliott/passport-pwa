@@ -1,9 +1,10 @@
 import RoundedButton from "@/components/common/rounded-button";
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useLogin, useRegister } from "@/hooks/useAuth";
+import { toast } from 'react-toastify';
 import { cn } from "@/lib/cn-helper";
-
+        
 const getInputStyles = (isError: boolean) => cn(
 	"w-80 rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100",
 	isError
@@ -13,6 +14,8 @@ const getInputStyles = (isError: boolean) => cn(
 
 export default function LoginPage() {
 	const [errors, setErrors] = useState({ username: false, password: false });
+  const [ searchParams ] = useSearchParams();
+  if (!searchParams.get('redirect')) searchParams.set('redirect', '/');
 	const formRef = useRef<HTMLFormElement>(null);
 	const navigate = useNavigate();
 	const loginMutation = useLogin();
@@ -29,7 +32,7 @@ export default function LoginPage() {
 				.filter(([_, isError]) => isError)
 				.map(([field]) => field.charAt(0).toUpperCase() + field.slice(1));
 
-			alert(
+			toast.error(
 				`${missingFields.join(" and ")} ${missingFields.length > 1 ? "are" : "is"} required.`
 			);
 			return false;
@@ -47,14 +50,18 @@ export default function LoginPage() {
 
 		const mutation = isLogin ? loginMutation : registerMutation;
 		mutation.mutate(validatedData, {
-			onSuccess: () => navigate("/"),
+			onSuccess: () => {
+          // Redirect to the root path after successful login or registration
+          toast.success(`Successfully ${isLogin ? 'logged in' : 'registered'} as ${formData.get('username')}`)
+          navigate(searchParams.get('redirect') || '/');
+        },
 			onError: (err) => {
 				const errorMessage = err.message.toLowerCase();
 				setErrors({
 					username: errorMessage.includes("username"),
 					password: errorMessage.includes("password"),
 				});
-				alert(err.message);
+				toast.error(err.message);
 			},
 		});
 	};
