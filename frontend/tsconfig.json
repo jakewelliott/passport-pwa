@@ -21,6 +21,6 @@
 		},
 		"esModuleInterop": true
 	},
-	"include": ["src", "vite-env.d.ts"],
+	"include": ["**/*.d.ts", "**/*.ts", "**/*.tsx"],
 	"references": [{ "path": "./tsconfig.node.json" }]
 }

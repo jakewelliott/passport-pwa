@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { ImageModal } from '../common/image-modal';
+import { ImageModal } from '../image-modal';
 
 // Mock react-zoom-pan-pinch as it's an external dependency
 jest.mock('react-zoom-pan-pinch', () => ({

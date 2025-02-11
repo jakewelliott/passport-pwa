@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { TrailIcon, TrailIcons } from '../common/trail-icons';
+import { TrailIcon, TrailIcons } from '../trail-icons';
 import type { Trail } from '@/lib/mock/types';
 
 describe('TrailIcon', () => {

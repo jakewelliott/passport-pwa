@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import RoundedButton from '../common/rounded-button';
+import RoundedButton from '../rounded-button';
 
 describe('RoundedButton', () => {
 	it('renders with default props', () => {
