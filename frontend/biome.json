@@ -1,0 +1,57 @@
+{
+	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
+	"files": {
+		"ignore": ["src/lib/mock/geojson.json"],
+		"include": ["src/**/*.{js,ts,jsx,tsx}"]
+	},
+	"organizeImports": {
+		"enabled": true,
+		"include": ["src/**/*.{js,ts,jsx,tsx}"]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"correctness": {
+				"noUnusedImports": "warn"
+			},
+			"suspicious": {
+				"noExplicitAny": "off"
+			},
+			"style": {
+				"useNumberNamespace": "off"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "error",
+					"fix": "safe",
+					"options": {
+						"attributes": ["class", "className"]
+					}
+				}
+			}
+		}
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": true,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineWidth": 120
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "single",
+			"semicolons": "always",
+			"arrowParentheses": "always",
+			"lineWidth": 120
+		}
+	},
+	"json": {
+		"parser": {
+			"allowComments": false,
+			"allowTrailingCommas": false
+		}
+	}
+}
