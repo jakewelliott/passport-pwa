@@ -3,7 +3,7 @@ import { TrailDetailView } from '@/app/more/components/trail-details';
 import type { Trail } from '@/lib/mock/types';
 
 // Mock the TrailIcons component
-jest.mock('@/components/common/trail-icons', () => ({
+jest.mock('@/components/trail-icons', () => ({
 	TrailIcons: () => <div data-testid="trail-icons" />
 }));
 

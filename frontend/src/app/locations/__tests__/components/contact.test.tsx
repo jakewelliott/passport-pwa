@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { LocationContact } from '@/app/locations/components/contact';
+import { LocationContact } from '@/app/locations/components/location-contact';
 import { api } from '@/lib/mock/api';
 
 describe('LocationContact', () => {
