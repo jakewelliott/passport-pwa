@@ -8,12 +8,14 @@ public static class TestConfiguration
 {
     public static IConfiguration GetConfiguration()
     {
+        var workspace = Environment.GetEnvironmentVariable("GITHUB_WORKSPACE");
+        throw new Exception(workspace);
         var dotenv = Path.Combine(
-            Environment.GetEnvironmentVariable("GITHUB_WORKSPACE").IsNullOrEmpty()
+            workspace.IsNullOrEmpty()
                 ? Directory.GetParent(Directory.GetCurrentDirectory())!
                     .Parent!.Parent!.Parent!.Parent!.Parent!.Parent!
                     .FullName
-                : Environment.GetEnvironmentVariable("GITHUB_WORKSPACE")!,
+                : workspace!,
             ".env");
         DotEnv.Load(dotenv);
         return new ConfigurationBuilder()
