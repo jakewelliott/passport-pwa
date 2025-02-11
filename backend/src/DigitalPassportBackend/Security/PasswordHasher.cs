@@ -7,7 +7,15 @@ using DigitalPassportBackend.Errors;
 using NetTopologySuite.Operation.Buffer;
 
 namespace DigitalPassportBackend.Security;
-public class PasswordHasher
+
+public interface IPasswordHasher
+{
+    void ValidatePassword(User user);
+    string HashPassword(string password);
+    bool VerifyPassword(string hash, string password);
+
+}
+public class PasswordHasher : IPasswordHasher
 {
     private const int SaltSize = 16; // 128 bit 
     private const int KeySize = 32; // 256 bit

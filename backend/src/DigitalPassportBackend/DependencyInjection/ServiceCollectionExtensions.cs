@@ -60,8 +60,8 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        services.AddSingleton<TokenProvider>();
-        services.AddSingleton<PasswordHasher>();
+        services.AddSingleton<ITokenProvider, TokenProvider>();
+        services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddAuthorization();
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(o =>
