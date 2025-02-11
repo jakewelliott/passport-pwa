@@ -34,12 +34,7 @@ jobs:
       - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
       - name: Create .env file
         run: |
-          echo 'DB_HOST=${{secrets.DB_HOST}}' > .env
-          echo 'DB_PORT=${{secrets.DB_PORT}}' >> .env
-          echo 'DB_PASSWORD=${{secrets.DB_PASSWORD}}' >> .env
-          echo 'DB_DATABASE=${{secrets.DB_PROD_DATABASE}}' >> .env
-          echo 'API_PORT=${{secrets.API_PORT}}' >> .env
-          echo 'FE_PORT=${{secrets.FE_PORT}}' >> .env
+          echo 'ADMIN_PASS=${{secrets.ADMIN_PASS}}' >> .env
       - run: echo "The workflow is now ready to test your code on the runner."
       - name: Setting up .NET
         uses: actions/setup-dotnet@v4
