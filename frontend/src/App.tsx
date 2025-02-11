@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate, } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import SplashScreen, { SplashScreenWrapper } from "@/components/splash-screen";
 import "@/styles/globals.css";
 import Header from "@/components/layout/header.tsx";
@@ -18,9 +18,9 @@ import StayingSafe from "@/app/more/staying-safe.tsx";
 import WelcomeMessage from "@/app/more/welcome-message.tsx";
 import LoginPage from "@/app/login.tsx";
 import { useUser } from "@/hooks/queries/useUser";
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Stamps from "./app/stamps";
-import { useLogout } from "./hooks/useAuth";
 
 const PrivateRoute = ({
 	children,
@@ -29,11 +29,17 @@ const PrivateRoute = ({
 	children: JSX.Element;
 	allowedRoles: string[];
 }) => {
-	const { data: user, isLoading } = useUser();
+  const { data: user, isLoading } = useUser(); // Fetch user data using your custom hook
+  const location = useLocation();
 
 	if (isLoading) return <SplashScreen loadingMsg="user" />; // Show a loading spinner while fetching user data
 	if (user == null) return <Navigate to="/login" replace />; // If user is not logged in, redirect to login page
 
+  if (!user) {
+    // If the user is not logged in, redirect to the login page
+    const redirectPath = encodeURIComponent(location.pathname + location.search);
+    return <Navigate to={`/login?redirect=${redirectPath}`} replace />;
+  }
 	if (!allowedRoles.includes(user.role)) {
 		console.log("User role not allowed on this route: ", user.role);
 		return <Navigate to="/locations" replace />;
@@ -43,113 +49,203 @@ const PrivateRoute = ({
 };
 
 const RoleBasedRedirect = () => {
-	const { data: user, isLoading } = useUser();
-	if (isLoading) return <SplashScreen />;
-	if (user == null) return <Navigate to="/login" replace />;
-	if (user.role === "admin") return <Navigate to="/more" replace />;
-	return <Navigate to="/locations" replace />;
+  const { data: user, isLoading } = useUser();
+  const location = useLocation();
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
+
+  if (!user) {
+    const redirectPath = encodeURIComponent(location.pathname + location.search);
+    return <Navigate to={`/login?redirect=${redirectPath}`} replace />;
+  }
+
+  if (user.role === "admin") {
+    return <Navigate to="/more" replace />;
+  }
+  return <Navigate to="/locations" replace />;
 };
 
 const LoggedOutRoutes = () => {
+  const location = useLocation();
+  const redirectPath = encodeURIComponent(location.pathname + location.search);
 	return (
-		<SplashScreenWrapper>
-			<main className="flex-grow">
-				<Routes>
-					<Route path="/login" element={<LoginPage />} />
-					<Route path="*" element={<Navigate to="/login" replace />} />
-				</Routes>
-			</main>
-		</SplashScreenWrapper>
-	);
+      <SplashScreenWrapper>
+        <main className="flex-grow">
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="*" element={<Navigate to={`/login?redirect=${redirectPath}`} replace />} />
+          </Routes>
+        </main>
+        <ToastContainer
+        position="bottom-right"
+        theme="colored"
+        closeOnClick
+        draggable
+        style={{ zIndex: 9999 }}
+      />
+      </SplashScreenWrapper>
+    );
 };
 
 export default function App() {
-	const { data: user, isLoading } = useUser();
-	const handleLogout = useLogout();
+  var { data: user, isLoading } = useUser();
 
-	if (isLoading) return <SplashScreen loadingMsg="user" />;
-	if (user == null) return <LoggedOutRoutes />;
+  if (isLoading) return <SplashScreen loadingMsg="user" />;
 
-	return (
-		<SplashScreenWrapper>
-			<div className="app">
-				<Header />
-				<TabBar />
-				<main className={"flex-grow pb-16"}>
-					<Routes>
-						{/* Public routes */}
-						<Route path="/login" element={<LoginPage />} />
+  if (!user) return <LoggedOutRoutes />
 
-						{/* Root redirect */}
-						<Route path="/" element={<RoleBasedRedirect />} />
+  return (
+    <SplashScreenWrapper>
+      <div className="app">
+        <Header />
+        <TabBar />
+        <main className={"flex-grow pb-16"}>
+          <Routes>
+            {/* Public routes */}
+            <Route path="/login" element={<LoginPage />} />
 
-						{/* Main tab routes */}
-						<Route
-							path="/locations"
-							element={
-								<PrivateRoute allowedRoles={["visitor", 'admin']}>
-									<Locations />
-								</PrivateRoute>
-							}
-						>
-							<Route
-								path="/locations/:abbreviation"
-								element={
-									<PrivateRoute allowedRoles={["visitor"]}>
-										<LocationDetail />
-									</PrivateRoute>
-								}
-							/>
-						</Route>
-						<Route
-							path="/stamps"
-							element={
-								<PrivateRoute allowedRoles={["visitor"]}>
-									<Stamps />
-								</PrivateRoute>
-							}
-						/>
+            {/* Root redirect */}
+            <Route path="/" element={<RoleBasedRedirect />} />
 
-						{/* More section routes */}
-						<Route
-							path="/more"
-							element={
-								<PrivateRoute allowedRoles={["visitor", "admin"]}>
-									<More />
-								</PrivateRoute>
-							}
-						>
-							{/* Information routes */}
-							<Route path="app-info" element={<AppInfo />} />
-							<Route path="icon-legend" element={<IconLegend />} />
-							<Route path="welcome-message" element={<WelcomeMessage />} />
+            {/* Main tab routes */}
+            <Route path="/locations">
+              <Route
+                index
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <Locations />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/locations/:abbreviation"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <LocationDetail />
+                  </PrivateRoute>
+                }
+              />
+            </Route>
+            <Route
+              path="/stamps"
+              element={
+                <PrivateRoute allowedRoles={["visitor"]}>
+                  <Stamps />
+                </PrivateRoute>
+              }
+            ></Route>
 
-							{/* Hiking related routes */}
-							<Route path="trails" element={<Trails />} />
-							<Route path="staying-safe" element={<StayingSafe />} />
-							<Route path="hiking-essentials" element={<HikingEssentials />} />
+            {/* More section routes */}
+            <Route path="/more">
+              <Route
+                index
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <More />
+                  </PrivateRoute>
+                }
+              />
+              {/* Information routes */}
+              <Route
+                path="app-info"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <AppInfo />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="icon-legend"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <IconLegend />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="welcome-message"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <WelcomeMessage />
+                  </PrivateRoute>
+                }
+              />
 
-							{/* User content routes */}
-							<Route path="bucket-list" element={<BucketList />} />
-							<Route path="my-notes">
-								<Route index element={<MyNotes />} />
-								<Route path="general-notes" element={<EditGeneralNotes />} />
-							</Route>
-						</Route>
+              {/* Hiking related routes */}
+              <Route
+                path="trails"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <Trails />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="staying-safe"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <StayingSafe />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="hiking-essentials"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <HikingEssentials />
+                  </PrivateRoute>
+                }
+              />
 
-						{/* Adam's scratchpad */}
-						<Route
-							path="/scratchpad"
-							element={
-								<PrivateRoute allowedRoles={["visitor", "admin"]}>
-									<Scratchpad />
-								</PrivateRoute>
-							}
-						/>
-					</Routes>
-				</main>
-			</div>
-			<ToastContainer position='bottom-right' theme='colored' closeOnClick draggable />
-		</SplashScreenWrapper >
-	);
+              {/* User content routes */}
+              <Route
+                path="bucket-list"
+                element={
+                  <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                    <BucketList />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="my-notes">
+                <Route
+                  index
+                  element={
+                    <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                      <MyNotes />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="general-notes"
+                  element={
+                    <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                      <EditGeneralNotes />
+                    </PrivateRoute>
+                  }
+                />
+              </Route>
+            </Route>
+
+            {/* Adam's scratchpad */}
+            <Route
+              path="/scratchpad"
+              element={
+                <PrivateRoute allowedRoles={["visitor", "admin"]}>
+                  <Scratchpad />
+                </PrivateRoute>
+              }
+            ></Route>
+          </Routes>
+        </main>
+      </div>
+      <ToastContainer
+        position="bottom-right"
+        theme="colored"
+        closeOnClick
+        draggable
+      />
+    </SplashScreenWrapper>
+  );
 }
