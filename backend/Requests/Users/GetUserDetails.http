@@ -1,0 +1,16 @@
+@validUserId=1
+
+### Valid
+GET {{backend-uri}}/auth/{{validUserId}}
+Authorization: Bearer {{admin-token}}
+Accept: application/json
+
+### Invalid - Not Authorized
+GET {{backend-uri}}/auth/{{validUserId}}
+Authorization: none
+Accept: application/json
+
+### Invalid - No User
+GET {{backend-uri}}/auth/0
+Authorization: Bearer {{admin-token}}
+Accept: application/json

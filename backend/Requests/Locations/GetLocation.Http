@@ -1,0 +1,5 @@
+### VALID
+GET {{host}}/locations/CABE
+
+### INVALID - Invalid Location Abbreviation
+GET {{host}}/locations/NOTFOUND
