@@ -1,10 +1,10 @@
-import type { UserParkVisit, UserProfile, UserStamp } from '@/lib/mock/types';
+import type { UserParkVisit, UserProfile, Stamp } from '@/lib/mock/types';
 import userStampsJson from '@/lib/mock/user_stamps.json';
 import userParkVisitsJson from '@/lib/mock/user_park_visits.json';
 import dummyMapper from '@/lib/dummy-mapper';
 
 const dummyVisit: UserParkVisit = {
-  code: 'DUMM',
+  code: 'CABE',
   timestamp: new Date(),
 };
 
@@ -13,11 +13,11 @@ export const userParkVisits = userParkVisitsJson.map(dummyMapper(dummyVisit));
 const dummyProfile: UserProfile = {
   username: 'dummyuser',
   role: 'visitor',
-  id: 0
+  id: 0,
 };
 
-const dummyStamp: UserStamp = {
-  code: 'DUMM',
+const dummyStamp: Stamp = {
+  code: 'CABE',
   timestamp: new Date(),
   location: {
     latitude: 0,

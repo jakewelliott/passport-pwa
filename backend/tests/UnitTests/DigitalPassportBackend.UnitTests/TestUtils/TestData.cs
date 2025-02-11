@@ -77,8 +77,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 4,
                 icon = ParkIconNames.Fishing_Red,
-                created_at = DateTime.Now,
-                updated_at = DateTime.Now,
+                created_at = DateTime.UtcNow,
+                updated_at = DateTime.UtcNow,
                 parkId = Parks[0].id,
                 park = Parks[0]
             },
@@ -86,8 +86,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 9,
                 icon = ParkIconNames.Swimming_Red,
-                created_at = DateTime.Now,
-                updated_at = DateTime.Now,
+                created_at = DateTime.UtcNow,
+                updated_at = DateTime.UtcNow,
                 parkId = Parks[0].id,
                 park = Parks[0]
             }
@@ -100,8 +100,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 id = 42,
                 photo = "https://facilities.ofa.ncsu.edu/files/2020/02/Engineering-II.jpg",
                 alt = "Photo of EB2 from the south.",
-                createdAt = DateTime.Now,
-                updatedAt = DateTime.Now,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 parkId = Parks[1].id,
                 park = Parks[1]
             },
@@ -111,8 +111,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 id = 78,
                 photo = "https://visit.ncsu.edu/wp-content/uploads/sites/27/2020/03/Engineering-Building-II.jpg",
                 alt = "Aerial photo of EB2 from the north.",
-                createdAt = DateTime.Now,
-                updatedAt = DateTime.Now,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 parkId = Parks[1].id,
                 park = Parks[1]
             }
@@ -124,8 +124,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 42,
                 task = "Task 1 at CABE",
-                createdAt = DateTime.Now,
-                updatedAt = DateTime.Now,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
                 park = Parks[0]
             },
@@ -133,8 +133,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 84,
                 task = "Task 1 at EB2",
-                createdAt = DateTime.Now,
-                updatedAt = DateTime.Now,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 parkId = Parks[1].id,
                 park = Parks[1]
             },
@@ -142,10 +142,78 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 128,
                 task = "Task 2 at CABE",
-                createdAt = DateTime.Now,
-                updatedAt = DateTime.Now,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
                 park = Parks[0]
+            }
+        ];
+
+        public static readonly List<User> Users = 
+        [
+            new()
+            {
+                id = 1,
+                username = "superAdmin",
+                password = TestConfiguration.GetConfiguration()["ADMIN_PASS"]!,
+                role = UserRole.admin,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+            },
+            new()
+            {
+                id = 7,
+                username = "visitor_0",
+                password = "visitor_0_password",
+                role = UserRole.visitor,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow
+            },
+            new()
+            {
+                id = 18,
+                username = "usr_admin_1",
+                password = "admin_password",
+                role = UserRole.admin,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow
+            },
+            new()
+            {
+                id = 24,
+                username = "visitor_1",
+                password = "visitor_1_password",
+                role = UserRole.visitor,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow
+            }
+        ];
+
+        public static readonly List<CollectedStamp> CollectedStamps =
+        [
+            new()
+            {
+                id = 3,
+                method = StampCollectionMethod.location,
+                location = new(35.7716, -78.6737),
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                userId = Users[1].id,
+                user = Users[1],
+                parkId = Parks[1].id,
+                park = Parks[1]
+            },
+            new()
+            {
+                id = 6,
+                method = StampCollectionMethod.manual,
+                location = new(35.7691, -78.6765),
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                userId = Users[3].id,
+                user = Users[3],
+                parkId = Parks[1].id,
+                park = Parks[1]
             }
         ];
     }

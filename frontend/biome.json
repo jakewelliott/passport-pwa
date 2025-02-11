@@ -18,6 +18,9 @@
 			"suspicious": {
 				"noExplicitAny": "off"
 			},
+			"style": {
+				"useNumberNamespace": "off"
+			},
 			"nursery": {
 				"useSortedClasses": {
 					"level": "error",

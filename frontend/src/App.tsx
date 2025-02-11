@@ -4,7 +4,6 @@ import "@/styles/globals.css";
 import Header from "@/components/layout/header.tsx";
 import TabBar from "@/components/layout/tab-bar.tsx";
 import Locations from "@/app/locations/index.tsx";
-import Stamps from "@/app/stamps/index";
 import More from "@/app/more/index.tsx";
 import LocationDetail from "@/app/locations/detail-tabs.tsx";
 import { Scratchpad } from "@/components/scratchpad.tsx";
@@ -23,34 +22,33 @@ import { queryClient } from "./lib/tanstack-local-storage";
 import { api } from "./lib/mock/api";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import Stamps from "./app/stamps";
+import { useLogout } from "./hooks/useAuth";
 
 const PrivateRoute = ({
-  children,
-  allowedRoles,
+	children,
+	allowedRoles,
 }: {
-  children: JSX.Element;
-  allowedRoles: string[];
+	children: JSX.Element;
+	allowedRoles: string[];
 }) => {
   const { data: user, isLoading } = useUser(); // Fetch user data using your custom hook
   const location = useLocation();
 
-  if (isLoading) {
-    return <SplashScreen />; // Show a loading spinner while fetching user data
-  }
+	if (isLoading) return <SplashScreen loadingMsg="user" />; // Show a loading spinner while fetching user data
+	if (user == null) return <Navigate to="/login" replace />; // If user is not logged in, redirect to login page
 
   if (!user) {
     // If the user is not logged in, redirect to the login page
     const redirectPath = encodeURIComponent(location.pathname + location.search);
     return <Navigate to={`/login?redirect=${redirectPath}`} replace />;
   }
+	if (!allowedRoles.includes(user.role)) {
+		console.log("User role not allowed on this route: ", user.role);
+		return <Navigate to="/locations" replace />;
+	}
 
-  if (!allowedRoles.includes(user.role)) {
-    // If the user's role is not allowed, redirect to a default page (e.g., locations)
-    return <Navigate to="/locations" replace />;
-  }
-
-  // If the user is authenticated and has an allowed role, render the children
-  return children;
+	return children;
 };
 
 const RoleBasedRedirect = () => {
@@ -69,33 +67,13 @@ const RoleBasedRedirect = () => {
   if (user.role === "admin") {
     return <Navigate to="/more" replace />;
   }
-
   return <Navigate to="/locations" replace />;
 };
 
-export default function App() {
-  var { data: user, isLoading } = useUser();
+const LoggedOutRoutes = () => {
   const location = useLocation();
   const redirectPath = encodeURIComponent(location.pathname + location.search);
-
-  const navigate = useNavigate();
-
-  const handleLogout = async () => {
-    await api.logoutUser();
-    await queryClient.invalidateQueries({
-      queryKey: ["user"],
-      refetchType: "all",
-    });
-    navigate("/");
-    user = useUser().data;
-  };
-
-  if (isLoading) {
-    return <SplashScreen />;
-  }
-
-  if (!user) {
-    return (
+	return (
       <SplashScreenWrapper>
         <main className="flex-grow">
           <Routes>
@@ -112,7 +90,20 @@ export default function App() {
       />
       </SplashScreenWrapper>
     );
-  }
+};
+
+export default function App() {
+  var { data: user, isLoading } = useUser();
+  const location = useLocation();
+  const redirectPath = encodeURIComponent(location.pathname + location.search);
+
+  const navigate = useNavigate();
+
+  const handleLogout = useLogout();
+
+  if (isLoading) return <SplashScreen loadingMsg="user" />;
+
+  if (!user) return <LoggedOutRoutes />
 
   return (
     <SplashScreenWrapper>
@@ -263,7 +254,6 @@ export default function App() {
         theme="colored"
         closeOnClick
         draggable
-        style={{ zIndex: 9999 }}
       />
     </SplashScreenWrapper>
   );
