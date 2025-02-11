@@ -5,18 +5,18 @@ namespace DigitalPassportBackend.Services;
 
 public class LocationsService : ILocationsService
 {
-    private readonly LocationsRepository _locationsRepository;
-    private readonly ParkAddressRepository _addressRepository;
-    private readonly BucketListItemRepository _bucketListItemRepository;
-    private readonly ParkIconRepository _parkIconRepository;
-    private readonly ParkPhotoRepository _parkPhotoRepository;
+    private readonly ILocationsRepository _locationsRepository;
+    private readonly IParkAddressRepository _addressRepository;
+    private readonly IBucketListItemRepository _bucketListItemRepository;
+    private readonly IParkIconRepository _parkIconRepository;
+    private readonly IParkPhotoRepository _parkPhotoRepository;
 
     public LocationsService(
-        LocationsRepository locationsRepository,
-        ParkAddressRepository addressRepository,
-        BucketListItemRepository bucketListItemRepository,
-        ParkIconRepository parkIconRepository,
-        ParkPhotoRepository parkPhotoRepository)
+        ILocationsRepository locationsRepository,
+        IParkAddressRepository addressRepository,
+        IBucketListItemRepository bucketListItemRepository,
+        IParkIconRepository parkIconRepository,
+        IParkPhotoRepository parkPhotoRepository)
     {
         _locationsRepository = locationsRepository;
         _addressRepository = addressRepository;
@@ -49,5 +49,4 @@ public class LocationsService : ILocationsService
     {
         return _parkPhotoRepository.GetByLocationId(id);
     }
-
 }

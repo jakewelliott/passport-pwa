@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 using DigitalPassportBackend.Persistence.Database;
@@ -13,6 +14,7 @@ using Microsoft.OpenApi.Models;
 
 namespace DigitalPassportBackend.DependencyInjection;
 
+[ExcludeFromCodeCoverage]
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddServices(
@@ -81,18 +83,18 @@ public static class ServiceCollectionExtensions
         IConfiguration configuration,
         bool isDevelopment)
     {
-        services.AddScoped<BucketListItemRepository>();
-        services.AddScoped<CollectedStampRepository>();
-        services.AddScoped<CompletedBucketListItemRepository>();
-        services.AddScoped<LocationsRepository>();
-        services.AddScoped<ParkAddressRepository>();
-        services.AddScoped<ParkIconRepository>();
-        services.AddScoped<ParkPhotoRepository>();
-        services.AddScoped<ParkVisitRepository>();
-        services.AddScoped<PrivateNoteRepository>();
-        services.AddScoped<TrailIconRepository>();
-        services.AddScoped<TrailRepository>();
-        services.AddScoped<UserRepository>();
+        services.AddScoped<IBucketListItemRepository, BucketListItemRepository>();
+        services.AddScoped<ICollectedStampRepository, CollectedStampRepository>();
+        services.AddScoped<ICompletedBucketListItemRepository, CompletedBucketListItemRepository>();
+        services.AddScoped<ILocationsRepository, LocationsRepository>();
+        services.AddScoped<IParkAddressRepository, ParkAddressRepository>();
+        services.AddScoped<IParkIconRepository, ParkIconRepository>();
+        services.AddScoped<IParkPhotoRepository, ParkPhotoRepository>();
+        services.AddScoped<IParkVisitRepository, ParkVisitRepository>();
+        services.AddScoped<IPrivateNoteRepository, PrivateNoteRepository>();
+        services.AddScoped<ITrailIconRepository, TrailIconRepository>();
+        services.AddScoped<ITrailRepository, TrailRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
         var envAddendum = isDevelopment ? "DEV_" : "";
         var connectionString = $"host={configuration[$"DB_{envAddendum}HOST"]};" +
