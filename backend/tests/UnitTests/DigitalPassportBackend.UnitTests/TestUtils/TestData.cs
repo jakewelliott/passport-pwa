@@ -188,5 +188,33 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 updatedAt = DateTime.UtcNow
             }
         ];
+
+        public static readonly List<CollectedStamp> CollectedStamps =
+        [
+            new()
+            {
+                id = 3,
+                method = StampCollectionMethod.location,
+                location = new(35.7716, -78.6737),
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                userId = Users[1].id,
+                user = Users[1],
+                parkId = Parks[1].id,
+                park = Parks[1]
+            },
+            new()
+            {
+                id = 6,
+                method = StampCollectionMethod.manual,
+                location = new(35.7691, -78.6765),
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                userId = Users[3].id,
+                user = Users[3],
+                parkId = Parks[1].id,
+                park = Parks[1]
+            }
+        ];
     }
 }
