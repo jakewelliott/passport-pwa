@@ -4,7 +4,7 @@ import { queryClient } from '@/lib/tanstack-local-storage';
 import { userProfile } from '@/lib/mock/user';
 
 // use our mock user data as placeholder data for now.
-const placeholderUser: UserProfile = userProfile;
+const placeholderUser: UserProfile = { ...userProfile, id: 0 };
 
 export const useUser = () => {
   return useQuery<UserProfile | null, Error>({
