@@ -1,8 +1,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
+
 using NetTopologySuite.Geometries;
 
 namespace DigitalPassportBackend.Domain;
 
+[ExcludeFromCodeCoverage]
 [Table("collected_stamps")]
 public class CollectedStamp
 {
