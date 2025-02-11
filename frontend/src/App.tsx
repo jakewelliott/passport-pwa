@@ -21,6 +21,7 @@ import LoginPage from "@/app/login.tsx";
 import { useUser } from "@/hooks/queries/useUser";
 import { queryClient } from "./lib/tanstack-local-storage";
 import { api } from "./lib/mock/api";
+import { ToastContainer } from "react-toastify"
 
 const PrivateRoute = ({
   children,
