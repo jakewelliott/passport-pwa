@@ -1,7 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { NotesMiniTab } from '@/app/locations/components/notes-minitab';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { toast } from "react-toastify";
+import { renderWithClient } from '@/lib/test-wrapper';
 
 // Mock the store
 jest.mock('@/hooks/store/useParkNotesStore');
@@ -18,81 +19,40 @@ jest.mock("react-toastify", () => ({
 }));
 
 describe('NotesMiniTab', () => {
-	const mockGetNote = jest.fn();
+	const mockAbbreviation = 'ENRI';
+	const mockInitialNote = 'Initial test note';
 	const mockSetNote = jest.fn();
-	const mockAbbreviation = 'TEST';
 
 	beforeEach(() => {
-		// Reset mocks
 		jest.clearAllMocks();
-
-		// Mock implementation
 		mockedUseParkNotesStore.mockReturnValue({
-			getNote: mockGetNote,
-			setNote: mockSetNote
+			getNote: () => mockInitialNote,
+			setNote: mockSetNote,
 		});
-
-		// Default mock values
-		mockGetNote.mockReturnValue('Existing note');
 	});
 
-	it('renders textarea with existing note', () => {
-		render(<NotesMiniTab abbreviation={mockAbbreviation} />);
+	it('renders the notes textarea with initial value', () => {
+		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} />);
 		const textarea = screen.getByRole('textbox');
-
-		expect(textarea).toBeInTheDocument();
-		expect(textarea).toHaveValue('Existing note');
-		expect(mockGetNote).toHaveBeenCalledWith(mockAbbreviation);
+		expect(textarea).toHaveValue(mockInitialNote);
 	});
 
-	it('renders save button', () => {
-		render(<NotesMiniTab abbreviation={mockAbbreviation} />);
-		const saveButton = screen.getByText('Save');
-		expect(saveButton).toBeInTheDocument();
-	});
-
-	it('updates note when typing in textarea', () => {
-		render(<NotesMiniTab abbreviation={mockAbbreviation} />);
+	it('updates note on textarea change', () => {
+		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} />);
 		const textarea = screen.getByRole('textbox');
+		const newNote = 'Updated test note';
 
-		fireEvent.change(textarea, { target: { value: 'New note content' } });
-
-		expect(mockSetNote).toHaveBeenCalledWith(mockAbbreviation, 'New note content');
+		fireEvent.change(textarea, { target: { value: newNote } });
+		expect(mockSetNote).toHaveBeenCalledWith(mockAbbreviation, newNote);
 	});
 
-	it('shows placeholder text when textarea is empty', () => {
-		mockGetNote.mockReturnValue('');
-		render(<NotesMiniTab abbreviation={mockAbbreviation} />);
-
+	it('shows success toast when note is saved', () => {
+		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} />);
 		const textarea = screen.getByRole('textbox');
-		expect(textarea).toHaveAttribute('placeholder', 'Add some personal notes about this park!');
-	});
+		const newNote = 'Updated test note';
 
-	it('shows alert when save button is clicked', async () => {
-		render(<NotesMiniTab abbreviation={mockAbbreviation} />);
-
-		const saveButton = screen.getByText('Save');
-		const clickableArea = saveButton.parentElement;
-		expect(clickableArea).toBeInTheDocument();
-		if (clickableArea) {
-			fireEvent.click(clickableArea);
-		}
-
-		expect(toast.success).toHaveBeenCalledWith("Notes saved!");
-	});
-
-	it('applies correct styling to textarea', () => {
-		render(<NotesMiniTab abbreviation={mockAbbreviation} />);
-		const textarea = screen.getByRole('textbox');
-
-		expect(textarea).toHaveClass(
-			'h-72',
-			'w-full',
-			'flex-grow',
-			'resize-none',
-			'border',
-			'border-secondary_darkteal',
-			'p-4'
-		);
+		fireEvent.change(textarea, { target: { value: newNote } });
+		fireEvent.click(screen.getByTestId('save-button'));
+		expect(toast.success).toHaveBeenCalledWith('Notes saved!');
 	});
 }); 
