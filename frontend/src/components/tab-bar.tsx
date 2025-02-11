@@ -4,6 +4,7 @@ import { MdMoreHoriz } from 'react-icons/md';
 import { FaStamp } from 'react-icons/fa';
 import { useUser } from '@/hooks/queries/useUser';
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
+
 const TabBar = () => {
 	const { data: user, isLoading } = useUser();
 	if (!user || isLoading) return <LoadingPlaceholder />;

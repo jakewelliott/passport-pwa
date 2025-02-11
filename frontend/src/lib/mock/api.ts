@@ -11,7 +11,6 @@ export const api = {
   // Parks
   getParks: () => parks,
 
-  // biome-ignore lint/style/noNonNullAssertion: dangerous but we r just mocking
   getPark: (code: ParkAbbreviation) => parks.find((park: Park) => park.abbreviation === code)!,
 
   // Users

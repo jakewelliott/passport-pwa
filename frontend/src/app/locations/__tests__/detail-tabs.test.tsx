@@ -1,8 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { screen } from '@testing-library/react';
+import { Routes, Route } from 'react-router-dom';
 import DetailTabs from '../detail-tabs';
 import { usePark } from '@/hooks/queries/useParks';
 import { api } from '@/lib/mock/api';
+import { renderWithClient } from '@/lib/test-wrapper';
 
 // Mock the hooks
 jest.mock('@/hooks/queries/useParks');
@@ -10,20 +11,19 @@ jest.mock('@/hooks/queries/useParks');
 const mockUsePark = usePark as jest.Mock;
 
 describe('DetailTabs', () => {
-	const mockPark = api.getParks()[0];
+	const mockPark = api.getPark('ENRI');
 
 	beforeEach(() => {
-		// Reset all mocks before each test
 		jest.clearAllMocks();
+		mockUsePark.mockReturnValue({ data: mockPark });
 	});
 
-	const renderWithRouter = () => {
-		render(
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<DetailTabs />} />
-				</Routes>
-			</BrowserRouter>
+	const renderDetailTabs = () => {
+		renderWithClient(
+			<Routes>
+				<Route path="/locations/:abbreviation" element={<DetailTabs />} />
+			</Routes>,
+			{ routerProps: { initialEntries: ['/locations/ENRI'] } }
 		);
 	};
 
@@ -33,7 +33,7 @@ describe('DetailTabs', () => {
 			isLoading: true
 		});
 
-		renderWithRouter();
+		renderDetailTabs();
 		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
 	});
 
@@ -43,7 +43,7 @@ describe('DetailTabs', () => {
 			isLoading: false
 		});
 
-		renderWithRouter();
+		renderDetailTabs();
 		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
 	});
 
@@ -53,13 +53,13 @@ describe('DetailTabs', () => {
 			isLoading: false
 		});
 
-		renderWithRouter();
+		renderDetailTabs();
 
 		// Check if LocationContact is rendered
 		expect(screen.getByTestId('location-contact')).toBeInTheDocument();
 
 		// Check if LocationActionBar is rendered
-		expect(screen.getByTestId('action-bar')).toBeInTheDocument();
+		expect(screen.getByTestId('location-action-bar')).toBeInTheDocument();
 
 		// Check if LocationMiniTabBar and its children are rendered
 		expect(screen.getByText('Details')).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('DetailTabs', () => {
 			isLoading: false
 		});
 
-		renderWithRouter();
+		renderDetailTabs();
 
 		// Verify park data is passed correctly by checking rendered content
 		expect(screen.getByText(mockPark.name)).toBeInTheDocument();

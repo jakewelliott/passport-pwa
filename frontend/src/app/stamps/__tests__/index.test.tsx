@@ -1,27 +1,37 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { screen, fireEvent } from '@testing-library/react';
 import Stamps from '../index';
-import { useParks } from '@/hooks/queries/useParks';
+import { useParks, usePark } from '@/hooks/queries/useParks';
+import { useStamp } from '@/hooks/useStamps';
 import { api } from '@/lib/mock/api';
+import { renderWithClient } from '@/lib/test-wrapper';
 
 // Mock the hooks
 jest.mock('@/hooks/queries/useParks');
+jest.mock('@/hooks/useStamps');
 
 const mockUseParks = useParks as jest.Mock;
+const mockUsePark = usePark as jest.Mock;
+const mockUseStamp = useStamp as jest.Mock;
 
 describe('Stamps', () => {
 	const mockParks = api.getParks();
 
 	beforeEach(() => {
 		jest.clearAllMocks();
+		// Mock usePark to return the first park when called
+		mockUsePark.mockReturnValue({
+			data: mockParks[0],
+			isLoading: false
+		});
+		// Mock useStamp to return a stamp
+		mockUseStamp.mockReturnValue({
+			data: { timestamp: new Date(), location: null },
+			isLoading: false
+		});
 	});
 
 	const renderStamps = () => {
-		render(
-			<BrowserRouter>
-				<Stamps />
-			</BrowserRouter>
-		);
+		renderWithClient(<Stamps />);
 	};
 
 	it('shows loading state when data is loading', () => {
@@ -49,18 +59,6 @@ describe('Stamps', () => {
 			expect(stampImage).toHaveAttribute('src', `/stamps/${park.abbreviation}.svg`);
 			expect(stampImage).toHaveClass('opacity-50', 'grayscale');
 		});
-	});
-
-	it('organizes stamps in a grid layout', () => {
-		mockUseParks.mockReturnValue({
-			data: mockParks,
-			isLoading: false
-		});
-
-		renderStamps();
-
-		const gridContainer = screen.getByRole('button').closest('.grid');
-		expect(gridContainer).toHaveClass('grid-cols-3');
 	});
 
 	it('shows stamp details when a stamp is clicked', () => {

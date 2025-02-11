@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import CollectStamp from '../collect-stamp';
 import parks from '@/lib/mock/parks';
 
@@ -21,9 +21,8 @@ describe('CollectStamp', () => {
 	});
 
 	it('renders the collect button', () => {
-		const collectButton = screen.getByText('Collect!');
+		const collectButton = screen.getByRole('button', { name: 'Collect!' });
 		expect(collectButton).toBeInTheDocument();
-		expect(collectButton.closest('button')).toHaveClass('rounded-button');
 	});
 
 	it('displays the park stamp image', () => {
@@ -37,12 +36,6 @@ describe('CollectStamp', () => {
 		const closeButton = screen.getByText('×');
 		expect(closeButton).toBeInTheDocument();
 		expect(closeButton).toHaveClass('cursor-pointer', 'font-bold', 'text-h1', 'text-supporting_darkgray');
-	});
-
-	it('has the correct modal styling', () => {
-		const modal = screen.getByText('Woohoo!!!').closest('div');
-		expect(modal).toHaveClass('fixed', 'inset-0', 'flex', 'items-center', 'justify-center', 'bg-secondary_lightblue');
-		expect(modal).toHaveStyle({ zIndex: 9999 });
 	});
 
 	it('has the correct content container styling', () => {

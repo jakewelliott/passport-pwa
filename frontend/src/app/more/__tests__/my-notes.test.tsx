@@ -1,16 +1,12 @@
-import { render, screen, } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { screen } from '@testing-library/react';
 import { MyNotes } from '@/app/more/my-notes';
 import { useParks } from '@/hooks/queries/useParks';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
+import { renderWithClient } from '@/lib/test-wrapper';
 
-// Mock the hooks and router
+// Mock the hooks
 jest.mock('@/hooks/queries/useParks');
 jest.mock('@/hooks/store/useParkNotesStore');
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useNavigate: () => jest.fn()
-}));
 
 const mockUseParks = useParks as jest.Mock;
 const mockUseParkNotesStore = useParkNotesStore as unknown as jest.Mock;
@@ -43,11 +39,7 @@ describe('MyNotes Component - User Stories', () => {
 
 	// User Story: As a user, I want to see my general notes
 	it('should display general notes section', () => {
-		render(
-			<BrowserRouter>
-				<MyNotes />
-			</BrowserRouter>
-		);
+		renderWithClient(<MyNotes />);
 
 		expect(screen.getByText('General Notes')).toBeInTheDocument();
 		expect(screen.getByText('Some general notes')).toBeInTheDocument();
@@ -55,11 +47,7 @@ describe('MyNotes Component - User Stories', () => {
 
 	// User Story: As a user, I want to see which parks I have notes for
 	it('should display parks with notes', () => {
-		render(
-			<BrowserRouter>
-				<MyNotes />
-			</BrowserRouter>
-		);
+		renderWithClient(<MyNotes />);
 
 		expect(screen.getByText('Test Park 1')).toBeInTheDocument();
 		expect(screen.getByText('Test City 1')).toBeInTheDocument();
@@ -73,11 +61,7 @@ describe('MyNotes Component - User Stories', () => {
 			getKeys: () => ['generalNotes']
 		});
 
-		render(
-			<BrowserRouter>
-				<MyNotes />
-			</BrowserRouter>
-		);
+		renderWithClient(<MyNotes />);
 
 		expect(screen.getByText('No park notes found.')).toBeInTheDocument();
 	});
@@ -90,22 +74,14 @@ describe('MyNotes Component - User Stories', () => {
 			getNote: () => ''
 		});
 
-		render(
-			<BrowserRouter>
-				<MyNotes />
-			</BrowserRouter>
-		);
+		renderWithClient(<MyNotes />);
 
 		expect(screen.getByText('No general notes yet')).toBeInTheDocument();
 	});
 
 	// User Story: As a user, I want to see when my notes were last updated
 	it('should display last updated information', () => {
-		render(
-			<BrowserRouter>
-				<MyNotes />
-			</BrowserRouter>
-		);
+		renderWithClient(<MyNotes />);
 
 		const lastUpdatedTexts = screen.getAllByText('Last updated: Not available');
 		expect(lastUpdatedTexts.length).toBeGreaterThan(0);
