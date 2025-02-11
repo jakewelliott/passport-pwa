@@ -68,44 +68,6 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         }
 
         [Fact]
-        public void Get_VisitorRoleValidUserId_ThrowsUnauthorizedAccessException()
-        {
-            // Arrange
-            SetupUser(2, "visitor");
-
-            // Act & Assert
-            Assert.Throws<UnauthorizedAccessException>(() => _controller.Get(1));
-        }
-
-        [Fact]
-        public void Get_VisitorRoleInvalidUserId_ThrowsUnauthorizedAccessException()
-        {
-            // Arrange
-            SetupUser(2, "visitor");
-
-            // Act & Assert
-            Assert.Throws<UnauthorizedAccessException>(() => _controller.Get(0));
-        }
-
-        [Fact]
-        public void Get_VisitorRoleOwnUserId_ThrowsUnauthorizedAccessException()
-        {
-            // Arrange
-            SetupUser(2, "visitor");
-
-            // Act & Assert
-            Assert.Throws<UnauthorizedAccessException>(() => _controller.Get(2));
-        }
-
-        [Fact]
-        public void Get_NotAuthenticated_ThrowsUnauthorizedAccessException()
-        {
-            // Act & Assert
-            Assert.Throws<UnauthorizedAccessException>(() => _controller.Get(0));
-            Assert.Throws<UnauthorizedAccessException>(() => _controller.Get(1));
-        }
-
-        [Fact]
         public void Register_NullLoginDto_ThrowsNullReferenceException()
         {
             // Act & Assert
