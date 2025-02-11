@@ -1,16 +1,12 @@
 using Moq;
 
 using DigitalPassportBackend.Controllers;
-
-using Xunit;
 using DigitalPassportBackend.Services;
 using DigitalPassportBackend.Domain;
 using Microsoft.AspNetCore.Mvc;
 using static DigitalPassportBackend.Controllers.LocationsController;
-using Microsoft.AspNetCore.Http;
-using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Errors;
-using Xunit.Sdk;
+using DigitalPassportBackend.UnitTests.TestUtils;
 
 namespace DigitalPassportBackend.UnitTests.Controllers;
 public class LocationsControllerTests
@@ -29,32 +25,21 @@ public class LocationsControllerTests
     public void Get_ReturnsOkResult_WhenLocationExists()
     {
         // Arrange
-        var location = new Park
-        {
-            id = 1,
-            parkName = "New York City",
-            parkAbbreviation = "NYC",
-            parkType = ParkType.SPA,
-            website = "google.com"
-        };
-        var addresses = new List<ParkAddress>();
-        var icons = new List<ParkIcon>();
-        var bucketListItems = new List<BucketListItem>();
-        var parkPhotos = new List<ParkPhoto>();
-
-        _mockLocationsService.Setup(s => s.GetByAbbreviation(location.parkAbbreviation)).Returns(location);
-        _mockLocationsService.Setup(s => s.GetAddressesByLocationId(location.id)).Returns(addresses);
-        _mockLocationsService.Setup(s => s.GetIconsByLocationId(location.id)).Returns(icons);
-        _mockLocationsService.Setup(s => s.GetBucketListItemsByLocationId(location.id)).Returns(bucketListItems);
-        _mockLocationsService.Setup(s => s.GetParkPhotosByLocationId(location.id)).Returns(parkPhotos);
+        SetupLocation(TestData.Parks[0]);
+        SetupLocation(TestData.Parks[1]);
 
         // Act
-        var result = _controller.Get(location.parkAbbreviation);
+        var result0 = _controller.Get(TestData.Parks[0].parkAbbreviation);
+        var result1 = _controller.Get(TestData.Parks[1].parkAbbreviation);
 
         // Assert
-        var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnValue = Assert.IsType<LocationResponse>(okResult.Value);
-        Assert.Equal(location.parkName, returnValue.parkName);
+        var okResult = Assert.IsType<OkObjectResult>(result0);
+        Assert.IsType<LocationResponse>(okResult.Value);
+        Assert.True(Response.Equal(TestData.Parks[0], (LocationResponse) okResult.Value));
+
+        okResult = Assert.IsType<OkObjectResult>(result1);
+        Assert.IsType<LocationResponse>(okResult.Value);
+        Assert.True(Response.Equal(TestData.Parks[1], (LocationResponse) okResult.Value));
     }
 
     [Fact]
@@ -70,5 +55,19 @@ public class LocationsControllerTests
         // Assert
         Assert.Equal(404, exception.StatusCode);
         Assert.Equal($"Park not found with abbreviation {locationAbbrev}", exception.ErrorMessage);
+    }
+
+    private void SetupLocation(Park park)
+    {
+        _mockLocationsService.Setup(s => s.GetByAbbreviation(park.parkAbbreviation))
+            .Returns(park);
+        _mockLocationsService.Setup(s => s.GetAddressesByLocationId(park.id))
+            .Returns([.. TestData.ParkAddresses.Where(p => p.parkId == park.id)]);
+        _mockLocationsService.Setup(s => s.GetIconsByLocationId(park.id))
+            .Returns([.. TestData.ParkIcons.Where(p => p.parkId == park.id)]);
+        _mockLocationsService.Setup(s => s.GetBucketListItemsByLocationId(park.id))
+            .Returns([.. TestData.BucketList.Where(p => p.parkId == park.id)]);
+        _mockLocationsService.Setup(s => s.GetParkPhotosByLocationId(park.id))
+            .Returns([.. TestData.ParkPhotos.Where(p => p.parkId == park.id)]);
     }
 }
