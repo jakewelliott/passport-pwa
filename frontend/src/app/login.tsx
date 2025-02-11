@@ -52,7 +52,7 @@ export default function LoginPage() {
 		mutation.mutate(validatedData, {
 			onSuccess: () => {
           // Redirect to the root path after successful login or registration
-          toast.success(`Successfully ${isLogin ? 'logged in' : 'registered'} as ${username}`)
+          toast.success(`Successfully ${isLogin ? 'logged in' : 'registered'} as ${formData.get('username')}`)
           navigate(searchParams.get('redirect') || '/');
         },
 			onError: (err) => {
