@@ -1,4 +1,4 @@
-import ListRow from '@/components/common/list-row';
+import ListRow from '@/components/list-row';
 import { Link } from 'react-router-dom';
 import { useUser } from '@/hooks/queries/useUser';
 import { useLogout } from '@/hooks/useAuth';

@@ -1,7 +1,8 @@
 {
 	"$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
 	"files": {
-		"ignore": ["src/lib/mock/geojson.json"]
+		"ignore": ["src/lib/mock/geojson.json"],
+		"include": ["src/**/*.{js,ts,jsx,tsx}"]
 	},
 	"organizeImports": {
 		"enabled": true,
@@ -9,7 +10,6 @@
 	},
 	"linter": {
 		"enabled": true,
-		"ignore": ["./src/components/ui/*"],
 		"rules": {
 			"recommended": true,
 			"correctness": {

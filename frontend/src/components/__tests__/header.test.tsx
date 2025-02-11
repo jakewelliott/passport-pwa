@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import Header from '../layout/header';
+import Header from '../header';
 import * as usePageTitleHook from '@/hooks/usePageTitle';
 
 // Mock the useNavigate hook
