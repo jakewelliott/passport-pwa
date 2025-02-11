@@ -1,8 +1,7 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import LoginPage from '../login';
+import { renderWithClient } from '@/lib/test-wrapper';
 
 // Mock the react-toastify
 jest.mock('react-toastify');
@@ -29,16 +28,8 @@ jest.mock('@/hooks/useAuth', () => ({
 	}),
 }));
 
-const queryClient = new QueryClient();
-
 const renderLoginPage = () => {
-	render(
-		<QueryClientProvider client={queryClient}>
-			<BrowserRouter>
-				<LoginPage />
-			</BrowserRouter>
-		</QueryClientProvider>
-	);
+	renderWithClient(<LoginPage />);
 };
 
 describe('LoginPage', () => {

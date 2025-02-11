@@ -20,8 +20,6 @@ const toStringShort = (date: Date) =>
     year: 'numeric',
   });
 
-// Export single object with all the functions
-
 export default {
   fromString,
   parse: fromString,

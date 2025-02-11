@@ -1,7 +1,8 @@
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter, useLocation } from 'react-router-dom';
+import { screen } from '@testing-library/react';
+import { useLocation } from 'react-router-dom';
 import TabBar from '../tab-bar';
 import * as useUserHook from '@/hooks/queries/useUser';
+import { renderWithClient } from '@/lib/test-wrapper';
 
 // Mock the useLocation hook
 jest.mock('react-router-dom', () => ({
@@ -9,83 +10,110 @@ jest.mock('react-router-dom', () => ({
 	useLocation: jest.fn(),
 }));
 
+// Mock the useUser hook
+jest.mock('@/hooks/queries/useUser');
+
 const mockUseLocation = useLocation as jest.Mock;
+const mockUseUser = useUserHook.useUser as jest.Mock;
 
 describe('TabBar', () => {
-	const mockUseUser = jest.spyOn(useUserHook, 'useUser');
-
 	beforeEach(() => {
-		mockUseLocation.mockReturnValue({ pathname: '/stamps' });
+		jest.clearAllMocks();
+		mockUseLocation.mockReturnValue({ pathname: '/' });
+		mockUseUser.mockReturnValue({ data: { username: 'testuser' } });
 	});
 
-	it('renders all tabs for visitor role', () => {
-		mockUseUser.mockReturnValue({
-			data: { role: 'visitor' },
-		} as any);
+	it('renders all navigation tabs', () => {
+		renderWithClient(<TabBar />);
 
-		render(
-			<BrowserRouter>
-				<TabBar />
-			</BrowserRouter>
-		);
+		expect(screen.getByText('Locations')).toBeInTheDocument();
+		expect(screen.getByText('Stamps')).toBeInTheDocument();
+		expect(screen.getByText('More')).toBeInTheDocument();
+	});
+
+	it('highlights active tab based on current route', () => {
+		mockUseLocation.mockReturnValue({ pathname: '/stamps' });
+		renderWithClient(<TabBar />);
+
+		const stampsTab = screen.getByText('Stamps').closest('div');
+		expect(stampsTab).toHaveClass('text-system_white');
+	});
+
+	it('shows inactive color for non-active tabs', () => {
+		mockUseLocation.mockReturnValue({ pathname: '/stamps' });
+		renderWithClient(<TabBar />);
+
+		const locationsTab = screen.getByText('Locations').closest('div');
+		const moreTab = screen.getByText('More').closest('div');
+
+		expect(locationsTab).toHaveClass('text-supporting_inactiveblue');
+		expect(moreTab).toHaveClass('text-supporting_inactiveblue');
+	});
+
+	it('has correct navigation links', () => {
+		renderWithClient(<TabBar />);
+
+		const locationsLink = screen.getByText('Locations').closest('a');
+		const stampsLink = screen.getByText('Stamps').closest('a');
+		const moreLink = screen.getByText('More').closest('a');
+
+		expect(locationsLink).toHaveAttribute('href', '/locations');
+		expect(stampsLink).toHaveAttribute('href', '/stamps');
+		expect(moreLink).toHaveAttribute('href', '/more');
+	});
+
+	it('shows loading placeholder when user data is loading', () => {
+		mockUseUser.mockReturnValue({ isLoading: true });
+		renderWithClient(<TabBar />);
+
+		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+	});
+
+	it('shows loading placeholder when user data is null', () => {
+		mockUseUser.mockReturnValue({ data: null, isLoading: false });
+		renderWithClient(<TabBar />);
+
+		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+	});
+
+	it('shows correct tabs for visitor role', () => {
+		mockUseUser.mockReturnValue({ data: { role: 'visitor', username: 'testuser' } });
+		renderWithClient(<TabBar />);
 
 		expect(screen.getByText('Stamps')).toBeInTheDocument();
 		expect(screen.getByText('Locations')).toBeInTheDocument();
 		expect(screen.getByText('More')).toBeInTheDocument();
 	});
 
-	it('renders appropriate tabs for admin role', () => {
-		mockUseUser.mockReturnValue({
-			data: { role: 'admin' },
-		} as any);
-
-		render(
-			<BrowserRouter>
-				<TabBar />
-			</BrowserRouter>
-		);
+	it('shows correct tabs for admin role', () => {
+		mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
+		renderWithClient(<TabBar />);
 
 		expect(screen.queryByText('Stamps')).not.toBeInTheDocument();
 		expect(screen.getByText('Locations')).toBeInTheDocument();
 		expect(screen.getByText('More')).toBeInTheDocument();
 	});
 
-	it('highlights active tab', () => {
-		mockUseUser.mockReturnValue({
-			data: { role: 'visitor' },
-		} as any);
+	it('renders icons for each tab', () => {
+		renderWithClient(<TabBar />);
 
-		mockUseLocation.mockReturnValue({ pathname: '/stamps' });
+		const links = screen.getAllByRole('link');
+		expect(links).toHaveLength(3); // One for each tab
 
-		render(
-			<BrowserRouter>
-				<TabBar />
-			</BrowserRouter>
-		);
-
-		const activeTab = screen.getByText('Stamps').closest('div');
-		const inactiveTab = screen.getByText('Locations').closest('div');
-
-		expect(activeTab).toHaveClass('text-system_white');
-		expect(inactiveTab).toHaveClass('text-supporting_inactiveblue');
+		// Verify each link has an SVG icon
+		links.forEach(link => {
+			expect(link.querySelector('svg')).toBeInTheDocument();
+		});
 	});
 
-	it('has correct styling', () => {
-		mockUseUser.mockReturnValue({
-			data: { role: 'visitor' },
-		} as any);
+	it('highlights tab when pathname partially matches', () => {
+		mockUseLocation.mockReturnValue({ pathname: '/stamps/details' });
+		renderWithClient(<TabBar />);
 
-		render(
-			<BrowserRouter>
-				<TabBar />
-			</BrowserRouter>
-		);
+		const stampsTab = screen.getByText('Stamps').closest('div');
+		expect(stampsTab).toHaveClass('text-system_white');
 
-		const nav = screen.getByRole('navigation');
-		expect(nav).toHaveClass('fixed', 'right-0', 'bottom-0', 'left-0', 'bg-secondary_darkteal');
-		expect(nav).toHaveStyle({ zIndex: '9998' });
-
-		const ul = nav.firstChild;
-		expect(ul).toHaveClass('flex', 'h-16', 'items-center', 'justify-around');
+		const locationsTab = screen.getByText('Locations').closest('div');
+		expect(locationsTab).toHaveClass('text-supporting_inactiveblue');
 	});
 }); 

@@ -4,7 +4,7 @@ import { useParks } from '@/hooks/queries/useParks';
 
 const LoadingPlaceholder = () => {
 	// TODO: add a loading placeholder (blank grey boxes)
-	return <div>Loading...</div>;
+	return <div data-testid='loading-placeholder'>Loading...</div>;
 };
 
 export default function Locations() {
