@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { PassportHeader } from '../common/passport-header';
+import { PassportHeader } from '../passport-header';
 
 describe('PassportHeader', () => {
 	it('renders logo with correct attributes', () => {

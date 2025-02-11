@@ -6,9 +6,9 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
-		"lint": "npx @biomejs/biome lint ./src",
-		"check": "npx @biomejs/biome check ./src",
-		"fix": "npx @biomejs/biome check --write --unsafe ./src",
+		"lint": "biome check",
+		"check": "biome check",
+		"fix": "biome check --write --unsafe",
 		"preview": "vite preview",
 		"test": "jest --coverage",
 		"test:watch": "jest --watch"
@@ -48,6 +48,7 @@
 		"@typescript-eslint/parser": "^7.8.0",
 		"@vitejs/plugin-react": "^4.2.1",
 		"autoprefixer": "^10.4.20",
+		"biome": "^0.3.3",
 		"eslint": "^8.57.0",
 		"eslint-plugin-react-hooks": "^4.6.2",
 		"eslint-plugin-react-refresh": "^0.4.6",

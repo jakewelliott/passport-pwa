@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter, useLocation } from 'react-router-dom';
-import TabBar from '../layout/tab-bar';
+import TabBar from '../tab-bar';
 import * as useUserHook from '@/hooks/queries/useUser';
 
 // Mock the useLocation hook

@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ListRow from '../common/list-row';
+import ListRow from '../list-row';
 
 describe('ListRow', () => {
 	it('renders children correctly', () => {
