@@ -1,47 +1,85 @@
 import { render, screen, act } from '@testing-library/react';
 import SplashScreen, { SplashScreenWrapper } from '../splash-screen';
 
+jest.useFakeTimers();
+
 describe('SplashScreen', () => {
-  it('renders the splash screen with logo and text', () => {
-    render(<SplashScreen />);
+	it('renders logo with correct attributes', () => {
+		render(<SplashScreen />);
 
-    // Check if logo is present
-    expect(screen.getByAltText('North Carolina Department of Parks and Rec White Logo')).toBeInTheDocument();
+		const logo = screen.getByAltText('North Carolina Department of Parks and Rec White Logo');
+		expect(logo).toBeInTheDocument();
+		expect(logo).toHaveAttribute('src', '/DPRLogoWhite.svg');
+		expect(logo).toHaveAttribute('width', '136');
+		expect(logo).toHaveAttribute('height', '103');
+	});
 
-    // Check if text content is present
-    expect(screen.getByText('North Carolina State Parks')).toBeInTheDocument();
-    expect(screen.getByText('Passport')).toBeInTheDocument();
-  });
+	it('renders title and passport text', () => {
+		render(<SplashScreen />);
+		expect(screen.getByText('North Carolina State Parks')).toBeInTheDocument();
+		expect(screen.getByText('Passport')).toBeInTheDocument();
+	});
+
+	it('has correct styling', () => {
+		render(<SplashScreen />);
+
+		const container = screen.getByText('North Carolina State Parks').parentElement?.parentElement;
+		expect(container).toHaveStyle({
+			backgroundImage: "url('/photos/CRMO_FrontCover.jpg')",
+			backgroundSize: '150%',
+			backgroundPosition: 'center 25%',
+			zIndex: 9999,
+		});
+		expect(container).toHaveClass('fixed', 'inset-0', 'flex', 'flex-col', 'items-center', 'bg-no-repeat');
+
+		const passportText = screen.getByText('Passport');
+		expect(passportText).toHaveClass('script');
+		expect(passportText).toHaveStyle({ paddingTop: 30 });
+	});
 });
 
 describe('SplashScreenWrapper', () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
+	it('initially shows splash screen', () => {
+		render(
+			<SplashScreenWrapper>
+				<div>Child Content</div>
+			</SplashScreenWrapper>
+		);
 
-  afterEach(() => {
-    jest.useRealTimers();
-  });
+		expect(screen.getByText('North Carolina State Parks')).toBeInTheDocument();
+		expect(screen.queryByText('Child Content')).not.toBeInTheDocument();
+	});
 
-  it('shows splash screen initially and then children after timeout', async () => {
-    const TestChild = () => <div>Test Content</div>;
+	it('shows children after timeout', async () => {
+		render(
+			<SplashScreenWrapper>
+				<div>Child Content</div>
+			</SplashScreenWrapper>
+		);
 
-    render(
-      <SplashScreenWrapper>
-        <TestChild />
-      </SplashScreenWrapper>,
-    );
+		// Initially splash screen is shown
+		expect(screen.getByText('North Carolina State Parks')).toBeInTheDocument();
 
-    // Initially shows splash screen
-    expect(screen.getByText('North Carolina State Parks')).toBeInTheDocument();
-    expect(screen.queryByText('Test Content')).not.toBeInTheDocument();
+		// Advance timers
+		act(() => {
+			jest.advanceTimersByTime(500);
+		});
 
-    // After timeout, shows children
-    act(() => {
-      jest.advanceTimersByTime(500);
-    });
+		// Now children should be shown
+		expect(screen.getByText('Child Content')).toBeInTheDocument();
+		expect(screen.queryByText('North Carolina State Parks')).not.toBeInTheDocument();
+	});
 
-    expect(screen.queryByText('North Carolina State Parks')).not.toBeInTheDocument();
-    expect(screen.getByText('Test Content')).toBeInTheDocument();
-  });
+	it('cleans up timer on unmount', () => {
+		const { unmount } = render(
+			<SplashScreenWrapper>
+				<div>Child Content</div>
+			</SplashScreenWrapper>
+		);
+
+		const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout');
+		unmount();
+		expect(clearTimeoutSpy).toHaveBeenCalled();
+		clearTimeoutSpy.mockRestore();
+	});
 });
