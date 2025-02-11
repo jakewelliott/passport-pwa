@@ -124,12 +124,6 @@ src/ houses the source files for the functionality of the app
 > src/context/ houses the global contexts (used to pass information between
 > components across the app)
 
-> src/NOTINUSE/ houses some of the files that Adam made while he was testing the
-> different functionalities such as GPS and certain offline features. These
-> files are not being used anywhere else in the program but are being kept
-> temporarily for us to refer to as we implement these features in the actual
-> app.
-
 > src/pages/ holds the basic structure for each page of the app (this is where
 > all the components are put together to create a page). There is a subdirectory
 > for each tab as well as some files that are loose because they do not involve
@@ -161,3 +155,6 @@ Biome has a VSCode extension that you can install to get inline feedback on your
 code as you are writing it, and auto format your code as you save it.
 
 Rules for Biome are in the `biome.json` file.
+
+# Testing & Coverage
+Run dis bit: `npm test`
