@@ -25,4 +25,4 @@ dev-dist
 *.sw?
 
 # coverage will show up in vscode search 
-coverage/
+coverage

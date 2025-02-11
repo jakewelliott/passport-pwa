@@ -1,6 +1,6 @@
 import RoundedButton from "@/components/rounded-button";
 import { useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useLogin, useRegister } from "@/hooks/useAuth";
 import { toast } from 'react-toastify';
 import { cn } from "@/lib/cn-helper";
@@ -17,7 +17,6 @@ export default function LoginPage() {
 	const [searchParams] = useSearchParams();
 	if (!searchParams.get('redirect')) searchParams.set('redirect', '/');
 	const formRef = useRef<HTMLFormElement>(null);
-	const navigate = useNavigate();
 	const loginMutation = useLogin();
 	const registerMutation = useRegister();
 
@@ -49,20 +48,16 @@ export default function LoginPage() {
 		if (!validatedData) return;
 
 		const mutation = isLogin ? loginMutation : registerMutation;
-		mutation.mutate(validatedData, {
-			onSuccess: () => {
-				// Redirect to the root path after successful login or registration
-				toast.success(`Successfully ${isLogin ? 'logged in' : 'registered'} as ${formData.get('username')}`)
-				navigate(searchParams.get('redirect') || '/');
-			},
+		mutation.mutate({
+			...validatedData
+		}, {
 			onError: (err) => {
 				const errorMessage = err.message.toLowerCase();
 				setErrors({
-					username: errorMessage.includes("username"),
+					username: errorMessage.includes("username") || errorMessage.includes("invalid"),
 					password: errorMessage.includes("password"),
 				});
-				toast.error(err.message);
-			},
+			}
 		});
 	};
 
