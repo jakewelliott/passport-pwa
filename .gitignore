@@ -1,8 +1,5 @@
 **/.DS_Store
-
-# SSL Certificates
+**/node_modules
 **/*.pem
-
 **/.env
-
-frontend/coverage/**
+**/*.pem
