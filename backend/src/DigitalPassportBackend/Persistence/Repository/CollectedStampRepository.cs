@@ -7,11 +7,6 @@ public class CollectedStampRepository(DigitalPassportDbContext digitalPassportDb
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
-    public Park? GetByAbbreviation(string abbreviation)
-    {
-        return _digitalPassportDbContext.Parks.Where(l => l.parkAbbreviation.Equals(abbreviation)).Single();
-    }
-
     public CollectedStamp GetById(int id)
     {
         var result = _digitalPassportDbContext.CollectedStamps.Where(a => a.id.Equals(id)).SingleOrDefault();
