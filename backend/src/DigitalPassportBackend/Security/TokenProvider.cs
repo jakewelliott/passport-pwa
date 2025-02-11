@@ -5,7 +5,13 @@ using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DigitalPassportBackend.Secutiry;
-public class TokenProvider(IConfiguration configuration)
+
+public interface ITokenProvider
+{
+    string Create(User user);
+}
+
+public class TokenProvider(IConfiguration configuration) : ITokenProvider
 {
     public string Create(User user)
     {

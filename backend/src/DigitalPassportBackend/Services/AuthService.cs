@@ -8,15 +8,15 @@ namespace DigitalPassportBackend.Services;
 
 public class AuthService(
     IUserRepository userRepository,
-    PasswordHasher passwordHasher,
-    TokenProvider tokenProvider) : IAuthService
+    IPasswordHasher passwordHasher,
+    ITokenProvider tokenProvider) : IAuthService
 {
 
     public User GetUserById(int id)
     {
         User user = userRepository.GetById(id)!;
         user.password = "HIDDEN FOR USER PROTECTION";
-        return userRepository.GetById(id)!;
+        return user;
     }
 
     public string LoginUser(User user)
@@ -32,7 +32,7 @@ public class AuthService(
 
     public string RegisterUser(User user)
     {
-        var restrictedKeywords = new[] { "admin", "anon", "anonymous", "guest", "visitor", "test" };
+        var restrictedKeywords = new[] { "admin", "anon", "guest", "visitor", "test" };
 
         // Check if the username contains any restricted keyword
         foreach (var keyword in restrictedKeywords)
