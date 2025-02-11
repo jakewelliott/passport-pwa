@@ -2,6 +2,8 @@ using DigitalPassportBackend.Domain;
 
 using Microsoft.OpenApi.Extensions;
 
+using NetTopologySuite.Geometries;
+
 using static DigitalPassportBackend.Controllers.LocationsController;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils;
@@ -11,10 +13,7 @@ public static class Response
     {
         return park.id == resp.id
             && park.parkName == resp.parkName
-            && new {
-                longitude = park.coordinates == null ? 0 : park.coordinates.X,
-                latitude = park.coordinates == null ? 0 : park.coordinates.Y
-            } == resp.coordinates
+            && Equal(park.coordinates, resp.coordinates)
             && park.phone == resp.phone
             && park.email == resp.email
             && park.establishedYear == resp.establishedYear
@@ -63,6 +62,16 @@ public static class Response
         return photos.Count() == resp.Length
             && FieldEqual(photos, p => p.photo, resp, r => r.photoPath)
             && FieldEqual(photos, p => p.alt, resp, r => r.alt);
+    }
+
+    public static bool Equal(Point? coord, object obj)
+    {
+        try {
+            return coord?.X == (double) obj.GetType().GetProperty("longitude")?.GetValue(obj, null)!
+                && coord?.Y == (double) obj.GetType().GetProperty("latitude")?.GetValue(obj, null)!;
+        } catch {
+            return false;
+        }
     }
 
     private static bool FieldEqual<T, U>(IEnumerable<T> a, Func<T, string?> funcA, IEnumerable<U> b, Func<U, string?> funcB)
