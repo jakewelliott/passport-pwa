@@ -218,6 +218,40 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             }
         ];
 
+        public static readonly List<ParkVisit> ParkVisits = 
+        [
+            new()
+            {
+                id = 2,
+                createdAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
+                updatedAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
+                parkId = Parks[0].id,
+                park = Parks[0],
+                userId = Users[1].id,
+                user = Users[1]
+            },
+            new() 
+            {
+                id = 8,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0],
+                userId = Users[1].id,
+                user = Users[1]
+            },
+            new()
+            {
+                id = 10,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0],
+                userId = Users[2].id,
+                user = Users[2]
+            }
+        ];
+
         public static readonly List<BucketListItem> BucketList =
         [
             new()
