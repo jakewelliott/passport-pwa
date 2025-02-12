@@ -103,7 +103,9 @@ public class TokenProviderTests
             id = RandomNumberGenerator.GetInt32(2147483646),
             username = "testuser",
             password = "password",
-            role = UserRole.visitor
+            role = UserRole.visitor,
+            createdAt = DateTime.UtcNow,
+            updatedAt = DateTime.UtcNow
         };
 
         // Act
