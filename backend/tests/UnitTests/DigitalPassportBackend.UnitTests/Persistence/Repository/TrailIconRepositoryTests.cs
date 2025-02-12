@@ -27,7 +27,7 @@ public class TrailIconRepositoryTests
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new TrailIconRepository(_db);
+        _repo = new(_db);
     }
 
     [Fact]

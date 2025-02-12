@@ -26,7 +26,7 @@ public class LocationsRepositoryTests
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new LocationsRepository(_db);
+        _repo = new(_db);
     }
 
     [Fact]

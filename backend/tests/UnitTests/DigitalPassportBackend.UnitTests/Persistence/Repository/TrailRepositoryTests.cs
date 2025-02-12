@@ -26,7 +26,7 @@ public class TrailRepositoryTests
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new TrailRepository(_db);
+        _repo = new(_db);
     }
 
     [Fact]

@@ -26,7 +26,7 @@ public class CollectedStampRepositoryTests
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new CollectedStampRepository(_db);
+        _repo = new(_db);
     }
 
     [Fact]

@@ -26,7 +26,7 @@ public class ParkAddressRepositoryTests
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new ParkAddressRepository(_db);
+        _repo = new(_db);
     }
 
     [Fact]
