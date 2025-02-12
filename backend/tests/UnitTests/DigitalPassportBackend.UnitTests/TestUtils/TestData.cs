@@ -4,7 +4,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
 {
     public static partial class TestData
     {
-        public static readonly List<Park> Parks = 
+        public static readonly List<Park> Parks =
         [
             new() {
                 id = 45,
@@ -42,8 +42,68 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 website = "https://www.nscu.edu"
             }
         ];
-        
-        public static readonly List<ParkAddress> ParkAddresses = 
+
+        public static readonly List<Trail> Trails =
+        [
+            new()
+            {
+                id = 1,
+                trailName = "trail name",
+                length = "trail length",
+                description = "trail description",
+            },
+            new()
+            {
+                id = 2,
+                trailName = "trail name 2",
+                length = "trail length 2",
+                description = "trail description 2",
+            },
+            new()
+            {
+                id = 3,
+                trailName = "trail name 3",
+                length = "trail length 3",
+                description = "trail description 3",
+            },
+            new()
+            {
+                id = 4,
+                trailName = "trail name 4",
+                length = "trail length 4",
+                description = "trail description 4",
+            },
+        ];
+
+        public static readonly List<TrailIcon> TrailIcons =
+        [
+            new()
+            {
+                id = 1,
+                icon = TrailIconName.Accessible,
+                trail = Trails[0],
+            },
+            new()
+            {
+                id = 2,
+                icon = TrailIconName.Amphiteater,
+                trail = Trails[1],
+            },
+            new()
+            {
+                id = 3,
+                icon = TrailIconName.BackpackCamping,
+                trail = Trails[2],
+            },
+            new()
+            {
+                id = 4,
+                icon = TrailIconName.FourWDBeach,
+                trail = Trails[3],
+            },
+        ];
+
+        public static readonly List<ParkAddress> ParkAddresses =
         [
             new()
             {
@@ -71,7 +131,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             }
         ];
 
-        public static readonly List<ParkIcon> ParkIcons = 
+        public static readonly List<ParkIcon> ParkIcons =
         [
             new()
             {
@@ -149,7 +209,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             }
         ];
 
-        public static readonly List<User> Users = 
+        public static readonly List<User> Users =
         [
             new()
             {
