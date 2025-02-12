@@ -26,7 +26,7 @@ public class BucketListItemRepositoryTests
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new BucketListItemRepository(_db);
+        _repo = new(_db);
     }
 
     [Fact]

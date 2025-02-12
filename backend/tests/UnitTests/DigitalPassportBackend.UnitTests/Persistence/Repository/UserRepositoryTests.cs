@@ -26,7 +26,7 @@ public class UserRepositoryTests
         _db.SaveChanges();
 
         // Initialize the repository.
-        _repo = new UserRepository(_db);
+        _repo = new(_db);
     }
 
     [Fact]
