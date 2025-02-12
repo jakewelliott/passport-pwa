@@ -2,7 +2,7 @@ using DigitalPassportBackend.Domain;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils
 {
-    public static partial class TestData
+    public static class TestData
     {
         public static readonly List<Park> Parks =
         [
@@ -243,6 +243,43 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new()
             {
                 id = 10,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0],
+                userId = Users[2].id,
+                user = Users[2]
+            }
+        ];
+
+        public static readonly List<PrivateNote> PrivateNotes =
+        [
+            new()
+            {
+                id = 10,
+                note = "this is a note. it has stuff in it.",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0],
+                userId = Users[1].id,
+                user = Users[1]
+            },
+            new()
+            {
+                id = 24,
+                note = "im so excited to wake up and write tests all day :)",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[1].id,
+                park = Parks[1],
+                userId = Users[2].id,
+                user = Users[2]
+            },
+            new()
+            {
+                id = 42,
+                note = "omg my boyfriend lives near here i should go with him 🥰",
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
