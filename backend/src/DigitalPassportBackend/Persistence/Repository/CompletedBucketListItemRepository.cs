@@ -7,11 +7,6 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
-    public Park? GetByAbbreviation(string abbreviation)
-    {
-        return _digitalPassportDbContext.Parks.Where(l => l.parkAbbreviation.Equals(abbreviation)).Single();
-    }
-
     public CompletedBucketListItem GetById(int id)
     {
         var result = _digitalPassportDbContext.CompletedBucketListItems.Where(a => a.id.Equals(id)).SingleOrDefault();
