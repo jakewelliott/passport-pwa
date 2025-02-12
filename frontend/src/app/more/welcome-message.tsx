@@ -30,21 +30,21 @@ const WelcomeMessage: React.FC = () => {
         </p>
       </div>
 
-      <div className='mt-8 grid grid-cols-3 place-items-center gap-4'>
+      <div className='mt-8 grid grid-cols-3 place-items-center gap-4' role='image-grid'>
         {/* Replace these image paths with your actual image paths */}
         <img
           src='/photos/ELKN_ParkVisitor_LauraMeeks.jpg'
-          alt='North Carolina State Park Scene'
+          alt='Elk Knob State Park Scene'
           className='aspect-square w-full rounded-lg object-cover shadow-md'
         />
         <img
           src='/photos/MOJESign_ParkVisitor_EverettFamily.jpg'
-          alt='North Carolina State Park Scene'
+          alt='Mount Jefferson State Natural Area Scene'
           className='aspect-square w-full rounded-lg object-cover shadow-md'
         />
         <img
           src='/photos/DogWithPassport_ParkVisitor_KatieGriswold.jpg'
-          alt='North Carolina State Park Scene'
+          alt='Dog with paper Passport'
           className='aspect-square w-full rounded-lg object-cover shadow-md'
         />
       </div>

@@ -1,70 +1,74 @@
-import { } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import StayingSafe from '@/app/more/staying-safe';
 
-describe('StayingSafe Component - User Stories', () => {
-	// TODO: fix - test expects "Tell someone your plans" text which is not present in the component
-	// it('should display general safety guidelines', () => {
-	// 	render(
-	// 		<BrowserRouter>
-	// 			<StayingSafe />
-	// 		</BrowserRouter>
-	// 	);
+describe('StayingSafe Component', () => {
+  const safetyRules = [
+    'Alcohol is not allowed except on individual campsites.',
+    'Follow the rules for boating and fishing from the NC Wildlife Resources Commission. Make sure you have a fishing license if you are fishing.',
+    'Do not fly drones in the park.',
+    'Only have fires in grills and fire rings, and keep an eye on them.',
+    'Do not bring firewood from far away; get it locally or make sure it is treated.',
+    'No fireworks or weapons. Handguns are allowed with a concealed carry permit in outdoor areas only.',
+    "Watch out for snakes, poison ivy, and ticks. Check for ticks after you've been hiking.",
+    'Bring enough water for you and your pets.',
+    "Stick to the trails, and don't go near steep edges. Be careful on wet trails, rocks, and bridges.",
+    "Plan your hikes ahead of time so you don't get caught by darkness.",
+    "Always wear a life jacket when you are paddling, boating, or swimming, especially if you're not a strong swimmer. Kids under 13 years old are required to wear one.",
+    'Do not go paddling alone.',
+    'Keep your pets on a leash all the time.',
+    'You can only climb in certain spots and must get a permit first.',
+    'Swim only in designated areas. Be careful if there are no lifeguards.',
+    'Keep the park clean by using the trash and recycling bins.',
+    'Hunting or trapping animals is not allowed.',
+    'Do not feed or try to touch the animals. Tell the park staff if you see any sick ones.',
+  ];
 
-	// 	expect(screen.getByText(/Safety Guidelines/i)).toBeInTheDocument();
-	// 	expect(screen.getByText(/Tell someone your plans/i)).toBeInTheDocument();
-	// });
+  it('renders the title correctly', () => {
+    render(<StayingSafe />);
 
-	// TODO: fix - test expects "Weather" section which is not present in the component
-	// it('should provide weather-related safety information', () => {
-	// 	render(
-	// 		<BrowserRouter>
-	// 			<StayingSafe />
-	// 		</BrowserRouter>
-	// 	);
+    const title = screen.getByText('How to Stay Safe While Visiting NC State Parks');
+    expect(title).toBeInTheDocument();
+    expect(title).toHaveClass('mb-6', 'w-full', 'bg-supporting_inactiveblue', 'p-3', 'text-center', 'text-system_white', 'uppercase');
+  });
 
-	// 	expect(screen.getByText(/Weather/i)).toBeInTheDocument();
-	// 	expect(screen.getByText(/Check weather conditions/i)).toBeInTheDocument();
-	// });
+  it('renders the description correctly', () => {
+    render(<StayingSafe />);
 
-	// TODO: fix - test expects "Keep a safe distance" text which is not present in the component
-	// it('should display wildlife safety information', () => {
-	// 	render(
-	// 		<BrowserRouter>
-	// 			<StayingSafe />
-	// 		</BrowserRouter>
-	// 	);
+    const description = screen.getByText(
+      "To keep everyone safe and protect our parks, please follow these rules and safety guidelines while you're here!"
+    );
+    expect(description).toBeInTheDocument();
+  });
 
-	// 	expect(screen.getByText(/Wildlife/i)).toBeInTheDocument();
-	// 	expect(screen.getByText(/Keep a safe distance/i)).toBeInTheDocument();
-	// });
+  it('renders all safety rules as list items', () => {
+    render(<StayingSafe />);
 
-	// TODO: fix - test doesn't match actual component content
-	// // User Story: As a user, I want to know about emergency procedures
-	// it('should provide emergency information', () => {
-	// 	render(
-	// 		<BrowserRouter>
-	// 			<StayingSafe />
-	// 		</BrowserRouter>
-	// 	);
+    const list = screen.getByRole('list');
+    expect(list).toBeInTheDocument();
 
-	// 	expect(screen.getByText(/Emergency/i)).toBeInTheDocument();
-	// 	expect(screen.getByText(/Call 911/i)).toBeInTheDocument();
-	// });
+    const listItems = screen.getAllByRole('listitem');
+    expect(listItems).toHaveLength(safetyRules.length);
 
-	// TODO: fix - test doesn't match actual component content
-	// // User Story: As a user, I want to learn about trail safety equipment
-	// it('should list recommended safety equipment', () => {
-	// 	render(
-	// 		<BrowserRouter>
-	// 			<StayingSafe />
-	// 		</BrowserRouter>
-	// 	);
+    safetyRules.forEach((rule) => {
+      expect(screen.getByText(rule)).toBeInTheDocument();
+    });
+  });
 
-	// 	expect(screen.getByText(/Equipment/i)).toBeInTheDocument();
-	// 	expect(screen.getByText(/First aid kit/i)).toBeInTheDocument();
-	// });
+  it('renders each list item with correct structure', () => {
+    render(<StayingSafe />);
 
-	// Placeholder test to avoid empty test suite error
-	it('TODO: fix staying safe tests', () => {
-		expect(true).toBe(true);
-	});
-}); 
+    const listItems = screen.getAllByRole('listitem');
+
+    listItems.forEach((item) => {
+      // Check that each list item has a bullet point (•)
+      const bulletPoint = item.querySelector('span:first-child');
+      expect(bulletPoint).toBeInTheDocument();
+      expect(bulletPoint?.textContent).toBe('•');
+
+      // Check that each list item has text content
+      const textContent = item.querySelector('span:last-child');
+      expect(textContent).toBeInTheDocument();
+      expect(textContent?.textContent).not.toBe('');
+    });
+  });
+});
