@@ -178,37 +178,6 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             }
         ];
 
-        public static readonly List<BucketListItem> BucketList =
-        [
-            new()
-            {
-                id = 42,
-                task = "Task 1 at CABE",
-                createdAt = DateTime.UtcNow,
-                updatedAt = DateTime.UtcNow,
-                parkId = Parks[0].id,
-                park = Parks[0]
-            },
-            new()
-            {
-                id = 84,
-                task = "Task 1 at EB2",
-                createdAt = DateTime.UtcNow,
-                updatedAt = DateTime.UtcNow,
-                parkId = Parks[1].id,
-                park = Parks[1]
-            },
-            new()
-            {
-                id = 128,
-                task = "Task 2 at CABE",
-                createdAt = DateTime.UtcNow,
-                updatedAt = DateTime.UtcNow,
-                parkId = Parks[0].id,
-                park = Parks[0]
-            }
-        ];
-
         public static readonly List<User> Users =
         [
             new()
@@ -246,6 +215,79 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 role = UserRole.visitor,
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow
+            }
+        ];
+
+        public static readonly List<BucketListItem> BucketList =
+        [
+            new()
+            {
+                id = 42,
+                task = "Task 1 at CABE",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0]
+            },
+            new()
+            {
+                id = 84,
+                task = "Task 1 at EB2",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[1].id,
+                park = Parks[1]
+            },
+            new()
+            {
+                id = 128,
+                task = "Task 2 at CABE",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0]
+            }
+        ];
+
+        public static readonly List<CompletedBucketListItem> CompletedBucketListItems = [
+            new()
+            {
+                id = 9,
+                location = new(34.0496, -77.9196),
+                created_at = DateTime.UtcNow,
+                updated_at = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0],
+                bucketListItemId = BucketList[2].id,
+                bucketListItem = BucketList[2],
+                userId = Users[3].id,
+                user = Users[3]
+            },
+            new()
+            {
+                id = 24,
+                location = new(34.0481, -77.9132),
+                created_at = DateTime.UtcNow,
+                updated_at = DateTime.UtcNow,
+                parkId = Parks[0].id,
+                park = Parks[0],
+                bucketListItemId = BucketList[0].id,
+                bucketListItem = BucketList[0],
+                userId = Users[1].id,
+                user = Users[1]
+            },
+            new()
+            {
+                id = 84,
+                location = new(35.7717, -78.6736),
+                created_at = DateTime.UtcNow,
+                updated_at = DateTime.UtcNow,
+                parkId = Parks[1].id,
+                park = Parks[1],
+                bucketListItemId = BucketList[1].id,
+                bucketListItem = BucketList[1],
+                userId = Users[3].id,
+                user = Users[3]
             }
         ];
 
