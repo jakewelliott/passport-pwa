@@ -7,7 +7,7 @@ import DateHelper from '@/lib/date-helper';
 import { renderWithClient } from '@/lib/test-wrapper';
 
 // Mock the hooks
-jest.mock('@/hooks/useStamps');
+jest.mock('@/hooks/queries/useStamps');
 jest.mock('@/hooks/queries/useParks');
 
 const mockUseStamp = useStamp as jest.Mock;

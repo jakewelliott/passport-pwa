@@ -13,7 +13,7 @@ const isVisited = (code: string, stamps: { code: string }[] | undefined) =>
 	stamps?.some(stamp => stamp.code === code) ?? false;
 const sortByName = (a: Park, b: Park) => a.name.localeCompare(b.name);
 
-const Stamp = ({ code, handleClick, greyed, parkName }: { code: string; handleClick: () => void; greyed: boolean; parkName: string }) => {
+const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean; parkName: string }) => {
 	return (
 		<button onClick={handleClick} className='flex items-center justify-center p-2' type='button'>
 			<img

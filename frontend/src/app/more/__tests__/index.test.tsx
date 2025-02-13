@@ -9,7 +9,7 @@ jest.mock('@/hooks/queries/useUser', () => ({
 	useUser: jest.fn(),
 }));
 
-jest.mock('@/hooks/useAuth', () => ({
+jest.mock('@/hooks/auth/useLogout', () => ({
 	useLogout: jest.fn(),
 }));
 
