@@ -1,9 +1,12 @@
 import RoundedButton from "@/components/rounded-button";
 import { useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useLogin, useRegister } from "@/hooks/useAuth";
+import { useLogin } from "@/hooks/auth/useLogin";
+import { useRegister } from "@/hooks/auth/useRegister";
 import { toast } from 'react-toastify';
 import { cn } from "@/lib/cn-helper";
+import { dbg } from "@/lib/debug";
+import { SuperAdminButton } from "./components/superadmin-button";
 
 const getInputStyles = (isError: boolean) => cn(
 	"w-80 rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100",
@@ -13,6 +16,7 @@ const getInputStyles = (isError: boolean) => cn(
 );
 
 export default function LoginPage() {
+	dbg('RENDER', 'LoginPage');
 	const [errors, setErrors] = useState({ username: false, password: false });
 	const [searchParams] = useSearchParams();
 	if (!searchParams.get('redirect')) searchParams.set('redirect', '/');
@@ -101,6 +105,7 @@ export default function LoginPage() {
 					<button type="submit">
 						<RoundedButton title="Login" color="secondary_orange" />
 					</button>
+					<SuperAdminButton />
 				</div>
 			</form>
 		</div>
