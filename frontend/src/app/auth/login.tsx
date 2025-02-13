@@ -105,8 +105,8 @@ export default function LoginPage() {
 					<button type="submit">
 						<RoundedButton title="Login" color="secondary_orange" />
 					</button>
-					<SuperAdminButton />
 				</div>
+				<SuperAdminButton />
 			</form>
 		</div>
 	);

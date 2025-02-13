@@ -1,24 +1,24 @@
 import RoundedButton from "@/components/rounded-button";
-import { dbg } from "@/lib/debug";
+import { dbg, PRODUCTION } from "@/lib/debug";
 import { useLogin } from "@/hooks/auth/useLogin";
-import { DEBUG } from "@/lib/debug";
 
-const username = process.env.ADMIN_USER || 'superadmin';
-const password = process.env.ADMIN_PASS || 'adminpassword';
+const username = process.env.ADMIN_USER || '';
+const password = process.env.ADMIN_PASS || '';
+
+if (!username || !password) {
+	dbg('MISC', 'SuperAdminButton', 'ADMIN_USER or ADMIN_PASS env var not set');
+}
+
 const credentials = { username, password };
 
 export const SuperAdminButton = () => {
 
-	dbg('RENDER', 'SuperAdminButton', credentials);
-
 	const login = useLogin();
-
-	if (!DEBUG) return null;
+	if (PRODUCTION) return null;
 
 	const handleClick = async (e: React.FormEvent) => {
 		e.preventDefault();
-		console.log('WTF!!!');
-		dbg('AUTH', 'SUPER ADMIN BUTTON', credentials);
+		dbg('AUTH', 'SUPER ADMIN LOGIN', credentials);
 		login.mutate(credentials);
 	};
 

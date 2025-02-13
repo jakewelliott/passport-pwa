@@ -1,9 +1,8 @@
 import type { ParkAbbreviation, Stamp } from '@/lib/mock/types';
 import DateHelper from '@/lib/date-helper';
-import { useStamp } from '@/hooks/useStamps';
+import { useStamp } from '@/hooks/queries/useStamps';
 import { usePark } from '@/hooks/queries/useParks';
 import { a11yOnClick } from '@/lib/a11y';
-import { LoadingPlaceholder } from '@/components/loading-placeholder';
 
 interface StampsDetailProps {
 	abbreviation: ParkAbbreviation;
@@ -28,8 +27,8 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 	const { data: stamp, isLoading: stampLoading } = useStamp(code);
 	const { data: park, isLoading: parkLoading } = usePark(code);
 
-	if (parkLoading || !park) return <LoadingPlaceholder what='park' />;
-	if (stampLoading || !stamp) return <LoadingPlaceholder what='stamp' />;
+	if (parkLoading || !park) return null;
+	if (stampLoading || !stamp) return null;
 
 	return (
 		<article className='relative bg-supporting_lightblue p-4'>

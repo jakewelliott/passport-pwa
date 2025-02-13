@@ -81,12 +81,11 @@ export const dbgif = (cond: boolean, t: DebugType, where: string, what?: unknown
 };
 
 export const jason = (p: unknown): void => {
-  log(JSON.stringify(p, null, 2));
+  log(sjason(p));
 };
 
 export const sjason = (p: unknown): string => {
 	if (typeof p === 'string') {
-		log('p is a string');
 		return p;
 	}
   return JSON.stringify(p, null, 2);

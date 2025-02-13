@@ -8,7 +8,6 @@ export const LoggedInAs = () => {
 
 	const message = user?.username ? `You are currently logged in as '${user.username}'` : 'You are not logged in';
 
-	dbg('RENDER', 'LoggedInAs', { user });
 	return (
 		<div className='text-center'>
 			{message}
