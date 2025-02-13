@@ -15,14 +15,8 @@ const Layout = ({ children }: LayoutProps) => {
 
 	return (
 		<div className="min-h-screen">
-			{/* Main content area with proper spacing for fixed elements */}
 			<div
-				className="h-screen overflow-y-auto"
-				style={{
-					paddingTop: '50px',    // Height of header
-					paddingBottom: '64px',  // Height of tab bar
-					height: '100dvh'        // Use dynamic viewport height
-				}}
+				className="overflow-y-auto pt-12 pb-16 h-dvh"
 			>
 				{children}
 			</div>
