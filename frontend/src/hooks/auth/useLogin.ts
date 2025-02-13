@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { decodeToken } from '@/lib/token-helper';
 import { queryClient } from '@/lib/tanstack-local-storage';
-import type { LoginCredentials, ErrorResponse } from '@/lib/mock/types';
+import type { LoginCredentials } from '@/lib/mock/types';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { API_AUTH_LOGIN_URL } from '@/lib/fetch';
