@@ -60,6 +60,7 @@ export const fetchGet = async (url: string) => {
 	if (!response.ok) {
 		throw new Error(`GET failed: ${response.statusText}`);
 	}
-	dbg('FETCH', 'GET RESPONSE', { response });
-	return response;
+	const data = await response.json();
+	dbg('FETCH', 'GET RESPONSE', { response, data });
+	return data;
 };
