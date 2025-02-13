@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { StampDetails } from '@/app/stamps/components/stamp-details';
 import type { Park } from '@/lib/mock/types';
 import { useParks } from '@/hooks/queries/useParks';
+import { dbg } from '@/lib/debug';
 
 // TODO: fix scrolling bug when selecting stamp in last row
 
@@ -29,6 +30,7 @@ const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () =>
 
 // TODO: make this use a query instead of directly accessing dummy data
 export default function Stamps() {
+	dbg('RENDER', 'Stamps');
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
 	const { data: parks, isLoading } = useParks();

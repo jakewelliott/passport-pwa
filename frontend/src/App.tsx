@@ -19,6 +19,7 @@ import { useUser } from "@/hooks/queries/useUser";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import Stamps from "./app/stamps";
+import { dbg } from "./lib/debug";
 
 const PrivateRoute = ({
 	children,
@@ -66,6 +67,7 @@ const RoleBasedRedirect = () => {
 };
 
 const LoggedOutRoutes = () => {
+	dbg('RENDER', 'LoggedOutRoutes');
 	const location = useLocation();
 	const redirectPath = encodeURIComponent(location.pathname + location.search);
 	return (
@@ -88,7 +90,10 @@ const LoggedOutRoutes = () => {
 };
 
 export default function App() {
+
 	const { data: user, isLoading } = useUser();
+
+	dbg('RENDER', 'App.tsx', { isLoading, user });
 
 	if (isLoading) return <SplashScreen loadingMsg="user" />;
 	if (!user) return <LoggedOutRoutes />

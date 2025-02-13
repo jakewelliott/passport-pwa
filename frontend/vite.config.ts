@@ -9,24 +9,35 @@ export default defineConfig(({command, mode}) => {
 	const isProduction = command === 'build';
 	const pemDirectory = isProduction ? '.' : '..';
 	return {
-	plugins: [react()],
-	define: {
-		'process.env': env
-	},
-	resolve: {
-		alias: {
-			"@": path.resolve(__dirname, "./src"),
+		plugins: [
+			react(),
+			{
+				name: 'terminal-logger',
+				configureServer(server) {
+					// Expose terminal write function to client
+					server.ws.on('terminal:log', (data) => {
+						process.stdout.write(data.message + '\n');
+					});
+				}
+			}
+		],
+		define: {
+			'process.env': env
 		},
-	},
-	server: {
-		host: "0.0.0.0",
-		port: 5174,
-		https: {
-			key: fs.readFileSync(path.join(pemDirectory, "localhost+2-key.pem")),
-			cert: fs.readFileSync(path.join(pemDirectory, "localhost+2.pem")),
+		resolve: {
+			alias: {
+				"@": path.resolve(__dirname, "./src"),
+			},
 		},
-		cors: true,
-		strictPort: true,
-	},
-}
+		server: {
+			host: "0.0.0.0",
+			port: 5174,
+			https: {
+				key: fs.readFileSync(path.join(pemDirectory, "localhost+2-key.pem")),
+				cert: fs.readFileSync(path.join(pemDirectory, "localhost+2.pem")),
+			},
+			cors: true,
+			strictPort: true,
+		},
+	}
 });
