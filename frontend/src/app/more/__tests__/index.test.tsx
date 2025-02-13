@@ -1,0 +1,90 @@
+import { render, screen, fireEvent } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import More from '@/app/more/index';
+import { useUser } from '@/hooks/queries/useUser';
+import { useLogout } from '@/hooks/useAuth';
+
+// Mock dependencies
+jest.mock('@/hooks/queries/useUser', () => ({
+  useUser: jest.fn(),
+}));
+
+jest.mock('@/hooks/useAuth', () => ({
+  useLogout: jest.fn(),
+}));
+
+describe('More Component', () => {
+  const mockHandleLogout = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useLogout as jest.Mock).mockReturnValue(mockHandleLogout);
+  });
+
+  it('renders all links correctly', () => {
+    (useUser as jest.Mock).mockReturnValue({ data: { username: 'testuser' } });
+
+    render(
+      <MemoryRouter>
+        <More />
+      </MemoryRouter>
+    );
+
+    // Check for all links
+    const links = [
+      { text: 'Trails', href: '/more/trails' },
+      { text: 'Bucket List', href: '/more/bucket-list' },
+      { text: 'My Notes', href: '/more/my-notes' },
+      { text: 'Welcome Message', href: '/more/welcome-message' },
+      { text: 'Staying Safe', href: '/more/staying-safe' },
+      { text: 'Hiking Essentials', href: '/more/hiking-essentials' },
+      { text: 'Icon Legend', href: '/more/icon-legend' },
+      { text: 'App Info', href: '/more/app-info' },
+    ];
+
+    links.forEach(({ text, href }) => {
+      const linkElement = screen.getByText(text).closest('a');
+      expect(linkElement).toBeInTheDocument();
+      expect(linkElement).toHaveAttribute('href', href);
+    });
+  });
+
+  it('displays the logged-in user\'s username', () => {
+    (useUser as jest.Mock).mockReturnValue({ data: { username: 'testuser' } });
+
+    render(
+      <MemoryRouter>
+        <More />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("You are currently logged in as 'testuser'")).toBeInTheDocument();
+  });
+
+  it('handles missing user data gracefully', () => {
+    (useUser as jest.Mock).mockReturnValue({ data: null });
+
+    render(
+      <MemoryRouter>
+        <More />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByText("You are currently logged in as ''")).toBeInTheDocument();
+  });
+
+  it('calls handleLogout when the logout button is clicked', () => {
+    (useUser as jest.Mock).mockReturnValue({ data: { username: 'testuser' } });
+
+    render(
+      <MemoryRouter>
+        <More />
+      </MemoryRouter>
+    );
+
+    const logoutButton = screen.getByText('Log out');
+    fireEvent.click(logoutButton);
+
+    expect(mockHandleLogout).toHaveBeenCalledTimes(1);
+  });
+});
