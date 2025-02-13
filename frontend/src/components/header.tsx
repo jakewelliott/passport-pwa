@@ -17,7 +17,7 @@ const Header = () => {
 	const { pageTitle, showBackButton } = usePageTitle();
 
 	return (
-		<div className='fixed top-0 right-0 left-0'>
+		<div className='fixed top-0 right-0 left-0 z-50'>
 			<header
 				className='relative flex items-center justify-center bg-secondary_darkteal p-4'
 				style={{ height: '50px' }}
