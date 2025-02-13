@@ -2,8 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useQuery } from '@tanstack/react-query';
 import type { UserProfile } from '@/lib/mock/types';
-import { userProfile } from '@/lib/mock/user';
-import { dbg, jason } from '@/lib/debug';
+import { dbg } from '@/lib/debug';
 import { API_USER_URL, fetchGet } from '@/lib/fetch';
 
 // Create a Zustand store for user data

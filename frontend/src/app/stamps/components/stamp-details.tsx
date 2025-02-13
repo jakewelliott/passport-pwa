@@ -2,7 +2,6 @@ import type { ParkAbbreviation, Stamp } from '@/lib/mock/types';
 import DateHelper from '@/lib/date-helper';
 import { useStamp } from '@/hooks/queries/useStamps';
 import { usePark } from '@/hooks/queries/useParks';
-import { a11yOnClick } from '@/lib/a11y';
 import { FaTimes } from 'react-icons/fa';
 
 interface StampsDetailProps {

@@ -1,6 +1,5 @@
 import { useUser } from "@/hooks/queries/useUser";
 import { useLogout } from "@/hooks/auth/useLogout";
-import { dbg } from "@/lib/debug";
 
 export const LoggedInAs = () => {
 	const { data: user } = useUser();
