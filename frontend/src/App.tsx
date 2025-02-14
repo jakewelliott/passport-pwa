@@ -89,6 +89,9 @@ const LoggedOutRoutes = () => {
 
 export default function App() {
 	const { data: user, isLoading } = useUser();
+	const location = useLocation();
+	
+	if (location.pathname == '/login') return <LoggedOutRoutes />
 
 	if (isLoading) return <SplashScreen loadingMsg="user" />;
 	if (!user) return <LoggedOutRoutes />
@@ -100,9 +103,6 @@ export default function App() {
 				<TabBar />
 				<main className={"flex-grow pb-16"}>
 					<Routes>
-						{/* Public routes */}
-						<Route path="/login" element={<LoginPage />} />
-
 						{/* Root redirect */}
 						<Route path="/" element={<RoleBasedRedirect />} />
 
