@@ -75,14 +75,14 @@ const LoggedOutRoutes = () => {
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="*" element={<Navigate to={`/login?redirect=${redirectPath}`} replace />} />
 				</Routes>
-			</main>
-			<ToastContainer
+				<ToastContainer
 				position="bottom-right"
 				theme="colored"
 				closeOnClick
 				draggable
 				style={{ zIndex: 9999 }}
 			/>
+			</main>
 		</SplashScreenWrapper>
 	);
 };
