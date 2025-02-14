@@ -15,7 +15,9 @@ export const useLogin = () => {
   
   return useMutation<string, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
-      const response = await fetch('http://localhost:5174/api/auth/login', {
+      console.log(process.env);
+      // const port = process.env.PROD === 'DEV' ? {process.env.API_PORT}
+      const response = await fetch(`http://localhost:${process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -53,7 +55,7 @@ export const useRegister = () => {
 
   return useMutation<string, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
-      const response = await fetch('http://localhost:5174/api/auth/register', {
+      const response = await fetch('http://localhost:5002/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -88,13 +90,23 @@ export const useRegister = () => {
  */
 export const useLogout = () => {
   const navigate = useNavigate();
-  return () => {
-    Cookies.remove('token');
-    queryClient.invalidateQueries({
+  return async () => {
+
+    console.log(localStorage.getItem('user'));
+    console.log(queryClient.getQueryData(['user']));
+    console.log(Cookies.get('token'));
+
+    await Cookies.remove('token');
+    await queryClient.removeQueries({
       queryKey: ['user'],
       refetchType: 'all',
     });
-    localStorage.removeItem('user');
+    await localStorage.removeItem('user');
+
+    console.log(localStorage.getItem('user'));
+    console.log(queryClient.getQueryData(['user']));
+    console.log(Cookies.get('token'));
+
     navigate('/');
   };
 };
