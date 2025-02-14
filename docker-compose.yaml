@@ -39,10 +39,11 @@ services:
     container_name: database
     image: mariadb:latest
     ports:
-      - "${DB_PORT}:3306"
+      - "${DB_PORT}:${DB_PORT}"
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MARIADB_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_TCP_PORT: ${DB_PORT}
     volumes:
       - mariadb_data:/var/lib/mysql
     healthcheck:
