@@ -55,7 +55,7 @@ export const useRegister = () => {
 
   return useMutation<string, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
-      const response = await fetch('http://localhost:5002/api/auth/register', {
+      const response = await fetch(`http://localhost:${process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
