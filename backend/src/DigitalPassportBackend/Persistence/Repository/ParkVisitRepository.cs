@@ -44,4 +44,10 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public List<ParkVisit> GetByParkAndUser(int locationId, int userId)
+    {
+        return _digitalPassportDbContext.ParkVisits.Where(s => s.parkId == locationId && s.userId == userId).OrderByDescending(v => v.createdAt).ToList();
+    }
+
 }

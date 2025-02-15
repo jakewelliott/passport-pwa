@@ -32,8 +32,8 @@ public static class Response
         resp = [.. resp.OrderBy(i => i.title)];
         return addrs.Count() == resp.Length
             && FieldEqual(addrs, a => a.title, resp, r => r.title)
-            && FieldEqual(addrs, a => a.addressLineOne, resp, r => r.addressesLineOne)
-            && FieldEqual(addrs, a => a.addressLineTwo, resp, r => r.addressesLineTwo)
+            && FieldEqual(addrs, a => a.addressLineOne, resp, r => r.addressLineOne)
+            && FieldEqual(addrs, a => a.addressLineTwo, resp, r => r.addressLineTwo)
             && FieldEqual(addrs, a => a.city, resp, r => r.city)
             && FieldEqual(addrs, a => a.state.GetDisplayName(), resp, r => r.state)
             && FieldEqual(addrs, a => a.zipcode.ToString(), resp, r => r.zipcode.ToString());
