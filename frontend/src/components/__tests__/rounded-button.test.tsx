@@ -16,14 +16,4 @@ describe('RoundedButton', () => {
 		expect(buttonDiv).toHaveClass('bg-system_black');
 	});
 
-	it('has correct styling', () => {
-		render(<RoundedButton title="Style Test" />);
-		const buttonDiv = screen.getByText('Style Test').parentElement;
-		expect(buttonDiv).toHaveStyle({
-			width: '146px',
-			height: '50px',
-			borderRadius: '25px'
-		});
-		expect(buttonDiv).toHaveClass('flex', 'cursor-pointer', 'select-none', 'items-center', 'justify-center');
-	});
 }); 

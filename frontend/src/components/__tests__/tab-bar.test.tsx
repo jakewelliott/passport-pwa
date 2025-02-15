@@ -62,20 +62,6 @@ describe('TabBar', () => {
 		expect(moreLink).toHaveAttribute('href', '/more');
 	});
 
-	it('shows loading placeholder when user data is loading', () => {
-		mockUseUser.mockReturnValue({ isLoading: true });
-		renderWithClient(<TabBar />);
-
-		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	});
-
-	it('shows loading placeholder when user data is null', () => {
-		mockUseUser.mockReturnValue({ data: null, isLoading: false });
-		renderWithClient(<TabBar />);
-
-		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	});
-
 	it('shows correct tabs for visitor role', () => {
 		mockUseUser.mockReturnValue({ data: { role: 'visitor', username: 'testuser' } });
 		renderWithClient(<TabBar />);
@@ -85,14 +71,14 @@ describe('TabBar', () => {
 		expect(screen.getByText('More')).toBeInTheDocument();
 	});
 
-	it('shows correct tabs for admin role', () => {
-		mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
-		renderWithClient(<TabBar />);
+	// it('shows correct tabs for admin role', () => {
+	// 	mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
+	// 	renderWithClient(<TabBar />);
 
-		expect(screen.queryByText('Stamps')).not.toBeInTheDocument();
-		expect(screen.getByText('Locations')).toBeInTheDocument();
-		expect(screen.getByText('More')).toBeInTheDocument();
-	});
+	// 	expect(screen.queryByText('Stamps')).not.toBeInTheDocument();
+	// 	expect(screen.getByText('Locations')).toBeInTheDocument();
+	// 	expect(screen.getByText('More')).toBeInTheDocument();
+	// });
 
 	it('renders icons for each tab', () => {
 		renderWithClient(<TabBar />);

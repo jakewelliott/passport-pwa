@@ -1,4 +1,4 @@
-import chalk from 'chalk';
+// import chalk from 'chalk';
 
 // variable to switch between production and development
 export const PRODUCTION = false;
@@ -39,25 +39,27 @@ const DebugControl = {
 
 type DebugType = keyof typeof DebugControl;
 
-const MessageColors: Record<DebugType, (str: string) => string> = {
-  RENDER: chalk.gray,
-  LOADER: chalk.hex('#FFA500'), // orange
-  MISC: chalk.yellow,
-  HOOK: chalk.green,
-  FETCH: chalk.cyan.dim, // teal-like
-  QUERY: chalk.cyan,
-  SUBSCRIPTION: chalk.blue,
-  MUTATE: chalk.magenta,
-  AUTH: chalk.magentaBright,
-  EFFECT: chalk.blue.dim, // indigo-like
-  STORAGE: chalk.greenBright, // lime
-  LAYOUT: chalk.gray,
-  ENV: chalk.yellowBright, // gold
-  TEST: chalk.magenta.dim, // lavender-like
-  NOTIFICATIONS: chalk.redBright,
-  STORE: chalk.greenBright, // lime
-  ERROR: chalk.red,
-};
+
+// chalk is an esm module, so im commenting it out for now
+// const MessageColors: Record<DebugType, (str: string) => string> = {
+//   RENDER: chalk.gray,
+//   LOADER: chalk.hex('#FFA500'), // orange
+//   MISC: chalk.yellow,
+//   HOOK: chalk.green,
+//   FETCH: chalk.cyan.dim, // teal-like
+//   QUERY: chalk.cyan,
+//   SUBSCRIPTION: chalk.blue,
+//   MUTATE: chalk.magenta,
+//   AUTH: chalk.magentaBright,
+//   EFFECT: chalk.blue.dim, // indigo-like
+//   STORAGE: chalk.greenBright, // lime
+//   LAYOUT: chalk.gray,
+//   ENV: chalk.yellowBright, // gold
+//   TEST: chalk.magenta.dim, // lavender-like
+//   NOTIFICATIONS: chalk.redBright,
+//   STORE: chalk.greenBright, // lime
+//   ERROR: chalk.red,
+// };
 
 const padRight = (str: string, length: number): string => str.padEnd(length, ' ');
 
@@ -68,7 +70,8 @@ export const dbg = (t: DebugType, where: string, what?: unknown): void => {
     const location = padRight(where, 20);
     const message = what ? sjason(what) : '';
     const inlineMessage = message.length > 40 || message.includes('{') ? '(obj)' : message;
-    log(MessageColors[t](`${logType}\t${location}\t${inlineMessage}`));
+    // log(MessageColors[t](`${logType}\t${location}\t${inlineMessage}`));
+		log(`${logType}\t${location}\t${inlineMessage}`);
     if (inlineMessage == '(obj)') {
       log(JSON.stringify(what, null, 2));
     }

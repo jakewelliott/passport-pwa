@@ -3,7 +3,8 @@
 exports[`Component Snapshots Header renders correctly 1`] = `
 <div>
   <div
-    class="fixed top-0 right-0 left-0 z-50"
+    class="sticky top-0 right-0 left-0"
+    style="z-index: 9999;"
   >
     <header
       class="relative flex items-center justify-center bg-secondary_darkteal p-4"
@@ -152,8 +153,9 @@ exports[`Component Snapshots PassportHeader renders correctly 1`] = `
 exports[`Component Snapshots RoundedButton renders correctly 1`] = `
 <div>
   <div
-    class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
+    class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center"
     role="button"
+    style="width: 146px; height: 50px; border-radius: 25px;"
   >
     <p
       class="button-text text-system_white"
@@ -197,10 +199,41 @@ exports[`Component Snapshots TabBar renders correctly 1`] = `
 <div>
   <nav
     class="fixed right-0 bottom-0 left-0 bg-secondary_darkteal"
+    style="z-index: 9998;"
   >
     <ul
       class="flex h-16 items-center justify-around"
     >
+      <li>
+        <a
+          data-discover="true"
+          href="/stamps"
+          style="text-decoration: none;"
+        >
+          <div
+            class="flex flex-col items-center p-2 text-supporting_inactiveblue"
+          >
+            <svg
+              fill="currentColor"
+              height="24px"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="24px"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M32 512h448v-64H32v64zm384-256h-66.56c-16.26 0-29.44-13.18-29.44-29.44v-9.46c0-27.37 8.88-53.41 21.46-77.72 9.11-17.61 12.9-38.39 9.05-60.42-6.77-38.78-38.47-70.7-77.26-77.45C212.62-9.04 160 37.33 160 96c0 14.16 3.12 27.54 8.69 39.58C182.02 164.43 192 194.7 192 226.49v.07c0 16.26-13.18 29.44-29.44 29.44H96c-53.02 0-96 42.98-96 96v32c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-32c0-53.02-42.98-96-96-96z"
+              />
+            </svg>
+            <span
+              class="p-mini"
+            >
+              Stamps
+            </span>
+          </div>
+        </a>
+      </li>
       <li>
         <a
           data-discover="true"
@@ -235,36 +268,6 @@ exports[`Component Snapshots TabBar renders correctly 1`] = `
               class="p-mini"
             >
               Locations
-            </span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a
-          data-discover="true"
-          href="/stamps"
-          style="text-decoration: none;"
-        >
-          <div
-            class="flex flex-col items-center p-2 text-supporting_inactiveblue"
-          >
-            <svg
-              fill="currentColor"
-              height="24px"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 512 512"
-              width="24px"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M32 512h448v-64H32v64zm384-256h-66.56c-16.26 0-29.44-13.18-29.44-29.44v-9.46c0-27.37 8.88-53.41 21.46-77.72 9.11-17.61 12.9-38.39 9.05-60.42-6.77-38.78-38.47-70.7-77.26-77.45C212.62-9.04 160 37.33 160 96c0 14.16 3.12 27.54 8.69 39.58C182.02 164.43 192 194.7 192 226.49v.07c0 16.26-13.18 29.44-29.44 29.44H96c-53.02 0-96 42.98-96 96v32c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-32c0-53.02-42.98-96-96-96z"
-              />
-            </svg>
-            <span
-              class="p-mini"
-            >
-              Stamps
             </span>
           </div>
         </a>

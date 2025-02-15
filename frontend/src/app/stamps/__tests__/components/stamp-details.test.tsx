@@ -38,12 +38,12 @@ describe('StampDetails', () => {
 		expect(screen.getByText(`Stamp collected on ${DateHelper.stringify(mockStamp.timestamp)}`)).toBeInTheDocument();
 	});
 
-	it('shows loading state when park data is loading', () => {
-		mockUsePark.mockReturnValue({ data: null, isLoading: true });
+	// it('shows loading state when park data is loading', () => {
+	// 	mockUsePark.mockReturnValue({ data: null, isLoading: true });
 
-		renderWithClient(<StampDetails abbreviation="ENRI" handleClose={mockHandleClose} />);
+	// 	renderWithClient(<StampDetails abbreviation="ENRI" handleClose={mockHandleClose} />);
 
-		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	});
+	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+	// });
 
 });

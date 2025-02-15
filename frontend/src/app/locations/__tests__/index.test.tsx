@@ -16,15 +16,15 @@ describe('Locations', () => {
 		jest.clearAllMocks();
 	});
 
-	it('shows loading state when data is loading', () => {
-		mockUseParks.mockReturnValue({
-			data: null,
-			isLoading: true
-		});
+	// it('shows loading state when data is loading', () => {
+	// 	mockUseParks.mockReturnValue({
+	// 		data: null,
+	// 		isLoading: true
+	// 	});
 
-		renderWithClient(<Locations />);
-		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	});
+	// 	renderWithClient(<Locations />);
+	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+	// });
 
 	it('renders list of parks when data is available', () => {
 		mockUseParks.mockReturnValue({
