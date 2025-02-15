@@ -47,7 +47,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddCors(options => {
             options.AddPolicy(corsPolicyName, builder => {
-                builder.WithOrigins("https://localhost:" + configuration["NGINX_PORT"], "https://localhost:" + configuration["FE_DEV_PORT"], "http://localhost:" + configuration["NGINX_PORT"], "http://localhost:" + configuration["FE_DEV_PORT"])
+                builder.WithOrigins("https://localhost:" + configuration["FE_PORT"], "https://localhost:" + configuration["FE_DEV_PORT"], "http://localhost:" + configuration["FE_PORT"], "http://localhost:" + configuration["FE_DEV_PORT"])
                     .AllowAnyHeader()
                     .AllowCredentials()
                     .AllowAnyMethod();
@@ -99,11 +99,10 @@ public static class ServiceCollectionExtensions
 
         var envAddendum = isDevelopment ? "DEV_" : "";
         var connectionString = $"host={configuration[$"DB_{envAddendum}HOST"]};" +
-                               $"port={configuration[$"DB_{envAddendum}PORT"]};" +
+                               $"port=3306;" +
                                $"user id=root;" +
                                $"password={configuration[$"DB_{envAddendum}PASSWORD"]};" +
                                $"database={configuration[$"DB_{envAddendum}DATABASE"]};";
-        Console.WriteLine(connectionString);
         services.AddDbContext<DigitalPassportDbContext>((serviceProvider, options) =>
 {
     options.UseMySql(
