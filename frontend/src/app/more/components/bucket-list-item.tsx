@@ -3,68 +3,58 @@ import type { Park } from '@/lib/mock/types';
 export const BucketListItem = () => {
   const park: Park = {
     abbreviation: 'CABE',
-    name: 'Sample Data',
-    city: 'Raleigh',
-    address: [
+    parkName: 'Sample Data',
+    addresses: [
       {
-        name: 'Secondary Address:',
+        title: 'Secondary Address:',
         addressLineOne: '1234 Main St',
         city: 'Raleigh',
         state: 'NC',
-        zip: '27606',
+        zipcode: 27606,
+        addressLineTwo: ''
       },
       {
-        name: 'Tertiary Address:',
+        title: 'Tertiary Address:',
         addressLineOne: '1234 Main St',
         city: 'Raleigh',
         state: 'NC',
-        zip: '27606',
+        zipcode: 27606,
+        addressLineTwo: ''
       },
     ],
     coordinates: { latitude: 35.2023, longitude: -78.9761 },
-    phone: '(555) 555-5555',
+    phone: 5555555555,
     email: 'email@ncparks.gov',
     website: 'ncparks.gov',
-    stamp: {
-      time: '1/1/25',
-      method: 'manual',
-    },
-    bucketList: {
-      text: 'random bucket list item',
-      status: false,
-    },
-    established: '2003',
+    establishedYear: '2003',
     landmark: 'My House',
     youCanFind: 'My items',
-    trails: ['The driveway'],
-    parkIcons: ['Paddling-Red.svg', 'RVCamping-Green.svg', 'Playground-Blue.svg'],
-    parkPhotos: [
-      { url: './photos/CABE.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
-      { url: './photos/CACR.jpg' },
+    trails: 'The driveway',
+    icons: [{ iconName: 'Paddling-Red.svg' }, { iconName: 'RVCamping-Green.svg' }, { iconName: 'Playground-Blue.svg' }],
+    photos: [
+      {
+        photoPath: './photos/CABE.jpg',
+        alt: ''
+      },
+      {
+        photoPath: './photos/CACR.jpg',
+        alt: ''
+      },
+      {
+        photoPath: './photos/CACR.jpg',
+        alt: ''
+      },
     ],
-    parkNotes: '',
+    id: 0,
+    bucketListItems: []
   };
 
   return (
     <div className='my-2.5 flex items-start'>
-      {park.bucketList?.status ? (
-        <FaRegCheckSquare size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
+      {park.bucketListItems?.length<0 ? (
+        <FaRegCheckSquare data-testid="checked-icon" size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
       ) : (
-        <FaRegSquare size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
+        <FaRegSquare data-testid="unchecked-icon" size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
       )}
       <div className='flex w-full flex-col justify-center'>
         <p>Participate</p>
