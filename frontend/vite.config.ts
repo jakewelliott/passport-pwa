@@ -7,9 +7,9 @@ import { cwd } from "node:process";
 
 // https://vitejs.dev/config/
 export default defineConfig(({command, mode}) => {
-	const env = loadEnv(mode, process.cwd() + '/' + pemDirectory, '');
 	const isProduction = command === 'build';
 	const pemDirectory = isProduction ? '.' : '..';
+	const env = loadEnv(mode, process.cwd() + '/' + pemDirectory, '');
 	return {
 		plugins: [
 			react(),
