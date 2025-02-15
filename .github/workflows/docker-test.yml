@@ -27,7 +27,7 @@ jobs:
         echo 'DB_DATABASE=${{secrets.DB_PROD_DATABASE}}' >> .env
         echo 'API_PORT=${{secrets.API_PORT}}' >> .env
         echo 'FE_PORT=${{secrets.FE_PORT}}' >> .env
-    
+
     - name: Build and run Docker Compose
       run: |
         docker-compose build

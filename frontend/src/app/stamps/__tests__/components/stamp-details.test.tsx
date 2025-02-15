@@ -1,13 +1,13 @@
 import { screen } from '@testing-library/react';
 import { StampDetails } from '../../components/stamp-details';
-import { useStamp } from '@/hooks/useStamps';
+import { useStamp } from '@/hooks/queries/useStamps';
 import { usePark } from '@/hooks/queries/useParks';
 import { api } from '@/lib/mock/api';
 import DateHelper from '@/lib/date-helper';
 import { renderWithClient } from '@/lib/test-wrapper';
 
 // Mock the hooks
-jest.mock('@/hooks/useStamps');
+jest.mock('@/hooks/queries/useStamps');
 jest.mock('@/hooks/queries/useParks');
 
 const mockUseStamp = useStamp as jest.Mock;
