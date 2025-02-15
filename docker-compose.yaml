@@ -6,7 +6,7 @@ services:
       - "5173:80"
     build:
       context: .
-      dockerfile: nginx.Dockerfile
+      dockerfile: ./Dockerfile
     depends_on:
       - frontend
       - backend
