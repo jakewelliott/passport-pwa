@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useState } from 'react';
 
-export const SplashScreen = ({ loadingMsg }: { loadingMsg?: string }) => {
+export default function SplashScreen({ loadingMsg }: { loadingMsg?: string }) {
 	return (
 		<div
 			className='fixed inset-0 flex flex-col items-center bg-no-repeat'
@@ -28,9 +28,9 @@ export const SplashScreen = ({ loadingMsg }: { loadingMsg?: string }) => {
 			</div>
 		</div>
 	);
-};
+}
 
-export const SplashScreenWrapper = (props: React.PropsWithChildren) => {
+export function SplashScreenWrapper(props: React.PropsWithChildren) {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
