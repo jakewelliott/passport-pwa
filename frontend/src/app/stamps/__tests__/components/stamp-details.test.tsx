@@ -32,7 +32,7 @@ describe('StampDetails', () => {
 		renderWithClient(<StampDetails abbreviation="ENRI" handleClose={mockHandleClose} />);
 
 		// Verify park name is displayed
-		expect(screen.getByText(mockPark.name)).toBeInTheDocument();
+		expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
 
 		// Verify collection date is displayed
 		expect(screen.getByText(`Stamp collected on ${DateHelper.stringify(mockStamp.timestamp)}`)).toBeInTheDocument();
