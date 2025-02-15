@@ -2,20 +2,18 @@ import { useMemo, useState } from 'react';
 import { StampDetails } from '@/app/stamps/components/stamp-details';
 import type { Park } from '@/lib/mock/types';
 import { useParks } from '@/hooks/queries/useParks';
+import { useUser } from '@/hooks/queries/useUser';
+import { useStamps } from '@/hooks/queries/useStamps';
+import { dbg } from '@/lib/debug';
+import { toast } from 'react-toastify';
 
 // TODO: fix scrolling bug when selecting stamp in last row
 
-const isVisited = (code: string) => !code && false;
+const isVisited = (code: string, stamps: { code: string }[] | undefined) =>
+	stamps?.some(stamp => stamp.code === code) ?? false;
 const sortByName = (a: Park, b: Park) => a.name.localeCompare(b.name);
 
-const GRID_COLS = {
-	default: 3,
-	sm: 5,
-	md: 6,
-	lg: 8,
-} as const;
-
-const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean }) => {
+const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean; parkName: string }) => {
 	return (
 		<button onClick={handleClick} className='flex items-center justify-center p-2' type='button'>
 			<img
@@ -29,61 +27,48 @@ const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () =>
 
 // TODO: make this use a query instead of directly accessing dummy data
 export default function Stamps() {
+	dbg('RENDER', 'Stamps');
 	const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
-	const { data: parks, isLoading } = useParks();
+	const { data: parks, isLoading: parksLoading } = useParks();
+	const { data: stamps, isLoading: stampsLoading } = useStamps();
+	const { isLoading: userLoading } = useUser();
 
-	// TODO: toggle sort a/z, date visited,
-	const sortedParks: Park[] = useMemo(() => {
-		const achieved = parks?.filter((park) => isVisited(park.abbreviation)).sort(sortByName) || [];
-		const notAchieved = parks?.filter((park) => !isVisited(park.abbreviation)).sort(sortByName) || [];
-		return [...achieved, ...notAchieved];
-	}, [parks]);
-
-	const rows = useMemo(() => {
-		return sortedParks.reduce((acc: Park[][], park, index) => {
-			const rowIndex = Math.floor(index / GRID_COLS.default);
-			acc[rowIndex] = acc[rowIndex] || [];
-			acc[rowIndex].push(park);
-			return acc;
-		}, []);
-	}, [sortedParks]);
-
-	const shouldShowDetails = (rowIndex: number) => {
-		if (selectedIndex === null) return false;
-		const parkIndex = selectedIndex;
-		return parkIndex >= rowIndex * GRID_COLS.default && parkIndex < (rowIndex + 1) * GRID_COLS.default;
+	const handleStampClick = (index: number, park: Park) => {
+		if (!isVisited(park.abbreviation, stamps)) {
+			toast.info(`You haven't collected the ${park.name} stamp yet!`);
+		}
+		setSelectedIndex(index);
 	};
 
-	// TODO: add a loading state, its down here b/c rules of hooks
-	if (isLoading) return <div>Loading...</div>;
+	// TODO: toggle sort a/z, date last visited, date first achieved
+	const sortedParks: Park[] = useMemo(() => {
+		const achieved = parks?.filter((park) => isVisited(park.abbreviation, stamps)).sort(sortByName) || [];
+		const notAchieved = parks?.filter((park) => !isVisited(park.abbreviation, stamps)).sort(sortByName) || [];
+		return [...achieved, ...notAchieved];
+	}, [parks, stamps]);
+
+	if (userLoading || parksLoading || stampsLoading) return null;
 
 	return (
-		<div className='mx-auto my-4'>
-			<div className='grid gap-4 px-4'>
-				{rows.map((row, rowIndex) => (
-					<div key={`row-${row[0].abbreviation}`}>
-						<div className='grid grid-cols-3 gap-4 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8'>
-							{row.map((park, i) => (
-								<Stamp
-									key={park.abbreviation}
-									code={park.abbreviation}
-									greyed={!isVisited(park.abbreviation)}
-									handleClick={() => setSelectedIndex(rowIndex * GRID_COLS.default + i)}
-								/>
-							))}
-						</div>
-						{shouldShowDetails(rowIndex) && sortedParks[selectedIndex || 0] && (
-							<div className='mt-4'>
-								<StampDetails
-									abbreviation={sortedParks[selectedIndex || 0].abbreviation}
-									handleClose={() => setSelectedIndex(null)}
-								/>
-							</div>
-						)}
-					</div>
+		<div className='px-4 py-4'>
+			<div className='grid grid-cols-3 gap-4'>
+				{sortedParks.map((park, index) => (
+					<Stamp
+						key={park.abbreviation}
+						code={park.abbreviation}
+						greyed={!isVisited(park.abbreviation, stamps)}
+						handleClick={() => handleStampClick(index, park)}
+						parkName={park.name}
+					/>
 				))}
 			</div>
+			{selectedIndex !== null && sortedParks[selectedIndex] && (
+				<StampDetails
+					abbreviation={sortedParks[selectedIndex].abbreviation}
+					handleClose={() => setSelectedIndex(null)}
+				/>
+			)}
 		</div>
 	);
 }

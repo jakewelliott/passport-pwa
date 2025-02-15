@@ -1,16 +1,13 @@
 import ListRow from '@/components/list-row';
 import { Link } from 'react-router-dom';
 import { useParks } from '@/hooks/queries/useParks';
-
-const LoadingPlaceholder = () => {
-	// TODO: add a loading placeholder (blank grey boxes)
-	return <div data-testid='loading-placeholder'>Loading...</div>;
-};
+import { dbg } from '@/lib/debug';
 
 export default function Locations() {
 	const { data: parks, isLoading } = useParks();
+	dbg('RENDER', 'Locations');
 
-	if (isLoading || !parks) return <LoadingPlaceholder />;
+	if (isLoading || !parks) return null;
 
 	return (
 		<>

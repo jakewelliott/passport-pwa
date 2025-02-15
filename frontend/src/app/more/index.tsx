@@ -1,59 +1,28 @@
 import ListRow from '@/components/list-row';
 import { Link } from 'react-router-dom';
-import { useUser } from '@/hooks/queries/useUser';
-import { useLogout } from '@/hooks/useAuth';
+import { LoggedInAs } from './components/logged-in-as';
+
+const LinkRow = ({ to, label }: { to: string; label: string }) => (
+	<Link to={to} className='text-supporting_inactiveblue no-underline'>
+		<ListRow>
+			<h2 className='mx-4 my-6'>{label}</h2>
+		</ListRow>
+	</Link>
+);
+
 
 export default function More() {
-	const { data: user } = useUser();
-	const handleLogout = useLogout();
-
 	return (
 		<div className='mx-4 my-4 flex flex-col gap-3.5'>
-			<Link to={'/more/trails'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>Trails</h2>
-				</ListRow>
-			</Link>
-			<Link to={'/more/bucket-list'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>Bucket List</h2>
-				</ListRow>
-			</Link>
-			<Link to={'/more/my-notes'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>My Notes</h2>
-				</ListRow>
-			</Link>
-			<Link to={'/more/welcome-message'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>Welcome Message</h2>
-				</ListRow>
-			</Link>
-			<Link to={'/more/staying-safe'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>Staying Safe</h2>
-				</ListRow>
-			</Link>
-			<Link to={'/more/hiking-essentials'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>Hiking Essentials</h2>
-				</ListRow>
-			</Link>
-			<Link to={'/more/icon-legend'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>Icon Legend</h2>
-				</ListRow>
-			</Link>
-			<Link to={'/more/app-info'} className='text-supporting_inactiveblue no-underline'>
-				<ListRow>
-					<h2 className='mx-4 my-6'>App Info</h2>
-				</ListRow>
-			</Link>
-			<div className='text-center'>
-				You are currently logged in as '{user?.username}'
-				<br />
-				<button className='link' onClick={handleLogout} type='button'>Log out</button>
-			</div>
-		</div>
+			<LinkRow to={'/more/trails'} label='Trails' />
+			<LinkRow to={'/more/bucket-list'} label='Bucket List' />
+			<LinkRow to={'/more/my-notes'} label='My Notes' />
+			<LinkRow to={'/more/welcome-message'} label='Welcome Message' />
+			<LinkRow to={'/more/staying-safe'} label='Staying Safe' />
+			<LinkRow to={'/more/hiking-essentials'} label='Hiking Essentials' />
+			<LinkRow to={'/more/icon-legend'} label='Icon Legend' />
+			<LinkRow to={'/more/app-info'} label='App Info' />
+			<LoggedInAs />
+		</div >
 	);
 }
