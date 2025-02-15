@@ -1,7 +1,8 @@
 import { dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
 
-export const API_URL = 'http://localhost:5001/api';
+const API_PORT = process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT;
+export const API_URL = `http://localhost:${API_PORT}/api`;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
