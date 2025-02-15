@@ -15,7 +15,7 @@ const sortByName = (a: Park, b: Park) => a.name.localeCompare(b.name);
 
 const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean; parkName: string }) => {
 	return (
-		<button onClick={handleClick} className='flex items-center justify-center p-2' type='button'>
+		<button onClick={handleClick} className='flex items-center justify-center p-2' type='button' role='button'>
 			<img
 				src={`/stamps/${code}.svg`}
 				alt={`${code} - ${greyed ? 'greyed out' : 'achieved'}`}

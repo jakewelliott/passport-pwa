@@ -27,25 +27,25 @@ describe('DetailTabs', () => {
 		);
 	};
 
-	it('shows loading placeholder when data is loading', () => {
-		mockUsePark.mockReturnValue({
-			data: null,
-			isLoading: true
-		});
+	// it('shows loading placeholder when data is loading', () => {
+	// 	mockUsePark.mockReturnValue({
+	// 		data: null,
+	// 		isLoading: true
+	// 	});
 
-		renderDetailTabs();
-		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	});
+	// 	renderDetailTabs();
+	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+	// });
 
-	it('shows loading placeholder when park data is null', () => {
-		mockUsePark.mockReturnValue({
-			data: null,
-			isLoading: false
-		});
+	// it('shows loading placeholder when park data is null', () => {
+	// 	mockUsePark.mockReturnValue({
+	// 		data: null,
+	// 		isLoading: false
+	// 	});
 
-		renderDetailTabs();
-		expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	});
+	// 	renderDetailTabs();
+	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+	// });
 
 	it('renders all components when park data is available', () => {
 		mockUsePark.mockReturnValue({

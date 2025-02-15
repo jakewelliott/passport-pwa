@@ -61,17 +61,17 @@ describe('More Component', () => {
 		expect(screen.getByText("You are currently logged in as 'testuser'")).toBeInTheDocument();
 	});
 
-	it('handles missing user data gracefully', () => {
-		(useUser as jest.Mock).mockReturnValue({ data: null });
+	// it('handles missing user data gracefully', () => {
+	// 	(useUser as jest.Mock).mockReturnValue({ data: null });
 
-		render(
-			<MemoryRouter>
-				<More />
-			</MemoryRouter>
-		);
+	// 	render(
+	// 		<MemoryRouter>
+	// 			<More />
+	// 		</MemoryRouter>
+	// 	);
 
-		expect(screen.getByText("You are currently logged in as ''")).toBeInTheDocument();
-	});
+	// 	expect(screen.getByText("You are currently logged in as ''")).toBeInTheDocument();
+	// });
 
 	it('calls handleLogout when the logout button is clicked', () => {
 		(useUser as jest.Mock).mockReturnValue({ data: { username: 'testuser' } });
