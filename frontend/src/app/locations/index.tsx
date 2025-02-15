@@ -1,28 +1,37 @@
 import ListRow from '@/components/list-row';
 import { Link } from 'react-router-dom';
 import { useParks } from '@/hooks/queries/useParks';
-import { dbg } from '@/lib/debug';
 
-export default function Locations() {
-	const { data: parks, isLoading } = useParks();
-	dbg('RENDER', 'Locations');
-
-	if (isLoading || !parks) return null;
-
+const LoadingPlaceholder = () => {
+	// TODO: add a loading placeholder (blank grey boxes)
+	return <div data-testid='loading-placeholder'>Loading...</div>;
+  };
+  
+  export default function Locations() {
+	const { data: parks, isLoading, isError, error } = useParks();
+  
+	if (isLoading) return <LoadingPlaceholder />;
+	if (isError) return <div>Error: {error.message}</div>;
+	if (!parks) return <div>No parks found</div>;
+  
 	return (
-		<>
-			{parks.map((park) => (
-				<div className='m-3' key={park.abbreviation}>
-					<Link to={`/locations/${park.abbreviation}`} className='text-supporting_inactiveblue no-underline'>
-						<ListRow>
-							<div className='flex flex-col gap-1'>
-								<h3>{park.name}</h3>
-								<p>{park.city}, NC</p>
-							</div>
-						</ListRow>
-					</Link>
+	  <>
+		{parks.map((park) => (
+		  <div className='m-3' key={park.id}>
+			<Link 
+			  to={`/locations/${park.abbreviation}`} 
+			  className='text-supporting_inactiveblue no-underline'
+			>
+			  <ListRow>
+				<div className='flex flex-col gap-1'>
+				  <h3>{park.parkName}</h3>
+				  <p>{park.addresses[0]?.city}, {park.addresses[0]?.state}</p>
 				</div>
-			))}
-		</>
+			  </ListRow>
+			</Link>
+		  </div>
+		))}
+	  </>
 	);
-}
+  }
+  

@@ -26,7 +26,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(locationDataResponse);
     }
 
-    public record AddressResponse(string title, string addressesLineOne, string? addressesLineTwo, string city, string state, int zipcode)
+    public record AddressResponse(string title, string addressLineOne, string? addressLineTwo, string city, string state, int zipcode)
     {
         public static AddressResponse FromDomain(ParkAddress address)
         {

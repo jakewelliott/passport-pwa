@@ -4,7 +4,7 @@ import { a11yOnClick } from '@/lib/a11y';
 
 interface ImageModalProps {
 	photo: {
-		url: string;
+		photoPath: string;
 		caption?: string;
 	};
 	onClose: () => void;
@@ -21,7 +21,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
 			</span>
 			<TransformWrapper>
 				<TransformComponent>
-					<img src={photo.url} alt={photo.caption || 'Photo'} className='max-h-screen max-w-full object-contain' />
+					<img src={`/photos/${photo.photoPath}`} alt={photo.caption || 'Photo'} className='max-h-screen max-w-full object-contain' />
 				</TransformComponent>
 			</TransformWrapper>
 			{photo.caption && (
