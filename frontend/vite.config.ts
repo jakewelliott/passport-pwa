@@ -2,34 +2,42 @@ import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
 import fs from "node:fs";
 import path from "node:path";
-import { cwd } from "node:process";
 
 // https://vitejs.dev/config/
 export default defineConfig(({command, mode}) => {
+	const env = loadEnv(mode, process.cwd(), '');
 	const isProduction = command === 'build';
 	const pemDirectory = isProduction ? '.' : '..';
-	const env = loadEnv(mode, process.cwd() + '/' + pemDirectory, '');
-	
 	return {
-	plugins: [react()],
-	define: {
-		'process.env': env,
-		'process.env.PROD': JSON.stringify(isProduction? 'PROD' : 'DEV')
-	},
-	resolve: {
-		alias: {
-			"@": path.resolve(__dirname, "./src"),
+		plugins: [
+			react(),
+			{
+				name: 'terminal-logger',
+				configureServer(server) {
+					// Expose terminal write function to client
+					server.ws.on('terminal:log', (data) => {
+						process.stdout.write(data.message + '\n');
+					});
+				}
+			}
+		],
+		define: {
+			'process.env': env
 		},
-	},
-	server: {
-		host: "0.0.0.0",
-		port: 5174,
-		https: {
-			key: fs.readFileSync(path.join(pemDirectory, "localhost+2-key.pem")),
-			cert: fs.readFileSync(path.join(pemDirectory, "localhost+2.pem")),
+		resolve: {
+			alias: {
+				"@": path.resolve(__dirname, "./src"),
+			},
 		},
-		cors: true,
-		strictPort: true,
-	},
-}
+		server: {
+			host: "0.0.0.0",
+			port: 5174,
+			https: {
+				key: fs.readFileSync(path.join(pemDirectory, "localhost+2-key.pem")),
+				cert: fs.readFileSync(path.join(pemDirectory, "localhost+2.pem")),
+			},
+			cors: true,
+			strictPort: true,
+		},
+	}
 });
