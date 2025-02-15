@@ -1,0 +1,72 @@
+# This workflow will build a .NET project and run the tests. This is based on a starter workflow from GitHub and a workflow provided by NCSU Teaching Staff.
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET Tests
+
+on: 
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+  pull_request_target:
+    branches: '**'
+
+jobs:
+  Run-DotNet-Tests:
+    runs-on: [self-hosted]
+    steps:
+      - name: Publish reminder
+        uses: actions/github-script@v4.0.2
+        if: github.event_name == 'pull_request'
+        with:
+          script: |
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Reminder: Wait until Github Actions has finished running the build before merging this PR!'
+            })
+
+      - name: Check out repository code
+        uses: actions/checkout@v4
+        with:
+          ssh-key: '${{ secrets.SSH_PRIVATE_KEY }}'
+          ssh-known-hosts: 'github.ncsu.edu ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCy5K6oZoBJ881aKKkon5MB016unAgciPVqNAlFY6PWtbUd7qJEwbJJAtxZcY43UmB8x4SW8yjqLGeQDEjioDkYY/Ml58Sh+gzAdeMeloGI2uwgVw77bGvcREAZ8s/lpx3D48XtvbS/IU4CgOO7RcMFsOH0y4jVX0LDdDxKLVXu/mUxnrqB8d/NtaZjOeI1b38LxFpfF6RVD7MBC9xhuZUcofVLQMhZq+OZ85xBxqb8UV5Ujp5hPbjO2uBDf3F1G0VLZko8W6LIiJaeBrEVl2UhQR2NDX5w7sUPg9D9mRWDQvIws1C887XeyF84cxkshFzuqbbtnGPVDxNpjMnDoWsN'
+      
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      
+      - name: Create .env file
+        run: |
+          echo 'ADMIN_PASS=${{secrets.ADMIN_PASS}}' >> .env
+          echo 'API_TOKEN_KEY=${{secrets.API_TOKEN_KEY}}' >> .env
+
+      - run: echo "The workflow is now ready to test your code on the runner."
+
+      - name: Setting up .NET
+        uses: actions/setup-dotnet@v4
+        env:
+          DOTNET_INSTALL_DIR: "${{ github.workspace }}/.dotnet"
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Verify .NET installation
+        run: dotnet --info        
+
+      - name: Restore dotnet dependencies
+        run: dotnet restore 
+        working-directory: backend
+
+      - name: Build
+        run: dotnet build --no-restore
+        working-directory: backend
+
+      - name: Run tests with dotnet
+        run: dotnet test --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+        working-directory: backend
+
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: dotnet-results-${{ matrix.dotnet-version }}
+          path: backend/TestResults-${{ matrix.dotnet-version }}
+        if: ${{ always() }}
