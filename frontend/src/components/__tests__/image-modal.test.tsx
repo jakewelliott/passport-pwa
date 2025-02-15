@@ -12,7 +12,7 @@ jest.mock('react-zoom-pan-pinch', () => ({
 describe('ImageModal', () => {
 	const mockOnClose = jest.fn();
 	const mockPhoto = {
-		url: 'test-image.jpg',
+		photoPath: 'test-image.jpg',
 		caption: 'Test Caption',
 	};
 
@@ -25,12 +25,12 @@ describe('ImageModal', () => {
 
 		const img = screen.getByAltText('Test Caption');
 		expect(img).toBeInTheDocument();
-		expect(img).toHaveAttribute('src', 'test-image.jpg');
+		expect(img).toHaveAttribute('src', '/photos/test-image.jpg');
 		expect(screen.getByText('Test Caption')).toBeInTheDocument();
 	});
 
 	it('renders without caption', () => {
-		const photoWithoutCaption = { url: 'test-image.jpg' };
+		const photoWithoutCaption = { photoPath: 'test-image.jpg' };
 		render(<ImageModal photo={photoWithoutCaption} onClose={mockOnClose} />);
 
 		const img = screen.getByAltText('Photo');

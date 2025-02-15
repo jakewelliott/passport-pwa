@@ -16,19 +16,19 @@ const dummy: Park = {
     },
   ],
   coordinates: {
-    latitude: 0,
-    longitude: 0,
+    latitude: 10,
+    longitude: 10,
   },
   phone: 1234567890,
   icons: [],
   photos: [],
   id: 0,
-  email: '',
+  email: 'jake@jakewelliott.com',
   establishedYear: '',
   landmark: '',
   youCanFind: '',
   trails: '',
-  website: '',
+  website: 'jakewelliott.com',
   bucketListItems: []
 };
 

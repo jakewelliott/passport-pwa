@@ -12,12 +12,12 @@ export default function CollectStamp() {
 				</span>
 				<h1 className='text-secondary_darkteal uppercase'>Woohoo!!!</h1>
 				<p className='p-large'>
-					Your location indicates that you are at {parkDetails.name}. You have not collected the badge at this location
+					Your location indicates that you are at {parkDetails.parkName}. You have not collected the badge at this location
 					yet.{' '}
 				</p>
 				<RoundedButton title={'Collect!'} />
-				<img src={`/stamps/${parkDetails.abbreviation}.svg`} width={'150px'} alt={`${parkDetails.name} stamp`} />
+				<img src={`/stamps/${parkDetails.abbreviation}.svg`} width={'150px'} alt={`${parkDetails.parkName} stamp`} />
 			</div>
 		</div>
 	);
-}
+} 
