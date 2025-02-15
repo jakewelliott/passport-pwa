@@ -11,13 +11,10 @@ jest.mock('react-toastify');
 const loginMutate = jest.fn();
 const registerMutate = jest.fn();
 
-jest.mock('@/hooks/auth/useLogin', () => ({
+jest.mock('@/hooks/useAuth', () => ({
 	useLogin: () => ({
 		mutate: loginMutate,
 	}),
-}));
-
-jest.mock('@/hooks/auth/useRegister', () => ({
 	useRegister: () => ({
 		mutate: registerMutate,
 	}),

@@ -1,7 +1,7 @@
 import { screen, fireEvent } from '@testing-library/react';
 import Stamps from '../index';
 import { useParks, usePark } from '@/hooks/queries/useParks';
-import { useStamp } from '@/hooks/queries/useStamps';
+import { useStamp } from '@/hooks/useStamps';
 import { api } from '@/lib/mock/api';
 import { renderWithClient } from '@/lib/test-wrapper';
 
