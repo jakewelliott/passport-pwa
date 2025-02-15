@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import { register as registerServiceWorker } from './lib/service-worker.ts';
 import { queryClient } from './lib/tanstack-local-storage.ts';
+import { ToastContainer } from 'react-toastify';
 
 const rootElement = document.getElementById('root');
 
@@ -18,6 +19,13 @@ ReactDOM.createRoot(rootElement).render(
 		<QueryClientProvider client={queryClient}>
 			<BrowserRouter>
 				<App />
+				<ToastContainer
+				position="bottom-right"
+				theme="colored"
+				closeOnClick
+				draggable
+				style={{ zIndex: 9999 }}
+			/>
 			</BrowserRouter>
 		</QueryClientProvider>
 	</React.StrictMode>,

@@ -41,8 +41,6 @@ const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, parks: Park[]): Park |
   return parks.find((park) => park.name.startsWith(containingFeature.properties?.PK_NAME));
 };
 
-// TODO: add a mutation to update park visits
-// make sure we check our park visits first so we don't have to make extra calls
 export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
   const [currentPark, setCurrentPark] = useState<Park | undefined>(undefined);
   const { data: parks, isLoading: parksLoading } = useParks();

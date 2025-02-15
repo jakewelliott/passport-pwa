@@ -3,7 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import TabBar from '../tab-bar';
 import RoundedButton from '../rounded-button';
 import { LoadingPlaceholder } from '../loading-placeholder';
-import { SplashScreen } from '../splash-screen';
+import SplashScreen from '../splash-screen';
 import { ImageModal } from '../image-modal';
 import Header from '../header';
 import { TrailIcons } from '../trail-icons';

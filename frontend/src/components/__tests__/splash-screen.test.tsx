@@ -1,5 +1,5 @@
 import { render, screen, act } from '@testing-library/react';
-import { SplashScreen, SplashScreenWrapper } from '../splash-screen';
+import SplashScreen, { SplashScreenWrapper } from '../splash-screen';
 
 jest.useFakeTimers();
 
