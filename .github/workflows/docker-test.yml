@@ -21,8 +21,8 @@ jobs:
 
     - name: Generate certs
       run: |
-        chmod +x setup-certs.sh
-        ./setup-certs.sh
+        chmod +x setup-dev-certs.sh
+        ./setup-dev-certs.sh
 
     - name: Create .env file
       run: |
