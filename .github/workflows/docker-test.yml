@@ -31,6 +31,9 @@ jobs:
     - name: List directory contents
       run: ls -la      
 
+    - name: Display nginx.conf content
+      run: cat nginx.conf    
+
     - name: Build and run Docker Compose
       run: |
         docker-compose build
