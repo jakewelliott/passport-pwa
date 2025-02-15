@@ -21,8 +21,8 @@ jobs:
 
     - name: Save certs to file
       run: |
-        echo -n $CERT_PEM | base64 -d -o ./localhost+2.pem
-        echo -n $CERT_PEM_KEY | base64 -d -o ./localhost+2-key.pem
+        echo -n $CERT_PEM | base64 -d > ./localhost+2.pem
+        echo -n $CERT_PEM_KEY | base64 -d > ./localhost+2-key.pem
       env:
         CERT_PEM: ${{ secrets.CERT_PEM }}
         CERT_PEM_KEY: ${{ secrets.CERT_PEM_KEY }}
