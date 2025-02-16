@@ -14,7 +14,7 @@ describe('CollectStamp', () => {
 	});
 
 	it('displays the park name in the message', () => {
-		const message = screen.getByText(new RegExp(mockPark.name));
+		const message = screen.getByText(new RegExp(mockPark.parkName));
 		expect(message).toBeInTheDocument();
 		expect(message.textContent).toContain('Your location indicates that you are at');
 		expect(message.textContent).toContain('You have not collected the badge at this location yet.');
@@ -26,7 +26,7 @@ describe('CollectStamp', () => {
 	});
 
 	it('displays the park stamp image', () => {
-		const stampImage = screen.getByAltText(`${mockPark.name} stamp`);
+		const stampImage = screen.getByAltText(`${mockPark.parkName} stamp`);
 		expect(stampImage).toBeInTheDocument();
 		expect(stampImage).toHaveAttribute('src', `/stamps/${mockPark.abbreviation}.svg`);
 		expect(stampImage).toHaveAttribute('width', '150px');

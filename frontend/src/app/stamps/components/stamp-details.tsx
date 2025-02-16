@@ -7,7 +7,7 @@ import { FaTimes } from 'react-icons/fa';
 interface StampsDetailProps {
 	abbreviation: ParkAbbreviation;
 	handleClose: () => void;
-}
+} 
 
 const CollectedOn = ({ stamp }: { stamp: Stamp | null }) =>
 	stamp == null ? (
@@ -25,8 +25,10 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 	const { data: stamp, isLoading: stampLoading } = useStamp(code);
 	const { data: park, isLoading: parkLoading } = usePark(code);
 
-	if (parkLoading || !park) return null;
-	if (stampLoading || !stamp) return null;
+	if (parkLoading || !park) 
+		return null;
+	if (stampLoading || !stamp) 
+		return null;
 
 	return (
 		<>
@@ -48,7 +50,7 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 				>
 					<header className='mb-4'>
 						<div className='flex items-center justify-between'>
-							<h3 className='font-semibold text-xl text-center'>{park.name}</h3>
+							<h3 className='font-semibold text-xl text-center'>{park.parkName}</h3>
 							<button
 								className='rounded-full p-2 transition-colors hover:bg-black/10'
 								onClick={handleClose}
@@ -68,7 +70,7 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 							/>
 						</div>
 						<div className='space-y-2'>
-							<p className='text-supporting_inactiveblue'>{park.city}</p>
+							<p className='text-supporting_inactiveblue'>{park.addresses[0].city}</p>
 							<CollectedOn stamp={stamp} />
 							<CollectedManually stamp={stamp || null} />
 							<a

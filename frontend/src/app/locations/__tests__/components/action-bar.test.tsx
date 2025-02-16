@@ -9,7 +9,7 @@ describe('LocationActionBar', () => {
 		render(<LocationActionBar park={park} />);
 		const links = screen.getAllByRole('link');
 		const navLink = links[0]; // First link is navigation
-		expect(navLink).toHaveAttribute('href', `https://www.google.com/maps/place/${park.coordinates}`);
+		expect(navLink).toHaveAttribute('href', `https://www.google.com/maps/place/${park.coordinates.latitude},${park.coordinates.longitude}`);
 	});
 
 	it('renders phone link with correct href', () => {

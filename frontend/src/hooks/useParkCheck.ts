@@ -14,7 +14,7 @@ export type ParkCheckResult = {
   isLoading: boolean;
 };
 
-// CASE 0 -> {park, false} 			: user is in a park
+// CASE 0 -> {park, false} 			: user is in a park 
 // CASE 1 -> {undefined, false} : user is out of bounds
 // CASE 2 -> {undefined, true} 	: user is loading
 // CASE 3 -> {undefined, false} : user is error
@@ -38,7 +38,7 @@ const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, parks: Park[]): Park |
 
   if (!containingFeature) return undefined;
 
-  return parks.find((park) => park.name.startsWith(containingFeature.properties?.PK_NAME));
+  return parks.find((park) => park.parkName.startsWith(containingFeature.properties?.PK_NAME));
 };
 
 // TODO: add a mutation to update park visits

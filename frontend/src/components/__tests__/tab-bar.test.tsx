@@ -71,6 +71,12 @@ describe('TabBar', () => {
 		expect(screen.getByText('More')).toBeInTheDocument();
 	});
 
+	it('returns null when user data is loading', () => {
+		mockUseUser.mockReturnValue({ isLoading: true });
+		const { container } = renderWithClient(<TabBar />);
+		expect(container.firstChild).toBeNull();
+	  });	  
+
 	// it('shows correct tabs for admin role', () => {
 	// 	mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
 	// 	renderWithClient(<TabBar />);

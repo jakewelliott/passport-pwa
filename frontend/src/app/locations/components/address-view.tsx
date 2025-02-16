@@ -6,17 +6,18 @@ interface AddressViewProps {
 }
 
 export const AddressView = ({ address }: AddressViewProps) => {
+  console.log(address);
   return (
-    <div className='top-0 flex' key={address.name}>
+    <div className='top-0 flex' key={address.title}>
       <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
       <p>
-        {address.name}
+        {address.title}
         <br />
         {address.addressLineOne}
         {address.addressLineTwo && <br />}
         {address.addressLineTwo}
         <br />
-        {address.city}, {address.state} {address.zip}
+        {address.city}, {address.state} {address.zipcode}
       </p>
     </div>
   );

@@ -4,25 +4,32 @@ import dummyMapper from '../dummy-mapper';
 
 const dummy: Park = {
   abbreviation: 'DUMM',
-  name: 'Foobar Park',
-  city: 'Foobar City',
-  address: [
+  parkName: 'Foobar Park',
+  addresses: [
     {
+      title: 'Main address',
       addressLineOne: 'Foobar Street',
       addressLineTwo: 'Foobar Street',
       city: 'Foobarville',
       state: 'Foobaria',
-      zip: '12345',
+      zipcode: 12345,
     },
   ],
   coordinates: {
-    latitude: 0,
-    longitude: 0,
+    latitude: 10,
+    longitude: 10,
   },
-  phone: '(123) 456-7890',
-  parkIcons: [],
-  parkPhotos: [],
-  parkNotes: 'Not a real park',
+  phone: 1234567890,
+  icons: [],
+  photos: [],
+  id: 0,
+  email: 'jake@jakewelliott.com',
+  establishedYear: '',
+  landmark: '',
+  youCanFind: '',
+  trails: '',
+  website: 'jakewelliott.com',
+  bucketListItems: []
 };
 
 export default parksJson.map(dummyMapper<Park>(dummy));
