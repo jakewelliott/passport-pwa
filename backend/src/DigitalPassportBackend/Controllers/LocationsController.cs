@@ -13,7 +13,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     private readonly ILocationsService _locationsService = locationsService;
 
     [HttpGet("{locationAbbrev}")]
-    public IActionResult Get(string locationAbbrev)
+    public IActionResult GetLocation(string locationAbbrev)
     {
         // invoking the use case
         var location = _locationsService.GetByAbbreviation(locationAbbrev);
@@ -22,6 +22,15 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
         var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
         var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
+        // return 200 ok
+        return Ok(locationDataResponse);
+    }
+
+    [HttpGet()]
+    public IActionResult GetSummary()
+    {
+        // invoking the use case
+        var locationDataResponse = _locationsService.GetLocationSummary();
         // return 200 ok
         return Ok(locationDataResponse);
     }
@@ -141,5 +150,25 @@ public class LocationsController(ILocationsService locationsService) : Controlle
             );
         }
 
+    };
+
+    public record LocationSummaryResponse(
+        string ParkName,
+        string City,
+        string State
+    )
+    {
+        public static LocationSummaryResponse FromDomain(
+            string ParkName,
+            string City,
+            string State
+        )
+        {
+            return new LocationSummaryResponse(
+                ParkName: ParkName,
+                City: City,
+                State: State
+            );
+        }
     };
 }

@@ -8,5 +8,6 @@ public interface ILocationsService
     List<BucketListItem> GetBucketListItemsByLocationId(int id);
     Park GetByAbbreviation(string locationAbbrev);
     List<ParkIcon> GetIconsByLocationId(int id);
+    List<ParkSummary> GetLocationSummary();
     List<ParkPhoto> GetParkPhotosByLocationId(int id);
 }
