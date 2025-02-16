@@ -36,7 +36,7 @@ describe('Locations', () => {
 
 		// Check if all parks are rendered
 		mockParks.forEach(park => {
-			expect(screen.getByText(park.name)).toBeInTheDocument();
+			expect(screen.getByText(park.parkName)).toBeInTheDocument();
 			// expect(screen.getByText(park.address[0].city)).toBeInTheDocument();
 		});
 	});

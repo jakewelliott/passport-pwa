@@ -8,7 +8,7 @@ interface AchievementsViewProps {
 
 const AchievementsView = ({ parkActivity, park }: AchievementsViewProps) => {
   return (
-    <div className='flex flex-col gap-3'>
+    <div className='flex flex-col gap-3' data-testid='achievements-view'>
       {parkActivity.stampCollectedAt !== undefined && (
         <div className='top-0 flex'>
           <FaStamp size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
