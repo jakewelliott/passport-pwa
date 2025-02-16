@@ -25,8 +25,10 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 	const { data: stamp, isLoading: stampLoading } = useStamp(code);
 	const { data: park, isLoading: parkLoading } = usePark(code);
 
-	if (parkLoading || !park) return null;
-	if (stampLoading || !stamp) return null;
+	if (parkLoading || !park) 
+		return null;
+	if (stampLoading || !stamp) 
+		return null;
 
 	return (
 		<>
