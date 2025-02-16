@@ -40,6 +40,13 @@ export interface LoginResponse {
   token: string;
 }
 
+export interface ParkSummary {
+  parkName: string;
+  abbreviation: string;
+  city: string;
+  state: string;
+}
+
 export interface Park {
   id: number;
   parkName: string;

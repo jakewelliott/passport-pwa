@@ -1,6 +1,9 @@
+
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
+
+using Microsoft.IdentityModel.Tokens;
 
 namespace DigitalPassportBackend.Persistence.Repository;
 public class LocationsRepository(DigitalPassportDbContext digitalPassportDbContext) : ILocationsRepository
@@ -54,4 +57,10 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public List<Park> GetAll()
+    {
+        return _digitalPassportDbContext.Parks.ToList();
+    }
+
 }
