@@ -17,7 +17,6 @@ import { API_PARKS_URL } from '@/lib/fetch';
 export const usePark = (code: ParkAbbreviation) => {
   return useQuery<Park>({
     queryKey: ['park', code],
-		// TODO: make this reuse our useParks query
     queryFn: async () => await fetchGet(`${API_PARKS_URL}/${code}`),
   });
 };
