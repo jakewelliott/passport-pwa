@@ -33,7 +33,13 @@ export const queryClient = new QueryClient({
     queries: {
       staleTime: 1000 * 60 * 5, // 5 minutes
       gcTime: 1000 * 60 * 60 * 24, // 24 hours
-      retry: 2,
+      retry: (failureCount, error: Error) => {
+        // Don't retry on 401 errors
+        if (error.message === 'Unauthorized: Please log in again') {
+          return false;
+        }
+        return failureCount < 3;
+      },
     },
   },
 });
