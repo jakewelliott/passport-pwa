@@ -1,8 +1,6 @@
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Persistence.Repository;
 
-using NetTopologySuite.Index.HPRtree;
-
 namespace DigitalPassportBackend.Services;
 
 public class LocationsService : ILocationsService
@@ -46,23 +44,6 @@ public class LocationsService : ILocationsService
     {
         return _parkIconRepository.GetByLocationId(id);
     }
-
-    public List<ParkSummary> GetLocationSummary()
-    {
-        List<ParkSummary> locationsList = new List<ParkSummary>();
-        List<Park> allLocations = _locationsRepository.GetAll();
-        foreach (var location in allLocations)
-        {
-            locationsList.Add(new ParkSummary {
-                Abbreviation = location.parkAbbreviation,
-                ParkName = location.parkName,
-                City = location.city,
-                State = "NC"
-            });
-        }
-        return locationsList;
-    }
-
 
     public List<ParkPhoto> GetParkPhotosByLocationId(int id)
     {
