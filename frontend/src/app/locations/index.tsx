@@ -12,7 +12,7 @@ const LoadingPlaceholder = () => {
   
 	if (isLoading) return <LoadingPlaceholder />;
 	if (isError) return <div>Error: {error.message}</div>;
-	if (!parks) return <div>No parks found</div>;
+	if (!parks || parks.length === 0) return <div>No parks found</div>;
   
 	return (
 	  <>
@@ -25,7 +25,11 @@ const LoadingPlaceholder = () => {
 			  <ListRow>
 				<div className='flex flex-col gap-1'>
 				  <h3>{park.parkName}</h3>
-				  <p>{park.addresses[0]?.city}, {park.addresses[0]?.state}</p>
+				  {park.addresses && park.addresses.length > 0 ? (
+					<p>{park.addresses[0].city}, {park.addresses[0].state}</p>
+				  ) : (
+					<p>Address not available</p>
+				  )}
 				</div>
 			  </ListRow>
 			</Link>
