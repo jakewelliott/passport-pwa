@@ -17,6 +17,7 @@ import { BucketList } from "./app/more/bucket-list";
 import { MyNotes } from "./app/more/my-notes";
 import { EditGeneralNotes } from "./app/more/general-notes";
 import { AdminPage } from "@/app/admin";
+import { toast } from "react-toastify";
 
 const RoleBasedRedirect = () => {
 	const { data: user, isLoading } = useUser();
@@ -29,14 +30,13 @@ const RoleBasedRedirect = () => {
 };
 
 const AdminRoutes = () => {
-	const { data: user, isLoading } = useUser();
-	const isLoggedIn = user && !isLoading;
-	const isAdmin = isLoggedIn && user?.role === "admin";
-
+	dbg("RENDER", "AdminRoutes");
+	const { isLoading, isAdmin } = useUser();
 	if (isLoading) return <SplashScreen loadingMsg="checking permissions" />;
-	if (!isAdmin) return <Navigate to="/locations" replace />;
-
-	dbg("RENDER", "AdminRoutes", `user is ${!isAdmin ? "not" : ""} an admin`);
+	if (!isAdmin) {
+		toast.error("You are not authorized to access this page");
+		return <Navigate to="/locations" replace />;
+	}
 
 	return (
 		<Routes>

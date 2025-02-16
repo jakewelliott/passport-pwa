@@ -27,15 +27,14 @@ const useUserStore = create<UserState>()(
 export const useUser = () => {
   const { user, setUser } = useUserStore();
 	const isLoggedIn = !!user;
+	const isAdmin = isLoggedIn && user?.role === "admin";
 
   const query = useQuery<UserProfile | null, Error>({
     queryKey: ['user'],
     queryFn: async () => {
       try {
-        // Replace this with your actual API call
 				dbg('QUERY', 'useUser');
-        const response = await fetchGet(API_USER_URL);
-        const userData = await response.json();
+        const userData = await fetchGet(API_USER_URL);
         setUser(userData); // Update Zustand store
         dbg('QUERY', 'useUser', userData.username);
         return userData;
@@ -48,5 +47,5 @@ export const useUser = () => {
   });
 
 	dbg('QUERY', 'useUser', query.data?.username || 'no user');
-	return { ...query, isLoggedIn };
+	return { ...query, isLoggedIn, isAdmin };
 };
