@@ -2,12 +2,13 @@ import { FaChevronLeft } from 'react-icons/fa6';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { useNavigate } from 'react-router-dom';
 
-const BackButton = ({ hidden }: { hidden: boolean }) => {
+export const BackButton = ({ hidden }: { hidden: boolean }) => {
 	const navigate = useNavigate();
-	if (hidden) return <div />;
+	if (hidden) 
+		return <div />;
 	return (
 		<button onClick={() => navigate(-1)} className='flex items-center text-system_white' type='button'>
-			<FaChevronLeft className='mr-1' />
+			<FaChevronLeft className='mr-1' data-testid="fa-chevron-left" />
 			<span>Back</span>
 		</button>
 	);
@@ -28,7 +29,7 @@ const Header = () => {
 					</div>
 				)}
 				<h4 className='text-system_white'>{pageTitle}</h4>
-				<div className='absolute right-4 w-[70px]' /> {/* Placeholder for balance */}
+				<div className='absolute right-4 w-[70px]' data-testid='balance-placeholder' /> {/* Placeholder for balance */}
 			</header>
 		</div>
 	);

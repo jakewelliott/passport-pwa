@@ -18,6 +18,7 @@ exports[`Component Snapshots Header renders correctly 1`] = `
         >
           <svg
             class="mr-1"
+            data-testid="fa-chevron-left"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -42,6 +43,7 @@ exports[`Component Snapshots Header renders correctly 1`] = `
       </h4>
       <div
         class="absolute right-4 w-[70px]"
+        data-testid="balance-placeholder"
       />
        
     </header>

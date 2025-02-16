@@ -79,4 +79,67 @@ describe('MyNotes Component - User Stories', () => {
     const lastUpdatedTexts = screen.getAllByText('Last updated: Not available');
     expect(lastUpdatedTexts.length).toBeGreaterThan(0);
   });
+
+  // Test when parks data is null or undefined
+  it('should handle null parks data', () => {
+    mockUseParks.mockReturnValue({ data: null });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+  });
+
+  // Test when there are parks but no notes for any of them
+  it('should show no park notes when parks exist but have no notes', () => {
+    mockUseParks.mockReturnValue({ data: mockParks });
+    mockUseParkNotesStore.mockReturnValue({ ...mockNotes, getKeys: () => ['generalNotes'] });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+  });
+
+  // Test when there are multiple parks with notes
+  it('should display multiple parks with notes', () => {
+    const multipleParks = [
+      ...mockParks,
+      { parkName: 'Test Park 3', abbreviation: 'TP3', addresses: [{ city: 'Test City 3' }] }
+    ];
+    const multipleNotes = {
+      ...mockNotes,
+      TP2: 'Notes for Test Park 2',
+      TP3: 'Notes for Test Park 3',
+      getKeys: () => ['generalNotes', 'TP1', 'TP2', 'TP3']
+    };
+    mockUseParks.mockReturnValue({ data: multipleParks });
+    mockUseParkNotesStore.mockReturnValue(multipleNotes);
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('Test Park 1')).toBeInTheDocument();
+    expect(screen.getByText('Test Park 2')).toBeInTheDocument();
+    expect(screen.getByText('Test Park 3')).toBeInTheDocument();
+  });
+
+  // Test when a park has no city in its address
+  it('should handle parks with no city in address', () => {
+    const parkWithNoCity = [{ parkName: 'No City Park', abbreviation: 'NCP', addresses: [{}] }];
+    mockUseParks.mockReturnValue({ data: parkWithNoCity });
+    mockUseParkNotesStore.mockReturnValue({
+      ...mockNotes,
+      NCP: 'Notes for No City Park',
+      getKeys: () => ['generalNotes', 'NCP']
+    });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No City Park')).toBeInTheDocument();
+    expect(screen.queryByText('Test City')).not.toBeInTheDocument();
+  });
+
+  // Test when a park has no addresses
+  it('should handle parks with no addresses', () => {
+    const parkWithNoAddress = [{ parkName: 'No Address Park', abbreviation: 'NAP', addresses: [] }];
+    mockUseParks.mockReturnValue({ data: parkWithNoAddress });
+    mockUseParkNotesStore.mockReturnValue({
+      ...mockNotes,
+      NAP: 'Notes for No Address Park',
+      getKeys: () => ['generalNotes', 'NAP']
+    });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No Address Park')).toBeInTheDocument();
+  });
+
 });
