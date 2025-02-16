@@ -8,18 +8,15 @@ const storage = {
   getItem: (key: string): string | null => {
     const value = localStorage.getItem(key);
 		dbg('STORAGE', 'GET', key);
-    // dbg('STORAGE', 'GET', [key, value]);  // this spams the terminal
     return value;
   },
   setItem: (key: string, value: string): void => {
     localStorage.setItem(key, value);
 		dbg('STORAGE', 'SET', key);
-    // dbg('STORAGE', 'SET', [key, value]); // this spams the terminal
   },
   removeItem: (key: string): void => {
     localStorage.removeItem(key);
 		dbg('STORAGE', 'REMOVE', key);
-    // dbg('STORAGE', 'REMOVE', [key]); // this spams the terminal
   },
 };
 
