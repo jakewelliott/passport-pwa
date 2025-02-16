@@ -1,11 +1,11 @@
-import type { ParkAbbreviation, Stamp } from '@/lib/mock/types';
 import DateHelper from '@/lib/date-helper';
 import { useStamp } from '@/hooks/queries/useStamps';
 import { usePark } from '@/hooks/queries/useParks';
 import { FaTimes } from 'react-icons/fa';
+import { Stamp } from '@/lib/mock/types'
 
 interface StampsDetailProps {
-	abbreviation: ParkAbbreviation;
+	abbreviation: string;
 	handleClose: () => void;
 } 
 

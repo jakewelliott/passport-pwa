@@ -1,4 +1,3 @@
-import type { ParkAbbreviation } from '@/lib/mock/types';
 import { useUser } from './useUser';
 import { api } from '@/lib/mock/api';
 import { useQuery } from '@tanstack/react-query';
@@ -20,7 +19,7 @@ export const useStamps = () => {
  * @param code The code of the park to get the stamp for
  * @returns The stamp for the user
  */
-export const useStamp = (code: ParkAbbreviation) => {
+export const useStamp = (code: string) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
   return { data: data?.find((stamp) => stamp.code === code) || null, isLoading };

@@ -4,10 +4,9 @@ import RoundedButton from '@/components/rounded-button';
 import { a11yOnClick } from '@/lib/a11y';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
-import type { ParkAbbreviation } from '@/lib/mock/types';
 import { toast } from 'react-toastify';
 
-export const NotesMiniTab = ({ abbreviation, parkId }: { abbreviation: ParkAbbreviation; parkId: number }) => {
+export const NotesMiniTab = ({ abbreviation, parkId }: { abbreviation: string; parkId: number }) => {
   const { getNote, setNote } = useParkNotesStore();
   const { data: remoteNote, isLoading } = useNote(parkId);
   const updateNoteMutation = useUpdateNote();

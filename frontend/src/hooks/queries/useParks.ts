@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import type { Park, ParkAbbreviation, ParkActivity } from '@/lib/mock/types';
+import type { Park, ParkActivity } from '@/lib/mock/types';
 import Cookies from 'js-cookie';
 // import { api } from '@/lib/mock/api';
 
@@ -15,7 +15,7 @@ import Cookies from 'js-cookie';
 // - error: the error returned from the query
 const BASE_URL = `http://localhost:${process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT}/api`;
 
-const fetchPark = async (code: ParkAbbreviation): Promise<Park> => {
+const fetchPark = async (code: string): Promise<Park> => {
   const response = await fetch(`${BASE_URL}/locations/${code}`);
   if (!response.ok) {
     throw new Error('Network response was not ok');
@@ -37,7 +37,7 @@ const fetchParkActivity = async (parkId: number): Promise<ParkActivity> => {
   return await response.json();
 };
 
-export const usePark = (code: ParkAbbreviation) => {
+export const usePark = (code: string) => {
   return useQuery<Park>({
     queryKey: ['park', code],
     queryFn: () => fetchPark(code),

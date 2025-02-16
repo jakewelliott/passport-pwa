@@ -9,6 +9,7 @@ const LoadingPlaceholder = () => {
   
   export default function Locations() {
 	const { data: parks, isLoading, isError, error } = useParks();
+	console.log(parks);
   
 	if (isLoading) return <LoadingPlaceholder />;
 	if (isError) return <div>Error: {error.message}</div>;
