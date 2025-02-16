@@ -24,7 +24,10 @@ export const SplashScreen = ({ loadingMsg }: { loadingMsg?: string }) => {
 				<p className='script' style={{ paddingTop: 30 }}>
 					Passport
 				</p>
-				{loadingMsg && <p>Loading {loadingMsg}...</p>}
+				{loadingMsg
+					&& 
+					<p>Loading {loadingMsg}...</p>
+				}
 			</div>
 		</div>
 	);

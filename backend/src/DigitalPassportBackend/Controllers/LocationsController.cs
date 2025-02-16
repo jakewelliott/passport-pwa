@@ -26,7 +26,26 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(locationDataResponse);
     }
 
-    public record AddressResponse(string title, string addressesLineOne, string? addressesLineTwo, string city, string state, int zipcode)
+    [HttpGet()]
+    public IActionResult GetAll()
+    {
+        // invoking the use case
+        List<LocationResponse> parks = new List<LocationResponse>();
+        var locations = _locationsService.GetAll();
+        foreach (var location in locations)
+        {
+            var addresses = _locationsService.GetAddressesByLocationId(location.id);
+            var icons = _locationsService.GetIconsByLocationId(location.id);
+            var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
+            var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
+            var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
+            parks.Add(locationDataResponse);
+        }
+        // return 200 ok
+        return Ok(parks);
+    }
+
+    public record AddressResponse(string title, string addressLineOne, string? addressLineTwo, string city, string state, int zipcode)
     {
         public static AddressResponse FromDomain(ParkAddress address)
         {

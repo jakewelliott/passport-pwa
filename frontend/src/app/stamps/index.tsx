@@ -11,8 +11,8 @@ import { toast } from 'react-toastify';
 
 const isVisited = (code: string, stamps: { code: string }[] | undefined) =>
 	stamps?.some(stamp => stamp.code === code) ?? false;
-const sortByName = (a: Park, b: Park) => a.name.localeCompare(b.name);
-
+const sortByName = (a: Park, b: Park) => a.parkName.localeCompare(b.parkName);
+    
 const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean; parkName: string }) => {
 	return (
 		<button onClick={handleClick} className='flex items-center justify-center p-2' type='button' role='button'>
@@ -36,7 +36,7 @@ export default function Stamps() {
 
 	const handleStampClick = (index: number, park: Park) => {
 		if (!isVisited(park.abbreviation, stamps)) {
-			toast.info(`You haven't collected the ${park.name} stamp yet!`);
+			toast.info(`You haven't collected the ${park.parkName} stamp yet!`);
 		}
 		setSelectedIndex(index);
 	};
@@ -59,7 +59,7 @@ export default function Stamps() {
 						code={park.abbreviation}
 						greyed={!isVisited(park.abbreviation, stamps)}
 						handleClick={() => handleStampClick(index, park)}
-						parkName={park.name}
+						parkName={park.parkName}
 					/>
 				))}
 			</div>

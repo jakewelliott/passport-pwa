@@ -6,7 +6,8 @@ import { useUser } from '@/hooks/queries/useUser';
 
 const TabBar = () => {
 	const { data: user, isLoading } = useUser();
-	if (!user || isLoading) return null;
+	if (!user || isLoading) 
+		return null;
 
 	const location = useLocation();
 	const tabs = [

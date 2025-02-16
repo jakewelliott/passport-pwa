@@ -16,6 +16,7 @@ const Layout = ({ children }: LayoutProps) => {
 	return (
 		<div className="min-h-screen">
 			<div
+				role='main'
 				className="overflow-y-auto pt-12 pb-16 h-dvh"
 			>
 				{children}

@@ -7,9 +7,9 @@ describe('DetailsMiniTab', () => {
 
 	it('renders establishment date when provided', () => {
 		render(<DetailsMiniTab park={park} />);
-		if (park.established) {
+		if (park.establishedYear) {
 			expect(screen.getByText('Established:')).toBeInTheDocument();
-			expect(screen.getByText(park.established)).toBeInTheDocument();
+			expect(screen.getByText(park.establishedYear)).toBeInTheDocument();
 		}
 	});
 
@@ -45,13 +45,13 @@ describe('DetailsMiniTab', () => {
 
 	it('renders park icons when provided', () => {
 		render(<DetailsMiniTab park={park} />);
-		if (park.parkIcons.length > 0) {
+		if (park.icons.length > 0) {
 			const iconContainer = screen.getByTestId('icon-scroll-container');
 			const icons = iconContainer.querySelectorAll('img');
-			expect(icons.length).toBe(park.parkIcons.length);
+			expect(icons.length).toBe(park.icons.length);
 
 			icons.forEach((icon, index) => {
-				expect(icon).toHaveAttribute('src', `/icons/park/${park.parkIcons[index]}`);
+				expect(icon).toHaveAttribute('src', `/icons/park/${park.icons[index]}`);
 				expect(icon).toHaveAttribute('alt', `Park icon ${index + 1}`);
 				expect(icon).toHaveAttribute('width', '55');
 				expect(icon).toHaveAttribute('height', '55');

@@ -68,7 +68,7 @@ describe('Component Snapshots', () => {
 
 		const { container } = render(
 			<ImageModal
-				photo={{ url: 'test.jpg', caption: 'Test Image' }}
+				photo={{ photoPath: 'test.jpg', caption: 'Test Image' }}
 				onClose={() => { }}
 			/>
 		);
