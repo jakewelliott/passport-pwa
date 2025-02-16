@@ -1,3 +1,4 @@
+
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
@@ -54,4 +55,10 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public List<Park> GetAll()
+    {
+        return _digitalPassportDbContext.Parks.ToList();
+    }
+
 }

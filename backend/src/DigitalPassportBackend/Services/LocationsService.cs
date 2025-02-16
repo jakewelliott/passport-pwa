@@ -30,6 +30,12 @@ public class LocationsService : ILocationsService
         return _addressRepository.GetByLocationId(id);
     }
 
+    public List<Park> GetAll()
+    {
+        return _locationsRepository.GetAll();
+    }
+
+
     public List<BucketListItem> GetBucketListItemsByLocationId(int id)
     {
         return _bucketListItemRepository.GetByLocationId(id);

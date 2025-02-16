@@ -1,3 +1,4 @@
+
 using DigitalPassportBackend.Domain;
 
 namespace DigitalPassportBackend.Services;
@@ -5,6 +6,8 @@ namespace DigitalPassportBackend.Services;
 public interface ILocationsService
 {
     List<ParkAddress> GetAddressesByLocationId(int id);
+    List<Park> GetAll();
+
     List<BucketListItem> GetBucketListItemsByLocationId(int id);
     Park GetByAbbreviation(string locationAbbrev);
     List<ParkIcon> GetIconsByLocationId(int id);
