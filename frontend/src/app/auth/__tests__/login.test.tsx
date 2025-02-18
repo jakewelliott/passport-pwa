@@ -239,18 +239,18 @@ it('renders SuperAdminButton component', () => {
   it('handles form submission with only username filled', async () => {
 	renderLoginPage();
   
-	fireEvent.change(screen.getByPlaceholderText('Username'), {
+	fireEvent.change(screen.getByPlaceholderText('Password'), {
 	  target: { value: 'testuser' },
 	});
   
 	fireEvent.click(screen.getByText('Login'));
   
 	await waitFor(() => {
-	  expect(toast.error).toHaveBeenCalledWith('Password is required.');
+	  expect(toast.error).toHaveBeenCalledWith('Username is required.');
 	});
   
-	expect(screen.getByPlaceholderText('Username')).not.toHaveClass('border-system_red');
-	expect(screen.getByPlaceholderText('Password')).toHaveClass('border-system_red');
+	expect(screen.getByPlaceholderText('Username')).toHaveClass('border-system_red');
+	expect(screen.getByPlaceholderText('Password')).not.toHaveClass('border-system_red');
   });
   
 });
