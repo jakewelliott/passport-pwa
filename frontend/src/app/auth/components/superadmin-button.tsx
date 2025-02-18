@@ -23,7 +23,7 @@ export const SuperAdminButton = () => {
 	};
 
 	return (
-		<button type="button" onClick={handleClick}>
+		<button type="button" onClick={handleClick} data-testid="super-admin-button">
 			<RoundedButton title="SUPERADMIN" />
 		</button>
 	)

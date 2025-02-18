@@ -10,7 +10,8 @@ const NoPhotos = () => {
 export const PhotoGalleryMiniTab = ({ photos }: { photos: Park['photos'] }) => {
 	const [selectedPhoto, setSelectedPhoto] = useState<Park['photos'][0] | null>(null);
 
-	if (!photos || photos.length === 0) return <NoPhotos />;
+	if (!photos || photos.length === 0)
+		return <NoPhotos />;
 
 	const handleOpen = (photo: Park['photos'][0]) => {
 		setSelectedPhoto(photo);

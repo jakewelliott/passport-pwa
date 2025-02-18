@@ -11,9 +11,12 @@ const LoadingPlaceholder = () => {
 	const { data: parks, isLoading, isError, error } = useParks();
 	console.log(parks);
   
-	if (isLoading) return <LoadingPlaceholder />;
-	if (isError) return <div>Error: {error.message}</div>;
-	if (!parks || parks.length === 0) return <div>No parks found</div>;
+	if (isLoading) 
+		return <LoadingPlaceholder />;
+	if (isError) 
+		return <div>Error: {error.message}</div>;
+	if (!parks || parks.length === 0) 
+		return <div>No parks found</div>;
   
 	return (
 	  <>
