@@ -42,22 +42,32 @@ describe('LocationContact', () => {
 		}
 	});
 
-	it('renders address line two when provided', () => {
-		const parkWithLineTwoAddress = park;
-		parkWithLineTwoAddress.addresses[0].addressLineTwo = "Heyy Whats uppppp"
+	it('renders address line two when provided and adds <br /> element', () => {
+		const parkWithLineTwoAddress = { ...park };
+		parkWithLineTwoAddress.addresses[0] = {
+		  ...parkWithLineTwoAddress.addresses[0],
+		  addressLineTwo: "Heyy Whats uppppp"
+		};
+		
 		render(<LocationContact park={parkWithLineTwoAddress} parkActivity={parkActivity} />);
+		
 		if (parkWithLineTwoAddress.addresses?.[0]) {
-			const addressText = screen.getByText((content, element) => {
-				return element?.tagName.toLowerCase() === 'p' &&
-					content.includes(parkWithLineTwoAddress.addresses[0].addressLineOne) &&
-					content.includes(parkWithLineTwoAddress.addresses[0].addressLineTwo) &&
-					content.includes(parkWithLineTwoAddress.addresses[0].city) &&
-					content.includes(parkWithLineTwoAddress.addresses[0].state) &&
-					content.includes(parkWithLineTwoAddress.addresses[0].zipcode.toString());
-			});
-			expect(addressText).toBeInTheDocument();
+		  const addressText = screen.getByText((content, element) => {
+			return element?.tagName.toLowerCase() === 'p' &&
+			  content.includes(parkWithLineTwoAddress.addresses[0].addressLineOne) &&
+			  content.includes(parkWithLineTwoAddress.addresses[0].addressLineTwo) &&
+			  content.includes(parkWithLineTwoAddress.addresses[0].city) &&
+			  content.includes(parkWithLineTwoAddress.addresses[0].state) &&
+			  content.includes(parkWithLineTwoAddress.addresses[0].zipcode.toString());
+		  });
+		  expect(addressText).toBeInTheDocument();
+		  
+		  // Check if there are two <br /> elements in the address
+		  const brElements = addressText.getElementsByTagName('br');
+		  expect(brElements.length).toBe(3);
 		}
-	});
+	  });
+	  
 
 	it('hides multiple addresses', () => {
 		const parkWithThreeAddresses = park;
