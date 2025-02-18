@@ -25,16 +25,15 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 	const { data: stamp, isLoading: stampLoading } = useStamp(code);
 	const { data: park, isLoading: parkLoading } = usePark(code);
 
-	if (parkLoading || !park) 
-		return null;
-	if (stampLoading || !stamp) 
+	if (parkLoading || !park || stampLoading ) 
 		return null;
 
 	return (
 		<>
 			{/* Dark overlay */}
 			<div
-				className="fixed inset-0 bg-black opacity-75"
+				data-testid="overlay"
+				className="fixed inset-0 bg-system_black opacity-75"
 				style={{ zIndex: 40 }}
 				onClick={handleClose}
 			/>

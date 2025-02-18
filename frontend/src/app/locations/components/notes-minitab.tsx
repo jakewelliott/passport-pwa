@@ -1,4 +1,3 @@
-// components/NotesMiniTab.tsx
 import { useEffect } from 'react';
 import RoundedButton from '@/components/rounded-button';
 import { a11yOnClick } from '@/lib/a11y';
@@ -33,7 +32,8 @@ export const NotesMiniTab = ({ abbreviation, parkId }: { abbreviation: string; p
     );
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) 
+    return <div>Loading...</div>;
 
   return (
     <div className='flex h-full flex-col'>

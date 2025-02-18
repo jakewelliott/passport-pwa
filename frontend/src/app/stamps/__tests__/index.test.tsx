@@ -1,146 +1,108 @@
-// TODO: rewrite this test
-describe('Stamps - REWRITE THIS FILE', () => {
-	it('renders', () => {
-		expect(true).toBe(true);
-	});
+import { screen } from '@testing-library/react';
+import { renderWithClient } from '@/lib/test-wrapper';
+import Stamps from '../index';
+import { useParks } from '@/hooks/queries/useParks';
+import { useStamps, useStamp } from '@/hooks/queries/useStamps';
+import { useUser } from '@/hooks/queries/useUser';
+
+// Mock the hooks and dependencies
+jest.mock('@/hooks/queries/useParks');
+jest.mock('@/hooks/queries/useStamps');
+jest.mock('@/hooks/queries/useUser');
+jest.mock('react-toastify');
+
+const mockUseParks = useParks as jest.Mock;
+const mockUseStamps = useStamps as jest.Mock;
+const mockUseUser = useUser as jest.Mock;
+const mockUseStamp = useStamp as jest.Mock;
+
+const isVisited = (code: string, stamps: { code: string }[] | undefined) =>
+  stamps?.some(stamp => stamp.code === code) ?? false;
+
+describe('Stamps', () => {
+  const mockParks = [
+    { id: 1, parkName: 'Eno River State Park', abbreviation: 'ACAD' },
+    { id: 2, parkName: 'Carvers Creek State Park', abbreviation: 'YELL' },
+    { id: 3, parkName: 'Jones Lake State Park', abbreviation: 'ZION' },
+  ];
+
+  const mockStamps = [
+    { code: 'ACAD', timestamp: new Date(), location: { latitude: 0, longitude: 0 } },
+    { code: 'ZION', timestamp: new Date(), location: { latitude: 0, longitude: 0 } },
+  ];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    mockUseUser.mockReturnValue({ isLoading: false });
+    mockUseParks.mockReturnValue({ data: mockParks, isLoading: false });
+    mockUseStamps.mockReturnValue({ data: mockStamps, isLoading: false });
+    mockUseStamp.mockReturnValue({
+      data: {
+        code: 'ACAD',
+        timestamp: new Date('2024-01-01T12:00:00Z'),
+        location: { latitude: 0, longitude: 0 }
+      },
+      isLoading: false
+    });
+  });
+
+  it('renders loading state correctly', () => {
+    mockUseParks.mockReturnValue({ data: null, isLoading: true });
+    const { container } = renderWithClient(<Stamps />);
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it('renders stamps grid correctly', () => {
+    renderWithClient(<Stamps />);
+    mockParks.forEach(park => {
+      const stampImage = screen.getByAltText(`${park.abbreviation} - ${
+        isVisited(park.abbreviation, mockStamps) ? 'achieved' : 'greyed out'
+      }`);
+      expect(stampImage).toBeInTheDocument();
+    });
+  });
+
+  it('applies correct styling for collected and uncollected stamps', () => {
+    renderWithClient(<Stamps />);
+    const collectedStamp = screen.getByAltText('ACAD - achieved');
+    expect(collectedStamp).not.toHaveClass('opacity-50');
+    expect(collectedStamp).not.toHaveClass('grayscale');
+
+    const uncollectedStamp = screen.getByAltText('YELL - greyed out');
+    expect(uncollectedStamp).toHaveClass('opacity-50');
+    expect(uncollectedStamp).toHaveClass('grayscale');
+  });
+
+  it('sorts parks correctly with achieved stamps first', () => {
+    renderWithClient(<Stamps />);
+    const stampImages = screen.getAllByRole('button');
+    expect(stampImages[0].querySelector('img')).toHaveAttribute('alt', 'ACAD - achieved');
+    expect(stampImages[1].querySelector('img')).toHaveAttribute('alt', 'ZION - achieved');
+    expect(stampImages[2].querySelector('img')).toHaveAttribute('alt', 'YELL - greyed out');
+  });
+
+  it('handles error state when fetching parks fails', () => {
+    mockUseParks.mockReturnValue({ data: null, isLoading: false, error: new Error('Failed to fetch parks') });
+    renderWithClient(<Stamps />);
+    expect(screen.queryByRole('button')).not.toBeInTheDocument();
+  });
+
+  it('handles error state when fetching stamps fails', () => {
+    mockUseStamps.mockReturnValue({ data: null, isLoading: false, error: new Error('Failed to fetch stamps') });
+    renderWithClient(<Stamps />);
+    
+    // Check that all buttons are rendered as greyed out
+    const buttons = screen.getAllByRole('button');
+    expect(buttons).toHaveLength(3); // Assuming there are 3 parks
+    
+    buttons.forEach(button => {
+      const img = button.querySelector('img');
+      expect(img).toHaveClass('opacity-50');
+      expect(img).toHaveClass('grayscale');
+    });
+    
+    // Verify that no StampDetails component is rendered
+    expect(screen.queryByRole('button', { name: /close/i })).not.toBeInTheDocument();
+  });
+  
 });
-
-
-// import { screen, fireEvent } from '@testing-library/react';
-// import { useParks, usePark } from '@/hooks/queries/useParks';
-// import { useStamp, useStamps } from '@/hooks/queries/useStamps';
-// import { api } from '@/lib/mock/api';
-
-
-// // Mock the hooks
-// jest.mock('@/hooks/queries/useParks');
-// jest.mock('@/hooks/queries/useStamps');
-
-// const mockUseParks = useParks as jest.Mock;
-// const mockUsePark = usePark as jest.Mock;
-// const mockUseStamp = useStamp as jest.Mock;
-// const mockUseStamps = useStamps as jest.Mock;
-
-// describe('Stamps', () => {
-// 	const mockParks = api.getParks();
-
-// 	beforeEach(() => {
-// 		jest.clearAllMocks();
-// 		// Mock usePark to return the first park when called
-// 		mockUsePark.mockReturnValue({
-// 			data: mockParks[0],
-// 			isLoading: false
-// 		});
-// 		// Mock useStamp to return a stamp
-// 		mockUseStamp.mockReturnValue({
-// 			data: { timestamp: new Date(), location: null },
-// 			isLoading: false
-// 		});
-// 		// Mock useStamps to return the mock stamps
-// 		mockUseStamps.mockReturnValue({
-// 			data: [{ code: mockParks[0].abbreviation, timestamp: new Date(), location: null }],
-// 			isLoading: false
-// 		});
-// 	});
-
-// 	const renderStamps = () => {
-// 		renderWithClient(<Stamps />);
-// 	};
-
-// 	it('shows loading state when data is loading', () => {
-// 		mockUseParks.mockReturnValue({
-// 			data: null,
-// 			isLoading: true
-// 		});
-
-// 		renderStamps();
-// 		expect(screen.getByText('Loading...')).toBeInTheDocument();
-// 	});
-
-// 	it('renders grid of stamps when data is available', () => {
-// 		mockUseParks.mockReturnValue({
-// 			data: mockParks,
-// 			isLoading: false
-// 		});
-
-// 		renderStamps();
-
-// 		// Check if all park stamps are rendered
-// 		mockParks.forEach(park => {
-// 			const stampImage = screen.getByAltText(`${park.abbreviation} - greyed out`);
-// 			expect(stampImage).toBeInTheDocument();
-// 			expect(stampImage).toHaveAttribute('src', `/stamps/${park.abbreviation}.svg`);
-// 			expect(stampImage).toHaveClass('opacity-50', 'grayscale');
-// 		});
-// 	});
-
-// 	it('shows stamp details when a stamp is clicked', () => {
-// 		mockUseParks.mockReturnValue({
-// 			data: mockParks,
-// 			isLoading: false
-// 		});
-
-// 		renderStamps();
-
-// 		// Click the first stamp
-// 		const firstStamp = screen.getByAltText(`${mockParks[0].abbreviation} - greyed out`);
-// 		fireEvent.click(firstStamp);
-
-// 		// StampDetails component should be rendered
-// 		expect(screen.getByRole('article')).toBeInTheDocument();
-// 	});
-
-// 	it('hides stamp details when close button is clicked', () => {
-// 		mockUseParks.mockReturnValue({
-// 			data: mockParks,
-// 			isLoading: false
-// 		});
-
-// 		renderStamps();
-
-// 		// Click the first stamp to show details
-// 		const firstStamp = screen.getByAltText(`${mockParks[0].abbreviation} - greyed out`);
-// 		fireEvent.click(firstStamp);
-
-// 		// Click the close button
-// 		const closeButton = screen.getByRole('button', { name: 'Close park details' });
-// 		fireEvent.click(closeButton);
-
-// 		// StampDetails component should not be in the document
-// 		expect(screen.queryByRole('article')).not.toBeInTheDocument();
-// 	});
-
-// 	it('applies correct styling to stamp buttons', () => {
-// 		mockUseParks.mockReturnValue({
-// 			data: mockParks,
-// 			isLoading: false
-// 		});
-
-// 		renderStamps();
-
-// 		const stampButtons = screen.getAllByRole('button').filter(button =>
-// 			button.className.includes('flex items-center justify-center p-2')
-// 		);
-
-// 		stampButtons.forEach(button => {
-// 			expect(button).toHaveClass('flex', 'items-center', 'justify-center', 'p-2');
-// 		});
-// 	});
-
-// 	it('renders stamps in correct grid layout with responsive classes', () => {
-// 		mockUseParks.mockReturnValue({
-// 			data: mockParks,
-// 			isLoading: false
-// 		});
-
-// 		renderStamps();
-
-// 		const gridRow = screen.getAllByRole('button')[0].closest('.grid-cols-3');
-// 		expect(gridRow).toHaveClass(
-// 			'grid-cols-3',
-// 			'sm:grid-cols-5',
-// 			'md:grid-cols-6',
-// 			'lg:grid-cols-8'
-// 		);
-// 	});
-// });

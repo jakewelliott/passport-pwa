@@ -156,4 +156,101 @@ describe('LoginPage', () => {
 		expect(privacyLink).toHaveAttribute('href', 'https://www.nc.gov/privacy');
 		expect(privacyLink).toHaveAttribute('target', '_blank');
 	});
+
+	// Add these tests to your existing test suite
+
+it('renders SuperAdminButton component', () => {
+	renderLoginPage();
+	expect(screen.getByTestId('super-admin-button')).toBeInTheDocument();
+  });
+  
+  it('applies correct styles to input fields based on error state', async () => {
+	renderLoginPage();
+  
+	const usernameInput = screen.getByPlaceholderText('Username');
+	const passwordInput = screen.getByPlaceholderText('Password');
+  
+	// Initially, inputs should have default styles
+	expect(usernameInput).not.toHaveClass('border-system_red');
+	expect(passwordInput).not.toHaveClass('border-system_red');
+  
+	// Trigger validation error
+	fireEvent.click(screen.getByText('Login'));
+  
+	await waitFor(() => {
+	  expect(usernameInput).toHaveClass('border-system_red');
+	  expect(passwordInput).toHaveClass('border-system_red');
+	});
+  
+	// Fill in fields and check if error styles are removed
+	fireEvent.change(usernameInput, { target: { value: 'testuser' } });
+	fireEvent.change(passwordInput, { target: { value: 'password' } });
+  
+	fireEvent.click(screen.getByText('Login'));
+  
+	await waitFor(() => {
+	  expect(usernameInput).not.toHaveClass('border-system_red');
+	  expect(passwordInput).not.toHaveClass('border-system_red');
+	});
+  });
+  
+  it('handles partial form completion', async () => {
+	renderLoginPage();
+  
+	fireEvent.change(screen.getByPlaceholderText('Username'), {
+	  target: { value: 'testuser' },
+	});
+  
+	fireEvent.click(screen.getByText('Login'));
+  
+	await waitFor(() => {
+	  expect(toast.error).toHaveBeenCalledWith('Password is required.');
+	});
+  });
+  
+  it('clears error states on successful login/register', async () => {
+	renderLoginPage();
+  
+	// Trigger error state
+	fireEvent.click(screen.getByText('Login'));
+  
+	await waitFor(() => {
+	  expect(screen.getByPlaceholderText('Username')).toHaveClass('border-system_red');
+	  expect(screen.getByPlaceholderText('Password')).toHaveClass('border-system_red');
+	});
+  
+	// Fill form and submit
+	fireEvent.change(screen.getByPlaceholderText('Username'), {
+	  target: { value: 'testuser' },
+	});
+	fireEvent.change(screen.getByPlaceholderText('Password'), {
+	  target: { value: 'password' },
+	});
+  
+	await act(async () => {
+	  fireEvent.click(screen.getByText('Login'));
+	});
+  
+	// Check if error states are cleared
+	expect(screen.getByPlaceholderText('Username')).not.toHaveClass('border-system_red');
+	expect(screen.getByPlaceholderText('Password')).not.toHaveClass('border-system_red');
+  });
+  
+  it('handles form submission with only username filled', async () => {
+	renderLoginPage();
+  
+	fireEvent.change(screen.getByPlaceholderText('Username'), {
+	  target: { value: 'testuser' },
+	});
+  
+	fireEvent.click(screen.getByText('Login'));
+  
+	await waitFor(() => {
+	  expect(toast.error).toHaveBeenCalledWith('Password is required.');
+	});
+  
+	expect(screen.getByPlaceholderText('Username')).not.toHaveClass('border-system_red');
+	expect(screen.getByPlaceholderText('Password')).toHaveClass('border-system_red');
+  });
+  
 });

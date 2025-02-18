@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { LocationContact } from '@/app/locations/components/location-contact';
 import { api } from '@/lib/mock/api';
 
@@ -40,6 +40,35 @@ describe('LocationContact', () => {
 			});
 			expect(addressText).toBeInTheDocument();
 		}
+	});
+
+	it('renders address line two when provided', () => {
+		const parkWithLineTwoAddress = park;
+		parkWithLineTwoAddress.addresses[0].addressLineTwo = "Heyy Whats uppppp"
+		render(<LocationContact park={parkWithLineTwoAddress} parkActivity={parkActivity} />);
+		if (parkWithLineTwoAddress.addresses?.[0]) {
+			const addressText = screen.getByText((content, element) => {
+				return element?.tagName.toLowerCase() === 'p' &&
+					content.includes(parkWithLineTwoAddress.addresses[0].addressLineOne) &&
+					content.includes(parkWithLineTwoAddress.addresses[0].addressLineTwo) &&
+					content.includes(parkWithLineTwoAddress.addresses[0].city) &&
+					content.includes(parkWithLineTwoAddress.addresses[0].state) &&
+					content.includes(parkWithLineTwoAddress.addresses[0].zipcode.toString());
+			});
+			expect(addressText).toBeInTheDocument();
+		}
+	});
+
+	it('hides multiple addresses', () => {
+		const parkWithThreeAddresses = park;
+		parkWithThreeAddresses.addresses.push(park.addresses[0]);
+		parkWithThreeAddresses.addresses.push(park.addresses[0]);
+		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		var showMoreButton = screen.getByText('Show More');
+		expect(showMoreButton).toBeInTheDocument();
+		fireEvent.click(showMoreButton);
+		const showLessButton = screen.getByText('Show Less');
+		expect(showLessButton).toBeInTheDocument();
 	});
 
 	it('renders contact icons', () => {
