@@ -5,16 +5,13 @@ import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
 import { toast } from "react-toastify";
 import { renderWithClient } from '@/lib/test-wrapper';
 
-// Mock the store
 jest.mock('@/hooks/store/useParkNotesStore');
 const mockedUseParkNotesStore = useParkNotesStore as jest.MockedFunction<typeof useParkNotesStore>;
 
-// Mock the query hooks
 jest.mock('@/hooks/queries/useNotes');
 const mockedUseNote = useNote as jest.MockedFunction<typeof useNote>;
 const mockedUseUpdateNote = useUpdateNote as jest.MockedFunction<typeof useUpdateNote>;
 
-// Mock react-toastify
 jest.mock("react-toastify", () => ({
   toast: {
     success: jest.fn(),
@@ -81,7 +78,6 @@ describe('NotesMiniTab', () => {
       );
     });
 
-    // Simulate successful save
     const successCallback = mockMutate.mock.calls[0][1].onSuccess;
     successCallback();
 
@@ -98,10 +94,63 @@ describe('NotesMiniTab', () => {
       expect(mockMutate).toHaveBeenCalled();
     });
 
-    // Simulate failed save
     const errorCallback = mockMutate.mock.calls[0][1].onError;
     errorCallback();
 
     expect(toast.error).toHaveBeenCalledWith('Failed to save notes');
+  });
+
+  it('renders loading state when data is being fetched', () => {
+    mockedUseNote.mockReturnValueOnce({
+      data: null,
+      isLoading: true,
+    } as any);
+
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
+  });
+
+  it('updates local state when remote note changes', async () => {
+    const newRemoteNote = 'New remote note';
+    mockedUseNote.mockReturnValueOnce({
+      data: { id: 1, note: newRemoteNote },
+      isLoading: false,
+    } as any);
+
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+
+    await waitFor(() => {
+      expect(mockSetNote).toHaveBeenCalledWith(mockAbbreviation, newRemoteNote);
+    });
+  });
+
+  it('handles empty note correctly', async () => {
+    mockedUseParkNotesStore.mockReturnValueOnce({
+      getNote: () => '',
+      setNote: mockSetNote,
+    });
+
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+    const saveButton = screen.getByTestId('save-button');
+
+    fireEvent.click(saveButton);
+
+    await waitFor(() => {
+      expect(mockMutate).toHaveBeenCalledWith(
+        { parkId: mockParkId, note: '' },
+        expect.anything()
+      );
+    });
+  });
+
+  it('displays placeholder text when note is empty', () => {
+    mockedUseParkNotesStore.mockReturnValueOnce({
+      getNote: () => '',
+      setNote: mockSetNote,
+    });
+
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).toHaveAttribute('placeholder', 'Add some personal notes about this park!');
   });
 });
