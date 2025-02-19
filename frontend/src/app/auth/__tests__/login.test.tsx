@@ -3,21 +3,22 @@ import { toast } from 'react-toastify';
 import LoginPage from '../login';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { act } from 'react-dom/test-utils';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 
 // Mock the react-toastify
-jest.mock('react-toastify');
+vi.mock('react-toastify');
 
 // Mock the auth hooks
-const loginMutate = jest.fn();
-const registerMutate = jest.fn();
+const loginMutate = vi.fn();
+const registerMutate = vi.fn();
 
-jest.mock('@/hooks/auth/useLogin', () => ({
+vi.mock('@/hooks/auth/useLogin', () => ({
 	useLogin: () => ({
 		mutate: loginMutate,
 	}),
 }));
 
-jest.mock('@/hooks/auth/useRegister', () => ({
+vi.mock('@/hooks/auth/useRegister', () => ({
 	useRegister: () => ({
 		mutate: registerMutate,
 	}),
@@ -29,7 +30,7 @@ const renderLoginPage = () => {
 
 describe('LoginPage', () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 	});
 
 	it('renders login form with all elements', () => {

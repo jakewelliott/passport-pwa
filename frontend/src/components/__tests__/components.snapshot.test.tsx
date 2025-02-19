@@ -9,16 +9,17 @@ import Header from '../header';
 import { TrailIcons } from '../trail-icons';
 import ListRow from '../list-row';
 import { PassportHeader } from '../passport-header';
+import { describe, it, expect, vi } from 'vitest';
 
 // Mock ResizeObserver
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
-	observe: jest.fn(),
-	unobserve: jest.fn(),
-	disconnect: jest.fn(),
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+	observe: vi.fn(),
+	unobserve: vi.fn(),
+	disconnect: vi.fn(),
 }));
 
 // Mock the useUser hook
-jest.mock('@/hooks/queries/useUser', () => ({
+vi.mock('@/hooks/queries/useUser', () => ({
 	useUser: () => ({
 		data: { role: 'visitor' },
 		isLoading: false
@@ -26,7 +27,7 @@ jest.mock('@/hooks/queries/useUser', () => ({
 }));
 
 // Mock the usePageTitle hook
-jest.mock('@/hooks/usePageTitle', () => ({
+vi.mock('@/hooks/usePageTitle', () => ({
 	usePageTitle: () => ({
 		pageTitle: 'Test Title',
 		showBackButton: true

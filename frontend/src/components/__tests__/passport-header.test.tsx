@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+import { describe, it, expect } from 'vitest';
 import { PassportHeader } from '../passport-header';
 
 describe('PassportHeader', () => {

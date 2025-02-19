@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import RoundedButton from '../rounded-button';
+import { describe, it, expect } from 'vitest';
 
 describe('RoundedButton', () => {
 	it('renders with default props', () => {

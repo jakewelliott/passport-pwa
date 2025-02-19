@@ -9,8 +9,8 @@
 // jest.mock('@/hooks/queries/useUser');
 // jest.mock('@/hooks/useAuth');
 
-// const mockUseUser = useUser as jest.Mock;
-// const mockUseLogout = useLogout as jest.Mock;
+// const mockUseUser = useUser as Mock;
+// const mockUseLogout = useLogout as Mock;
 
 describe('More Page - User Stories', () => {
 	// const mockLogout = jest.fn();

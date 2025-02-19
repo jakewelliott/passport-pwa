@@ -16,10 +16,10 @@ describe('Stamps - REWRITE THIS FILE', () => {
 // jest.mock('@/hooks/queries/useParks');
 // jest.mock('@/hooks/queries/useStamps');
 
-// const mockUseParks = useParks as jest.Mock;
-// const mockUsePark = usePark as jest.Mock;
-// const mockUseStamp = useStamp as jest.Mock;
-// const mockUseStamps = useStamps as jest.Mock;
+// const mockUseParks = useParks as Mock;
+// const mockUsePark = usePark as Mock;
+// const mockUseStamp = useStamp as Mock;
+// const mockUseStamps = useStamps as Mock;
 
 // describe('Stamps', () => {
 // 	const mockParks = api.getParks();

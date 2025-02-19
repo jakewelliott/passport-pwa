@@ -10,8 +10,8 @@ import { renderWithClient } from '@/lib/test-wrapper';
 jest.mock('@/hooks/queries/useStamps');
 jest.mock('@/hooks/queries/useParks');
 
-const mockUseStamp = useStamp as jest.Mock;
-const mockUsePark = usePark as jest.Mock;
+const mockUseStamp = useStamp as Mock;
+const mockUsePark = usePark as Mock;
 
 describe('StampDetails', () => {
 	const mockPark = api.getPark('ENRI');

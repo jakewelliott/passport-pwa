@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { DetailsMiniTab } from '@/app/locations/components/details-minitab';
 import { api } from '@/lib/mock/api';
+import { describe, it, expect } from 'vitest';
 
 describe('DetailsMiniTab', () => {
 	const park = api.getParks()[0];

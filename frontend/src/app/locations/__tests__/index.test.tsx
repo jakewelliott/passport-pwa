@@ -3,11 +3,12 @@ import { useParks } from '@/hooks/queries/useParks';
 import { api } from '@/lib/mock/api';
 import Locations from '../index';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 
 // Mock the hooks
-jest.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/queries/useParks');
 
-const mockUseParks = useParks as jest.Mock;
+const mockUseParks = useParks as Mock;
 
 describe('Locations', () => {
 
@@ -23,22 +24,22 @@ describe('Locations', () => {
 
 	const mockParks = api.getParks();
 
-    beforeEach(() => {
-        jest.clearAllMocks();
-    });
+	beforeEach(() => {
+		vi.clearAllMocks();
+	});
 
-    it('renders list of parks when data is available', () => {
+	it('renders list of parks when data is available', () => {
 		mockUseParks.mockReturnValue({
 			data: mockParks,
 			isLoading: false
 		});
-	
+
 		renderWithClient(<Locations />);
-	
+
 		const parkElements = screen.getAllByText(mockParks[0].parkName);
 		expect(parkElements).toHaveLength(mockParks.length);
 	});
-	
-	  
+
+
 
 });

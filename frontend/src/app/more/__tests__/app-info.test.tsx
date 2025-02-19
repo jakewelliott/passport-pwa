@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { AppInfo } from '@/app/more/app-info';
+import { describe, it, expect } from 'vitest';
 
 describe('AppInfo Component - User Stories', () => {
 	// User Story: As a user, I want to see the app name and branding

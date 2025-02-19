@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { HikingEssentials } from '@/app/more/hiking-essentials';
-
+import { describe, it, expect } from 'vitest';
 describe('HikingEssentials Component - User Stories', () => {
 	// User Story: As a user, I want to learn about essential hiking gear
 	it('should display essential hiking gear information', () => {

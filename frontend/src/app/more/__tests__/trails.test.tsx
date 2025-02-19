@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { Trails } from '@/app/more/trails';
-
+import { describe, it, expect } from 'vitest';
 describe('Trails Component - User Stories', () => {
 	// TODO: fix - test doesn't match actual component content
 	// // User Story: As a user, I want to learn about trail difficulty levels
