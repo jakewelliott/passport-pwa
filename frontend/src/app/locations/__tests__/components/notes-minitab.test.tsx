@@ -8,7 +8,7 @@ import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the store
 vi.mock('@/hooks/store/useParkNotesStore');
-const mockedUseParkNotesStore = useParkNotesStore as Mock;
+const mockedUseParkNotesStore = useParkNotesStore as unknown as Mock;
 
 // Mock the query hooks
 vi.mock('@/hooks/queries/useNotes');

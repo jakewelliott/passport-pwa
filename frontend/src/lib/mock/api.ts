@@ -2,7 +2,7 @@ import park_activity from './park_activity';
 import parks from './parks';
 import { userProfile, userStamps } from './user';
 
-import type { Geopoint, Park, ParkAbbreviation } from './types';
+import type { Geopoint, Park } from './types';
 
 // ADAM: We should design our API to allow us to do as much on the client side as possible.
 // Can't rely on the service layer if you're offline!
@@ -12,7 +12,7 @@ export const api = {
   // Parks
   getParks: () => parks,
   getParkActivity: () => park_activity,
-  getPark: (code: ParkAbbreviation) => parks.find((park: Park) => park.abbreviation === code),
+  getPark: (code: string) => parks.find((park: Park) => park.abbreviation === code),
 
   // Users
   getUserByID: (userId: number) => {
