@@ -1,8 +1,10 @@
 import { dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
-import { ErrorResponse } from './mock/types';
 
-const API_PORT = process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT;
+// TODO: use correct port for dev, for some reason PROD wasnt working for me in docker
+// const API_PORT = process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT;
+const API_PORT = process.env.NGINX_PORT;
+
 export const API_URL = `http://localhost:${API_PORT}/api`;
 
 // auth
@@ -40,12 +42,7 @@ export const fetchPost = async (url: string, body: any) => {
 		body: JSON.stringify(body),
 	});
 
-	if (!response.ok) {
-		const errorData: ErrorResponse = await response.json();
-		const msg = `${errorData.detail} ${response.statusText}`;
-		dbg('ERROR', 'POST ERROR', msg);
-		throw new Error(`POST failed: ${msg}`);
-	}
+	if (!response.ok) fetchError(response);
 
 	dbg('FETCH', 'POST RESPONSE', { response });
 	return response;
@@ -67,15 +64,16 @@ export const fetchGet = async (url: string) => {
 		credentials: 'include',
 	});
 
-	if (!response.ok) {
-		const errorData: ErrorResponse = await response.json();
-		const msg = `${errorData.detail} ${response.statusText}`;
-		dbg('ERROR', 'GET ERROR', msg);
-		throw new Error(`GET failed: ${msg}`);
-	}
+	if (!response.ok) fetchError(response);
 
 	const data = await response.json();
 	dbg('FETCH', 'GET RESPONSE', { response, data });
 
 	return data;
+};
+
+const fetchError = (response: Response) => {
+	dbg('ERROR', 'FETCH', { response });
+	const msg = `${response.statusText}`;
+	throw new Error(`FETCH failed: ${msg}`);
 };

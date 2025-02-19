@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { decodeToken } from '@/lib/token-helper';
 import { queryClient } from '@/lib/tanstack-local-storage';
-import type { LoginCredentials, ErrorResponse } from '@/lib/mock/types';
+import type { LoginCredentials } from '@/lib/mock/types';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchPost } from '@/lib/fetch';
@@ -17,14 +17,11 @@ export const useRegister = () => {
 
   return useMutation<string, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
+			dbg('MUTATE', 'useRegister', { username, password });
       const response = await fetchPost(API_AUTH_REGISTER_URL, {
         username,
         password,
       });
-      if (!response.ok) {
-        const responseData: ErrorResponse = await response.json();
-        throw new Error(responseData.detail || 'Registration failed. Please try again later.');
-      }
       return response.text();
     },
     onSuccess: (data, { username }) => {
@@ -42,6 +39,7 @@ export const useRegister = () => {
     },
     onError: (error) => {
 			dbg('ERROR', 'useRegister', error);
+			// TODO: be more verbose here
       toast.error(error.message);
     }
   });
