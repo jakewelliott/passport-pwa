@@ -1,7 +1,7 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
 import DateHelper from '@/lib/date-helper';
-import type { Park, Stamp } from '@/lib/mock/types';
+import type { Address, Park, Stamp } from '@/lib/mock/types';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
@@ -15,6 +15,16 @@ const mockUseStamp = useStamp as Mock;
 const mockUsePark = usePark as Mock;
 
 describe('StampDetails', () => {
+
+	const mockAddress: Address = {
+		title: '',
+		addressLineOne: '',
+		addressLineTwo: '',
+		city: '',
+		state: '',
+		zipcode: 0,
+	};
+
 	const mockPark: Park = {
 		id: 1,
 		parkName: 'ENRI',
@@ -26,12 +36,13 @@ describe('StampDetails', () => {
 		youCanFind: '',
 		trails: '',
 		website: '',
-		addresses: [],
+		addresses: [mockAddress],
 		icons: [],
 		bucketListItems: [],
 		photos: [],
-		abbreviation: ''
+		abbreviation: '',
 	};
+
 	const mockStamp: Stamp = {
 		code: 'ENRI',
 		timestamp: new Date('2024-01-01T12:00:00Z'),

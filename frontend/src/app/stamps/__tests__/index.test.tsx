@@ -8,7 +8,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import type { Mock } from 'vitest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import Stamps from '..';
+import Stamps from '../';
 
 // Mock the hooks and toast
 vi.mock('@/hooks/queries/useParks');
