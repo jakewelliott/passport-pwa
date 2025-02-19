@@ -18,6 +18,8 @@ export const LocationContact = ({ park, parkActivity }: LocationContactProps) =>
 		setShowAllAddresses(!showAllAddresses);
 	};
 
+	const parkPhone = park.phone.toString();
+
 	const addressesToShow = showAllAddresses ? park.addresses : park.addresses?.slice(0, 2);
 
 	return (
@@ -49,7 +51,7 @@ export const LocationContact = ({ park, parkActivity }: LocationContactProps) =>
 			{park.phone && (
 				<div className='top-0 flex'>
 					<FiPhone size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-					<p>{park.phone}</p>
+					<p>{`(${parkPhone.slice(0, 3)}) ${parkPhone.slice(3,6)}-${parkPhone.slice(6, 10)}`}</p>
 				</div>
 			)}
 			{park.email && (
