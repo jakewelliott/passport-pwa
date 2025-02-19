@@ -2,23 +2,25 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { LoggedInAs } from '../../components/logged-in-as';
 import { useUser } from "@/hooks/queries/useUser";
 import { useLogout } from "@/hooks/auth/useLogout";
+import { describe, it, test, expect, beforeEach, vi } from 'vitest';
+import { Mock } from 'vitest';
 
 // Mock the hooks
-jest.mock("@/hooks/queries/useUser");
-jest.mock("@/hooks/auth/useLogout");
+vi.mock("@/hooks/queries/useUser");
+vi.mock("@/hooks/auth/useLogout");
 
 describe('LoggedInAs', () => {
 	// Mock logout function
-	const mockLogout = jest.fn();
+	const mockLogout = vi.fn();
 
 	beforeEach(() => {
 		// Clear all mocks before each test
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 		// Setup default mock for useLogout
 		(useLogout as Mock).mockReturnValue(mockLogout);
 	});
 
-	test('displays logged in message when user exists', () => {
+	it('displays logged in message when user exists', () => {
 		// Mock useUser to return a user
 		(useUser as Mock).mockReturnValue({
 			data: { username: 'testUser' }

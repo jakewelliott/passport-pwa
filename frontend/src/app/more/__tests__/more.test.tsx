@@ -5,8 +5,7 @@ import { useLogout } from '@/hooks/auth/useLogout';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { Mock } from 'vitest';
 import { renderWithClient } from '@/lib/test-wrapper';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { fireEvent, screen } from '@testing-library/react';
 
 // Mock the hooks
 vi.mock('@/hooks/queries/useUser');
@@ -22,13 +21,7 @@ describe('More Page - User Stories', () => {
 		mockUseUser.mockReturnValue({
 			data: { username: 'testuser' }
 		});
-		mockUseLogout.mockReturnValue({
-			mutate: mockMutate,
-			isPending: false,
-			isSuccess: false,
-			isError: false,
-			error: null
-		});
+		mockUseLogout.mockReturnValue(mockMutate);
 	});
 
 	// User Story: As a user, I want to see all available sections in the More menu
@@ -53,35 +46,26 @@ describe('More Page - User Stories', () => {
 
 	// User Story: As a user, I want to see my username displayed
 	it('should display the logged-in username', () => {
-		render(
-			<BrowserRouter>
-				<More />
-			</BrowserRouter>
-		);
+		renderWithClient(<More />);
 
 		expect(screen.getByText(/testuser/)).toBeInTheDocument();
 	});
 
 	// User Story: As a user, I want to be able to log out
 	it('should allow the user to log out', () => {
-		render(
-			<BrowserRouter>
-				<More />
-			</BrowserRouter>
+		renderWithClient(
+			<More />
 		);
 
 		const logoutButton = screen.getByText('Log out');
 		fireEvent.click(logoutButton);
+
 		expect(mockMutate).toHaveBeenCalled();
 	});
 
 	// User Story: As a user, I want all navigation links to be accessible
 	it('should have accessible navigation links', () => {
-		render(
-			<BrowserRouter>
-				<More />
-			</BrowserRouter>
-		);
+		renderWithClient(<More />);
 
 		const links = screen.getAllByRole('link');
 		expect(links).toHaveLength(8); // All section links
