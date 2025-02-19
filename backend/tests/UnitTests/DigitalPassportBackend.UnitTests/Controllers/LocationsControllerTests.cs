@@ -15,6 +15,8 @@ public class LocationsControllerTests
 
     private readonly LocationsController _controller;
 
+    private readonly List<Park> _locations = [];
+
     public LocationsControllerTests()
     {
         _mockLocationsService = new Mock<ILocationsService>();
@@ -57,6 +59,26 @@ public class LocationsControllerTests
         Assert.Equal($"Park not found with abbreviation {locationAbbrev}", exception.ErrorMessage);
     }
 
+    [Fact]
+    public void GetAll_ReturnsListOfAllLocations()
+    {
+        // Arrange.
+        SetupLocation(TestData.Parks[0]);
+        SetupLocation(TestData.Parks[1]);
+        _mockLocationsService.Setup(s => s.GetAll())
+            .Returns(_locations);
+
+        // Act.
+        var result = _controller.GetAll();
+
+        // Assert.
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var list = Assert.IsType<List<LocationResponse>>(okResult.Value)!;
+        Assert.Equal(2, list.Count);
+        Assert.True(Response.Equal(TestData.Parks[0], list[0]));
+        Assert.True(Response.Equal(TestData.Parks[1], list[1]));
+    }
+
     private void SetupLocation(Park park)
     {
         _mockLocationsService.Setup(s => s.GetByAbbreviation(park.parkAbbreviation))
@@ -69,5 +91,6 @@ public class LocationsControllerTests
             .Returns([.. TestData.BucketList.Where(p => p.parkId == park.id)]);
         _mockLocationsService.Setup(s => s.GetParkPhotosByLocationId(park.id))
             .Returns([.. TestData.ParkPhotos.Where(p => p.parkId == park.id)]);
+        _locations.Add(park);
     }
 }
