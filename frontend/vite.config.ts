@@ -42,5 +42,19 @@ export default defineConfig(({command, mode}) => {
 			cors: true,
 			strictPort: true,
 		},
+		test: {
+			globals: true,
+			environment: 'jsdom',
+			setupFiles: ['./src/lib/vitest-setup.ts'],
+			coverage: {
+				provider: 'v8',
+				reporter: ['text', 'json', 'html'],
+				exclude: [
+					'node_modules/',
+					'src/lib/vitest-setup.ts',
+				],
+			},
+			include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+		},
 	}
 });

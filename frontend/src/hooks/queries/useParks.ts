@@ -1,7 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { API_ACTIVITY_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
 import type { Park, ParkActivity } from '@/lib/mock/types';
-import Cookies from 'js-cookie';
-// import { api } from '@/lib/mock/api';
+import { useQuery } from '@tanstack/react-query';
 
 // ADAM:
 // This is a very simple query hook.
@@ -13,65 +12,24 @@ import Cookies from 'js-cookie';
 // - isLoading: a boolean that indicates if the query is loading (data is undefined)
 // - isError: a boolean that indicates if the query has an error
 // - error: the error returned from the query
-const BASE_URL = `http://localhost:${process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT}/api`;
-
-const fetchPark = async (code: string): Promise<Park> => {
-  const response = await fetch(`${BASE_URL}/locations/${code}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  const data = await response.json();
-  return { ...data, abbreviation: code };
-};
-
-const fetchParkActivity = async (parkId: number): Promise<ParkActivity> => {
-  const token = Cookies.get('token');
-  const response = await fetch(`${BASE_URL}/activity/park/${parkId}`, {
-    headers: {
-      'Authorization': `Bearer ${token}`,
-    }
-  });
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return await response.json();
-};
 
 export const usePark = (code: string) => {
   return useQuery<Park>({
     queryKey: ['park', code],
-    queryFn: () => fetchPark(code),
+    queryFn: async () => await fetchGet(`${API_PARKS_URL}/${code}`),
   });
 };
 
 export const useParkActivity = (parkId: number) => {
-  const token = Cookies.get('token');
-
-  return useQuery<ParkActivity, Error>({
+  return useQuery<ParkActivity>({
     queryKey: ['parkActivity', parkId],
-    queryFn: () => fetchParkActivity(parkId),
-    enabled: !!token, // Only run the query if a token exists
-    retry: (failureCount, error) => {
-      // Don't retry on 401 errors
-      if (error.message === 'Unauthorized: Please log in again') {
-        return false;
-      }
-      return failureCount < 3;
-    }
+    queryFn: async () => await fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
   });
-};
-
-const fetchParks = async (): Promise<Park[]> => {
-  const response = await fetch(`${BASE_URL}/locations`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return await response.json();
 };
 
 export const useParks = () => {
   return useQuery<Park[]>({
     queryKey: ['parks'],
-    queryFn: fetchParks,
+    queryFn: async () => await fetchGet(API_PARKS_URL),
   });
 };

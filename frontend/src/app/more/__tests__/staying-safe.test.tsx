@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react';
 import StayingSafe from '@/app/more/staying-safe';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('StayingSafe Component', () => {
   const safetyRules = [
@@ -28,14 +29,22 @@ describe('StayingSafe Component', () => {
 
     const title = screen.getByText('How to Stay Safe While Visiting NC State Parks');
     expect(title).toBeInTheDocument();
-    expect(title).toHaveClass('mb-6', 'w-full', 'bg-supporting_inactiveblue', 'p-3', 'text-center', 'text-system_white', 'uppercase');
+    expect(title).toHaveClass(
+      'mb-6',
+      'w-full',
+      'bg-supporting_inactiveblue',
+      'p-3',
+      'text-center',
+      'text-system_white',
+      'uppercase',
+    );
   });
 
   it('renders the description correctly', () => {
     render(<StayingSafe />);
 
     const description = screen.getByText(
-      "To keep everyone safe and protect our parks, please follow these rules and safety guidelines while you're here!"
+      "To keep everyone safe and protect our parks, please follow these rules and safety guidelines while you're here!",
     );
     expect(description).toBeInTheDocument();
   });
@@ -49,9 +58,9 @@ describe('StayingSafe Component', () => {
     const listItems = screen.getAllByRole('listitem');
     expect(listItems).toHaveLength(safetyRules.length);
 
-    safetyRules.forEach((rule) => {
+    for (const rule of safetyRules) {
       expect(screen.getByText(rule)).toBeInTheDocument();
-    });
+    }
   });
 
   it('renders each list item with correct structure', () => {
@@ -59,7 +68,7 @@ describe('StayingSafe Component', () => {
 
     const listItems = screen.getAllByRole('listitem');
 
-    listItems.forEach((item) => {
+    for (const item of listItems) {
       // Check that each list item has a bullet point (•)
       const bulletPoint = item.querySelector('span:first-child');
       expect(bulletPoint).toBeInTheDocument();
@@ -69,6 +78,6 @@ describe('StayingSafe Component', () => {
       const textContent = item.querySelector('span:last-child');
       expect(textContent).toBeInTheDocument();
       expect(textContent?.textContent).not.toBe('');
-    });
+    }
   });
 });

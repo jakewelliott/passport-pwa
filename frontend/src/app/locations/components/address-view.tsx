@@ -1,12 +1,11 @@
-import { FiNavigation } from 'react-icons/fi';
 import type { Address } from '@/lib/mock/types';
+import { FiNavigation } from 'react-icons/fi';
 
 interface AddressViewProps {
   address: Address;
 }
 
 export const AddressView = ({ address }: AddressViewProps) => {
-  console.log(address);
   return (
     <div className='top-0 flex' key={address.title}>
       <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />

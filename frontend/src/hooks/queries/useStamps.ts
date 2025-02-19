@@ -1,6 +1,6 @@
-import { useUser } from './useUser';
 import { api } from '@/lib/mock/api';
 import { useQuery } from '@tanstack/react-query';
+import { useUser } from './useUser';
 /**
  * Gets all of the local user's stamps, empty array if user is not loaded
  * @returns The stamps for the user

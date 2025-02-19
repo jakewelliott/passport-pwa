@@ -1,23 +1,24 @@
-import { render, screen } from '@testing-library/react';
 import { BucketList } from '@/app/more/bucket-list';
 import { BucketListItem } from '@/app/more/components/bucket-list-item';
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the BucketListItem component
-jest.mock('@/app/more/components/bucket-list-item', () => ({
-  BucketListItem: jest.fn(() => <div data-testid="bucket-list-item" />)
+vi.mock('@/app/more/components/bucket-list-item', () => ({
+  BucketListItem: vi.fn(() => <div data-testid='bucket-list-item' />),
 }));
 
 beforeEach(() => {
-    jest.clearAllMocks();
-  });  
+  vi.clearAllMocks();
+});
 
 describe('BucketList', () => {
-    it('renders without crashing', () => {
-        render(<BucketList />);
-        const items = screen.getAllByTestId('bucket-list-item');
-        expect(items.length).toBe(11);
-        expect(items[0]).toBeInTheDocument();
-      });      
+  it('renders without crashing', () => {
+    render(<BucketList />);
+    const items = screen.getAllByTestId('bucket-list-item');
+    expect(items.length).toBe(11);
+    expect(items[0]).toBeInTheDocument();
+  });
 
   it('renders the correct number of BucketListItems', () => {
     render(<BucketList />);
