@@ -1,5 +1,5 @@
-import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
 import type { Park } from '@/lib/mock/types';
+import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
 
 const park: Park = {
   abbreviation: 'CABE',
@@ -11,7 +11,7 @@ const park: Park = {
       city: 'Raleigh',
       state: 'NC',
       zipcode: 27606,
-      addressLineTwo: ''
+      addressLineTwo: '',
     },
     {
       title: 'Tertiary Address:',
@@ -19,7 +19,7 @@ const park: Park = {
       city: 'Raleigh',
       state: 'NC',
       zipcode: 27606,
-      addressLineTwo: ''
+      addressLineTwo: '',
     },
   ],
   coordinates: { latitude: 35.2023, longitude: -78.9761 },
@@ -34,19 +34,19 @@ const park: Park = {
   photos: [
     {
       photoPath: './photos/CABE.jpg',
-      alt: ''
+      alt: '',
     },
     {
       photoPath: './photos/CACR.jpg',
-      alt: ''
+      alt: '',
     },
     {
       photoPath: './photos/CACR.jpg',
-      alt: ''
+      alt: '',
     },
   ],
   id: 0,
-  bucketListItems: []
+  bucketListItems: [],
 };
 
 export const BucketListItem = () => {
@@ -54,18 +54,18 @@ export const BucketListItem = () => {
   return (
     <div className='my-2.5 flex items-start'>
       {hasValidBucketListItem ? (
-        <FaRegCheckSquare 
-          data-testid="checked-icon" 
-          size={'24px'} 
-          strokeWidth={3} 
-          style={{ paddingRight: '5px', paddingTop: '3px' }} 
+        <FaRegCheckSquare
+          data-testid='checked-icon'
+          size={'24px'}
+          strokeWidth={3}
+          style={{ paddingRight: '5px', paddingTop: '3px' }}
         />
       ) : (
-        <FaRegSquare 
-          data-testid="unchecked-icon" 
-          size={'24px'} 
-          strokeWidth={3} 
-          style={{ paddingRight: '5px', paddingTop: '3px' }} 
+        <FaRegSquare
+          data-testid='unchecked-icon'
+          size={'24px'}
+          strokeWidth={3}
+          style={{ paddingRight: '5px', paddingTop: '3px' }}
         />
       )}
       <div className='flex w-full flex-col justify-center'>

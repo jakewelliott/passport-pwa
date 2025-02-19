@@ -1,6 +1,6 @@
 import { dbg } from '@/lib/debug';
 import type { Geopoint } from '@/lib/mock/types';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface LocationState {
   geopoint: {

@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { a11yOnClick } from '@/lib/a11y';
+import { useState } from 'react';
 
 interface LocationMiniTabBarProps {
   children: React.ReactNode[];
