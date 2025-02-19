@@ -1,9 +1,9 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import More from '@/app/more/index';
-import { useUser } from '@/hooks/queries/useUser';
 import { useLogout } from '@/hooks/auth/useLogout';
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import { useUser } from '@/hooks/queries/useUser';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock dependencies
 vi.mock('@/hooks/queries/useUser', () => ({
@@ -43,11 +43,11 @@ describe('More Component', () => {
 			{ text: 'App Info', href: '/more/app-info' },
 		];
 
-		links.forEach(({ text, href }) => {
+		for (const { text, href } of links) {
 			const linkElement = screen.getByText(text).closest('a');
 			expect(linkElement).toBeInTheDocument();
 			expect(linkElement).toHaveAttribute('href', href);
-		});
+		}
 	});
 
 	it('displays the logged-in user\'s username', () => {

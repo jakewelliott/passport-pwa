@@ -1,9 +1,9 @@
-import { screen } from '@testing-library/react';
-import { useLocation } from 'react-router-dom';
-import TabBar from '../tab-bar';
 import * as useUserHook from '@/hooks/queries/useUser';
 import { renderWithClient } from '@/lib/test-wrapper';
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import { screen } from '@testing-library/react';
+import { useLocation } from 'react-router-dom';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import TabBar from '../tab-bar';
 
 // Mock the useLocation hook
 vi.mock('react-router-dom', async () => {
@@ -31,11 +31,11 @@ describe('TabBar', () => {
 		renderWithClient(<TabBar />);
 
 		const tabs = ['Locations', 'Stamps', 'More'];
-		tabs.forEach(tab => {
+		for (const tab of tabs) {
 			const tabElement = screen.getByText(tab);
 			expect(tabElement).toBeInTheDocument();
 			expect(tabElement.closest('a')).toHaveAttribute('href', `/${tab.toLowerCase()}`);
-		});
+		}
 	});
 
 	it('highlights active tab based on current route', () => {
@@ -97,9 +97,9 @@ describe('TabBar', () => {
 		expect(links).toHaveLength(3);
 
 		// Just verify that each link has an SVG icon
-		links.forEach(link => {
+		for (const link of links) {
 			const svg = link.querySelector('svg');
 			expect(svg).toBeInTheDocument();
-		});
+		}
 	});
 }); 
