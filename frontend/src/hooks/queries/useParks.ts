@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import type { Park, ParkAbbreviation, ParkActivity } from '@/lib/mock/types';
 import { API_ACTIVITY_URL, fetchGet } from '@/lib/fetch';
 import { API_PARKS_URL } from '@/lib/fetch';
+import type { Park, ParkAbbreviation, ParkActivity } from '@/lib/mock/types';
+import { useQuery } from '@tanstack/react-query';
 
 // ADAM:
 // This is a very simple query hook.

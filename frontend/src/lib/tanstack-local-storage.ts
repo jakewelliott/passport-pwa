@@ -1,22 +1,22 @@
-import { QueryClient } from '@tanstack/react-query';
 import { persistQueryClient } from '@tanstack/query-persist-client-core';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
+import { QueryClient } from '@tanstack/react-query';
 import { dbg } from './debug';
 
 // Create a wrapper for IndexedDB that implements the sync interface
 const storage = {
   getItem: (key: string): string | null => {
     const value = localStorage.getItem(key);
-		dbg('STORAGE', 'GET', key);
+    dbg('STORAGE', 'GET', key);
     return value;
   },
   setItem: (key: string, value: string): void => {
     localStorage.setItem(key, value);
-		dbg('STORAGE', 'SET', key);
+    dbg('STORAGE', 'SET', key);
   },
   removeItem: (key: string): void => {
     localStorage.removeItem(key);
-		dbg('STORAGE', 'REMOVE', key);
+    dbg('STORAGE', 'REMOVE', key);
   },
 };
 

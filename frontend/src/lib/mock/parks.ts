@@ -1,6 +1,6 @@
-import type { Park } from './types';
-import parksJson from './parks.json';
 import dummyMapper from '../dummy-mapper';
+import parksJson from './parks.json';
+import type { Park } from './types';
 
 const dummy: Park = {
   abbreviation: 'DUMM',
@@ -29,7 +29,7 @@ const dummy: Park = {
   youCanFind: '',
   trails: '',
   website: 'jakewelliott.com',
-  bucketListItems: []
+  bucketListItems: [],
 };
 
 export default parksJson.map(dummyMapper<Park>(dummy));

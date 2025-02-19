@@ -1,5 +1,5 @@
-import parks from './parks';
 import park_activity from './park_activity';
+import parks from './parks';
 import { userProfile, userStamps } from './user';
 
 import type { Geopoint, Park, ParkAbbreviation } from './types';
@@ -12,7 +12,7 @@ export const api = {
   // Parks
   getParks: () => parks,
   getParkActivity: () => park_activity,
-  getPark: (code: ParkAbbreviation) => parks.find((park: Park) => park.abbreviation === code)!,
+  getPark: (code: ParkAbbreviation) => parks.find((park: Park) => park.abbreviation === code),
 
   // Users
   getUserByID: (userId: number) => {

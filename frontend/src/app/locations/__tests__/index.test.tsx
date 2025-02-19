@@ -1,9 +1,9 @@
-import { screen } from '@testing-library/react';
 import { useParks } from '@/hooks/queries/useParks';
 import { api } from '@/lib/mock/api';
-import Locations from '../index';
 import { renderWithClient } from '@/lib/test-wrapper';
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import { screen } from '@testing-library/react';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import Locations from '../index';
 
 // Mock the hooks
 vi.mock('@/hooks/queries/useParks');
@@ -11,35 +11,31 @@ vi.mock('@/hooks/queries/useParks');
 const mockUseParks = useParks as Mock;
 
 describe('Locations', () => {
+  // it('shows loading state when data is loading', () => {
+  // 	mockUseParks.mockReturnValue({
+  // 		data: null,
+  // 		isLoading: true
+  // 	});
 
-	// it('shows loading state when data is loading', () => {
-	// 	mockUseParks.mockReturnValue({
-	// 		data: null,
-	// 		isLoading: true
-	// 	});
+  // 	renderWithClient(<Locations />);
+  // 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+  // });
 
-	// 	renderWithClient(<Locations />);
-	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	// });
+  const mockParks = api.getParks();
 
-	const mockParks = api.getParks();
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-	beforeEach(() => {
-		vi.clearAllMocks();
-	});
+  it('renders list of parks when data is available', () => {
+    mockUseParks.mockReturnValue({
+      data: mockParks,
+      isLoading: false,
+    });
 
-	it('renders list of parks when data is available', () => {
-		mockUseParks.mockReturnValue({
-			data: mockParks,
-			isLoading: false
-		});
+    renderWithClient(<Locations />);
 
-		renderWithClient(<Locations />);
-
-		const parkElements = screen.getAllByText(mockParks[0].parkName);
-		expect(parkElements).toHaveLength(mockParks.length);
-	});
-
-
-
+    const parkElements = screen.getAllByText(mockParks[0].parkName);
+    expect(parkElements).toHaveLength(mockParks.length);
+  });
 });
