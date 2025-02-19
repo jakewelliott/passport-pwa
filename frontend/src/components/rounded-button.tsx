@@ -5,23 +5,29 @@
 // ex: <RoundedButton title="TEXT_ONE" color="system_black" />
 import { cn } from '@/lib/cn-helper';
 interface ButtonProps {
-	title: string;
-	color?: string;
-	onClick?: (e: React.FormEvent) => unknown;
-	type?: 'button' | 'submit' | 'reset';
+  title: string;
+  color?: string;
+  onClick?: (e: React.FormEvent) => unknown;
+  type?: 'button' | 'submit' | 'reset';
 }
 
-const RoundedButton: React.FC<ButtonProps> = ({ title, color = 'secondary_darkteal', onClick = (e: React.FormEvent) => { e.preventDefault(); }, type = 'button' }) => {
-	const className = cn(
-		`bg-${color} flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full`,
-	);
+const RoundedButton: React.FC<ButtonProps> = ({
+  title,
+  color = 'secondary_darkteal',
+  onClick = (e: React.FormEvent) => {
+    e.preventDefault();
+  },
+  type = 'button',
+}) => {
+  const className = cn(
+    `bg-${color} flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full`,
+  );
 
-
-	return (
-		<button type={type} className={className} onClick={onClick}>
-			<p className='button-text text-system_white'>{title}</p>
-		</button>
-	);
+  return (
+    <button type={type} className={className} onClick={onClick}>
+      <p className='button-text text-system_white'>{title}</p>
+    </button>
+  );
 };
 
 export default RoundedButton;
