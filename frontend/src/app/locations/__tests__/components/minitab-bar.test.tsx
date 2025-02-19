@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { LocationMiniTabBar } from '@/app/locations/components/minitab-bar';
-
+import { describe, it, expect } from 'vitest';
 describe('LocationMiniTabBar', () => {
 	const mockChildren = [
 		<div key="details">Details Content</div>,

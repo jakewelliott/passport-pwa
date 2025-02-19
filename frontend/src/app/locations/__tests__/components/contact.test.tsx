@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { LocationContact } from '@/app/locations/components/location-contact';
 import { api } from '@/lib/mock/api';
-
+import { describe, it, expect } from 'vitest';
 describe('LocationContact', () => {
 	const park = api.getParks()[0];
 	const parkActivity = api.getParkActivity()[0];

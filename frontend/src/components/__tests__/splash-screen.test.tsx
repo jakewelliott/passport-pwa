@@ -1,7 +1,8 @@
 import { render, screen, act } from '@testing-library/react';
 import { SplashScreen, SplashScreenWrapper } from '../splash-screen';
+import { describe, it, expect, vi } from 'vitest';
 
-jest.useFakeTimers();
+vi.useFakeTimers();
 
 describe('SplashScreen', () => {
 	it('renders logo with correct attributes', () => {
@@ -62,7 +63,7 @@ describe('SplashScreenWrapper', () => {
 
 		// Advance timers
 		act(() => {
-			jest.advanceTimersByTime(500);
+			vi.advanceTimersByTime(500);
 		});
 
 		// Now children should be shown
@@ -77,7 +78,7 @@ describe('SplashScreenWrapper', () => {
 			</SplashScreenWrapper>
 		);
 
-		const clearTimeoutSpy = jest.spyOn(window, 'clearTimeout');
+		const clearTimeoutSpy = vi.spyOn(window, 'clearTimeout');
 		unmount();
 		expect(clearTimeoutSpy).toHaveBeenCalled();
 		clearTimeoutSpy.mockRestore();

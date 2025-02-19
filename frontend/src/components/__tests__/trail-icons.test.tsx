@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { TrailIcon, TrailIcons } from '../trail-icons';
 import type { Trail } from '@/lib/mock/types';
+import { describe, it, expect } from 'vitest';
 
 describe('TrailIcon', () => {
 	it('renders with default props', () => {

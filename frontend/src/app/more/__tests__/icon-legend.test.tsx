@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { IconLegend } from '@/app/more/icon-legend';
-
+import { describe, it, expect } from 'vitest';
 describe('IconLegend Component - User Stories', () => {
 	// User Story: As a user, I want to understand what each icon means
 	it('should display icons with their meanings', () => {

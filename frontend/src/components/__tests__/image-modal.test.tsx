@@ -1,8 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { ImageModal } from '../image-modal';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock react-zoom-pan-pinch as it's an external dependency
-jest.mock('react-zoom-pan-pinch', () => ({
+vi.mock('react-zoom-pan-pinch', () => ({
 	TransformWrapper: ({ children }: { children: React.ReactNode }) => <div data-testid="transform-wrapper">{children}</div>,
 	TransformComponent: ({ children }: { children: React.ReactNode }) => (
 		<div data-testid="transform-component">{children}</div>
@@ -10,7 +11,7 @@ jest.mock('react-zoom-pan-pinch', () => ({
 }));
 
 describe('ImageModal', () => {
-	const mockOnClose = jest.fn();
+	const mockOnClose = vi.fn();
 	const mockPhoto = {
 		photoPath: 'test-image.jpg',
 		caption: 'Test Caption',

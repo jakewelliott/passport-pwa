@@ -45,13 +45,13 @@ export default defineConfig(({command, mode}) => {
 		test: {
 			globals: true,
 			environment: 'jsdom',
-			setupFiles: ['./src/test/setup.ts'],
+			setupFiles: ['./src/lib/vitest-setup.ts'],
 			coverage: {
 				provider: 'v8',
 				reporter: ['text', 'json', 'html'],
 				exclude: [
 					'node_modules/',
-					'src/test/setup.ts',
+					'src/lib/vitest-setup.ts',
 				],
 			},
 			include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],

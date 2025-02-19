@@ -3,26 +3,27 @@ import { MemoryRouter } from 'react-router-dom';
 import More from '@/app/more/index';
 import { useUser } from '@/hooks/queries/useUser';
 import { useLogout } from '@/hooks/auth/useLogout';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 
 // Mock dependencies
-jest.mock('@/hooks/queries/useUser', () => ({
-	useUser: jest.fn(),
+vi.mock('@/hooks/queries/useUser', () => ({
+	useUser: vi.fn(),
 }));
 
-jest.mock('@/hooks/auth/useLogout', () => ({
-	useLogout: jest.fn(),
+vi.mock('@/hooks/auth/useLogout', () => ({
+	useLogout: vi.fn(),
 }));
 
 describe('More Component', () => {
-	const mockHandleLogout = jest.fn();
+	const mockHandleLogout = vi.fn();
 
 	beforeEach(() => {
-		jest.clearAllMocks();
-		(useLogout as jest.Mock).mockReturnValue(mockHandleLogout);
+		vi.clearAllMocks();
+		(useLogout as Mock).mockReturnValue(mockHandleLogout);
 	});
 
 	it('renders all links correctly', () => {
-		(useUser as jest.Mock).mockReturnValue({ data: { username: 'testuser' } });
+		(useUser as Mock).mockReturnValue({ data: { username: 'testuser' } });
 
 		render(
 			<MemoryRouter>
@@ -50,7 +51,7 @@ describe('More Component', () => {
 	});
 
 	it('displays the logged-in user\'s username', () => {
-		(useUser as jest.Mock).mockReturnValue({ data: { username: 'testuser' } });
+		(useUser as Mock).mockReturnValue({ data: { username: 'testuser' } });
 
 		render(
 			<MemoryRouter>
@@ -62,7 +63,7 @@ describe('More Component', () => {
 	});
 
 	// it('handles missing user data gracefully', () => {
-	// 	(useUser as jest.Mock).mockReturnValue({ data: null });
+	// 	(useUser as Mock).mockReturnValue({ data: null });
 
 	// 	render(
 	// 		<MemoryRouter>
@@ -74,7 +75,7 @@ describe('More Component', () => {
 	// });
 
 	it('calls handleLogout when the logout button is clicked', () => {
-		(useUser as jest.Mock).mockReturnValue({ data: { username: 'testuser' } });
+		(useUser as Mock).mockReturnValue({ data: { username: 'testuser' } });
 
 		render(
 			<MemoryRouter>

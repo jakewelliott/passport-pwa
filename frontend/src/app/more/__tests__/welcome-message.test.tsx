@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import WelcomeMessage from '@/app/more/welcome-message';
+import { describe, it, expect } from 'vitest';
 
 describe('WelcomeMessage Component', () => {
 	it('renders the title correctly', () => {

@@ -3,22 +3,23 @@ import { useLocation } from 'react-router-dom';
 import TabBar from '../tab-bar';
 import * as useUserHook from '@/hooks/queries/useUser';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 
 // Mock the useLocation hook
-jest.mock('react-router-dom', () => ({
-	...jest.requireActual('react-router-dom'),
-	useLocation: jest.fn(),
+vi.mock('react-router-dom', () => ({
+	...vi.importActual('react-router-dom'),
+	useLocation: vi.fn(),
 }));
 
 // Mock the useUser hook
-jest.mock('@/hooks/queries/useUser');
+vi.mock('@/hooks/queries/useUser');
 
-const mockUseLocation = useLocation as jest.Mock;
-const mockUseUser = useUserHook.useUser as jest.Mock;
+const mockUseLocation = useLocation as Mock;
+const mockUseUser = useUserHook.useUser as Mock;
 
 describe('TabBar', () => {
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 		mockUseLocation.mockReturnValue({ pathname: '/' });
 		mockUseUser.mockReturnValue({ data: { username: 'testuser' } });
 	});
@@ -75,7 +76,7 @@ describe('TabBar', () => {
 		mockUseUser.mockReturnValue({ isLoading: true });
 		const { container } = renderWithClient(<TabBar />);
 		expect(container.firstChild).toBeNull();
-	  });	  
+	});
 
 	// it('shows correct tabs for admin role', () => {
 	// 	mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
