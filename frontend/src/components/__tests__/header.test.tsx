@@ -1,21 +1,25 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, beforeEach, vi, type Mock } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { BrowserRouter } from 'react-router-dom';
 import Header, { BackButton } from '../header';
 import * as usePageTitleHook from '@/hooks/usePageTitle';
 
 // Mock the useNavigate hook
 const mockNavigate = vi.fn();
-vi.mock('react-router-dom', () => ({
-	...vi.importActual('react-router-dom'),
-	useNavigate: () => mockNavigate,
-}));
+vi.mock('react-router-dom', async () => {
+	const actual = await vi.importActual('react-router-dom');
+	return {
+		...actual,
+		useNavigate: () => mockNavigate,
+	};
+});
 
 describe('Header', () => {
 	const mockUsePageTitle = vi.spyOn(usePageTitleHook, 'usePageTitle');
 
 	beforeEach(() => {
 		mockNavigate.mockClear();
+		mockUsePageTitle.mockClear();
 	});
 
 	it('hides back button at top level pages', () => {
@@ -76,14 +80,17 @@ describe('Header', () => {
 			showBackButton: true,
 		});
 
-		render(
+		const { container } = render(
 			<BrowserRouter>
 				<Header />
 			</BrowserRouter>
 		);
 
 		const header = screen.getByRole('banner');
-		expect(header).toHaveClass('relative', 'flex', 'items-center', 'justify-center', 'bg-secondary_darkteal', 'p-4');
+		const expectedClasses = ['relative', 'flex', 'items-center', 'justify-center', 'bg-secondary_darkteal', 'p-4'];
+		expectedClasses.forEach(className => {
+			expect(header).toHaveClass(className);
+		});
 		expect(header).toHaveStyle({ height: '50px' });
 
 		const title = screen.getByText('Test Title');
@@ -157,6 +164,10 @@ describe('Header', () => {
 });
 
 describe('BackButton', () => {
+	beforeEach(() => {
+		mockNavigate.mockClear();
+	});
+
 	it('renders nothing when hidden prop is true', () => {
 		render(
 			<BrowserRouter>
@@ -179,5 +190,17 @@ describe('BackButton', () => {
 		expect(backButton).toBeInTheDocument();
 		expect(backButton).toContainElement(screen.getByTestId('fa-chevron-left'));
 		expect(screen.getByText('Back')).toBeInTheDocument();
+	});
+
+	it('navigates back when clicked', () => {
+		render(
+			<BrowserRouter>
+				<BackButton hidden={false} />
+			</BrowserRouter>
+		);
+
+		const backButton = screen.getByRole('button', { name: /back/i });
+		fireEvent.click(backButton);
+		expect(mockNavigate).toHaveBeenCalledWith(-1);
 	});
 });
