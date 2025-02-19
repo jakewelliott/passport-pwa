@@ -1,18 +1,16 @@
-export type ParkAbbreviation = Uppercase<string>;
-
 export interface Geopoint {
   latitude: number;
   longitude: number;
 }
 
 export interface Stamp {
-  code: ParkAbbreviation;
+  code: string;
   timestamp: Date;
   location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
 }
 
 export interface UserParkVisit {
-  code: ParkAbbreviation;
+  code: string;
   timestamp: Date;
 }
 

@@ -1,7 +1,7 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
 import DateHelper from '@/lib/date-helper';
-import { api } from '@/lib/mock/api';
+import type { Park, Stamp } from '@/lib/mock/types';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
@@ -15,8 +15,24 @@ const mockUseStamp = useStamp as Mock;
 const mockUsePark = usePark as Mock;
 
 describe('StampDetails', () => {
-	const mockPark = api.getPark('ENRI');
-	const mockStamp = {
+	const mockPark: Park = {
+		id: 1,
+		parkName: 'ENRI',
+		coordinates: { latitude: 0, longitude: 0 },
+		phone: 0,
+		email: '',
+		establishedYear: '',
+		landmark: '',
+		youCanFind: '',
+		trails: '',
+		website: '',
+		addresses: [],
+		icons: [],
+		bucketListItems: [],
+		photos: [],
+		abbreviation: ''
+	};
+	const mockStamp: Stamp = {
 		code: 'ENRI',
 		timestamp: new Date('2024-01-01T12:00:00Z'),
 		location: { latitude: 0, longitude: 0 },
