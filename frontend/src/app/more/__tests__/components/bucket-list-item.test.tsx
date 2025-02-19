@@ -1,11 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BucketListItem } from '@/app/more/components/bucket-list-item';
-import { } from 'react-icons/fa';
-
-jest.mock('react-icons/fa', () => ({
-	FaRegCheckSquare: () => <div data-testid="checked-icon" />,
-	FaRegSquare: () => <div data-testid="unchecked-icon" />
-}));
+import { describe, it, expect } from 'vitest';
 
 describe('BucketListItem', () => {
 	it('renders with correct text content', () => {
