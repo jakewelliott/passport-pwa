@@ -6,10 +6,13 @@ import { renderWithClient } from '@/lib/test-wrapper';
 import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 
 // Mock the useLocation hook
-vi.mock('react-router-dom', () => ({
-	...vi.importActual('react-router-dom'),
-	useLocation: vi.fn(),
-}));
+vi.mock('react-router-dom', async () => {
+	const actual = await vi.importActual('react-router-dom');
+	return {
+		...actual,
+		useLocation: vi.fn(),
+	};
+});
 
 // Mock the useUser hook
 vi.mock('@/hooks/queries/useUser');
@@ -21,15 +24,18 @@ describe('TabBar', () => {
 	beforeEach(() => {
 		vi.clearAllMocks();
 		mockUseLocation.mockReturnValue({ pathname: '/' });
-		mockUseUser.mockReturnValue({ data: { username: 'testuser' } });
+		mockUseUser.mockReturnValue({ data: { username: 'testuser', role: 'visitor' } });
 	});
 
-	it('renders all navigation tabs', () => {
+	it('renders all navigation tabs for visitor role', () => {
 		renderWithClient(<TabBar />);
 
-		expect(screen.getByText('Locations')).toBeInTheDocument();
-		expect(screen.getByText('Stamps')).toBeInTheDocument();
-		expect(screen.getByText('More')).toBeInTheDocument();
+		const tabs = ['Locations', 'Stamps', 'More'];
+		tabs.forEach(tab => {
+			const tabElement = screen.getByText(tab);
+			expect(tabElement).toBeInTheDocument();
+			expect(tabElement.closest('a')).toHaveAttribute('href', `/${tab.toLowerCase()}`);
+		});
 	});
 
 	it('highlights active tab based on current route', () => {
@@ -37,66 +43,38 @@ describe('TabBar', () => {
 		renderWithClient(<TabBar />);
 
 		const stampsTab = screen.getByText('Stamps').closest('div');
-		expect(stampsTab).toHaveClass('text-system_white');
-	});
-
-	it('shows inactive color for non-active tabs', () => {
-		mockUseLocation.mockReturnValue({ pathname: '/stamps' });
-		renderWithClient(<TabBar />);
-
 		const locationsTab = screen.getByText('Locations').closest('div');
 		const moreTab = screen.getByText('More').closest('div');
 
+		expect(stampsTab).toHaveClass('text-system_white');
 		expect(locationsTab).toHaveClass('text-supporting_inactiveblue');
 		expect(moreTab).toHaveClass('text-supporting_inactiveblue');
 	});
 
-	it('has correct navigation links', () => {
+	it('shows correct tabs for admin role', () => {
+		mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
 		renderWithClient(<TabBar />);
 
-		const locationsLink = screen.getByText('Locations').closest('a');
-		const stampsLink = screen.getByText('Stamps').closest('a');
-		const moreLink = screen.getByText('More').closest('a');
-
-		expect(locationsLink).toHaveAttribute('href', '/locations');
-		expect(stampsLink).toHaveAttribute('href', '/stamps');
-		expect(moreLink).toHaveAttribute('href', '/more');
-	});
-
-	it('shows correct tabs for visitor role', () => {
-		mockUseUser.mockReturnValue({ data: { role: 'visitor', username: 'testuser' } });
-		renderWithClient(<TabBar />);
-
-		expect(screen.getByText('Stamps')).toBeInTheDocument();
 		expect(screen.getByText('Locations')).toBeInTheDocument();
 		expect(screen.getByText('More')).toBeInTheDocument();
+		expect(screen.getByText('Stamps')).toBeInTheDocument();
+
+		// Verify correct links
+		expect(screen.getByText('Locations').closest('a')).toHaveAttribute('href', '/locations');
+		expect(screen.getByText('More').closest('a')).toHaveAttribute('href', '/more');
+		expect(screen.getByText('Stamps').closest('a')).toHaveAttribute('href', '/stamps');
 	});
 
 	it('returns null when user data is loading', () => {
-		mockUseUser.mockReturnValue({ isLoading: true });
+		mockUseUser.mockReturnValue({ isLoading: true, data: undefined });
 		const { container } = renderWithClient(<TabBar />);
 		expect(container.firstChild).toBeNull();
 	});
 
-	// it('shows correct tabs for admin role', () => {
-	// 	mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
-	// 	renderWithClient(<TabBar />);
-
-	// 	expect(screen.queryByText('Stamps')).not.toBeInTheDocument();
-	// 	expect(screen.getByText('Locations')).toBeInTheDocument();
-	// 	expect(screen.getByText('More')).toBeInTheDocument();
-	// });
-
-	it('renders icons for each tab', () => {
-		renderWithClient(<TabBar />);
-
-		const links = screen.getAllByRole('link');
-		expect(links).toHaveLength(3); // One for each tab
-
-		// Verify each link has an SVG icon
-		links.forEach(link => {
-			expect(link.querySelector('svg')).toBeInTheDocument();
-		});
+	it('returns null when user data is undefined', () => {
+		mockUseUser.mockReturnValue({ data: undefined, isLoading: false });
+		const { container } = renderWithClient(<TabBar />);
+		expect(container.firstChild).toBeNull();
 	});
 
 	it('highlights tab when pathname partially matches', () => {
@@ -104,9 +82,24 @@ describe('TabBar', () => {
 		renderWithClient(<TabBar />);
 
 		const stampsTab = screen.getByText('Stamps').closest('div');
-		expect(stampsTab).toHaveClass('text-system_white');
-
 		const locationsTab = screen.getByText('Locations').closest('div');
+		const moreTab = screen.getByText('More').closest('div');
+
+		expect(stampsTab).toHaveClass('text-system_white');
 		expect(locationsTab).toHaveClass('text-supporting_inactiveblue');
+		expect(moreTab).toHaveClass('text-supporting_inactiveblue');
+	});
+
+	it('renders icons for each tab', () => {
+		renderWithClient(<TabBar />);
+
+		const links = screen.getAllByRole('link');
+		expect(links).toHaveLength(3);
+
+		// Just verify that each link has an SVG icon
+		links.forEach(link => {
+			const svg = link.querySelector('svg');
+			expect(svg).toBeInTheDocument();
+		});
 	});
 }); 
