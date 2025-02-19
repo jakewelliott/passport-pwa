@@ -18,7 +18,7 @@ describe('LocationContact', () => {
 
 	it('renders phone number', () => {
 		render(<LocationContact park={park} parkActivity={parkActivity} />);
-		expect(screen.getByText(park.phone)).toBeInTheDocument();
+		expect(screen.getByText(`(${park.phone.toString().slice(0, 3)}) ${park.phone.toString().slice(3,6)}-${park.phone.toString().slice(6, 10)}`)).toBeInTheDocument();
 	});
 
 	it('renders email', () => {
