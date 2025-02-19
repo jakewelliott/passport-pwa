@@ -1,6 +1,6 @@
 import { API_ACTIVITY_URL, fetchGet } from '@/lib/fetch';
 import { API_PARKS_URL } from '@/lib/fetch';
-import type { Park, ParkAbbreviation, ParkActivity } from '@/lib/mock/types';
+import type { Park, ParkActivity } from '@/lib/mock/types';
 import { useQuery } from '@tanstack/react-query';
 
 // ADAM:
