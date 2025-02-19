@@ -153,16 +153,16 @@ exports[`Component Snapshots > PassportHeader renders correctly 1`] = `
 
 exports[`Component Snapshots > RoundedButton renders correctly 1`] = `
 <div>
-  <div
+  <button
     class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
-    role="button"
+    type="button"
   >
     <p
       class="button-text text-system_white"
     >
       Test Button
     </p>
-  </div>
+  </button>
 </div>
 `;
 
