@@ -1,5 +1,4 @@
 import { api } from '@/lib/mock/api';
-import type { ParkAbbreviation } from '@/lib/mock/types';
 import { useQuery } from '@tanstack/react-query';
 import { useUser } from './useUser';
 /**
