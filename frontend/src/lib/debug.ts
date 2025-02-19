@@ -10,7 +10,6 @@ const MUTED = false;
 // Custom logging function that writes to both console and terminal
 const log = (message: string): void => {
   console.log(message);
-	// TODO: figure out how to do with without jest throwing a fit.
   if (import.meta.hot) {
     import.meta.hot.send('terminal:log', { message });
   }
