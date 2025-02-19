@@ -91,12 +91,8 @@ export default function LoginPage() {
 					</a>
 				</p>
 				<div className='flex flex-row gap-4'>
-					<button type='button' onClick={handleAuth(false)}>
-						<RoundedButton title='Register' />
-					</button>
-					<button type='submit'>
-						<RoundedButton title='Login' color='secondary_orange' />
-					</button>
+					<RoundedButton type='button' title='Register' onClick={handleAuth(false)} />
+					<RoundedButton type='submit' title='Login' color='secondary_orange' onClick={handleAuth(true)} />
 				</div>
 				<SuperAdminButton />
 			</form>
