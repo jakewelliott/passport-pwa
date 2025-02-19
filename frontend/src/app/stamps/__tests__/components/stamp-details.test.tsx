@@ -5,10 +5,11 @@ import { usePark } from '@/hooks/queries/useParks';
 import { api } from '@/lib/mock/api';
 import DateHelper from '@/lib/date-helper';
 import { renderWithClient } from '@/lib/test-wrapper';
-
+import { Mock } from 'vitest';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 // Mock the hooks
-jest.mock('@/hooks/queries/useStamps');
-jest.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/queries/useStamps');
+vi.mock('@/hooks/queries/useParks');
 
 const mockUseStamp = useStamp as Mock;
 const mockUsePark = usePark as Mock;
@@ -20,10 +21,10 @@ describe('StampDetails', () => {
 		timestamp: new Date('2024-01-01T12:00:00Z'),
 		location: { latitude: 0, longitude: 0 }
 	};
-	const mockHandleClose = jest.fn();
+	const mockHandleClose = vi.fn();
 
 	beforeEach(() => {
-		jest.clearAllMocks();
+		vi.clearAllMocks();
 		mockUsePark.mockReturnValue({ data: mockPark });
 		mockUseStamp.mockReturnValue({ data: mockStamp });
 	});

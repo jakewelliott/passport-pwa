@@ -3,10 +3,12 @@ import { MyNotes } from '@/app/more/my-notes';
 import { useParks } from '@/hooks/queries/useParks';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { Mock } from 'vitest';
 
 // Mock the hooks
-jest.mock('@/hooks/queries/useParks');
-jest.mock('@/hooks/store/useParkNotesStore');
+vi.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/store/useParkNotesStore');
 
 const mockUseParks = useParks as Mock;
 const mockUseParkNotesStore = useParkNotesStore as unknown as Mock;

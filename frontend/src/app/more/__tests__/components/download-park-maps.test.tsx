@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { DownloadParkMaps } from '@/app/more/components/download-park-maps';
+import { describe, it, expect, vi } from 'vitest';
 
 // Mock react-icons/ri
-jest.mock('react-icons/ri', () => ({
+vi.mock('react-icons/ri', () => ({
 	RiMap2Line: () => <div data-testid="map-icon" />
 }));
 

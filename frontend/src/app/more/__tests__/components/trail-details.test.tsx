@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import { TrailDetailView } from '@/app/more/components/trail-details';
 import type { Trail } from '@/lib/mock/types';
+import { describe, it, expect, vi } from 'vitest';
 
 // Mock the TrailIcons component
-jest.mock('@/components/trail-icons', () => ({
+vi.mock('@/components/trail-icons', () => ({
 	TrailIcons: () => <div data-testid="trail-icons" />
 }));
 
