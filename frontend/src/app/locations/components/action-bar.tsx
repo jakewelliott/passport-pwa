@@ -1,11 +1,17 @@
-import { FiNavigation, FiPhone, FiGlobe, FiMail } from 'react-icons/fi';
 import type { Park } from '@/lib/mock/types';
+import { FiGlobe, FiMail, FiNavigation, FiPhone } from 'react-icons/fi';
 
 export const LocationActionBar = ({ park }: { park: Park }) => {
   return (
-    <div className='flex flex-row items-center justify-evenly bg-secondary_darkteal p-2.5' data-testid='location-action-bar'>
-      {park.coordinates && park.coordinates.latitude && park.coordinates.longitude && (
-        <a href={`https://www.google.com/maps/place/${park.coordinates.latitude},${park.coordinates.longitude}`} className='text-supporting_inactiveblue'>
+    <div
+      className='flex flex-row items-center justify-evenly bg-secondary_darkteal p-2.5'
+      data-testid='location-action-bar'
+    >
+      {park.coordinates?.latitude && park.coordinates.longitude && (
+        <a
+          href={`https://www.google.com/maps/place/${park.coordinates.latitude},${park.coordinates.longitude}`}
+          className='text-supporting_inactiveblue'
+        >
           <FiNavigation size={24} strokeWidth={4} />
         </a>
       )}

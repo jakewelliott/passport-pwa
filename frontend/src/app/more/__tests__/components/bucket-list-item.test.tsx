@@ -1,43 +1,43 @@
-import { render, screen } from '@testing-library/react';
 import { BucketListItem } from '@/app/more/components/bucket-list-item';
-import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('BucketListItem', () => {
-	it('renders with correct text content', () => {
-		render(<BucketListItem />);
+  it('renders with correct text content', () => {
+    render(<BucketListItem />);
 
-		expect(screen.getByText('Participate')).toBeInTheDocument();
-		expect(screen.getByText('Raleigh')).toBeInTheDocument();
-		expect(screen.getByText('1/1/2025')).toBeInTheDocument();
-	});
+    expect(screen.getByText('Participate')).toBeInTheDocument();
+    expect(screen.getByText('Raleigh')).toBeInTheDocument();
+    expect(screen.getByText('1/1/2025')).toBeInTheDocument();
+  });
 
-	it('renders unchecked icon when bucketList status is false', () => {
-		render(<BucketListItem />);
+  it('renders unchecked icon when bucketList status is false', () => {
+    render(<BucketListItem />);
 
-		expect(screen.getByTestId('unchecked-icon')).toBeInTheDocument();
-		expect(screen.queryByTestId('checked-icon')).not.toBeInTheDocument();
-	});
+    expect(screen.getByTestId('unchecked-icon')).toBeInTheDocument();
+    expect(screen.queryByTestId('checked-icon')).not.toBeInTheDocument();
+  });
 
-	it('has correct styling', () => {
-		render(<BucketListItem />);
+  it('has correct styling', () => {
+    render(<BucketListItem />);
 
-		const container = screen.getByText('Participate').closest('div');
-		expect(container?.parentElement).toHaveClass('my-2.5', 'flex', 'items-start');
+    const container = screen.getByText('Participate').closest('div');
+    expect(container?.parentElement).toHaveClass('my-2.5', 'flex', 'items-start');
 
-		const locationText = screen.getByText('Raleigh');
-		expect(locationText).toHaveClass('p-mini', 'text-main_green');
+    const locationText = screen.getByText('Raleigh');
+    expect(locationText).toHaveClass('p-mini', 'text-main_green');
 
-		const dateText = screen.getByText('1/1/2025');
-		expect(dateText).toHaveClass('p-mini');
-	});
+    const dateText = screen.getByText('1/1/2025');
+    expect(dateText).toHaveClass('p-mini');
+  });
 
-	it('renders content in correct layout', () => {
-		render(<BucketListItem />);
+  it('renders content in correct layout', () => {
+    render(<BucketListItem />);
 
-		const contentContainer = screen.getByText('Participate').closest('div');
-		expect(contentContainer).toHaveClass('flex', 'w-full', 'flex-col', 'justify-center');
+    const contentContainer = screen.getByText('Participate').closest('div');
+    expect(contentContainer).toHaveClass('flex', 'w-full', 'flex-col', 'justify-center');
 
-		const detailsContainer = screen.getByText('Raleigh').closest('div');
-		expect(detailsContainer).toHaveClass('flex', 'flex-wrap', 'items-center', 'justify-between', 'gap-2');
-	});
-}); 
+    const detailsContainer = screen.getByText('Raleigh').closest('div');
+    expect(detailsContainer).toHaveClass('flex', 'flex-wrap', 'items-center', 'justify-between', 'gap-2');
+  });
+});

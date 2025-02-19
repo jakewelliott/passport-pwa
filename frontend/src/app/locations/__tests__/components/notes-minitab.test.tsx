@@ -1,10 +1,10 @@
-import { screen, fireEvent, waitFor } from '@testing-library/react';
 import { NotesMiniTab } from '@/app/locations/components/notes-minitab';
-import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
-import { toast } from "react-toastify";
+import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { renderWithClient } from '@/lib/test-wrapper';
-import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { toast } from 'react-toastify';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the store
 vi.mock('@/hooks/store/useParkNotesStore');
@@ -16,93 +16,93 @@ const mockedUseNote = useNote as Mock;
 const mockedUseUpdateNote = useUpdateNote as Mock;
 
 // Mock react-toastify
-vi.mock("react-toastify", () => ({
-	toast: {
-		success: vi.fn(),
-		error: vi.fn(),
-		info: vi.fn(),
-		warning: vi.fn(),
-	},
+vi.mock('react-toastify', () => ({
+  toast: {
+    success: vi.fn(),
+    error: vi.fn(),
+    info: vi.fn(),
+    warning: vi.fn(),
+  },
 }));
 
 describe('NotesMiniTab', () => {
-	const mockAbbreviation = 'ENRI';
-	const mockParkId = 1;
-	const mockInitialNote = 'Initial test note';
-	const mockSetNote = vi.fn();
-	const mockMutate = vi.fn();
+  const mockAbbreviation = 'ENRI';
+  const mockParkId = 1;
+  const mockInitialNote = 'Initial test note';
+  const mockSetNote = vi.fn();
+  const mockMutate = vi.fn();
 
-	beforeEach(() => {
-		vi.clearAllMocks();
-		mockedUseParkNotesStore.mockReturnValue({
-			getNote: () => mockInitialNote,
-			setNote: mockSetNote,
-		});
-		mockedUseNote.mockReturnValue({
-			data: { id: 1, note: mockInitialNote },
-			isLoading: false,
-		} as any);
-		mockedUseUpdateNote.mockReturnValue({
-			mutate: mockMutate,
-		} as any);
-	});
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockedUseParkNotesStore.mockReturnValue({
+      getNote: () => mockInitialNote,
+      setNote: mockSetNote,
+    });
+    mockedUseNote.mockReturnValue({
+      data: { id: 1, note: mockInitialNote },
+      isLoading: false,
+    } as any);
+    mockedUseUpdateNote.mockReturnValue({
+      mutate: mockMutate,
+    } as any);
+  });
 
-	it('renders the notes textarea with initial value', () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
-		const textarea = screen.getByRole('textbox');
-		expect(textarea).toHaveValue(mockInitialNote);
-	});
+  it('renders the notes textarea with initial value', () => {
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+    const textarea = screen.getByRole('textbox');
+    expect(textarea).toHaveValue(mockInitialNote);
+  });
 
-	it('updates note on textarea change', async () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
-		const textarea = screen.getByRole('textbox');
-		const newNote = 'Updated test note';
+  it('updates note on textarea change', async () => {
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+    const textarea = screen.getByRole('textbox');
+    const newNote = 'Updated test note';
 
-		fireEvent.change(textarea, { target: { value: newNote } });
+    fireEvent.change(textarea, { target: { value: newNote } });
 
-		await waitFor(() => {
-			expect(mockSetNote).toHaveBeenCalledWith(mockAbbreviation, newNote);
-			expect(mockMutate).toHaveBeenCalledWith({ parkId: mockParkId, note: newNote });
-		});
-	});
+    await waitFor(() => {
+      expect(mockSetNote).toHaveBeenCalledWith(mockAbbreviation, newNote);
+      expect(mockMutate).toHaveBeenCalledWith({ parkId: mockParkId, note: newNote });
+    });
+  });
 
-	it('shows success toast when note is saved', async () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
-		const saveButton = screen.getByTestId('save-button');
+  it('shows success toast when note is saved', async () => {
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+    const saveButton = screen.getByTestId('save-button');
 
-		fireEvent.click(saveButton);
+    fireEvent.click(saveButton);
 
-		await waitFor(() => {
-			expect(mockMutate).toHaveBeenCalledWith(
-				{ parkId: mockParkId, note: mockInitialNote },
-				expect.objectContaining({
-					onSuccess: expect.any(Function),
-					onError: expect.any(Function),
-				})
-			);
-		});
+    await waitFor(() => {
+      expect(mockMutate).toHaveBeenCalledWith(
+        { parkId: mockParkId, note: mockInitialNote },
+        expect.objectContaining({
+          onSuccess: expect.any(Function),
+          onError: expect.any(Function),
+        }),
+      );
+    });
 
-		// Simulate successful save
-		const successCallback = mockMutate.mock.calls[0][1].onSuccess;
-		successCallback();
+    // Simulate successful save
+    const successCallback = mockMutate.mock.calls[0][1].onSuccess;
+    successCallback();
 
-		expect(toast.success).toHaveBeenCalledWith('Notes saved!');
-	});
+    expect(toast.success).toHaveBeenCalledWith('Notes saved!');
+  });
 
-	it('shows error toast when note save fails', async () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
-		const saveButton = screen.getByTestId('save-button');
+  it('shows error toast when note save fails', async () => {
+    renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+    const saveButton = screen.getByTestId('save-button');
 
-		fireEvent.click(saveButton);
+    fireEvent.click(saveButton);
 
-		await waitFor(() => {
-			expect(mockMutate).toHaveBeenCalled();
-		});
+    await waitFor(() => {
+      expect(mockMutate).toHaveBeenCalled();
+    });
 
-		// Simulate failed save
-		const errorCallback = mockMutate.mock.calls[0][1].onError;
-		errorCallback();
+    // Simulate failed save
+    const errorCallback = mockMutate.mock.calls[0][1].onError;
+    errorCallback();
 
-		expect(toast.error).toHaveBeenCalledWith('Failed to save notes');
-	});
+    expect(toast.error).toHaveBeenCalledWith('Failed to save notes');
+  });
 });

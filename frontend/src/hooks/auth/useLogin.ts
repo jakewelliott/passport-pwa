@@ -1,13 +1,13 @@
-import { useMutation } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
-import { decodeToken } from '@/lib/token-helper';
-import { queryClient } from '@/lib/tanstack-local-storage';
-import type { LoginCredentials } from '@/lib/mock/types';
-import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { dbg } from '@/lib/debug';
 import { API_AUTH_LOGIN_URL } from '@/lib/fetch';
 import { fetchPost } from '@/lib/fetch';
-import { dbg } from '@/lib/debug';
+import type { LoginCredentials } from '@/lib/mock/types';
+import { queryClient } from '@/lib/tanstack-local-storage';
+import { decodeToken } from '@/lib/token-helper';
+import { useMutation } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 /**
  * Logs in a user and redirects to the home page
@@ -15,10 +15,10 @@ import { dbg } from '@/lib/debug';
  */
 export const useLogin = () => {
   const navigate = useNavigate();
-  
+
   return useMutation<string, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
-			dbg('MUTATE', 'Logging in', { username, password });
+      dbg('MUTATE', 'Logging in', { username, password });
       const response = await fetchPost(API_AUTH_LOGIN_URL, {
         username,
         password,
@@ -36,11 +36,11 @@ export const useLogin = () => {
         toast.success(`Welcome back, ${username}`);
       }, 1000);
 
-			navigate('/');
+      navigate('/');
     },
     onError: (error) => {
-			dbg('ERROR', 'useLogin', error);
+      dbg('ERROR', 'useLogin', error);
       toast.error(error.message);
-    }
+    },
   });
 };

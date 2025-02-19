@@ -1,10 +1,10 @@
+import RoundedButton from '@/components/rounded-button';
+import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
+import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
+import { a11yOnClick } from '@/lib/a11y';
+import type { ParkAbbreviation } from '@/lib/mock/types';
 // components/NotesMiniTab.tsx
 import { useEffect } from 'react';
-import RoundedButton from '@/components/rounded-button';
-import { a11yOnClick } from '@/lib/a11y';
-import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
-import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
-import type { ParkAbbreviation } from '@/lib/mock/types';
 import { toast } from 'react-toastify';
 
 export const NotesMiniTab = ({ abbreviation, parkId }: { abbreviation: ParkAbbreviation; parkId: number }) => {

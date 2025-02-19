@@ -21,59 +21,59 @@ export const API_STAMPS_URL = `${API_URL}/stamps`;
 export const API_ACTIVITY_URL = `${API_URL}/activity/park`;
 
 const getAuthHeaders = (): Record<string, string> => {
-	const token = Cookies.get('token');
-	return token ? { 'Authorization': `Bearer ${token}` } : {};
+  const token = Cookies.get('token');
+  return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
 export const fetchPost = async (url: string, body: any) => {
-	dbg('FETCH', 'POST', { url, body });
-	const headers: Record<string, string> = {
-		'Content-Type': 'application/json',
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-		'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-		...getAuthHeaders(),
-	};
+  dbg('FETCH', 'POST', { url, body });
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    ...getAuthHeaders(),
+  };
 
-	const response = await fetch(url, {
-		method: 'POST',
-		headers,
-		credentials: 'include',
-		body: JSON.stringify(body),
-	});
+  const response = await fetch(url, {
+    method: 'POST',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify(body),
+  });
 
-	if (!response.ok) fetchError(response);
+  if (!response.ok) fetchError(response);
 
-	dbg('FETCH', 'POST RESPONSE', { response });
-	return response;
+  dbg('FETCH', 'POST RESPONSE', { response });
+  return response;
 };
 
 // TODO: add generic type arg and zod validation, throw might be tricky here
 export const fetchGet = async (url: string) => {
-	dbg('FETCH', 'GET', { url });
-	const headers: Record<string, string> = {
-		'Access-Control-Allow-Origin': '*',
-		'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-		'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-		...getAuthHeaders(),
-	};
+  dbg('FETCH', 'GET', { url });
+  const headers: Record<string, string> = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    ...getAuthHeaders(),
+  };
 
-	const response = await fetch(url, {
-		method: 'GET',
-		headers,
-		credentials: 'include',
-	});
+  const response = await fetch(url, {
+    method: 'GET',
+    headers,
+    credentials: 'include',
+  });
 
-	if (!response.ok) fetchError(response);
+  if (!response.ok) fetchError(response);
 
-	const data = await response.json();
-	dbg('FETCH', 'GET RESPONSE', { response, data });
+  const data = await response.json();
+  dbg('FETCH', 'GET RESPONSE', { response, data });
 
-	return data;
+  return data;
 };
 
 const fetchError = (response: Response) => {
-	dbg('ERROR', 'FETCH', { response });
-	const msg = `${response.statusText}`;
-	throw new Error(`FETCH failed: ${msg}`);
+  dbg('ERROR', 'FETCH', { response });
+  const msg = `${response.statusText}`;
+  throw new Error(`FETCH failed: ${msg}`);
 };

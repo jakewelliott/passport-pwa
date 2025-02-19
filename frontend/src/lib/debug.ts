@@ -38,7 +38,6 @@ const DebugControl = {
 
 type DebugType = keyof typeof DebugControl;
 
-
 // chalk is an esm module, so im commenting it out for now
 const MessageColors: Record<DebugType, (str: string) => string> = {
   RENDER: chalk.gray,
@@ -63,15 +62,15 @@ const MessageColors: Record<DebugType, (str: string) => string> = {
 const padRight = (str: string, length: number): string => str.padEnd(length, ' ');
 
 export const dbg = (t: DebugType, where: string, what?: unknown): void => {
-	if (MUTED) return;
+  if (MUTED) return;
   if (DEBUG && DebugControl[t]) {
     const logType = padRight(`[${t}]`, 10);
     const location = padRight(where, 20);
     const message = what ? sjason(what) : '';
     const inlineMessage = message.length > 40 || message.includes('{') ? '(obj)' : message;
     log(MessageColors[t](`${logType}\t${location}\t${inlineMessage}`));
-		// log(`${logType}\t${location}\t${inlineMessage}`);
-    if (inlineMessage == '(obj)') {
+    // log(`${logType}\t${location}\t${inlineMessage}`);
+    if (inlineMessage === '(obj)') {
       log(JSON.stringify(what, null, 2));
     }
   }
@@ -88,9 +87,8 @@ export const jason = (p: unknown): void => {
 };
 
 export const sjason = (p: unknown): string => {
-	if (typeof p === 'string') {
-		return p;
-	}
+  if (typeof p === 'string') {
+    return p;
+  }
   return JSON.stringify(p, null, 2);
 };
-
