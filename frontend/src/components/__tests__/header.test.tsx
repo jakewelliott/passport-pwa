@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { BrowserRouter } from 'react-router-dom';
-import Header, { BackButton } from '../header';
 import * as usePageTitleHook from '@/hooks/usePageTitle';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import Header, { BackButton } from '../header';
 
 // Mock the useNavigate hook
 const mockNavigate = vi.fn();
@@ -88,9 +88,9 @@ describe('Header', () => {
 
 		const header = screen.getByRole('banner');
 		const expectedClasses = ['relative', 'flex', 'items-center', 'justify-center', 'bg-secondary_darkteal', 'p-4'];
-		expectedClasses.forEach(className => {
+		for (const className of expectedClasses) {
 			expect(header).toHaveClass(className);
-		});
+		}
 		expect(header).toHaveStyle({ height: '50px' });
 
 		const title = screen.getByText('Test Title');

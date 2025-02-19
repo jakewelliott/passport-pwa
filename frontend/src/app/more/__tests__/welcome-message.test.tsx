@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
 import WelcomeMessage from '@/app/more/welcome-message';
-import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('WelcomeMessage Component', () => {
 	it('renders the title correctly', () => {
@@ -21,10 +21,10 @@ describe('WelcomeMessage Component', () => {
 			"We challenge you to visit as many of these amazing places as you can. Come join us to explore and learn about North Carolina's awesome natural and cultural treasures. We hope this program inspires you to create unforgettable memories and capture keepsakes of your adventures.",
 		];
 
-		paragraphs.forEach((text) => {
+		for (const text of paragraphs) {
 			const paragraph = screen.getByText(text);
 			expect(paragraph).toBeInTheDocument();
-		});
+		}
 	});
 
 	it('renders all images with correct attributes', () => {
@@ -45,12 +45,12 @@ describe('WelcomeMessage Component', () => {
 			},
 		];
 
-		images.forEach(({ src, alt }) => {
+		for (const { src, alt } of images) {
 			const image = screen.getByAltText(alt);
 			expect(image).toBeInTheDocument();
 			expect(image).toHaveAttribute('src', src);
 			expect(image).toHaveClass('aspect-square', 'w-full', 'rounded-lg', 'object-cover', 'shadow-md');
-		});
+		}
 	});
 
 	it('renders the photo caption correctly', () => {

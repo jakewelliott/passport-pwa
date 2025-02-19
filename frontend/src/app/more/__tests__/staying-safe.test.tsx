@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react';
 import StayingSafe from '@/app/more/staying-safe';
-import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('StayingSafe Component', () => {
 	const safetyRules = [
@@ -50,9 +50,9 @@ describe('StayingSafe Component', () => {
 		const listItems = screen.getAllByRole('listitem');
 		expect(listItems).toHaveLength(safetyRules.length);
 
-		safetyRules.forEach((rule) => {
+		for (const rule of safetyRules) {
 			expect(screen.getByText(rule)).toBeInTheDocument();
-		});
+		}
 	});
 
 	it('renders each list item with correct structure', () => {
@@ -60,7 +60,7 @@ describe('StayingSafe Component', () => {
 
 		const listItems = screen.getAllByRole('listitem');
 
-		listItems.forEach((item) => {
+		for (const item of listItems) {
 			// Check that each list item has a bullet point (•)
 			const bulletPoint = item.querySelector('span:first-child');
 			expect(bulletPoint).toBeInTheDocument();
@@ -71,5 +71,5 @@ describe('StayingSafe Component', () => {
 			expect(textContent).toBeInTheDocument();
 			expect(textContent?.textContent).not.toBe('');
 		});
-	});
+});
 });

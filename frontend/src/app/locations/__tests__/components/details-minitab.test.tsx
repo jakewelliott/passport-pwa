@@ -1,7 +1,7 @@
-import { render, screen } from '@testing-library/react';
 import { DetailsMiniTab } from '@/app/locations/components/details-minitab';
 import { api } from '@/lib/mock/api';
-import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 describe('DetailsMiniTab', () => {
 	const park = api.getParks()[0];
@@ -51,12 +51,13 @@ describe('DetailsMiniTab', () => {
 			const icons = iconContainer.querySelectorAll('img');
 			expect(icons.length).toBe(park.icons.length);
 
-			icons.forEach((icon, index) => {
+			for (let index = 0; index < icons.length; index++) {
+				const icon = icons[index];
 				expect(icon).toHaveAttribute('src', `/icons/park/${park.icons[index]}`);
 				expect(icon).toHaveAttribute('alt', `Park icon ${index + 1}`);
 				expect(icon).toHaveAttribute('width', '55');
 				expect(icon).toHaveAttribute('height', '55');
-			});
+			}
 		}
 	});
 }); 
