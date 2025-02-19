@@ -50,7 +50,7 @@ export interface Park {
   icons: { iconName: string }[];
   bucketListItems: { task: string }[];
   photos: { photoPath: string; alt: string }[];
-  abbreviation: ParkAbbreviation; // We'll keep this field
+  abbreviation: string; // We'll keep this field
 }
 
 export interface Address {

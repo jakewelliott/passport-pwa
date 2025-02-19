@@ -89,6 +89,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
 
     public record LocationResponse(
         int id,
+        string abbreviation,
         string parkName,
         object coordinates,
         long? phone,
@@ -144,6 +145,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
 
             return new LocationResponse(
                 location.id,
+                location.parkAbbreviation,
                 location.parkName,
                 lonLatObject,
                 location.phone,

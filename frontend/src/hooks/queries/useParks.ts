@@ -14,7 +14,7 @@ import { useQuery } from '@tanstack/react-query';
 // - isError: a boolean that indicates if the query has an error
 // - error: the error returned from the query
 
-export const usePark = (code: ParkAbbreviation) => {
+export const usePark = (code: string) => {
   return useQuery<Park>({
     queryKey: ['park', code],
     queryFn: async () => await fetchGet(`${API_PARKS_URL}/${code}`),

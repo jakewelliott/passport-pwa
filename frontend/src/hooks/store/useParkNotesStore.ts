@@ -1,8 +1,7 @@
-import type { ParkAbbreviation } from '@/lib/mock/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-type ParkNoteKey = ParkAbbreviation | 'generalNotes';
+type ParkNoteKey = string | 'generalNotes';
 const EMPTY_NOTES = { generalNotes: '' };
 
 interface NotesStore {
