@@ -1,55 +1,56 @@
 import { Reservations } from '@/app/more/components/reservations';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
 
 const renderWithRouter = (component: React.ReactElement) => {
-  return render(<BrowserRouter>{component}</BrowserRouter>);
+	return render(<BrowserRouter>{component}</BrowserRouter>);
 };
 
 describe('Reservations', () => {
-  it('renders the header correctly', () => {
-    renderWithRouter(<Reservations />);
+	it('renders the header correctly', () => {
+		renderWithRouter(<Reservations />);
 
-    const header = screen.getByText('MAKE A RESERVATION');
-    expect(header).toBeInTheDocument();
-    expect(header).toHaveClass('pb-1', 'text-center', 'text-main_green');
-  });
+		const header = screen.getByText('MAKE A RESERVATION');
+		expect(header).toBeInTheDocument();
+		expect(header).toHaveClass('pb-1', 'text-center', 'text-main_green');
+	});
 
-  it('renders reservation link and phone number', () => {
-    renderWithRouter(<Reservations />);
+	it('renders reservation link and phone number', () => {
+		renderWithRouter(<Reservations />);
 
-    const link = screen.getByText('ncparks.gov/reservations');
-    expect(link).toBeInTheDocument();
-    expect(link).toHaveClass('p-mini');
-    expect(link.closest('a')).toHaveAttribute('href', 'https://www.ncparks.gov/reservations');
+		const link = screen.getByText('ncparks.gov/reservations');
+		expect(link).toBeInTheDocument();
+		expect(link).toHaveClass('p-mini');
+		expect(link.closest('a')).toHaveAttribute('href', 'https://www.ncparks.gov/reservations');
 
-    const phone = screen.getByText('1-877-722-6762');
-    expect(phone).toBeInTheDocument();
-    expect(phone).toHaveClass('p-mini');
-  });
+		const phone = screen.getByText('1-877-722-6762');
+		expect(phone).toBeInTheDocument();
+		expect(phone).toHaveClass('p-mini');
+	});
 
-  it('renders descriptive text', () => {
-    renderWithRouter(<Reservations />);
+	it('renders descriptive text', () => {
+		renderWithRouter(<Reservations />);
 
-    const description = screen.getByText(
-      'Reserve campsites, picnic shelters and other park facilities online or over the phone.',
-    );
-    expect(description).toBeInTheDocument();
-    expect(description).toHaveClass('p-mini');
-  });
+		const description = screen.getByText(
+			'Reserve campsites, picnic shelters and other park facilities online or over the phone.',
+		);
+		expect(description).toBeInTheDocument();
+		expect(description).toHaveClass('p-mini');
+	});
 
-  it('applies correct layout styling', () => {
-    renderWithRouter(<Reservations />);
+	it('applies correct layout styling', () => {
+		renderWithRouter(<Reservations />);
 
-    const container = screen.getByText('MAKE A RESERVATION').closest('div')?.parentElement?.parentElement;
-    expect(container).toHaveClass('p-4');
+		const container = screen.getByText('MAKE A RESERVATION').closest('div')?.parentElement?.parentElement;
+		expect(container).toHaveClass('p-4');
 
-    const topSection = screen.getByText('MAKE A RESERVATION').closest('div')?.parentElement;
-    expect(topSection).toHaveClass('mb-3', 'flex', 'items-center');
+		const topSection = screen.getByText('MAKE A RESERVATION').closest('div')?.parentElement;
+		expect(topSection).toHaveClass('mb-3', 'flex', 'items-center');
 
-    const bottomSection = screen
-      .getByText('Reserve campsites, picnic shelters and other park facilities online or over the phone.')
-      .closest('div');
-    expect(bottomSection).toHaveClass('mt-3', 'flex', 'items-center');
-  });
+		const bottomSection = screen
+			.getByText('Reserve campsites, picnic shelters and other park facilities online or over the phone.')
+			.closest('div');
+		expect(bottomSection).toHaveClass('mt-3', 'flex', 'items-center');
+	});
 });
