@@ -107,6 +107,57 @@ public class CollectedStampRepositoryTests
         Assert.Contains(NewStamp, _db.CollectedStamps);
     }
 
+    [Fact]
+    public void GetByParkAndUser_ReturnStamp_ValidIDsExistingStamp()
+    {
+        // Arrange
+        var userId = TestData.CollectedStamps[0].userId;
+        var locationId = TestData.CollectedStamps[0].parkId;
+
+        // Act
+        var result = _repo.GetByParkAndUser(locationId, userId);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(locationId, result.parkId);
+        Assert.Equal(userId, result.userId);
+        Assert.Equal(TestData.CollectedStamps[0].id, result.id);
+        Assert.Equal(TestData.CollectedStamps[0].method, result.method);
+        Assert.Equal(TestData.CollectedStamps[0].location, result.location);
+        Assert.Equal(TestData.CollectedStamps[0].createdAt, result.createdAt);
+        Assert.Equal(TestData.CollectedStamps[0].updatedAt, result.updatedAt);
+        Assert.Equal(TestData.CollectedStamps[0].user, result.user);
+        Assert.Equal(TestData.CollectedStamps[0].park, result.park);
+    }
+
+    [Fact]
+    public void GetByParkAndUser_ReturnNull_ValidIDsNonexistingStamp()
+    {
+        // Arrange
+        var userId = TestData.Users[2].id;
+        var locationId = TestData.Parks[1].id;
+
+        // Act
+        var result = _repo.GetByParkAndUser(locationId, userId);
+
+        // Assert
+        Assert.Null(result);
+    }
+
+        [Fact]
+    public void GetByParkAndUser_ReturnNull_InvalidIDsNonexistingStamp()
+    {
+        // Arrange
+        var userId = -1;
+        var locationId = -1;
+
+        // Act
+        var result = _repo.GetByParkAndUser(locationId, userId);
+
+        // Assert
+        Assert.Null(result);
+    }
+
     private static readonly CollectedStamp NewStamp = new()
     {
         method = StampCollectionMethod.location,

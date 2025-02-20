@@ -1,6 +1,6 @@
+import { API_ACTIVITY_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
+import type { Park, ParkActivity } from '@/lib/mock/types';
 import { useQuery } from '@tanstack/react-query';
-import type { Park, ParkAbbreviation } from '@/lib/mock/types';
-import { api } from '@/lib/mock/api';
 
 // ADAM:
 // This is a very simple query hook.
@@ -13,15 +13,23 @@ import { api } from '@/lib/mock/api';
 // - isError: a boolean that indicates if the query has an error
 // - error: the error returned from the query
 
-export const useParks = () => {
-  return useQuery<Park[]>({
-    queryKey: ['parks'],
-    queryFn: (): Park[] => api.getParks(),
+export const usePark = (code: string) => {
+  return useQuery<Park>({
+    queryKey: ['park', code],
+    queryFn: async () => await fetchGet(`${API_PARKS_URL}/${code}`),
   });
 };
 
-export const usePark = (code: ParkAbbreviation) => {
-  const query = useParks();
-  const park = query.data?.find((park) => park.abbreviation === code);
-  return { ...query, data: park };
+export const useParkActivity = (parkId: number) => {
+  return useQuery<ParkActivity>({
+    queryKey: ['parkActivity', parkId],
+    queryFn: async () => await fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
+  });
+};
+
+export const useParks = () => {
+  return useQuery<Park[]>({
+    queryKey: ['parks'],
+    queryFn: async () => await fetchGet(API_PARKS_URL),
+  });
 };

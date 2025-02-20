@@ -1,89 +1,134 @@
-import { screen } from '@testing-library/react';
-import { Routes, Route } from 'react-router-dom';
-import DetailTabs from '../detail-tabs';
-import { usePark } from '@/hooks/queries/useParks';
-import { api } from '@/lib/mock/api';
+import { usePark, useParkActivity } from '@/hooks/queries/useParks';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { screen, waitFor } from '@testing-library/react';
+import { Route, Routes } from 'react-router-dom';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import DetailTabs from '../detail-tabs';
 
 // Mock the hooks
-jest.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/queries/useParks');
 
-const mockUsePark = usePark as jest.Mock;
+const mockUsePark = usePark as Mock;
+const mockUseParkActivity = useParkActivity as Mock;
 
 describe('DetailTabs', () => {
-	const mockPark = api.getPark('ENRI');
+  const mockPark = {
+    id: 45,
+    parkName: 'Carolina Beach State Park',
+    coordinates: {
+      longitude: -77.9066,
+      latitude: 34.0472,
+    },
+    phone: 9104588206,
+    email: 'carolina.beach@ncparks.gov',
+    establishedYear: '1969',
+    landmark: 'Sugarloaf Dune',
+    youCanFind: 'the Venus flytrap',
+    trails: '■ 9 trails\n\n■ 1 wheelchair-accessible trail',
+    website: 'https://www.ncparks.gov/state-parks/carolina-beach-state-park',
+    addresses: [
+      {
+        title: 'Main Address',
+        addressesLineOne: '1010 State Park Road',
+        addressesLineTwo: '',
+        city: 'Carolina Beach',
+        state: 'NC',
+        zipcode: 28428,
+      },
+    ],
+    icons: [{ iconName: 'CamperCabins-Green' }],
+    bucketListItems: [{ task: 'Find a venus flytrap' }],
+    photos: [{ photoPath: 'CABE.jpg', alt: 'Carolina Beach State Park main image' }],
+    abbreviation: 'CABE',
+  };
 
-	beforeEach(() => {
-		jest.clearAllMocks();
-		mockUsePark.mockReturnValue({ data: mockPark });
-	});
+  const mockParkActivity = {
+    completedBucketListItems: [{ id: 7 }],
+    stampCollectedAt: '2024-02-16T06:48:06',
+    privateNote: {
+      id: 1,
+      note: 'Hello!',
+    },
+    lastVisited: '2025-02-15T06:48:06',
+  };
 
-	const renderDetailTabs = () => {
-		renderWithClient(
-			<Routes>
-				<Route path="/locations/:abbreviation" element={<DetailTabs />} />
-			</Routes>,
-			{ routerProps: { initialEntries: ['/locations/ENRI'] } }
-		);
-	};
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: mockParkActivity, isLoading: false });
+  });
 
-	// it('shows loading placeholder when data is loading', () => {
-	// 	mockUsePark.mockReturnValue({
-	// 		data: null,
-	// 		isLoading: true
-	// 	});
+  const renderDetailTabs = () => {
+    renderWithClient(
+      <Routes>
+        <Route path='/locations/:abbreviation' element={<DetailTabs />} />
+      </Routes>,
+      { routerProps: { initialEntries: ['/locations/CABE'] } },
+    );
+  };
 
-	// 	renderDetailTabs();
-	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	// });
+  it('shows loading placeholder when data is loading', async () => {
+    mockUsePark.mockReturnValue({ data: null, isLoading: true });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: true });
 
-	// it('shows loading placeholder when park data is null', () => {
-	// 	mockUsePark.mockReturnValue({
-	// 		data: null,
-	// 		isLoading: false
-	// 	});
+    renderDetailTabs();
+    expect(await screen.findByTestId('loading-placeholder')).toBeInTheDocument();
+  });
 
-	// 	renderDetailTabs();
-	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	// });
+  it('shows loading placeholder when park data is null', async () => {
+    mockUsePark.mockReturnValue({ data: null, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false });
 
-	it('renders all components when park data is available', () => {
-		mockUsePark.mockReturnValue({
-			data: mockPark,
-			isLoading: false
-		});
+    renderDetailTabs();
+    expect(await screen.findByTestId('loading-placeholder')).toBeInTheDocument();
+  });
 
-		renderDetailTabs();
+  it('renders all components when park data is available', async () => {
+    renderDetailTabs();
 
-		// Check if LocationContact is rendered
-		expect(screen.getByTestId('location-contact')).toBeInTheDocument();
+    await waitFor(() => {
+      // Check if LocationContact is rendered
+      expect(screen.getByTestId('location-contact')).toBeInTheDocument();
 
-		// Check if LocationActionBar is rendered
-		expect(screen.getByTestId('location-action-bar')).toBeInTheDocument();
+      // Check if LocationActionBar is rendered
+      expect(screen.getByTestId('location-action-bar')).toBeInTheDocument();
 
-		// Check if LocationMiniTabBar and its children are rendered
-		expect(screen.getByText('Details')).toBeInTheDocument();
-		expect(screen.getByText('Photos')).toBeInTheDocument();
-		expect(screen.getByText('Notes')).toBeInTheDocument();
+      // Check if LocationMiniTabBar and its children are rendered
+      expect(screen.getByText('Details')).toBeInTheDocument();
+      expect(screen.getByText('Photos')).toBeInTheDocument();
+      expect(screen.getByText('Notes')).toBeInTheDocument();
 
-		// Verify the default tab content is visible (Details tab)
-		if (mockPark.established) {
-			expect(screen.getByText('Established:')).toBeInTheDocument();
-		}
-	});
+      // Verify the default tab content is visible (Details tab)
+      expect(screen.getByText('Established:')).toBeInTheDocument();
+    });
+  });
 
-	it('passes correct park data to child components', () => {
-		mockUsePark.mockReturnValue({
-			data: mockPark,
-			isLoading: false
-		});
+  it('passes correct park data to child components', async () => {
+    renderDetailTabs();
 
-		renderDetailTabs();
+    await waitFor(() => {
+      // Check for park name
+      const parkNameElements = screen.getAllByText(/Carolina Beach/);
+      expect(parkNameElements).toHaveLength(2); // Assuming there are two elements with this text
 
-		// Verify park data is passed correctly by checking rendered content
-		expect(screen.getByText(mockPark.name)).toBeInTheDocument();
-		if (mockPark.address[0].city) {
-			expect(screen.getByText(new RegExp(mockPark.address[0].city))).toBeInTheDocument();
-		}
-	});
+      // Check for city
+      expect(screen.getByText(/Carolina Beach, NC/)).toBeInTheDocument();
+
+      // Check for established year
+      expect(screen.getByText(/1969/)).toBeInTheDocument();
+    });
+  });
+
+  it('passes correct park activity data to child components', async () => {
+    renderDetailTabs();
+
+    await waitFor(() => {
+      const achievementsElement = screen.getByTestId('achievements-view');
+      expect(achievementsElement).toHaveTextContent(/Stamp collected/);
+      expect(achievementsElement).toHaveTextContent(/2024-02-16/);
+
+      expect(achievementsElement).toHaveTextContent(/Bucket List Item/);
+      expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
+    });
+  });
 });

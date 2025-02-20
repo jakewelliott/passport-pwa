@@ -1,44 +1,41 @@
-import { screen } from '@testing-library/react';
 import { useParks } from '@/hooks/queries/useParks';
 import { api } from '@/lib/mock/api';
-import Locations from '../index';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { screen } from '@testing-library/react';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import Locations from '../index';
 
 // Mock the hooks
-jest.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/queries/useParks');
 
-const mockUseParks = useParks as jest.Mock;
+const mockUseParks = useParks as Mock;
 
 describe('Locations', () => {
-	const mockParks = api.getParks();
+  // it('shows loading state when data is loading', () => {
+  // 	mockUseParks.mockReturnValue({
+  // 		data: null,
+  // 		isLoading: true
+  // 	});
 
-	beforeEach(() => {
-		jest.clearAllMocks();
-	});
+  // 	renderWithClient(<Locations />);
+  // 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+  // });
 
-	// it('shows loading state when data is loading', () => {
-	// 	mockUseParks.mockReturnValue({
-	// 		data: null,
-	// 		isLoading: true
-	// 	});
+  const mockParks = api.getParks();
 
-	// 	renderWithClient(<Locations />);
-	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	// });
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
 
-	it('renders list of parks when data is available', () => {
-		mockUseParks.mockReturnValue({
-			data: mockParks,
-			isLoading: false
-		});
+  it('renders list of parks when data is available', () => {
+    mockUseParks.mockReturnValue({
+      data: mockParks,
+      isLoading: false,
+    });
 
-		renderWithClient(<Locations />);
+    renderWithClient(<Locations />);
 
-		// Check if all parks are rendered
-		mockParks.forEach(park => {
-			expect(screen.getByText(park.name)).toBeInTheDocument();
-			// expect(screen.getByText(park.address[0].city)).toBeInTheDocument();
-		});
-	});
-
+    const parkElements = screen.getAllByText(mockParks[0].parkName);
+    expect(parkElements).toHaveLength(mockParks.length);
+  });
 });
