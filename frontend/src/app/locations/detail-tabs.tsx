@@ -8,18 +8,18 @@ import { useParams } from 'react-router-dom';
 
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import { usePark, useParkActivity } from '@/hooks/queries/useParks';
+import { useUser } from '@/hooks/queries/useUser';
 
 export default function DetailTabs() {
   const { abbreviation } = useParams();
   const parkAbbreviation = abbreviation as Uppercase<string>;
   const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
-  const { data: parkActivity, isLoading: isActivityLoading } = useParkActivity(park?.id ?? 0);
-
-  if (isParkLoading || isActivityLoading || !park || !parkActivity) return <LoadingPlaceholder />;
-
+  const { data: user, isLoading: isUserLoading } = useUser();
+  const { data: parkActivity, isLoading: isActivityLoading } = (!isUserLoading && user?.role != 'admin') ? useParkActivity(park?.id ?? 0) : {data: null, isLoading: false};
+  if (isParkLoading || isActivityLoading || !park ) return <LoadingPlaceholder />;
   return (
     <>
-      <LocationContact park={park} parkActivity={parkActivity} />
+      <LocationContact park={park} parkActivity={parkActivity!} />
       <LocationActionBar park={park} />
       <LocationMiniTabBar>
         <DetailsMiniTab park={park} />
