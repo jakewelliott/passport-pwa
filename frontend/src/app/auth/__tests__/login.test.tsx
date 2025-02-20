@@ -52,6 +52,30 @@ describe('LoginPage', () => {
     });
   });
 
+  it('shows validation errors when submitting empty field', async () => {
+    renderLoginPage();
+    fireEvent.change(screen.getByPlaceholderText('Username'), {
+      target: { value: 'username' }
+    });
+    fireEvent.click(screen.getByText('Login'));
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('Password is required.');
+    });
+
+    fireEvent.change(screen.getByPlaceholderText('Password'), {
+      target: { value: 'password' }
+    });
+    fireEvent.change(screen.getByPlaceholderText('Username'), {
+      target: { value: '' }
+    });
+    fireEvent.click(screen.getByText('Login'));
+
+    await waitFor(() => {
+      expect(toast.error).toHaveBeenCalledWith('Username is required.');
+    });
+  });
+
   it('handles successful login', async () => {
     renderLoginPage();
 

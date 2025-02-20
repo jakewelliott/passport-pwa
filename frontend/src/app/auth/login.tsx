@@ -44,9 +44,8 @@ export default function LoginPage() {
 
   const handleAuth = (isLogin: boolean) => async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formRef.current) return;
 
-    const formData = new FormData(formRef.current);
+    const formData = new FormData(formRef.current!);
     const validatedData = validateFields(formData);
     if (!validatedData) return;
 
