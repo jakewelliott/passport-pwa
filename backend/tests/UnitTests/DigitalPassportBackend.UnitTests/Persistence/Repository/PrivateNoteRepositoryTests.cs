@@ -108,6 +108,56 @@ public class PrivateNoteRepositoryTests
         Assert.Contains(NewNote, _db.PrivateNotes);
     }
 
+    [Fact]
+    public void GetByParkAndUser_ReturnPrivateNote_ValidIDsExistingNote()
+    {
+        // Arrange
+        var userId = TestData.PrivateNotes[0].userId;
+        var locationId = TestData.PrivateNotes[0].park.id;
+
+        // Act
+        var result = _repo.GetByParkAndUser(locationId, userId);
+
+        // Assert
+        Assert.NotNull(result);
+        Assert.Equal(locationId, result.parkId);
+        Assert.Equal(userId, result.userId);
+        Assert.Equal(TestData.PrivateNotes[0].id, result.id);
+        Assert.Equal(TestData.PrivateNotes[0].note, result.note);
+        Assert.Equal(TestData.PrivateNotes[0].createdAt, result.createdAt);
+        Assert.Equal(TestData.PrivateNotes[0].updatedAt, result.updatedAt);
+        Assert.Equal(TestData.PrivateNotes[0].user, result.user);
+        Assert.Equal(TestData.PrivateNotes[0].park, result.park);
+    }
+
+    [Fact]
+    public void GetByParkAndUser_ReturnNull_ValidIDsNonexistingNote()
+    {
+        // Arrange
+        var userId = TestData.Users[1].id;
+        var locationId = TestData.Parks[1].id;
+
+        // Act
+        var result = _repo.GetByParkAndUser(locationId, userId);
+
+        // Assert
+        Assert.Null(result);
+    }
+
+    [Fact]
+    public void GetByParkAndUser_ReturnNull_InvalidIDsNonexistingNote()
+    {
+        // Arrange
+        var userId = -1;
+        var locationId = -1;
+
+        // Act
+        var result = _repo.GetByParkAndUser(locationId, userId);
+
+        // Assert
+        Assert.Null(result);
+    }
+
     private static readonly PrivateNote NewNote = new()
     {
         note = "note! aaaaaa!!!",
