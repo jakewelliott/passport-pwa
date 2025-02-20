@@ -35,7 +35,6 @@ public class LocationsService : ILocationsService
         return _locationsRepository.GetAll();
     }
 
-
     public List<BucketListItem> GetBucketListItemsByLocationId(int id)
     {
         return _bucketListItemRepository.GetByLocationId(id);
