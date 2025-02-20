@@ -1,58 +1,59 @@
-import { screen, waitFor } from '@testing-library/react';
-import { Routes, Route } from 'react-router-dom';
-import DetailTabs from '../detail-tabs';
 import { usePark, useParkActivity } from '@/hooks/queries/useParks';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { screen, waitFor } from '@testing-library/react';
+import { Route, Routes } from 'react-router-dom';
+import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import DetailTabs from '../detail-tabs';
 
 // Mock the hooks
-jest.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/queries/useParks');
 
-const mockUsePark = usePark as jest.Mock;
-const mockUseParkActivity = useParkActivity as jest.Mock;
+const mockUsePark = usePark as Mock;
+const mockUseParkActivity = useParkActivity as Mock;
 
 describe('DetailTabs', () => {
   const mockPark = {
     id: 45,
-    parkName: "Carolina Beach State Park",
+    parkName: 'Carolina Beach State Park',
     coordinates: {
       longitude: -77.9066,
-      latitude: 34.0472
+      latitude: 34.0472,
     },
     phone: 9104588206,
-    email: "carolina.beach@ncparks.gov",
-    establishedYear: "1969",
-    landmark: "Sugarloaf Dune",
-    youCanFind: "the Venus flytrap",
-    trails: "■ 9 trails\n\n■ 1 wheelchair-accessible trail",
-    website: "https://www.ncparks.gov/state-parks/carolina-beach-state-park",
+    email: 'carolina.beach@ncparks.gov',
+    establishedYear: '1969',
+    landmark: 'Sugarloaf Dune',
+    youCanFind: 'the Venus flytrap',
+    trails: '■ 9 trails\n\n■ 1 wheelchair-accessible trail',
+    website: 'https://www.ncparks.gov/state-parks/carolina-beach-state-park',
     addresses: [
       {
-        title: "Main Address",
-        addressesLineOne: "1010 State Park Road",
-        addressesLineTwo: "",
-        city: "Carolina Beach",
-        state: "NC",
-        zipcode: 28428
-      }
+        title: 'Main Address',
+        addressesLineOne: '1010 State Park Road',
+        addressesLineTwo: '',
+        city: 'Carolina Beach',
+        state: 'NC',
+        zipcode: 28428,
+      },
     ],
-    icons: [{ iconName: "CamperCabins-Green" }],
-    bucketListItems: [{ task: "Find a venus flytrap" }],
-    photos: [{ photoPath: "CABE.jpg", alt: "Carolina Beach State Park main image" }],
-    abbreviation: "CABE"
+    icons: [{ iconName: 'CamperCabins-Green' }],
+    bucketListItems: [{ task: 'Find a venus flytrap' }],
+    photos: [{ photoPath: 'CABE.jpg', alt: 'Carolina Beach State Park main image' }],
+    abbreviation: 'CABE',
   };
 
   const mockParkActivity = {
     completedBucketListItems: [{ id: 7 }],
-    stampCollectedAt: "2024-02-16T06:48:06",
+    stampCollectedAt: '2024-02-16T06:48:06',
     privateNote: {
       id: 1,
-      note: "Hello!"
+      note: 'Hello!',
     },
-    lastVisited: "2025-02-15T06:48:06"
+    lastVisited: '2025-02-15T06:48:06',
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
     mockUseParkActivity.mockReturnValue({ data: mockParkActivity, isLoading: false });
   });
@@ -60,9 +61,9 @@ describe('DetailTabs', () => {
   const renderDetailTabs = () => {
     renderWithClient(
       <Routes>
-        <Route path="/locations/:abbreviation" element={<DetailTabs />} />
+        <Route path='/locations/:abbreviation' element={<DetailTabs />} />
       </Routes>,
-      { routerProps: { initialEntries: ['/locations/CABE'] } }
+      { routerProps: { initialEntries: ['/locations/CABE'] } },
     );
   };
 
@@ -103,32 +104,31 @@ describe('DetailTabs', () => {
   });
 
   it('passes correct park data to child components', async () => {
-	renderDetailTabs();
-  
-	await waitFor(() => {
-	  // Check for park name
-	  const parkNameElements = screen.getAllByText(/Carolina Beach/);
-	  expect(parkNameElements).toHaveLength(2); // Assuming there are two elements with this text
-  
-	  // Check for city
-	  expect(screen.getByText(/Carolina Beach, NC/)).toBeInTheDocument();
-  
-	  // Check for established year
-	  expect(screen.getByText(/1969/)).toBeInTheDocument();
-	});
-  });  
+    renderDetailTabs();
+
+    await waitFor(() => {
+      // Check for park name
+      const parkNameElements = screen.getAllByText(/Carolina Beach/);
+      expect(parkNameElements).toHaveLength(2); // Assuming there are two elements with this text
+
+      // Check for city
+      expect(screen.getByText(/Carolina Beach, NC/)).toBeInTheDocument();
+
+      // Check for established year
+      expect(screen.getByText(/1969/)).toBeInTheDocument();
+    });
+  });
 
   it('passes correct park activity data to child components', async () => {
-	renderDetailTabs();
-  
-	await waitFor(() => {
-	  const achievementsElement = screen.getByTestId('achievements-view');
-	  expect(achievementsElement).toHaveTextContent(/Stamp collected/);
-	  expect(achievementsElement).toHaveTextContent(/2024-02-16/);
-  
-	  expect(achievementsElement).toHaveTextContent(/Bucket List Item/);
-	  expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
-	});
+    renderDetailTabs();
+
+    await waitFor(() => {
+      const achievementsElement = screen.getByTestId('achievements-view');
+      expect(achievementsElement).toHaveTextContent(/Stamp collected/);
+      expect(achievementsElement).toHaveTextContent(/2024-02-16/);
+
+      expect(achievementsElement).toHaveTextContent(/Bucket List Item/);
+      expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
+    });
   });
-  
 });

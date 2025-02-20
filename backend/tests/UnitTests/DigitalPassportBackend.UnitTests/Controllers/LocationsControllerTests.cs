@@ -14,7 +14,6 @@ public class LocationsControllerTests
     private readonly Mock<ILocationsService> _mockLocationsService;
 
     private readonly LocationsController _controller;
-
     private readonly List<Park> _locations = [];
 
     public LocationsControllerTests()
@@ -96,7 +95,6 @@ public class LocationsControllerTests
         var returnedLocations = Assert.IsType<List<LocationResponse>>(okResult.Value);
         Assert.Empty(returnedLocations);
     }
-
 
     private void SetupLocation(Park park)
     {

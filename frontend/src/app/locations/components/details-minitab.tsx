@@ -1,5 +1,5 @@
-import React from 'react';
 import type { Park } from '@/lib/mock/types';
+import React from 'react';
 
 export const DetailsMiniTab = ({ park }: { park: Park }) => {
   const renderTrails = (trails: string) => {
@@ -7,7 +7,7 @@ export const DetailsMiniTab = ({ park }: { park: Park }) => {
       .split('\n')
       .filter((line) => line.trim() !== '') // Remove empty lines
       .map((line, index, array) => (
-        <React.Fragment key={index}>
+        <React.Fragment key={line}>
           {line}
           {index < array.length - 1 && <br />} {/* Add <br /> only if it's not the last line */}
         </React.Fragment>
@@ -46,19 +46,20 @@ export const DetailsMiniTab = ({ park }: { park: Park }) => {
             <span className='green-text'>Trails: </span>
             <br />
             {renderTrails(park.trails)}
-            <br /><br />
+            <br />
+            <br />
           </>
         )}
       </p>
-      <div data-testid="icon-scroll-container" className='icon-scroll-container overflow-x-auto'>
+      <div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
         <div className='inline-flex gap-6 px-6'>
-          {park.icons && park.icons.map((icon, index) => (
-            <img 
-              src={`/icons/park/${icon.iconName}.svg`} 
-              width={55} 
-              height={55} 
-              key={icon.iconName} 
-              alt={`Park icon ${index + 1}`} 
+          {park.icons?.map((icon, index) => (
+            <img
+              src={`/icons/park/${icon.iconName}.svg`}
+              width={55}
+              height={55}
+              key={icon.iconName}
+              alt={`Park icon ${index + 1}`}
             />
           ))}
           <div className='w-px flex-shrink-0' />
