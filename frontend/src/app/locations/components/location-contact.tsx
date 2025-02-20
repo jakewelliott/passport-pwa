@@ -8,7 +8,7 @@ import { AddressView } from './address-view';
 
 interface LocationContactProps {
   park: Park;
-  parkActivity: ParkActivity;
+  parkActivity?: ParkActivity;
 }
 
 export const LocationContact = ({ park, parkActivity }: LocationContactProps) => {
@@ -63,7 +63,9 @@ export const LocationContact = ({ park, parkActivity }: LocationContactProps) =>
           <p>{park.email}</p>
         </div>
       )}
-      <AchievementsView parkActivity={parkActivity} park={park} />
+      {parkActivity && (
+        <AchievementsView parkActivity={parkActivity} park={park} />
+      )}
     </div>
   );
 };

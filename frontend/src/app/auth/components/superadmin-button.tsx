@@ -22,8 +22,8 @@ export const SuperAdminButton = () => {
   };
 
   return (
-    <button type='button' onClick={handleClick}>
+    <div data-testid='button' onClick={handleClick}>
       <RoundedButton title='SUPERADMIN' />
-    </button>
+    </div>
   );
 };
