@@ -13,7 +13,7 @@ const CollectedOn = ({ stamp }: { stamp: Stamp | null }) =>
   stamp == null ? (
     <p className='font-medium text-amber-600'>Stamp not yet collected</p>
   ) : (
-    <p className='font-medium'>Stamp collected on {DateHelper.stringify(stamp.timestamp)}</p>
+    <p className='font-medium'>Stamp collected on {DateHelper.stringify(stamp.createdAt)}</p>
   );
 
 const CollectedManually = ({ stamp }: { stamp: Stamp | null }) =>

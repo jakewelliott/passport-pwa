@@ -1,4 +1,6 @@
-import { api } from '@/lib/mock/api';
+import { dbg } from '@/lib/debug';
+import { API_STAMPS_URL, fetchGet } from '@/lib/fetch';
+import type { Stamp } from '@/lib/mock/types';
 import { useQuery } from '@tanstack/react-query';
 import { useUser } from './useUser';
 /**
@@ -8,10 +10,12 @@ import { useUser } from './useUser';
 export const useStamps = () => {
   // re-use our query hooks whenever possible
   const { data: user } = useUser();
-  return useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['stamps', user?.id],
-    queryFn: () => api.getUserStampsByID(user?.id || 0),
+    queryFn: () => fetchGet(`${API_STAMPS_URL}/${user?.id}`),
   });
+  dbg('HOOK', 'useStamps', { data, isLoading });
+  return { data, isLoading };
 };
 
 /**
@@ -19,8 +23,8 @@ export const useStamps = () => {
  * @param code The code of the park to get the stamp for
  * @returns The stamp for the user
  */
-export const useStamp = (code: string) => {
+export const useStamp = (abbreviation: string) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
-  return { data: data?.find((stamp) => stamp.code === code) || null, isLoading };
+  return { data: data?.find((stamp: Stamp) => stamp.abbreviation === abbreviation) || null, isLoading };
 };
