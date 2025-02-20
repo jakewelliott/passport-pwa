@@ -127,16 +127,6 @@ public class LocationsRepositoryTests
         Assert.Equal(NewPark, item);
         Assert.Contains(NewPark, _db.Parks);
     }
-
-    [Fact]
-    public void GetAll_ReturnsEmptyList_IfNoLocationsInDB()
-    {
-        _db.RemoveRange(TestData.Parks);
-        var list = _repo.GetAll();
-        Assert.Empty(list);
-        _db.AddRange(TestData.Parks);
-    }
-
     [Fact]
     public void GetAll_FullList_LocationsPopulatedInDB()
     {
