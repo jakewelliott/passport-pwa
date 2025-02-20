@@ -15,61 +15,66 @@ const mockUseStamp = useStamp as Mock;
 const mockUsePark = usePark as Mock;
 
 describe('StampDetails', () => {
-  const mockAddress: Address = {
-    title: '',
-    addressLineOne: '',
-    addressLineTwo: '',
-    city: '',
-    state: '',
-    zipcode: 0,
-  };
+	const mockAddress: Address = {
+		title: '',
+		addressLineOne: '',
+		addressLineTwo: '',
+		city: '',
+		state: '',
+		zipcode: 0,
+	};
 
-  const mockPark: Park = {
-    id: 1,
-    parkName: 'ENRI',
-    coordinates: { latitude: 0, longitude: 0 },
-    phone: 0,
-    email: '',
-    establishedYear: '',
-    landmark: '',
-    youCanFind: '',
-    trails: '',
-    website: '',
-    addresses: [mockAddress],
-    icons: [],
-    bucketListItems: [],
-    photos: [],
-    abbreviation: '',
-  };
+	const mockPark: Park = {
+		id: 1,
+		parkName: 'ENRI',
+		coordinates: { latitude: 0, longitude: 0 },
+		phone: 0,
+		email: '',
+		establishedYear: '',
+		landmark: '',
+		youCanFind: '',
+		trails: '',
+		website: '',
+		addresses: [mockAddress],
+		icons: [],
+		bucketListItems: [],
+		photos: [],
+		abbreviation: '',
+	};
 
-  const mockStamp: Stamp = {
-    code: 'ENRI',
-    timestamp: new Date('2024-01-01T12:00:00Z'),
-    location: { latitude: 0, longitude: 0 },
-  };
-  const mockHandleClose = vi.fn();
+	const mockStamp: Stamp = {
+		id: 1,
+		abbreviation: 'ENRI',
+		method: 'manual',
+		createdAt: new Date('2024-01-01T12:00:00Z'),
+		updatedAt: new Date('2024-01-01T12:00:00Z'),
+		userId: 0,
+		parkId: 0,
+		location: { latitude: 0, longitude: 0 },
+	};
+	const mockHandleClose = vi.fn();
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-    mockUsePark.mockReturnValue({ data: mockPark });
-    mockUseStamp.mockReturnValue({ data: mockStamp });
-  });
+	beforeEach(() => {
+		vi.clearAllMocks();
+		mockUsePark.mockReturnValue({ data: mockPark });
+		mockUseStamp.mockReturnValue({ data: mockStamp });
+	});
 
-  it('renders stamp details correctly', () => {
-    renderWithClient(<StampDetails abbreviation='ENRI' handleClose={mockHandleClose} />);
+	it('renders stamp details correctly', () => {
+		renderWithClient(<StampDetails abbreviation='ENRI' handleClose={mockHandleClose} />);
 
-    // Verify park name is displayed
-    expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
+		// Verify park name is displayed
+		expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
 
-    // Verify collection date is displayed
-    expect(screen.getByText(`Stamp collected on ${DateHelper.stringify(mockStamp.timestamp)}`)).toBeInTheDocument();
-  });
+		// Verify collection date is displayed
+		expect(screen.getByText(`Stamp collected on ${DateHelper.stringify(mockStamp.createdAt)}`)).toBeInTheDocument();
+	});
 
-  // it('shows loading state when park data is loading', () => {
-  // 	mockUsePark.mockReturnValue({ data: null, isLoading: true });
+	// it('shows loading state when park data is loading', () => {
+	// 	mockUsePark.mockReturnValue({ data: null, isLoading: true });
 
-  // 	renderWithClient(<StampDetails abbreviation="ENRI" handleClose={mockHandleClose} />);
+	// 	renderWithClient(<StampDetails abbreviation="ENRI" handleClose={mockHandleClose} />);
 
-  // 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-  // });
+	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+	// });
 });

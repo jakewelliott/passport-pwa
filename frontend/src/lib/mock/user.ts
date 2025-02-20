@@ -4,7 +4,7 @@ import userParkVisitsJson from '@/lib/mock/user_park_visits.json';
 import userStampsJson from '@/lib/mock/user_stamps.json';
 
 const dummyVisit: UserParkVisit = {
-  code: 'CABE',
+  abbreviation: 'CABE',
   timestamp: new Date(),
 };
 
@@ -17,8 +17,13 @@ const dummyProfile: UserProfile = {
 };
 
 const dummyStamp: Stamp = {
-  code: 'CABE',
-  timestamp: new Date(),
+  id: 0,
+  abbreviation: 'CABE',
+  method: 'manual',
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  userId: 0,
+  parkId: 0,
   location: {
     latitude: 0,
     longitude: 0,

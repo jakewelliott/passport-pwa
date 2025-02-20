@@ -68,7 +68,7 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<Point>("location")
-                        .IsRequired()
+                        // .IsRequired()
                         .HasColumnType("point");
 
                     b.Property<string>("method")

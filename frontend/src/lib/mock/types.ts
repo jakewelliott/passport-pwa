@@ -4,13 +4,18 @@ export interface Geopoint {
 }
 
 export interface Stamp {
-  code: string;
-  timestamp: Date;
-  location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
+  id: number;
+  abbreviation: string;
+  method: string;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: number;
+  parkId: number;
+  location: Geopoint; // TODO: this needs to be updated to match geojson
 }
 
 export interface UserParkVisit {
-  code: string;
+  abbreviation: string;
   timestamp: Date;
 }
 

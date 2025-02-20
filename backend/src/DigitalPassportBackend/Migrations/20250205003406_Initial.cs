@@ -238,7 +238,7 @@ namespace DigitalPassportBackend.Migrations
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     method = table.Column<string>(type: "varchar(255)", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    location = table.Column<Point>(type: "point", nullable: false),
+                    location = table.Column<Point>(type: "point", nullable: true),
                     created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     user = table.Column<int>(type: "int", nullable: false),
