@@ -1,7 +1,7 @@
-import type { UserParkVisit, UserProfile, Stamp } from '@/lib/mock/types';
-import userStampsJson from '@/lib/mock/user_stamps.json';
-import userParkVisitsJson from '@/lib/mock/user_park_visits.json';
 import dummyMapper from '@/lib/dummy-mapper';
+import type { Stamp, UserParkVisit, UserProfile } from '@/lib/mock/types';
+import userParkVisitsJson from '@/lib/mock/user_park_visits.json';
+import userStampsJson from '@/lib/mock/user_stamps.json';
 
 const dummyVisit: UserParkVisit = {
   code: 'CABE',

@@ -1,5 +1,5 @@
+import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaYoutube, FaInstagram } from 'react-icons/fa';
 
 export const ContactUs = () => {
   return (

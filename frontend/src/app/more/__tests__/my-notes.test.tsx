@@ -1,35 +1,37 @@
-import { screen } from '@testing-library/react';
 import { MyNotes } from '@/app/more/my-notes';
 import { useParks } from '@/hooks/queries/useParks';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Mock } from 'vitest';
 
 // Mock the hooks
-jest.mock('@/hooks/queries/useParks');
-jest.mock('@/hooks/store/useParkNotesStore');
+vi.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/store/useParkNotesStore');
 
-const mockUseParks = useParks as jest.Mock;
-const mockUseParkNotesStore = useParkNotesStore as unknown as jest.Mock;
+const mockUseParks = useParks as Mock;
+const mockUseParkNotesStore = useParkNotesStore as unknown as Mock;
 
 describe('MyNotes Component - User Stories', () => {
   const mockParks = [
-    { 
-      parkName: 'Test Park 1', 
-      abbreviation: 'TP1', 
-      addresses: [{ city: 'Test City 1' }] 
+    {
+      parkName: 'Test Park 1',
+      abbreviation: 'TP1',
+      addresses: [{ city: 'Test City 1' }],
     },
-    { 
-      parkName: 'Test Park 2', 
-      abbreviation: 'TP2', 
-      addresses: [{ city: 'Test City 2' }] 
-    }
+    {
+      parkName: 'Test Park 2',
+      abbreviation: 'TP2',
+      addresses: [{ city: 'Test City 2' }],
+    },
   ];
 
   const mockNotes = {
     generalNotes: 'Some general notes',
     TP1: 'Notes for Test Park 1',
     getNote: (key: string) => mockNotes[key as keyof typeof mockNotes],
-    getKeys: () => ['generalNotes', 'TP1']
+    getKeys: () => ['generalNotes', 'TP1'],
   };
 
   beforeEach(() => {
@@ -99,13 +101,13 @@ describe('MyNotes Component - User Stories', () => {
   it('should display multiple parks with notes', () => {
     const multipleParks = [
       ...mockParks,
-      { parkName: 'Test Park 3', abbreviation: 'TP3', addresses: [{ city: 'Test City 3' }] }
+      { parkName: 'Test Park 3', abbreviation: 'TP3', addresses: [{ city: 'Test City 3' }] },
     ];
     const multipleNotes = {
       ...mockNotes,
       TP2: 'Notes for Test Park 2',
       TP3: 'Notes for Test Park 3',
-      getKeys: () => ['generalNotes', 'TP1', 'TP2', 'TP3']
+      getKeys: () => ['generalNotes', 'TP1', 'TP2', 'TP3'],
     };
     mockUseParks.mockReturnValue({ data: multipleParks });
     mockUseParkNotesStore.mockReturnValue(multipleNotes);
@@ -122,7 +124,7 @@ describe('MyNotes Component - User Stories', () => {
     mockUseParkNotesStore.mockReturnValue({
       ...mockNotes,
       NCP: 'Notes for No City Park',
-      getKeys: () => ['generalNotes', 'NCP']
+      getKeys: () => ['generalNotes', 'NCP'],
     });
     renderWithClient(<MyNotes />);
     expect(screen.getByText('No City Park')).toBeInTheDocument();
@@ -136,10 +138,9 @@ describe('MyNotes Component - User Stories', () => {
     mockUseParkNotesStore.mockReturnValue({
       ...mockNotes,
       NAP: 'Notes for No Address Park',
-      getKeys: () => ['generalNotes', 'NAP']
+      getKeys: () => ['generalNotes', 'NAP'],
     });
     renderWithClient(<MyNotes />);
     expect(screen.getByText('No Address Park')).toBeInTheDocument();
   });
-
 });

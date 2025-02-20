@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Component Snapshots Header renders correctly 1`] = `
+exports[`Component Snapshots > Header renders correctly 1`] = `
 <div>
   <div
     class="fixed top-0 right-0 left-0 z-50"
@@ -51,7 +51,7 @@ exports[`Component Snapshots Header renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots ImageModal renders correctly 1`] = `
+exports[`Component Snapshots > ImageModal renders correctly 1`] = `
 <div>
   <div
     class="fixed inset-0 flex items-center justify-center bg-system_black"
@@ -86,7 +86,7 @@ exports[`Component Snapshots ImageModal renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots ListRow renders correctly 1`] = `
+exports[`Component Snapshots > ListRow renders correctly 1`] = `
 <div>
   <div
     class="flex items-center bg-supporting_lightblue p-3 shadow-md"
@@ -99,7 +99,7 @@ exports[`Component Snapshots ListRow renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots LoadingPlaceholder renders correctly 1`] = `
+exports[`Component Snapshots > LoadingPlaceholder renders correctly 1`] = `
 <div>
   <div
     class="animate-pulse"
@@ -125,7 +125,7 @@ exports[`Component Snapshots LoadingPlaceholder renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots PassportHeader renders correctly 1`] = `
+exports[`Component Snapshots > PassportHeader renders correctly 1`] = `
 <div>
   <div
     class="flex h-2/4 flex-col items-center justify-center"
@@ -151,22 +151,22 @@ exports[`Component Snapshots PassportHeader renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots RoundedButton renders correctly 1`] = `
+exports[`Component Snapshots > RoundedButton renders correctly 1`] = `
 <div>
-  <div
+  <button
     class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
-    role="button"
+    type="button"
   >
     <p
       class="button-text text-system_white"
     >
       Test Button
     </p>
-  </div>
+  </button>
 </div>
 `;
 
-exports[`Component Snapshots SplashScreen renders correctly 1`] = `
+exports[`Component Snapshots > SplashScreen renders correctly 1`] = `
 <div>
   <div
     class="fixed inset-0 flex flex-col items-center bg-no-repeat"
@@ -195,7 +195,7 @@ exports[`Component Snapshots SplashScreen renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots TabBar renders correctly 1`] = `
+exports[`Component Snapshots > TabBar renders correctly 1`] = `
 <div>
   <nav
     class="fixed right-0 bottom-0 left-0 bg-secondary_darkteal"
@@ -310,7 +310,7 @@ exports[`Component Snapshots TabBar renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots TrailIcons renders correctly 1`] = `
+exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
 <div>
   <div
     class="flex items-center gap-2 "

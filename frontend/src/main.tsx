@@ -10,17 +10,17 @@ import { queryClient } from './lib/tanstack-local-storage.ts';
 const rootElement = document.getElementById('root');
 
 if (!rootElement) {
-	throw new Error('Root element not found');
+  throw new Error('Root element not found');
 }
 
 ReactDOM.createRoot(rootElement).render(
-	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<BrowserRouter>
-				<App />
-			</BrowserRouter>
-		</QueryClientProvider>
-	</React.StrictMode>,
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </React.StrictMode>,
 );
 
 registerServiceWorker();
