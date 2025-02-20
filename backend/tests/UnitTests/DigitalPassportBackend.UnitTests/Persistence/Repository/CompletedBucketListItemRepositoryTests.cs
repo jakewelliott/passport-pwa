@@ -107,6 +107,56 @@ public class CompletedBucketListItemRepositoryTests
         Assert.Contains(NewItem, _db.CompletedBucketListItems);
     }
 
+    [Fact]
+    public void GetByParkAndUser_ReturnsItems_DataExists()
+    {
+        // Arrange
+        var locationId = TestData.CompletedBucketListItems[0].parkId;
+        var userId = TestData.CompletedBucketListItems[0].userId;
+
+        // Act
+        var result = _repo.GetByParkAndUser(locationId, userId);
+
+        // Assert
+        Assert.NotEmpty(result);
+
+        var counter = 0;
+        foreach (var item in result) {
+            Assert.Equal(locationId, item.parkId);
+            Assert.Equal(userId, item.userId);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].id, item.id);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].location, item.location);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].created_at, item.created_at);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].updated_at, item.updated_at);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].park, item.park);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItemId, item.bucketListItemId);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItem, item.bucketListItem);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].user, item.user);
+            counter++;
+        }
+    }
+
+    [Fact]
+    public void GetByParkAndUser_ReturnsEmpty_InvalidIDsDataNonexistent()
+    {
+        // Arrange
+        var invalidLocationId = -1;
+        var invalidUserId = -1;
+
+        var locationId = TestData.CompletedBucketListItems[0].parkId;
+        var userId = TestData.CompletedBucketListItems[0].userId;
+
+        // Act
+        var result0 = _repo.GetByParkAndUser(invalidLocationId, userId);
+        var result1 = _repo.GetByParkAndUser(locationId, invalidUserId);
+        var result2 = _repo.GetByParkAndUser(invalidLocationId, invalidUserId);
+
+        // Assert
+        Assert.Empty(result0);
+        Assert.Empty(result1);
+        Assert.Empty(result2);
+    }
+
     private static readonly CompletedBucketListItem NewItem = new()
     {
         id = 5,
