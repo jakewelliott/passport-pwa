@@ -4,7 +4,7 @@ import type { ParkActivity } from './types';
 
 const dummyActivity: ParkActivity = {
   completedBucketListItems: [],
-  stampCollectedAt: '',
+  stampCollectedAt: 'Yesterday',
   privateNote: {
     id: 0,
     note: '',

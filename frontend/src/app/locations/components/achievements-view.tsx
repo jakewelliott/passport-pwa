@@ -13,14 +13,13 @@ const AchievementsView = ({ parkActivity, park }: AchievementsViewProps) => {
         <div className='top-0 flex'>
           <FaStamp size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
           <p>
-            {parkActivity.stampCollectedAt != null
+            {parkActivity.stampCollectedAt
               ? `Stamp collected ${parkActivity.stampCollectedAt}`
               : 'Stamp not yet collected'}
           </p>
         </div>
       )}
-      {parkActivity.completedBucketListItems &&
-        parkActivity.completedBucketListItems.length > 0 &&
+      {
         park.bucketListItems &&
         park.bucketListItems.length > 0 && (
           <div className='top-0 flex'>
@@ -29,7 +28,7 @@ const AchievementsView = ({ parkActivity, park }: AchievementsViewProps) => {
             ) : (
               <FaRegSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
             )}
-            <p>
+            <p data-testid={'BLI'}>
               Bucket List Item:
               <br />
               {park.bucketListItems[0].task}
