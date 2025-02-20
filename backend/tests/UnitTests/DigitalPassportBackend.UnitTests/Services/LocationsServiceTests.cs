@@ -2,6 +2,7 @@ using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Services;
 using DigitalPassportBackend.UnitTests.TestUtils;
+using DigitalPassportBackend.Domain;
 
 using Moq;
 
@@ -29,6 +30,7 @@ public class LocationsServiceTests
         SetupLocation0();
         SetupLocation1();
         SetupInvalidLocation();
+        SetupAllLocations();
 
         // Initialize LocationsService.
         _locations = new LocationsService(
@@ -171,6 +173,39 @@ public class LocationsServiceTests
 
         // Assert.
         Assert.Empty(items);
+    }
+
+    [Fact]
+    public void GetAll_ParkList_WhenLocationsExist()
+    {
+        // Action
+        var items = _locations.GetAll();
+
+        // Assert
+        var counter = 0;
+        foreach(var park in TestData.Parks) {
+            Assert.Equal(park, items[counter]);
+            counter++;
+        }
+    }
+
+    [Fact]
+    public void GetAll_EmptyList_WhenLocationsDNE()
+    {
+        // Arrange
+        _mockLocations.Setup(s => s.GetAll())
+            .Returns(new List<Park>());
+
+        // Action
+        var items = _locations.GetAll();
+
+        // Assert
+        Assert.Empty(items);
+    }
+
+    private void SetupAllLocations() {
+        _mockLocations.Setup(s => s.GetAll())
+        .Returns(TestData.Parks);
     }
 
     // Park with all optional data fields except for park photos filled.
