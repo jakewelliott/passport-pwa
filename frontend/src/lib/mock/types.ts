@@ -1,26 +1,16 @@
-export type ParkAbbreviation = Uppercase<string>;
-
-export interface ErrorResponse {
-  type: string;
-  title: string;
-  status: number;
-  detail: string;
-  traceId: string;
-}
-
 export interface Geopoint {
   latitude: number;
   longitude: number;
 }
 
 export interface Stamp {
-  code: ParkAbbreviation;
+  code: string;
   timestamp: Date;
   location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
 }
 
 export interface UserParkVisit {
-  code: ParkAbbreviation;
+  code: string;
   timestamp: Date;
 }
 
@@ -40,40 +30,44 @@ export interface LoginResponse {
   token: string;
 }
 
+export interface Park {
+  id: number;
+  parkName: string;
+  coordinates: {
+    longitude: number;
+    latitude: number;
+  };
+  phone: number;
+  email: string;
+  establishedYear: string;
+  landmark: string;
+  youCanFind: string;
+  trails: string;
+  website: string;
+  addresses: Address[];
+  icons: { iconName: string }[];
+  bucketListItems: { task: string }[];
+  photos: { photoPath: string; alt: string }[];
+  abbreviation: string;
+}
+
 export interface Address {
-  name?: string;
+  title: string;
   addressLineOne: string;
-  addressLineTwo?: string;
+  addressLineTwo: string;
   city: string;
   state: string;
-  zip: string;
+  zipcode: number;
 }
 
-export interface ParkPhoto {
-  url: string;
-  caption?: string;
-}
-
-export interface Park {
-  abbreviation: ParkAbbreviation;
-  name: string;
-  city: string;
-  address: Address[];
-  additionalAddress?: Address[];
-  coordinates: Geopoint;
-  phone: string;
-  email?: string;
-  website?: string;
-  established?: string;
-  landmark?: string;
-  youCanFind?: string;
-  trails?: string[];
-  // TODO: model some types for icons and whatnot
-  parkIcons: string[];
-  parkPhotos: ParkPhoto[];
-  parkNotes: string;
-  stamp?: { time: string; method: string };
-  bucketList?: { status: boolean; text: string };
+export interface ParkActivity {
+  completedBucketListItems: { id: number }[];
+  stampCollectedAt: string;
+  privateNote: {
+    id: number;
+    note: string;
+  };
+  lastVisited: string;
 }
 
 export interface Trail {

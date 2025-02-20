@@ -1,89 +1,146 @@
-import { screen } from '@testing-library/react';
 import { MyNotes } from '@/app/more/my-notes';
 import { useParks } from '@/hooks/queries/useParks';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { renderWithClient } from '@/lib/test-wrapper';
+import { screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Mock } from 'vitest';
 
 // Mock the hooks
-jest.mock('@/hooks/queries/useParks');
-jest.mock('@/hooks/store/useParkNotesStore');
+vi.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/store/useParkNotesStore');
 
-const mockUseParks = useParks as jest.Mock;
-const mockUseParkNotesStore = useParkNotesStore as unknown as jest.Mock;
+const mockUseParks = useParks as Mock;
+const mockUseParkNotesStore = useParkNotesStore as unknown as Mock;
 
 describe('MyNotes Component - User Stories', () => {
-	const mockParks = [
-		{
-			name: 'Test Park 1',
-			abbreviation: 'TP1',
-			address: [{ city: 'Test City 1' }]
-		},
-		{
-			name: 'Test Park 2',
-			abbreviation: 'TP2',
-			address: [{ city: 'Test City 2' }]
-		}
-	];
+  const mockParks = [
+    {
+      parkName: 'Test Park 1',
+      abbreviation: 'TP1',
+      addresses: [{ city: 'Test City 1' }],
+    },
+    {
+      parkName: 'Test Park 2',
+      abbreviation: 'TP2',
+      addresses: [{ city: 'Test City 2' }],
+    },
+  ];
 
-	const mockNotes = {
-		generalNotes: 'Some general notes',
-		TP1: 'Notes for Test Park 1',
-		getNote: (key: string) => mockNotes[key as keyof typeof mockNotes],
-		getKeys: () => ['generalNotes', 'TP1']
-	};
+  const mockNotes = {
+    generalNotes: 'Some general notes',
+    TP1: 'Notes for Test Park 1',
+    getNote: (key: string) => mockNotes[key as keyof typeof mockNotes],
+    getKeys: () => ['generalNotes', 'TP1'],
+  };
 
-	beforeEach(() => {
-		mockUseParks.mockReturnValue({ data: mockParks });
-		mockUseParkNotesStore.mockReturnValue(mockNotes);
-	});
+  beforeEach(() => {
+    mockUseParks.mockReturnValue({ data: mockParks });
+    mockUseParkNotesStore.mockReturnValue(mockNotes);
+  });
 
-	// User Story: As a user, I want to see my general notes
-	it('should display general notes section', () => {
-		renderWithClient(<MyNotes />);
+  // User Story: As a user, I want to see my general notes
+  it('should display general notes section', () => {
+    renderWithClient(<MyNotes />);
 
-		expect(screen.getByText('General Notes')).toBeInTheDocument();
-		expect(screen.getByText('Some general notes')).toBeInTheDocument();
-	});
+    expect(screen.getByText('General Notes')).toBeInTheDocument();
+    expect(screen.getByText('Some general notes')).toBeInTheDocument();
+  });
 
-	// User Story: As a user, I want to see which parks I have notes for
-	it('should display parks with notes', () => {
-		renderWithClient(<MyNotes />);
+  // User Story: As a user, I want to see which parks I have notes for
+  it('should display parks with notes', () => {
+    renderWithClient(<MyNotes />);
 
-		expect(screen.getByText('Test Park 1')).toBeInTheDocument();
-		expect(screen.getByText('Test City 1')).toBeInTheDocument();
-		expect(screen.getByText('Notes for Test Park 1')).toBeInTheDocument();
-	});
+    expect(screen.getByText('Test Park 1')).toBeInTheDocument();
+    expect(screen.getByText('Test City 1')).toBeInTheDocument();
+    expect(screen.getByText('Notes for Test Park 1')).toBeInTheDocument();
+  });
 
-	// User Story: As a user, I want to see a message when I have no park notes
-	it('should display message when no park notes exist', () => {
-		mockUseParkNotesStore.mockReturnValue({
-			...mockNotes,
-			getKeys: () => ['generalNotes']
-		});
+  // User Story: As a user, I want to see a message when I have no park notes
+  it('should display message when no park notes exist', () => {
+    mockUseParkNotesStore.mockReturnValue({ ...mockNotes, getKeys: () => ['generalNotes'] });
 
-		renderWithClient(<MyNotes />);
+    renderWithClient(<MyNotes />);
 
-		expect(screen.getByText('No park notes found.')).toBeInTheDocument();
-	});
+    expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+  });
 
-	// User Story: As a user, I want to see a message when I have no general notes
-	it('should display placeholder when no general notes exist', () => {
-		mockUseParkNotesStore.mockReturnValue({
-			...mockNotes,
-			generalNotes: '',
-			getNote: () => ''
-		});
+  // User Story: As a user, I want to see a message when I have no general notes
+  it('should display placeholder when no general notes exist', () => {
+    mockUseParkNotesStore.mockReturnValue({ ...mockNotes, generalNotes: '', getNote: () => '' });
 
-		renderWithClient(<MyNotes />);
+    renderWithClient(<MyNotes />);
 
-		expect(screen.getByText('No general notes yet')).toBeInTheDocument();
-	});
+    expect(screen.getByText('No general notes yet')).toBeInTheDocument();
+  });
 
-	// User Story: As a user, I want to see when my notes were last updated
-	it('should display last updated information', () => {
-		renderWithClient(<MyNotes />);
+  // User Story: As a user, I want to see when my notes were last updated
+  it('should display last updated information', () => {
+    renderWithClient(<MyNotes />);
 
-		const lastUpdatedTexts = screen.getAllByText('Last updated: Not available');
-		expect(lastUpdatedTexts.length).toBeGreaterThan(0);
-	});
-}); 
+    const lastUpdatedTexts = screen.getAllByText('Last updated: Not available');
+    expect(lastUpdatedTexts.length).toBeGreaterThan(0);
+  });
+
+  // Test when parks data is null or undefined
+  it('should handle null parks data', () => {
+    mockUseParks.mockReturnValue({ data: null });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+  });
+
+  // Test when there are parks but no notes for any of them
+  it('should show no park notes when parks exist but have no notes', () => {
+    mockUseParks.mockReturnValue({ data: mockParks });
+    mockUseParkNotesStore.mockReturnValue({ ...mockNotes, getKeys: () => ['generalNotes'] });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+  });
+
+  // Test when there are multiple parks with notes
+  it('should display multiple parks with notes', () => {
+    const multipleParks = [
+      ...mockParks,
+      { parkName: 'Test Park 3', abbreviation: 'TP3', addresses: [{ city: 'Test City 3' }] },
+    ];
+    const multipleNotes = {
+      ...mockNotes,
+      TP2: 'Notes for Test Park 2',
+      TP3: 'Notes for Test Park 3',
+      getKeys: () => ['generalNotes', 'TP1', 'TP2', 'TP3'],
+    };
+    mockUseParks.mockReturnValue({ data: multipleParks });
+    mockUseParkNotesStore.mockReturnValue(multipleNotes);
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('Test Park 1')).toBeInTheDocument();
+    expect(screen.getByText('Test Park 2')).toBeInTheDocument();
+    expect(screen.getByText('Test Park 3')).toBeInTheDocument();
+  });
+
+  // Test when a park has no city in its address
+  it('should handle parks with no city in address', () => {
+    const parkWithNoCity = [{ parkName: 'No City Park', abbreviation: 'NCP', addresses: [{}] }];
+    mockUseParks.mockReturnValue({ data: parkWithNoCity });
+    mockUseParkNotesStore.mockReturnValue({
+      ...mockNotes,
+      NCP: 'Notes for No City Park',
+      getKeys: () => ['generalNotes', 'NCP'],
+    });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No City Park')).toBeInTheDocument();
+    expect(screen.queryByText('Test City')).not.toBeInTheDocument();
+  });
+
+  // Test when a park has no addresses
+  it('should handle parks with no addresses', () => {
+    const parkWithNoAddress = [{ parkName: 'No Address Park', abbreviation: 'NAP', addresses: [] }];
+    mockUseParks.mockReturnValue({ data: parkWithNoAddress });
+    mockUseParkNotesStore.mockReturnValue({
+      ...mockNotes,
+      NAP: 'Notes for No Address Park',
+      getKeys: () => ['generalNotes', 'NAP'],
+    });
+    renderWithClient(<MyNotes />);
+    expect(screen.getByText('No Address Park')).toBeInTheDocument();
+  });
+});

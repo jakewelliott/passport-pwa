@@ -30,7 +30,7 @@ const WelcomeMessage: React.FC = () => {
         </p>
       </div>
 
-      <div className='mt-8 grid grid-cols-3 place-items-center gap-4' role='image-grid'>
+      <div className='mt-8 grid grid-cols-3 place-items-center gap-4' data-testid='image-grid'>
         {/* Replace these image paths with your actual image paths */}
         <img
           src='/photos/ELKN_ParkVisitor_LauraMeeks.jpg'

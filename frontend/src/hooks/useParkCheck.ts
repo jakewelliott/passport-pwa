@@ -1,10 +1,10 @@
+import { useParks } from '@/hooks/queries/useParks';
+import { useLocation } from '@/hooks/useLocation';
+import { dbg, dbgif, sjason } from '@/lib/debug';
+import geoJSONData from '@/lib/mock/geojson.json';
+import type { Geopoint, Park } from '@/lib/mock/types';
 import { booleanPointInPolygon } from '@turf/turf';
 import { useEffect, useState } from 'react';
-import type { Geopoint, Park } from '@/lib/mock/types';
-import { useParks } from '@/hooks/queries/useParks';
-import geoJSONData from '@/lib/mock/geojson.json';
-import { dbg, dbgif, sjason } from '@/lib/debug';
-import { useLocation } from '@/hooks/useLocation';
 
 // import the bounds from the geojson file, get the features and cast them to the correct type
 const bounds = (geoJSONData as GeoJSON.FeatureCollection).features as GeoJSON.Feature<GeoJSON.Polygon>[];
@@ -38,7 +38,7 @@ const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, parks: Park[]): Park |
 
   if (!containingFeature) return undefined;
 
-  return parks.find((park) => park.name.startsWith(containingFeature.properties?.PK_NAME));
+  return parks.find((park) => park.parkName.startsWith(containingFeature.properties?.PK_NAME));
 };
 
 // TODO: add a mutation to update park visits

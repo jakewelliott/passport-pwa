@@ -1,22 +1,23 @@
-import { render, screen, fireEvent } from '@testing-library/react';
 import { EditGeneralNotes } from '@/app/more/general-notes';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
-
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Mock } from 'vitest';
 // Mock dependencies
-jest.mock('react-router-dom', () => ({
-  useNavigate: jest.fn(),
+vi.mock('react-router-dom', () => ({
+  useNavigate: vi.fn(),
 }));
 
-jest.mock('@/lib/a11y', () => ({
-  a11yOnClick: jest.fn((handler) => ({ onClick: handler })),
+vi.mock('@/lib/a11y', () => ({
+  a11yOnClick: vi.fn((handler) => ({ onClick: handler })),
 }));
 
 describe('EditGeneralNotes', () => {
-  const mockNavigate = jest.fn();
+  const mockNavigate = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    (useNavigate as jest.Mock).mockReturnValue(mockNavigate);
+    vi.clearAllMocks();
+    (useNavigate as Mock).mockReturnValue(mockNavigate);
     localStorage.clear();
   });
 
@@ -56,10 +57,10 @@ describe('EditGeneralNotes', () => {
 
   it('handles localStorage errors gracefully', () => {
     // Simulate a localStorage error
-    jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
+    vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
       throw new Error('Quota exceeded');
     });
-    console.error = jest.fn(); // Mock console.error to suppress error logs in test output
+    vi.spyOn(console, 'error').mockImplementation(() => {});
 
     render(<EditGeneralNotes />);
 

@@ -1,8 +1,8 @@
-import Cookies from 'js-cookie';
+import { dbg } from '@/lib/debug';
 import { queryClient } from '@/lib/tanstack-local-storage';
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { dbg } from '@/lib/debug';
 
 /**
  * Logs out the user and redirects to the home page
@@ -11,17 +11,17 @@ import { dbg } from '@/lib/debug';
 export const useLogout = () => {
   const navigate = useNavigate();
   return () => {
-		dbg('AUTH', 'Logging out...');
+    dbg('AUTH', 'Logging out...');
     Cookies.remove('token');
     queryClient.invalidateQueries({
       queryKey: ['user'],
       refetchType: 'all',
     });
     localStorage.removeItem('user');
-		setTimeout(() => {
-			dbg('AUTH', 'Successfully logged out');
-			toast.success('Successfully logged out');
-		}, 1000);
+    setTimeout(() => {
+      dbg('AUTH', 'Successfully logged out');
+      toast.success('Successfully logged out');
+    }, 1000);
     navigate('/');
   };
 };

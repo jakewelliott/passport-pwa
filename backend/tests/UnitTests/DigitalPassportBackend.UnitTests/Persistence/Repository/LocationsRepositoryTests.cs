@@ -127,6 +127,16 @@ public class LocationsRepositoryTests
         Assert.Equal(NewPark, item);
         Assert.Contains(NewPark, _db.Parks);
     }
+    [Fact]
+    public void GetAll_FullList_LocationsPopulatedInDB()
+    {
+        var list = _repo.GetAll();
+        Assert.NotEmpty(list);
+        Assert.Equal(2, list.Count);
+        Assert.Equal(TestData.Parks[0], list[0]);
+        Assert.Equal(TestData.Parks[1], list[1]);
+        _db.AddRange(TestData.Parks);
+    }
 
     private static readonly Park NewPark = new()
     {
