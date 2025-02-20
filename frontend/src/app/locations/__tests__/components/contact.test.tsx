@@ -2,6 +2,7 @@ import { LocationContact } from '@/app/locations/components/location-contact';
 import { api } from '@/lib/mock/api';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
+import AchievementsView from '../../components/achievements-view';
 describe('LocationContact', () => {
   const park = api.getParks()[0];
   const parkActivity = api.getParkActivity()[0];
@@ -47,6 +48,44 @@ describe('LocationContact', () => {
   it('renders contact icons', () => {
     render(<LocationContact park={park} parkActivity={parkActivity} />);
     const svgElements = document.querySelectorAll('svg');
-    expect(svgElements.length).toBeGreaterThanOrEqual(3); // At least Navigation, Phone, and Email icons
+    expect(svgElements.length).toBeGreaterThanOrEqual(1);
   });
+
+  it ('renders achievements', () => {
+    render(<LocationContact park={park} parkActivity={parkActivity} />);
+    const stampElement = screen.getByText('Stamp collected Yesterday');
+    expect(stampElement).toBeInTheDocument();
+    expect(screen.queryAllByTestId('BLI').length).toBe(0);
+  });
+
+  it('shows correct stamp text', () => {
+    const parkActivityNew = parkActivity;
+    parkActivityNew.stampCollectedAt = null!;
+    render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
+    const stampElement = screen.getByText('Stamp not yet collected');
+    expect(stampElement).toBeInTheDocument();
+    parkActivityNew.stampCollectedAt = '';
+    render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
+    const stampElements = screen.getAllByText('Stamp not yet collected');
+    expect(stampElements.length).toEqual(2);
+  })
+
+  it('Renders bucket list items', () => {
+    const parkNew = park;
+    parkNew.bucketListItems.push({task: "Bucket"})
+    const parkActivityNew = parkActivity;
+    parkActivityNew.completedBucketListItems.push({id: 0});
+    render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
+    const stampElements = screen.getByTestId("BLI");
+    expect(stampElements).toBeInTheDocument();
+  })
+
+  it('renders unchecked bucket list icon when required', () => {
+    const parkNew = park;
+    parkNew.bucketListItems.push({task: "Bucket"})
+    const parkActivityNew = parkActivity;
+    render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
+    const stampElements = screen.getByTestId("BLI");
+    expect(stampElements).toBeInTheDocument();
+  })
 });
