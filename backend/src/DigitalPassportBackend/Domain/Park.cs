@@ -31,8 +31,8 @@ public class Park
     public string? youCanFind { get; set; }
     [Column(TypeName="longtext")]
     public string? trails { get; set; }
-    [Column(TypeName="polygon")]
-    public Polygon? boundaries { get; set; }
+    [Column(TypeName="GEOMETRYCOLLECTION")]
+    public GeometryCollection? boundaries { get; set; }
     [Column(TypeName="longtext")]
     public string? accesses { get; set; }
     public required string website { get; set; } = "https://www.ncparks.gov/state-parks";
