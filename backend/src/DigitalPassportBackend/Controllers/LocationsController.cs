@@ -58,6 +58,14 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(_locationsService.UploadGeoJson(file));
     }
 
+    [HttpGet("geo")]
+    public IActionResult GetGeoData()
+    {
+        List<LocationGeoDataResponse> locations = new List<LocationGeoDataResponse>();
+        _locationsService.GetAll().ForEach(x => locations.Add(LocationGeoDataResponse.FromDomain(x)));
+        return Ok(locations);
+    }
+
     public record AddressResponse(string title, string addressLineOne, string? addressLineTwo, string city, string state, int zipcode)
     {
         public static AddressResponse FromDomain(ParkAddress address)
