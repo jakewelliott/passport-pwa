@@ -151,8 +151,8 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<Polygon>("boundaries")
-                        .HasColumnType("polygon");
+                    b.Property<GeometryCollection>("boundaries")
+                        .HasColumnType("GEOMETRYCOLLECTION");
 
                     b.Property<string>("city")
                         .HasMaxLength(255)
@@ -525,10 +525,10 @@ namespace DigitalPassportBackend.Migrations
                         new
                         {
                             id = 1,
-                            createdAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
-                            password = "10000.W8QErvwJ94AvgfYwFpWiVw==.NBzuowM3sOx7dBKmq35kI6UZaZAR3ZLN44ehkZMcN1w=",
+                            createdAt = new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640),
+                            password = "10000.l4pAaHVanTsIOdysP3AQMw==.l8F3RXNya/XPUilNIKPbZ4Jhfi/H2d2qrfRQDInA6WQ=",
                             role = "admin",
-                            updatedAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
+                            updatedAt = new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640),
                             username = "superAdmin"
                         });
                 });
