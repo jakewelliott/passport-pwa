@@ -1,441 +1,445 @@
 ﻿using System;
-
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-
 using NetTopologySuite.Geometries;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DigitalPassportBackend.Migrations
 {
-	/// <inheritdoc />
-	public partial class Initial : Migration
-	{
-		/// <inheritdoc />
-		protected override void Up(MigrationBuilder migrationBuilder)
-		{
-			migrationBuilder.AlterDatabase()
-				.Annotation("MySql:CharSet", "utf8mb4");
+    /// <inheritdoc />
+    public partial class Initial : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AlterDatabase()
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "parks",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					park_abbreviation = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					park_type = table.Column<string>(type: "varchar(255)", nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					park_name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					city = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					coordinates = table.Column<Point>(type: "point", nullable: true),
-					phone = table.Column<long>(type: "bigint", nullable: true),
-					email = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					stamp_image = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					established_year = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					landmark = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					you_can_find = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					trails = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					boundaries = table.Column<GeometryCollection>(type: "geometrycollection", nullable: true),
-					accesses = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					website = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_parks", x => x.id);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "parks",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    park_abbreviation = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    park_type = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    park_name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    city = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    coordinates = table.Column<Point>(type: "point", nullable: true),
+                    phone = table.Column<long>(type: "bigint", nullable: true),
+                    email = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    stamp_image = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    established_year = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    landmark = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    you_can_find = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    trails = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    boundaries = table.Column<GeometryCollection>(type: "geometrycollection", nullable: true),
+                    accesses = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    website = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_parks", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "trails",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					trail_name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					length = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					description = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_trails", x => x.id);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "trails",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    trail_name = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    length = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    description = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_trails", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "users",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					username = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					role = table.Column<string>(type: "varchar(255)", nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_users", x => x.id);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "users",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    username = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    password = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    role = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_users", x => x.id);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "bucket_list_items",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					task = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					park = table.Column<int>(type: "int", nullable: true)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_bucket_list_items", x => x.id);
-					table.ForeignKey(
-						name: "FK_bucket_list_items_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id");
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "bucket_list_items",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    task = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_bucket_list_items", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_bucket_list_items_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id");
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "park_addresses",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					title = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					address_line_one = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					address_line_two = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					city = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					state = table.Column<string>(type: "varchar(255)", nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					zipcode = table.Column<int>(type: "int", nullable: false),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					park = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_park_addresses", x => x.id);
-					table.ForeignKey(
-						name: "FK_park_addresses_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "park_addresses",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    title = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    address_line_one = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    address_line_two = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    city = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    state = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    zipcode = table.Column<int>(type: "int", nullable: false),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_park_addresses", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_park_addresses_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "park_icons",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					icon = table.Column<string>(type: "varchar(255)", nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					park = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_park_icons", x => x.id);
-					table.ForeignKey(
-						name: "FK_park_icons_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "park_icons",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    icon = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_park_icons", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_park_icons_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "park_photos",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					photo = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					alt = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					park = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_park_photos", x => x.id);
-					table.ForeignKey(
-						name: "FK_park_photos_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "park_photos",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    photo = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    alt = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_park_photos", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_park_photos_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "trail_icons",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					icon = table.Column<string>(type: "varchar(255)", nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					trail = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_trail_icons", x => x.id);
-					table.ForeignKey(
-						name: "FK_trail_icons_trails_trail",
-						column: x => x.trail,
-						principalTable: "trails",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "trail_icons",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    icon = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    trail = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_trail_icons", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_trail_icons_trails_trail",
+                        column: x => x.trail,
+                        principalTable: "trails",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "collected_stamps",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					method = table.Column<string>(type: "varchar(255)", nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					location = table.Column<Point>(type: "point", nullable: false),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					user = table.Column<int>(type: "int", nullable: false),
-					park = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_collected_stamps", x => x.id);
-					table.ForeignKey(
-						name: "FK_collected_stamps_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-					table.ForeignKey(
-						name: "FK_collected_stamps_users_user",
-						column: x => x.user,
-						principalTable: "users",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "collected_stamps",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    method = table.Column<string>(type: "varchar(255)", nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    location = table.Column<Point>(type: "point", nullable: false),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    user = table.Column<int>(type: "int", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_collected_stamps", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_collected_stamps_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_collected_stamps_users_user",
+                        column: x => x.user,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "park_visits",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					park = table.Column<int>(type: "int", nullable: false),
-					user = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_park_visits", x => x.id);
-					table.ForeignKey(
-						name: "FK_park_visits_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-					table.ForeignKey(
-						name: "FK_park_visits_users_user",
-						column: x => x.user,
-						principalTable: "users",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "park_visits",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: false),
+                    user = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_park_visits", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_park_visits_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_park_visits_users_user",
+                        column: x => x.user,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "private_notes",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					note = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
-						.Annotation("MySql:CharSet", "utf8mb4"),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					park = table.Column<int>(type: "int", nullable: true),
-					user = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_private_notes", x => x.id);
-					table.ForeignKey(
-						name: "FK_private_notes_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id");
-					table.ForeignKey(
-						name: "FK_private_notes_users_user",
-						column: x => x.user,
-						principalTable: "users",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "private_notes",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    note = table.Column<string>(type: "varchar(255)", maxLength: 255, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: true),
+                    user = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_private_notes", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_private_notes_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id");
+                    table.ForeignKey(
+                        name: "FK_private_notes_users_user",
+                        column: x => x.user,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.CreateTable(
-				name: "completed_bucket_list_items",
-				columns: table => new
-				{
-					id = table.Column<int>(type: "int", nullable: false)
-						.Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-					location = table.Column<Point>(type: "point", nullable: false),
-					created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-					park = table.Column<int>(type: "int", nullable: false),
-					bucket_list_item = table.Column<int>(type: "int", nullable: false),
-					user = table.Column<int>(type: "int", nullable: false)
-				},
-				constraints: table =>
-				{
-					table.PrimaryKey("PK_completed_bucket_list_items", x => x.id);
-					table.ForeignKey(
-						name: "FK_completed_bucket_list_items_bucket_list_items_bucket_list_it~",
-						column: x => x.bucket_list_item,
-						principalTable: "bucket_list_items",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-					table.ForeignKey(
-						name: "FK_completed_bucket_list_items_parks_park",
-						column: x => x.park,
-						principalTable: "parks",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-					table.ForeignKey(
-						name: "FK_completed_bucket_list_items_users_user",
-						column: x => x.user,
-						principalTable: "users",
-						principalColumn: "id",
-						onDelete: ReferentialAction.Cascade);
-				})
-				.Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.CreateTable(
+                name: "completed_bucket_list_items",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    location = table.Column<Point>(type: "point", nullable: false),
+                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    park = table.Column<int>(type: "int", nullable: false),
+                    bucket_list_item = table.Column<int>(type: "int", nullable: false),
+                    user = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_completed_bucket_list_items", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_completed_bucket_list_items_bucket_list_items_bucket_list_it~",
+                        column: x => x.bucket_list_item,
+                        principalTable: "bucket_list_items",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_completed_bucket_list_items_parks_park",
+                        column: x => x.park,
+                        principalTable: "parks",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_completed_bucket_list_items_users_user",
+                        column: x => x.user,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
 
-			migrationBuilder.InsertData(
-				table: "users",
-				columns: new[] { "id", "created_at", "password", "role", "updated_at", "username" },
-				values: new object[] { 1, new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640), "10000.l4pAaHVanTsIOdysP3AQMw==.l8F3RXNya/XPUilNIKPbZ4Jhfi/H2d2qrfRQDInA6WQ=", "admin", new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640), "superAdmin" });
+            migrationBuilder.InsertData(
+                table: "users",
+                columns: new[] { "id", "created_at", "password", "role", "updated_at", "username" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 2, 21, 10, 27, 17, 336, DateTimeKind.Utc).AddTicks(4320), "10000.WnLaO+/0z4EAIFWgEor+Fg==.ftzzXHqpKbJkVZlVxcnN2EPjsVnRSZv9J9yAjUizpLo=", "admin", new DateTime(2025, 2, 21, 10, 27, 17, 336, DateTimeKind.Utc).AddTicks(4310), "superAdmin" },
+                    { 2, new DateTime(2025, 2, 21, 10, 27, 17, 342, DateTimeKind.Utc).AddTicks(8800), "10000.WnLaO+/0z4EAIFWgEor+Fg==.ftzzXHqpKbJkVZlVxcnN2EPjsVnRSZv9J9yAjUizpLo=", "admin", new DateTime(2025, 2, 21, 10, 27, 17, 342, DateTimeKind.Utc).AddTicks(8800), "testUser" }
+                });
 
-			migrationBuilder.CreateIndex(
-				name: "IX_bucket_list_items_park",
-				table: "bucket_list_items",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_bucket_list_items_park",
+                table: "bucket_list_items",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_collected_stamps_park",
-				table: "collected_stamps",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_collected_stamps_park",
+                table: "collected_stamps",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_collected_stamps_user",
-				table: "collected_stamps",
-				column: "user");
+            migrationBuilder.CreateIndex(
+                name: "IX_collected_stamps_user",
+                table: "collected_stamps",
+                column: "user");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_completed_bucket_list_items_bucket_list_item",
-				table: "completed_bucket_list_items",
-				column: "bucket_list_item");
+            migrationBuilder.CreateIndex(
+                name: "IX_completed_bucket_list_items_bucket_list_item",
+                table: "completed_bucket_list_items",
+                column: "bucket_list_item");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_completed_bucket_list_items_park",
-				table: "completed_bucket_list_items",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_completed_bucket_list_items_park",
+                table: "completed_bucket_list_items",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_completed_bucket_list_items_user",
-				table: "completed_bucket_list_items",
-				column: "user");
+            migrationBuilder.CreateIndex(
+                name: "IX_completed_bucket_list_items_user",
+                table: "completed_bucket_list_items",
+                column: "user");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_park_addresses_park",
-				table: "park_addresses",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_park_addresses_park",
+                table: "park_addresses",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_park_icons_park",
-				table: "park_icons",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_park_icons_park",
+                table: "park_icons",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_park_photos_park",
-				table: "park_photos",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_park_photos_park",
+                table: "park_photos",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_park_visits_park",
-				table: "park_visits",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_park_visits_park",
+                table: "park_visits",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_park_visits_user",
-				table: "park_visits",
-				column: "user");
+            migrationBuilder.CreateIndex(
+                name: "IX_park_visits_user",
+                table: "park_visits",
+                column: "user");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_private_notes_park",
-				table: "private_notes",
-				column: "park");
+            migrationBuilder.CreateIndex(
+                name: "IX_private_notes_park",
+                table: "private_notes",
+                column: "park");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_private_notes_user",
-				table: "private_notes",
-				column: "user");
+            migrationBuilder.CreateIndex(
+                name: "IX_private_notes_user",
+                table: "private_notes",
+                column: "user");
 
-			migrationBuilder.CreateIndex(
-				name: "IX_trail_icons_trail",
-				table: "trail_icons",
-				column: "trail");
+            migrationBuilder.CreateIndex(
+                name: "IX_trail_icons_trail",
+                table: "trail_icons",
+                column: "trail");
 
-			migrationBuilder.Sql(@"
+                migrationBuilder.Sql(@"
 INSERT INTO parks (id,park_abbreviation,park_type,park_name,city,coordinates,phone,email,stamp_image,established_year,landmark,you_can_find,trails,boundaries,accesses,website,created_at,updated_at) VALUES
 	 (3,'CHRO','SPA','Chimney Rock State Park','Chimney Rock',ST_GeomFromText('POINT (-82.2485 35.4398)'),8286251823,'chimney.rock@ncparks.gov','CHRO.svg','2005','Chimney Rock, a 315-foot rock that looks like a chimney and has views of Hickory Nut Gorge and Lake Lure','the magnificent peregrine falcon and the white irisette, an endangered herb with small white flowers.','■ 10 trails
 
@@ -1416,46 +1420,46 @@ INSERT INTO trail_icons (id,icon,created_at,updated_at,trail) VALUES
 	 (24,'Paddling','2025-01-01 00:00:00.000000','2025-01-01 00:00:00.000000',13),
 	 (25,'Paddling','2025-01-01 00:00:00.000000','2025-01-01 00:00:00.000000',14);
             ");
-		}
+        }
 
-		/// <inheritdoc />
-		protected override void Down(MigrationBuilder migrationBuilder)
-		{
-			migrationBuilder.DropTable(
-				name: "collected_stamps");
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "collected_stamps");
 
-			migrationBuilder.DropTable(
-				name: "completed_bucket_list_items");
+            migrationBuilder.DropTable(
+                name: "completed_bucket_list_items");
 
-			migrationBuilder.DropTable(
-				name: "park_addresses");
+            migrationBuilder.DropTable(
+                name: "park_addresses");
 
-			migrationBuilder.DropTable(
-				name: "park_icons");
+            migrationBuilder.DropTable(
+                name: "park_icons");
 
-			migrationBuilder.DropTable(
-				name: "park_photos");
+            migrationBuilder.DropTable(
+                name: "park_photos");
 
-			migrationBuilder.DropTable(
-				name: "park_visits");
+            migrationBuilder.DropTable(
+                name: "park_visits");
 
-			migrationBuilder.DropTable(
-				name: "private_notes");
+            migrationBuilder.DropTable(
+                name: "private_notes");
 
-			migrationBuilder.DropTable(
-				name: "trail_icons");
+            migrationBuilder.DropTable(
+                name: "trail_icons");
 
-			migrationBuilder.DropTable(
-				name: "bucket_list_items");
+            migrationBuilder.DropTable(
+                name: "bucket_list_items");
 
-			migrationBuilder.DropTable(
-				name: "users");
+            migrationBuilder.DropTable(
+                name: "users");
 
-			migrationBuilder.DropTable(
-				name: "trails");
+            migrationBuilder.DropTable(
+                name: "trails");
 
-			migrationBuilder.DropTable(
-				name: "parks");
-		}
-	}
+            migrationBuilder.DropTable(
+                name: "parks");
+        }
+    }
 }

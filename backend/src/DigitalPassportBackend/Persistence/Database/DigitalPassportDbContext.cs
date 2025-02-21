@@ -39,7 +39,18 @@ public class DigitalPassportDbContext : DbContext
         modelBuilder.Entity<User>().HasData(new User
         {
             id = 1,
-            username = "superAdmin",
+            username = _configuration["ADMIN_USER"]!,
+            password = hashedAdminPassword,
+            role = UserRole.admin,
+            createdAt = DateTime.UtcNow,
+        });
+
+        var hashedVisitorPassword = new PasswordHasher().HashPassword(_configuration["TEST_PASS"]!);
+
+        modelBuilder.Entity<User>().HasData(new User
+        {
+            id = 2,
+            username = _configuration["TEST_USER"]!,
             password = hashedAdminPassword,
             role = UserRole.admin,
             createdAt = DateTime.UtcNow,
