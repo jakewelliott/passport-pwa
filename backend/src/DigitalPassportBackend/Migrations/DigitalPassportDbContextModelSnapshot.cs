@@ -525,11 +525,20 @@ namespace DigitalPassportBackend.Migrations
                         new
                         {
                             id = 1,
-                            createdAt = new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640),
-                            password = "10000.l4pAaHVanTsIOdysP3AQMw==.l8F3RXNya/XPUilNIKPbZ4Jhfi/H2d2qrfRQDInA6WQ=",
+                            createdAt = new DateTime(2025, 2, 21, 10, 27, 17, 336, DateTimeKind.Utc).AddTicks(4320),
+                            password = "10000.WnLaO+/0z4EAIFWgEor+Fg==.ftzzXHqpKbJkVZlVxcnN2EPjsVnRSZv9J9yAjUizpLo=",
                             role = "admin",
-                            updatedAt = new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640),
+                            updatedAt = new DateTime(2025, 2, 21, 10, 27, 17, 336, DateTimeKind.Utc).AddTicks(4310),
                             username = "superAdmin"
+                        },
+                        new
+                        {
+                            id = 2,
+                            createdAt = new DateTime(2025, 2, 21, 10, 27, 17, 342, DateTimeKind.Utc).AddTicks(8800),
+                            password = "10000.WnLaO+/0z4EAIFWgEor+Fg==.ftzzXHqpKbJkVZlVxcnN2EPjsVnRSZv9J9yAjUizpLo=",
+                            role = "admin",
+                            updatedAt = new DateTime(2025, 2, 21, 10, 27, 17, 342, DateTimeKind.Utc).AddTicks(8800),
+                            username = "testUser"
                         });
                 });
 
