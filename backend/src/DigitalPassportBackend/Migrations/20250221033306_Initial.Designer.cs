@@ -13,7 +13,7 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Migrations
 {
     [DbContext(typeof(DigitalPassportDbContext))]
-    [Migration("20250205003406_Initial")]
+    [Migration("20250221033306_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -154,8 +154,8 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<Polygon>("boundaries")
-                        .HasColumnType("polygon");
+                    b.Property<GeometryCollection>("boundaries")
+                        .HasColumnType("GEOMETRYCOLLECTION");
 
                     b.Property<string>("city")
                         .HasMaxLength(255)
@@ -164,8 +164,9 @@ namespace DigitalPassportBackend.Migrations
                     b.Property<Point>("coordinates")
                         .HasColumnType("point");
 
-                    b.Property<DateTime>("created_at")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime>("createdAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("email")
                         .HasMaxLength(255)
@@ -180,19 +181,22 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("park_abbreviation")
+                    b.Property<string>("parkAbbreviation")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("park_abbreviation");
 
-                    b.Property<string>("park_name")
+                    b.Property<string>("parkName")
                         .IsRequired()
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("park_name");
 
-                    b.Property<string>("park_type")
+                    b.Property<string>("parkType")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("park_type");
 
                     b.Property<long?>("phone")
                         .HasColumnType("bigint");
@@ -206,8 +210,9 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("updated_at")
-                        .HasColumnType("datetime(6)");
+                    b.Property<DateTime>("updatedAt")
+                        .HasColumnType("datetime(6)")
+                        .HasColumnName("updated_at");
 
                     b.Property<string>("website")
                         .IsRequired()
@@ -518,6 +523,17 @@ namespace DigitalPassportBackend.Migrations
                     b.HasKey("id");
 
                     b.ToTable("users");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            createdAt = new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640),
+                            password = "10000.l4pAaHVanTsIOdysP3AQMw==.l8F3RXNya/XPUilNIKPbZ4Jhfi/H2d2qrfRQDInA6WQ=",
+                            role = "admin",
+                            updatedAt = new DateTime(2025, 2, 21, 3, 33, 5, 911, DateTimeKind.Utc).AddTicks(7640),
+                            username = "superAdmin"
+                        });
                 });
 
             modelBuilder.Entity("DigitalPassportBackend.Domain.BucketListItem", b =>
