@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Services;
 using Microsoft.OpenApi.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using DigitalPassportBackend.Errors;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -43,6 +45,17 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         }
         // return 200 ok
         return Ok(parks);
+    }
+
+    [HttpPost("uploadGeoJson")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UploadGeoJson(IFormFile file)
+    {
+        if (file == null || file.ContentType != "application/json")
+        {
+            throw new ServiceException(StatusCodes.Status415UnsupportedMediaType, "You must upload a GeoJson file (ends in .json).");
+        }
+        return Ok(_locationsService.UploadGeoJson(file));
     }
 
     public record AddressResponse(string title, string addressLineOne, string? addressLineTwo, string city, string state, int zipcode)
@@ -159,6 +172,38 @@ public class LocationsController(ILocationsService locationsService) : Controlle
                 iconsArray.ToArray(),
                 bucketListItemsArray.ToArray(),
                 photosArray.ToArray()
+            );
+        }
+
+    };
+
+
+
+
+    public record LocationGeoDataResponse(
+        int id,
+        string abbreviation,
+        string parkName,
+        object coordinates,
+        string? boundaries
+    )
+    {
+        public static LocationGeoDataResponse FromDomain(
+            Park location
+        )
+        {
+            var lonLatObject = new
+            {
+                longitude = location.coordinates == null ? 0 : location.coordinates.X,
+                latitude = location.coordinates == null ? 0 : location.coordinates.Y
+            };
+
+            return new LocationGeoDataResponse(
+                location.id,
+                location.parkAbbreviation,
+                location.parkName,
+                lonLatObject,
+                location.boundaries?.ToString()
             );
         }
 
