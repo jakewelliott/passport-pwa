@@ -54,7 +54,7 @@ public class ParkVisitRepositoryTests
         
         // Assert.
         Assert.Equal(TestData.ParkVisits[2], item);
-        Assert.Equal(2, _db.ParkVisits.Count());
+        Assert.Equal(3, _db.ParkVisits.Count());
         Assert.DoesNotContain(TestData.ParkVisits[2], _db.ParkVisits);
     }
 
@@ -76,7 +76,7 @@ public class ParkVisitRepositoryTests
         var oldVisit = _repo.Update(newVisit);
 
         // Assert.
-        Assert.Equal(3, _db.ParkVisits.Count());
+        Assert.Equal(4, _db.ParkVisits.Count());
         Assert.Equal(TestData.ParkVisits[0], oldVisit);
         Assert.Contains(newVisit, _db.ParkVisits);
     }
@@ -86,14 +86,14 @@ public class ParkVisitRepositoryTests
     {
         // Action and assert.
         Assert.Throws<NotFoundException>(() => _repo.Update(NewVisit));
-        Assert.Equal(3, _db.ParkVisits.Count());
+        Assert.Equal(4, _db.ParkVisits.Count());
     }
 
     [Fact]
     public void Count_ReturnsNumberOfParkVisits()
     {
         // Action and assert.
-        Assert.Equal(3, _repo.Count());
+        Assert.Equal(4, _repo.Count());
     }
 
     [Fact]
@@ -103,7 +103,7 @@ public class ParkVisitRepositoryTests
         var item = _repo.Create(NewVisit);
 
         // Assert.
-        Assert.Equal(4, _db.ParkVisits.Count());
+        Assert.Equal(5, _db.ParkVisits.Count());
         Assert.Equal(NewVisit, item);
         Assert.Contains(NewVisit, _db.ParkVisits);
     }

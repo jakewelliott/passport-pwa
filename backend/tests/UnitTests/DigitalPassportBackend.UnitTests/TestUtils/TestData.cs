@@ -249,6 +249,16 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 park = Parks[0],
                 userId = Users[2].id,
                 user = Users[2]
+            },
+            new()
+            {
+                id = 13,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[1].id,
+                park = Parks[1],
+                userId = Users[3].id,
+                user = Users[3]
             }
         ];
 
