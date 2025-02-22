@@ -25,7 +25,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(_activityService.GetParkActivity(locationId, userId));
     }
 
-    [HttpPost("stamps/collect/{park_abbreviation}")]
+    [HttpPost("stamps/{park_abbreviation}")]
     // [Authorize(Roles = "visitor")]
     public IActionResult CollectStamp(
         string park_abbreviation, 
