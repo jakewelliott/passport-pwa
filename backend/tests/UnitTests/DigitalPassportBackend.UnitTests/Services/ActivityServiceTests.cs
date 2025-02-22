@@ -14,8 +14,10 @@ namespace DigitalPassportBackend.UnitTests.Services
         private readonly Mock<ICollectedStampRepository> _mockCollectedStamps;
         private readonly Mock<IPrivateNoteRepository> _mockPrivateNotes;
         private readonly Mock<IParkVisitRepository> _mockParkVisits;
+        private readonly Mock<ILocationsRepository> _mockLocations;
+        private readonly Mock<IUserRepository> _mockUsers;
 
-        private readonly IActivityService _activities;
+        private readonly ActivityService _activities;
 
         public ActivityServiceTests()
         {
@@ -24,17 +26,21 @@ namespace DigitalPassportBackend.UnitTests.Services
             _mockCollectedStamps = new();
             _mockPrivateNotes = new();
             _mockParkVisits = new();
+            _mockLocations = new();
+            _mockUsers = new();
 
             // Setup activity mocks
             SetupActivity0();
             SetupActivity1();
 
             // Initialize ActivityService
-            _activities = new ActivityService(
+            _activities = new(
                 _mockCompletedBucketList.Object,
                 _mockCollectedStamps.Object,
                 _mockPrivateNotes.Object,
-                _mockParkVisits.Object);
+                _mockParkVisits.Object,
+                _mockLocations.Object,
+                _mockUsers.Object);
         }
 
         [Fact]
@@ -47,7 +53,7 @@ namespace DigitalPassportBackend.UnitTests.Services
             Assert.NotNull(result);
             Assert.Equal(TestData.BucketList[0].id, result.CompletedBucketListItems[0].Id);
             Assert.Equal(TestData.ParkVisits[1].createdAt, result.LastVisited);
-            Assert.Equal(10, result.PrivateNote.Id);
+            Assert.Equal(10, result.PrivateNote!.Id);
             Assert.Equal("this is a note. it has stuff in it.", result.PrivateNote.Note);
             Assert.Null(result.StampCollectedAt);
         }
@@ -66,70 +72,51 @@ namespace DigitalPassportBackend.UnitTests.Services
             Assert.Null(result.StampCollectedAt);
         }
 
-        private ParkActivity GetParkActivity(
-            List<CompletedBucketListItem> bucketListItems, 
-            CollectedStamp? stampCollectedAt,
-            PrivateNote? privateNote,
-            ParkVisit lastVisited
-        )
-        {
-        return new ParkActivity
-            {
-                CompletedBucketListItems = bucketListItems.Select(item => new BucketListItemOverview
-                {
-                    Id = item.bucketListItemId,
-                }).ToList(),
-                StampCollectedAt = stampCollectedAt?.updatedAt,
-                PrivateNote = privateNote == null ? null : new PrivateNoteOverview
-                {
-                    Id = privateNote.id,
-                    Note = privateNote.note
-                },
-                LastVisited = lastVisited?.createdAt
-            };
-        }
-
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
         private void SetupActivity0()
         {
             // get data formatted correctly
-            List<CompletedBucketListItem> bucketList = new List<CompletedBucketListItem>();
-            bucketList.Add(TestData.CompletedBucketListItems[1]);
+            List<CompletedBucketListItem> bucketList =
+            [
+                TestData.CompletedBucketListItems[1]
+            ];
 
-            List<ParkVisit> visited = new List<ParkVisit>();
-            visited.Add(TestData.ParkVisits[0]);
-            visited.Add(TestData.ParkVisits[1]);
+            List<ParkVisit> visited =
+            [
+                TestData.ParkVisits[0],
+                TestData.ParkVisits[1]
+            ];
 
             // setup mocked functions
             _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
                 .Returns(bucketList);
 
             _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
-                .Returns((CollectedStamp)null);
+                .Returns((CollectedStamp?)null);
 
             _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
                 .Returns(TestData.PrivateNotes[0]);
 
             _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
-                .Returns(visited.OrderByDescending(v => v.createdAt).ToList());
+                .Returns([.. visited.OrderByDescending(v => v.createdAt)]);
         }
 
         // Setup User 0, Park 0 - no data
         private void SetupActivity1()
         {
             // get data formatted correctly
-            List<CompletedBucketListItem> bucketList = new List<CompletedBucketListItem>();
-            List<ParkVisit> visited = new List<ParkVisit>();
+            List<CompletedBucketListItem> bucketList = [];
+            List<ParkVisit> visited = [];
 
             // setup mocked functions
             _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
                 .Returns(bucketList);
 
             _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
-                .Returns((CollectedStamp)null);
+                .Returns((CollectedStamp?) null);
 
             _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
-                .Returns((PrivateNote)null);
+                .Returns((PrivateNote?) null);
 
             _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
                 .Returns(visited);
