@@ -1,6 +1,7 @@
 export interface Geopoint {
   latitude: number;
   longitude: number;
+  accuracy: number;
 }
 
 export interface Stamp {
