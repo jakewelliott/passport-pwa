@@ -26,7 +26,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpPost("stamps/{park_abbreviation}")]
-    // [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor")]
     public IActionResult CollectStamp(
         string park_abbreviation, 
         [FromBody] CollectStampRequest request)
