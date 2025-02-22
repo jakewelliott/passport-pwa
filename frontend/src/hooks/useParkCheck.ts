@@ -32,6 +32,7 @@ const castGeopoint = (geopoint: Geopoint): GeoJSON.Feature<GeoJSON.Point> => {
 };
 
 const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, parks: Park[], parksGeo: ParkGeoData[]): Park | undefined => {
+  console.log(parksGeo[0].boundaries);
   parksGeo.forEach(park => {
     for (const geometry of park.boundaries.geometries) {
       if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
