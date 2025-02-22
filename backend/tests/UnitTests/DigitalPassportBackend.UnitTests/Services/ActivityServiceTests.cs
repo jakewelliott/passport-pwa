@@ -32,6 +32,7 @@ namespace DigitalPassportBackend.UnitTests.Services
             // Setup activity mocks
             SetupActivity0();
             SetupActivity1();
+            SetupActivity2();
 
             // Initialize ActivityService
             _activities = new(
@@ -54,7 +55,7 @@ namespace DigitalPassportBackend.UnitTests.Services
             Assert.Equal(TestData.BucketList[0].id, result.CompletedBucketListItems[0].Id);
             Assert.Equal(TestData.ParkVisits[1].createdAt, result.LastVisited);
             Assert.Equal(10, result.PrivateNote!.Id);
-            Assert.Equal("this is a note. it has stuff in it.", result.PrivateNote.Note);
+            Assert.Equal(TestData.PrivateNotes[0].note, result.PrivateNote.Note);
             Assert.Null(result.StampCollectedAt);
         }
 
@@ -76,11 +77,6 @@ namespace DigitalPassportBackend.UnitTests.Services
         private void SetupActivity0()
         {
             // get data formatted correctly
-            List<CompletedBucketListItem> bucketList =
-            [
-                TestData.CompletedBucketListItems[1]
-            ];
-
             List<ParkVisit> visited =
             [
                 TestData.ParkVisits[0],
@@ -88,38 +84,44 @@ namespace DigitalPassportBackend.UnitTests.Services
             ];
 
             // setup mocked functions
-            _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
-                .Returns(bucketList);
-
-            _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
-                .Returns((CollectedStamp?)null);
-
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
-                .Returns(TestData.PrivateNotes[0]);
-
-            _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[1].id))
-                .Returns([.. visited.OrderByDescending(v => v.createdAt)]);
+            SetupActivity(0, 1,
+                [TestData.CompletedBucketListItems[1]],
+                null,
+                TestData.PrivateNotes[0],
+                [.. visited.OrderByDescending(v => v.createdAt)]);
         }
 
         // Setup User 0, Park 0 - no data
         private void SetupActivity1()
         {
-            // get data formatted correctly
-            List<CompletedBucketListItem> bucketList = [];
-            List<ParkVisit> visited = [];
+            SetupActivity(0, 0, [], null, null, []);
+        }
 
-            // setup mocked functions
-            _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
-                .Returns(bucketList);
+        // Setup User 3, Park 1 - Bucket list, stamp collected, no private notes, last visit.
+        private void SetupActivity2()
+        {
+            SetupActivity(1, 3,
+                [TestData.CompletedBucketListItems[2]],
+                TestData.CollectedStamps[1],
+                null,
+                [TestData.ParkVisits[3]]);
+        }
 
-            _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
-                .Returns((CollectedStamp?) null);
-
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
-                .Returns((PrivateNote?) null);
-
-            _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[0].id, TestData.Users[0].id))
-                .Returns(visited);
+        // Helper for setting up activities.
+        private void SetupActivity(int parkId, int userId,
+            List<CompletedBucketListItem> completedBucketListItems,
+            CollectedStamp? collectedStamp,
+            PrivateNote? privateNote,
+            List<ParkVisit> parkVisits)
+        {
+            _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
+                .Returns(completedBucketListItems);
+            _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
+                .Returns(collectedStamp);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
+                .Returns(privateNote);
+            _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
+                .Returns(parkVisits);
         }
     }
 }
