@@ -36,10 +36,12 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             List<CompletedBucketListItem> bucketListItems = new List<CompletedBucketListItem>();
             bucketListItems.Add(TestData.CompletedBucketListItems[1]);
 
-            List<ParkVisit> visited = new List<ParkVisit>();
-            visited.Add(TestData.ParkVisits[0]);
-            visited.Add(TestData.ParkVisits[1]);
-            var lastVisited = visited.OrderByDescending(v => v.createdAt).ToList().FirstOrDefault();
+            List<ParkVisit> visited =
+            [
+                TestData.ParkVisits[0],
+                TestData.ParkVisits[1]
+            ];
+            var lastVisited = visited.OrderByDescending(v => v.createdAt).ToList().First();
 
             var parkActivity = GetParkActivity(bucketListItems, null, TestData.PrivateNotes[0], 
                 lastVisited);
@@ -57,8 +59,8 @@ namespace DigitalPassportBackend.UnitTests.Controllers
 
             Assert.Equal(returnedActivity.CompletedBucketListItems[0].Id, TestData.BucketList[0].id);
             Assert.Null(returnedActivity.StampCollectedAt);
-            Assert.Equal(returnedActivity.PrivateNote.Id, 10);
-            Assert.Equal(returnedActivity.PrivateNote.Note, "this is a note. it has stuff in it.");
+            Assert.Equal(10, returnedActivity.PrivateNote!.Id);
+            Assert.Equal("this is a note. it has stuff in it.", returnedActivity.PrivateNote.Note);
             Assert.Equal(returnedActivity.LastVisited, TestData.ParkVisits[1].createdAt);
         }
 
