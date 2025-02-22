@@ -31,10 +31,7 @@ public class AuthServiceTests
     private void SetupTokenProvider()
     {
         _mockTokenProvider.Setup(tp => tp.Create(It.IsAny<User>()))
-            .Returns((User user) =>
-            {
-                return $"mocked_token_for_{user.username}";
-            });
+            .Returns((User user) => $"mocked_token_for_{user.username}");
     }
 
     [Fact]
@@ -59,10 +56,11 @@ public class AuthServiceTests
     {
         // Arrange
         var userId = 0;
-        _mockUserRepository.Setup(repo => repo.GetById(userId)).Returns((User)null);
+        _mockUserRepository.Setup(repo => repo.GetById(userId))
+            .Throws(new NotFoundException($"User not found with id {userId}"));
 
         // Act & Assert
-        Assert.Throws<NullReferenceException>(() => _authService.GetUserById(userId));
+        Assert.Throws<NotFoundException>(() => _authService.GetUserById(userId));
     }
 
     [Fact]
@@ -116,10 +114,10 @@ public class AuthServiceTests
     public void LoginUser_NullPassword_ThrowsServiceException()
     {
         // Arrange
-        var user = new User { username = "validUser", password = null, role = UserRole.visitor };
+        var user = new User { username = "validUser", password = null!, role = UserRole.visitor };
         var foundUser = new User { username = "validUser", password = "hashedPassword", role = UserRole.visitor };
         _mockUserRepository.Setup(repo => repo.GetByUsername("validUser")).Returns(foundUser);
-        _mockPasswordHasher.Setup(hasher => hasher.VerifyPassword("hashedPassword", null)).Returns(false);
+        _mockPasswordHasher.Setup(hasher => hasher.VerifyPassword("hashedPassword", null!)).Returns(false);
 
         // Act & Assert
         var exception = Assert.Throws<ServiceException>(() => _authService.LoginUser(user));
@@ -143,7 +141,7 @@ public class AuthServiceTests
     public void LoginUser_NullUser_ThrowsNullReferenceException()
     {
         // Act & Assert
-        Assert.Throws<NullReferenceException>(() => _authService.LoginUser(null));
+        Assert.Throws<NullReferenceException>(() => _authService.LoginUser(null!));
     }
 
     [Fact]

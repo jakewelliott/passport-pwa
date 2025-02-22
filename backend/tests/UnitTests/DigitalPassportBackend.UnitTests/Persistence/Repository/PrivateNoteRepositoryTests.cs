@@ -113,7 +113,7 @@ public class PrivateNoteRepositoryTests
     {
         // Arrange
         var userId = TestData.PrivateNotes[0].userId;
-        var locationId = TestData.PrivateNotes[0].park.id;
+        var locationId = TestData.PrivateNotes[0].park!.id;
 
         // Act
         var result = _repo.GetByParkAndUser(locationId, userId);

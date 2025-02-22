@@ -123,8 +123,8 @@ public class ParkVisitRepositoryTests
         var result2 = _repo.GetByParkAndUser(locationId2, userId2);
 
         // Assert
-        Assert.Equal(1, result.Count());
-        Assert.Equal(2, result2.Count());
+        Assert.Single(result);
+        Assert.Equal(2, result2.Count);
 
         Assert.Equal(locationId, result[0].parkId);
         Assert.Equal(userId, result[0].userId);
