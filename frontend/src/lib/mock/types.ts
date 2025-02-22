@@ -33,10 +33,7 @@ export interface LoginResponse {
 export interface Park {
   id: number;
   parkName: string;
-  coordinates: {
-    longitude: number;
-    latitude: number;
-  };
+  coordinates: Geopoint;
   phone: number;
   email: string;
   establishedYear: string;
@@ -75,4 +72,27 @@ export interface Trail {
   trailIcons: string[];
   distance: string;
   description: string;
+}
+
+export interface ParkGeoData {
+  id: number;
+  abbreviation: string;
+  parkName: string;
+  coordinates: Geopoint;
+  boundaries: GeoJSON.GeometryCollection;
+}
+
+export interface CollectStampResponse {
+  id: number;
+  createdAt: string;
+  method: string;
+  parkAbbreviation: string;
+}
+
+export interface CollectStampRequest {
+  latitude: number;
+  longitude: number;
+  inaccuracyRadius: number;
+  method: string;
+  dateTime: Date;
 }
