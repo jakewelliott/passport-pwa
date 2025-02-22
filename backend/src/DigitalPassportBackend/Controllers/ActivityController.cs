@@ -32,7 +32,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         [FromBody] CollectStampRequest request)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(park_abbreviation, request.latitude, request.longitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
+        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(park_abbreviation, request.longitude, request.latitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
     }
 
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
