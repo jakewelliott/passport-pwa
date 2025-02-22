@@ -28,8 +28,8 @@ public class ActivityService(
 
     public CollectedStamp CollectStamp(
         string park_abbreviation,
-        double latitude,
         double longitude,
+        double latitude,
         double inaccuracyRadius,
         string method,
         DateTime? dateTime,
