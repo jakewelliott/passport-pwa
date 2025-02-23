@@ -18,6 +18,9 @@ import StayingSafe from './app/more/staying-safe';
 import { Trails } from './app/more/trails';
 import WelcomeMessage from './app/more/welcome-message';
 import Stamps from './app/stamps';
+import { useEffect, useState } from 'react';
+import { useParkCheck } from './hooks/useParkCheck';
+import CollectStamp from '@/app/stamps/collect-stamp';
 
 const RoleBasedRedirect = () => {
   const { data: user, isLoading } = useUser();
@@ -49,33 +52,60 @@ const AdminRoutes = () => {
 
 const LoggedInRoutes = () => {
   dbg('RENDER', 'LoggedInRoutes');
+  const [showCollectModal, setShowCollectModal] = useState(false);
+  const { park } = useParkCheck();
 
+  useEffect(() => {
+    // Initial check
+    if (park) {
+      toast.success(`You are in ${park.parkName}`);
+      setShowCollectModal(true);
+    }
+
+    // Set up interval for checking every 5 minutes
+    const interval = setInterval(() => {
+      if (park) {
+        toast.success(`You are in ${park.parkName}`);
+        setShowCollectModal(true);
+      }
+    }, 5 * 60 * 1000); // 5 minutes in milliseconds
+
+    // Cleanup interval on unmount
+    return () => clearInterval(interval);
+  }, [park]);
+  
   return (
-    <Routes>
-      {/* Location tab */}
-      <Route path='/locations'>
-        <Route index element={<Locations />} />
-        <Route path=':abbreviation' element={<LocationDetail />} />
-      </Route>
-      {/* Stamps tab */}
-      <Route path='/stamps' element={<Stamps />} />
-      {/* More tab */}
-      <Route path='/more'>
-        <Route index element={<More />} />
-        <Route path='app-info' element={<AppInfo />} />
-        <Route path='icon-legend' element={<IconLegend />} />
-        <Route path='welcome-message' element={<WelcomeMessage />} />
-        <Route path='trails' element={<Trails />} />
-        <Route path='staying-safe' element={<StayingSafe />} />
-        <Route path='hiking-essentials' element={<HikingEssentials />} />
-        <Route path='bucket-list' element={<BucketList />} />
-        <Route path='my-notes'>
-          <Route index element={<MyNotes />} />
-          <Route path='general-notes' element={<EditGeneralNotes />} />
+    <>
+      <Routes>
+        {/* Location tab */}
+        <Route path='/locations'>
+          <Route index element={<Locations />} />
+          <Route path=':abbreviation' element={<LocationDetail />} />
         </Route>
-      </Route>
-      <Route path='*' element={<Navigate to='/locations' replace />} />
-    </Routes>
+        {/* Stamps tab */}
+        <Route path='/stamps' element={<Stamps />} />
+        {/* More tab */}
+        <Route path='/more'>
+          <Route index element={<More />} />
+          <Route path='app-info' element={<AppInfo />} />
+          <Route path='icon-legend' element={<IconLegend />} />
+          <Route path='welcome-message' element={<WelcomeMessage />} />
+          <Route path='trails' element={<Trails />} />
+          <Route path='staying-safe' element={<StayingSafe />} />
+          <Route path='hiking-essentials' element={<HikingEssentials />} />
+          <Route path='bucket-list' element={<BucketList />} />
+          <Route path='my-notes'>
+            <Route index element={<MyNotes />} />
+            <Route path='general-notes' element={<EditGeneralNotes />} />
+          </Route>
+        </Route>
+        <Route path='*' element={<Navigate to='/locations' replace />} />
+      </Routes>
+
+      {showCollectModal && park && (
+        <CollectStamp onClose={() => setShowCollectModal(false)} park={park} />
+      )}
+    </>
   );
 };
 
