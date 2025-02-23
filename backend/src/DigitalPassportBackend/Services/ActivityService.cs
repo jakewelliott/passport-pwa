@@ -85,6 +85,10 @@ public class ActivityService(
 
     public ParkActivity GetParkActivity(int locationId, int userId)
     {
+        // Verify that the location and user exists.
+        _locationsRepository.GetById(locationId);
+        _userRepository.GetById(userId);
+
         var bucketListItems = _completedBucketListItemRepository.GetByParkAndUser(locationId, userId);
         var stampCollectedAt = _collectedStampRepository.GetByParkAndUser(locationId, userId);
         var privateNote = _privateNoteRepository.GetByParkAndUser(locationId, userId);
