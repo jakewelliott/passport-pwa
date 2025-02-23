@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using NetTopologySuite.Geometries;
@@ -10,6 +12,7 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Migrations
 {
     /// <inheritdoc />
+	[ExcludeFromCodeCoverage]
     public partial class Initial : Migration
     {
         /// <inheritdoc />
