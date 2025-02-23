@@ -32,6 +32,7 @@ describe('Stamps', () => {
       location: {
         latitude: 35.7796,
         longitude: -78.6382,
+        accuracy: 0,
       },
     },
     {
@@ -40,6 +41,7 @@ describe('Stamps', () => {
       location: {
         latitude: 35.7796,
         longitude: -78.6382,
+        accuracy: 0,
       },
     },
   ];
