@@ -31,16 +31,20 @@ namespace DigitalPassportBackend.UnitTests.Services
             _mockLocations = new();
             _mockUsers = new();
 
-            // Setup activity mocks.
-            SetupActivity0();
-            SetupActivity1();
-            SetupActivity2();
-
-            // Setup location mocks.
+            // Setup exception mocks.
+            _mockUsers.Setup(s => s.GetById(It.IsAny<int>()))
+                .Throws(new NotFoundException("user not found"));
+            _mockLocations.Setup(s => s.GetByAbbreviation(It.IsAny<string>()))
+                .Throws(new NotFoundException("location not found"));
             _mockLocations.Setup(s => s.GetByAbbreviation("CABE"))
                 .Returns(TestData.Parks[0]);
             _mockLocations.Setup(s => s.GetByAbbreviation("EBII"))
                 .Returns(TestData.Parks[1]);
+
+            // Setup activity mocks.
+            SetupActivity0();
+            SetupActivity1();
+            SetupActivity2();
 
             // Initialize ActivityService.
             _activities = new(
@@ -115,7 +119,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 stamp.location.X, stamp.location.Y, 0.005,
                 stamp.method.GetDisplayName(),
                 stamp.createdAt,
-                stamp.userId);
+                stamp.user.id);
 
             // Assert.
             Assert.Equal(expected, result);
@@ -154,7 +158,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 stamp.location.X, stamp.location.Y, 0.005,
                 stamp.method.GetDisplayName(),
                 null,
-                stamp.userId);
+                stamp.user.id);
 
             // Assert.
             Assert.Equal(expected, result);
@@ -167,7 +171,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 TestData.Parks[1].parkAbbreviation,
                 35.77267838903396, -78.67343795255313, 0.005,
                 "invalid", null,
-                TestData.Users[2].id));
+                TestData.Users[0].id));
 
             Assert.Equal(StatusCodes.Status412PreconditionFailed, e.StatusCode);
             Assert.Equal("Stamp collection method is not valid.", e.ErrorMessage);
@@ -197,6 +201,26 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             Assert.Equal(StatusCodes.Status405MethodNotAllowed, e.StatusCode);
             Assert.Equal("Your location doesn't appear to be at the specified park.", e.ErrorMessage);
+        }
+
+        [Fact]
+        public void CollectStamp_ThrowsNotFoundException_WhenInvalidParkAbbreviation()
+        {
+            Assert.Throws<NotFoundException>(() => _activities.CollectStamp(
+                "INVALID",
+                35.77267838903396, -78.67343795255313, 0.005,
+                StampCollectionMethod.location.GetDisplayName(), null,
+                TestData.Users[0].id));
+        }
+
+        [Fact]
+        public void CollectStamp_ThrowsNotFoundException_WhenInvalidUserId()
+        {
+            Assert.Throws<NotFoundException>(() => _activities.CollectStamp(
+                TestData.Parks[0].parkAbbreviation,
+                35.77267838903396, -78.67343795255313, 0.005,
+                StampCollectionMethod.location.GetDisplayName(), null,
+                9999));
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
@@ -240,6 +264,8 @@ namespace DigitalPassportBackend.UnitTests.Services
             PrivateNote? privateNote,
             List<ParkVisit> parkVisits)
         {
+            _mockUsers.Setup(s => s.GetById(TestData.Users[userId].id))
+                .Returns(TestData.Users[userId]);
             _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(completedBucketListItems);
             _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
