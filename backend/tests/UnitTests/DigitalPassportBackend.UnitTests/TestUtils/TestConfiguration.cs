@@ -1,9 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.FileProviders.Physical;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils;
+[ExcludeFromCodeCoverage]
 public static class TestConfiguration
 {
     public static IConfiguration GetConfiguration()
