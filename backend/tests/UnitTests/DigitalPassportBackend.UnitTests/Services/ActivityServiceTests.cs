@@ -6,6 +6,7 @@ using DigitalPassportBackend.Domain;
 
 using Moq;
 using Microsoft.OpenApi.Extensions;
+using Microsoft.AspNetCore.Http;
 
 namespace DigitalPassportBackend.UnitTests.Services
 {
@@ -92,17 +93,19 @@ namespace DigitalPassportBackend.UnitTests.Services
                 park = TestData.Parks[0],
                 createdAt = DateTime.UtcNow
             };
+
             var expected = new CollectedStamp()
             {
-                location = new(34.04919197876853, -77.90944281388691),
-                method = StampCollectionMethod.location,
-                userId = TestData.Users[1].id,
-                user = TestData.Users[1],
-                parkId = TestData.Parks[0].id,
-                park = TestData.Parks[0],
-                createdAt = DateTime.UtcNow,
-                updatedAt = DateTime.UtcNow
+                location = stamp.location,
+                method = stamp.method,
+                userId = stamp.user.id,
+                user = stamp.user,
+                parkId = stamp.park.id,
+                park = stamp.park,
+                createdAt = stamp.createdAt,
+                updatedAt = stamp.createdAt
             };
+
             _mockCollectedStamps.Setup(s => s.Create(It.IsAny<CollectedStamp>()))
                 .Returns(expected);
 
@@ -116,6 +119,84 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Assert.
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void CollectStamp_ReturnsCollectedStamp_WhenStampCollectedManually_AndStampNotCollected()
+        {
+            // Setup with expected result.
+            var stamp = new CollectedStamp()
+            {
+                location = new(35.77267838903396, -78.67343795255313),
+                method = StampCollectionMethod.manual,
+                user = TestData.Users[0],
+                park = TestData.Parks[1]
+            };
+
+            var expected = new CollectedStamp()
+            {
+                location = stamp.location,
+                method = stamp.method,
+                userId = stamp.user.id,
+                user = stamp.user,
+                parkId = stamp.park.id,
+                park = stamp.park,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow
+            };
+
+            _mockCollectedStamps.Setup(s => s.Create(It.IsAny<CollectedStamp>()))
+                .Returns(expected);
+
+            // Action.
+            var result = _activities.CollectStamp(
+                TestData.Parks[1].parkAbbreviation,
+                stamp.location.X, stamp.location.Y, 0.005,
+                stamp.method.GetDisplayName(),
+                null,
+                stamp.userId);
+
+            // Assert.
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void CollectStamp_ThrowsServiceException_WhenInvalidCollectionMethod()
+        {
+            var e = Assert.Throws<ServiceException>(() => _activities.CollectStamp(
+                TestData.Parks[1].parkAbbreviation,
+                35.77267838903396, -78.67343795255313, 0.005,
+                "invalid", null,
+                TestData.Users[2].id));
+
+            Assert.Equal(StatusCodes.Status412PreconditionFailed, e.StatusCode);
+            Assert.Equal("Stamp collection method is not valid.", e.ErrorMessage);
+        }
+
+        [Fact]
+        public void CollectStamp_ThrowsServiceException_WhenAlreadyCollected()
+        {
+            var e = Assert.Throws<ServiceException>(() => _activities.CollectStamp(
+                TestData.Parks[1].parkAbbreviation,
+                35.77267838903396, -78.67343795255313, 0.005,
+                StampCollectionMethod.location.GetDisplayName(), null,
+                TestData.Users[3].id));
+
+            Assert.Equal(StatusCodes.Status409Conflict, e.StatusCode);
+            Assert.Equal("Stamp already collected for this park.", e.ErrorMessage);
+        }
+
+        [Fact]
+        public void CollectStamp_ThrowsServiceException_WhenInvalidLocation()
+        {
+            var e = Assert.Throws<ServiceException>(() => _activities.CollectStamp(
+                TestData.Parks[0].parkAbbreviation,
+                35.77267838903396, -78.67343795255313, 0.005,
+                StampCollectionMethod.location.GetDisplayName(), null,
+                TestData.Users[0].id));
+
+            Assert.Equal(StatusCodes.Status405MethodNotAllowed, e.StatusCode);
+            Assert.Equal("Your location doesn't appear to be at the specified park.", e.ErrorMessage);
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
