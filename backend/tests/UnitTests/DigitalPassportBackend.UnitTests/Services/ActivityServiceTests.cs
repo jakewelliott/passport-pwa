@@ -5,6 +5,7 @@ using DigitalPassportBackend.UnitTests.TestUtils;
 using DigitalPassportBackend.Domain;
 
 using Moq;
+using Microsoft.OpenApi.Extensions;
 
 namespace DigitalPassportBackend.UnitTests.Services
 {
@@ -21,7 +22,7 @@ namespace DigitalPassportBackend.UnitTests.Services
 
         public ActivityServiceTests()
         {
-            // Initialize mocked repositories
+            // Initialize mocked repositories.
             _mockCompletedBucketList = new();
             _mockCollectedStamps = new();
             _mockPrivateNotes = new();
@@ -29,12 +30,18 @@ namespace DigitalPassportBackend.UnitTests.Services
             _mockLocations = new();
             _mockUsers = new();
 
-            // Setup activity mocks
+            // Setup activity mocks.
             SetupActivity0();
             SetupActivity1();
             SetupActivity2();
 
-            // Initialize ActivityService
+            // Setup location mocks.
+            _mockLocations.Setup(s => s.GetByAbbreviation("CABE"))
+                .Returns(TestData.Parks[0]);
+            _mockLocations.Setup(s => s.GetByAbbreviation("EBII"))
+                .Returns(TestData.Parks[1]);
+
+            // Initialize ActivityService.
             _activities = new(
                 _mockCompletedBucketList.Object,
                 _mockCollectedStamps.Object,
@@ -71,6 +78,44 @@ namespace DigitalPassportBackend.UnitTests.Services
             Assert.Null(result.LastVisited);
             Assert.Null(result.PrivateNote);
             Assert.Null(result.StampCollectedAt);
+        }
+
+        [Fact]
+        public void CollectStamp_ReturnsCollectedStamp_WhenStampCollectedByLocation_AndStampNotCollected()
+        {
+            // Setup with expected result.
+            var stamp = new CollectedStamp()
+            {
+                location = new(34.04919197876853, -77.90944281388691),
+                method = StampCollectionMethod.location,
+                user = TestData.Users[1],
+                park = TestData.Parks[0],
+                createdAt = DateTime.UtcNow
+            };
+            var expected = new CollectedStamp()
+            {
+                location = new(34.04919197876853, -77.90944281388691),
+                method = StampCollectionMethod.location,
+                userId = TestData.Users[1].id,
+                user = TestData.Users[1],
+                parkId = TestData.Parks[0].id,
+                park = TestData.Parks[0],
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow
+            };
+            _mockCollectedStamps.Setup(s => s.Create(It.IsAny<CollectedStamp>()))
+                .Returns(expected);
+
+            // Action.
+            var result = _activities.CollectStamp(
+                TestData.Parks[0].parkAbbreviation,
+                stamp.location.X, stamp.location.Y, 0.005,
+                stamp.method.GetDisplayName(),
+                stamp.createdAt,
+                stamp.userId);
+
+            // Assert.
+            Assert.Equal(expected, result);
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
