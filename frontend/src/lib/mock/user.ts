@@ -1,7 +1,6 @@
 import dummyMapper from '@/lib/dummy-mapper';
-import type { Stamp, UserParkVisit, UserProfile } from '@/lib/mock/types';
+import type { UserParkVisit, UserProfile } from '@/lib/mock/types';
 import userParkVisitsJson from '@/lib/mock/user_park_visits.json';
-import userStampsJson from '@/lib/mock/user_stamps.json';
 
 const dummyVisit: UserParkVisit = {
   code: 'CABE',
@@ -15,16 +14,5 @@ const dummyProfile: UserProfile = {
   role: 'visitor',
   id: 0,
 };
-
-const dummyStamp: Stamp = {
-  code: 'CABE',
-  timestamp: new Date(),
-  location: {
-    latitude: 0,
-    longitude: 0,
-  },
-};
-
-export const userStamps = userStampsJson.map(dummyMapper(dummyStamp));
 
 export const userProfile = dummyProfile;

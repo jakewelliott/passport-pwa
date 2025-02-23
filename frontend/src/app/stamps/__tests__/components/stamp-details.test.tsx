@@ -27,7 +27,7 @@ describe('StampDetails', () => {
   const mockPark: Park = {
     id: 1,
     parkName: 'ENRI',
-    coordinates: { latitude: 0, longitude: 0 },
+    coordinates: { latitude: 0, longitude: 0, accuracy: 0 },
     phone: 0,
     email: '',
     establishedYear: '',
@@ -45,7 +45,7 @@ describe('StampDetails', () => {
   const mockStamp: Stamp = {
     code: 'ENRI',
     timestamp: new Date('2024-01-01T12:00:00Z'),
-    location: { latitude: 0, longitude: 0 },
+    location: { latitude: 0, longitude: 0, accuracy: 0 },
   };
   const mockHandleClose = vi.fn();
 

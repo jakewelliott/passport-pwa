@@ -7,7 +7,7 @@ describe('CollectStamp', () => {
   const mockPark = parks[0];
 
   beforeEach(() => {
-    render(<CollectStamp />);
+    render(<CollectStamp park={mockPark} onClose={() => {}} />);
   });
 
   it('renders the congratulatory header', () => {

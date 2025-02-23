@@ -22,7 +22,7 @@ const park: Park = {
       addressLineTwo: '',
     },
   ],
-  coordinates: { latitude: 35.2023, longitude: -78.9761 },
+  coordinates: { latitude: 35.2023, longitude: -78.9761, accuracy: 0 },
   phone: 5555555555,
   email: 'email@ncparks.gov',
   website: 'ncparks.gov',

@@ -1,6 +1,6 @@
 import park_activity from './park_activity';
 import parks from './parks';
-import { userProfile, userStamps } from './user';
+import { userProfile } from './user';
 
 import type { Geopoint, Park } from './types';
 
@@ -18,10 +18,6 @@ export const api = {
   getUserByID: (userId: number) => {
     console.log(userId);
     return userProfile;
-  },
-  getUserStampsByID: (userId: number) => {
-    console.log(userId);
-    return userStamps;
   },
 
   // Stamps
