@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+
 using DigitalPassportBackend.Domain;
 
 using Microsoft.OpenApi.Extensions;
@@ -7,6 +9,7 @@ using NetTopologySuite.Geometries;
 using static DigitalPassportBackend.Controllers.LocationsController;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils;
+[ExcludeFromCodeCoverage]
 public static class Response
 {
     public static bool Equal(Park park, LocationResponse resp)
