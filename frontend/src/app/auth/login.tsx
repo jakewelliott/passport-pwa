@@ -7,8 +7,6 @@ import { useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { SuperAdminButton } from './components/superadmin-button';
-import { useCollectStamp } from '@/hooks/queries/useStamps';
-import { useLocation } from '@/hooks/useLocation';
 
 const getInputStyles = (isError: boolean) =>
   cn(
@@ -26,8 +24,6 @@ export default function LoginPage() {
   const formRef = useRef<HTMLFormElement>(null);
   const loginMutation = useLogin();
   const registerMutation = useRegister();
-  const collectStampMutation = useCollectStamp('WIUM');
-  const location = useLocation();
 
   const validateFields = (formData: FormData) => {
     const username = formData.get('username') as string;
@@ -69,15 +65,6 @@ export default function LoginPage() {
       },
     );
   };
-  const handleCollectStamp = () => async () => {
-    collectStampMutation.mutate({
-      latitude: location.geopoint?.latitude || 0,
-      longitude: location.geopoint?.longitude || 0,
-      inaccuracyRadius: 100,
-      method: "location",
-      dateTime: new Date(),
-    });
-  };
 
   return (
     <div
@@ -107,7 +94,6 @@ export default function LoginPage() {
           <RoundedButton type='submit' title='Login' color='secondary_orange' onClick={handleAuth(true)} />
         </div>
         <SuperAdminButton />
-        <RoundedButton title='Collect Stamp' onClick={handleCollectStamp()} />
       </form>
     </div>
   );

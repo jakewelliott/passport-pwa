@@ -44,12 +44,8 @@ const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, accuracy: number, park
             if (booleanPointInPolygon(point, geometry)) {
               return parks.find(park => park.abbreviation === parkGeo.abbreviation);
             }
-            // Convert accuracy radius from meters to degrees
-            // At NC's latitude (~35°N), 1° is approximately 87,000 meters
-            const metersPerDegree = 87000;
-            const radiusInDegrees = accuracy / metersPerDegree;
             // Create buffered point using accuracy radius
-            const bufferedPoint = buffer(point, radiusInDegrees, {units: 'degrees'}) as GeoJSON.Feature<GeoJSON.Polygon>;
+            const bufferedPoint = buffer(point, accuracy, {units: 'degrees'}) as GeoJSON.Feature<GeoJSON.Polygon>;
             
             // Check if either the point is in the polygon or the buffer intersects it
             if (booleanPointInPolygon(point, geometry) || booleanIntersects(bufferedPoint, geometry)) {
