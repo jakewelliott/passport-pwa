@@ -1,20 +1,19 @@
-import { api } from '@/lib/mock/api';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useUser } from './useUser';
 import { CollectStampRequest } from '@/lib/mock/types';
-import { API_STAMPS_URL, fetchPost } from '@/lib/fetch';
+import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import { dbg } from '@/lib/debug';
 import { toast } from 'react-toastify';
+import { CollectedStamp } from '@/lib/mock/types';
 /**
  * Gets all of the local user's stamps, empty array if user is not loaded
  * @returns The stamps for the user
  */
 export const useStamps = () => {
-  // re-use our query hooks whenever possible
   const { data: user } = useUser();
-  return useQuery({
+  return useQuery<CollectedStamp[]>({
     queryKey: ['stamps', user?.id],
-    queryFn: () => api.getUserStampsByID(user?.id || 0),
+    queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL)
   });
 };
 
@@ -26,7 +25,7 @@ export const useStamps = () => {
 export const useStamp = (code: string) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
-  return { data: data?.find((stamp) => stamp.code === code) || null, isLoading };
+  return { data: data?.find((stamp) => stamp.parkAbbreviation === code) || null, isLoading };
 };
 
 export const useCollectStamp = (parkAbbreviation: string) => {

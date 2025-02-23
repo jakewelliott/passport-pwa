@@ -10,6 +10,13 @@ export interface Stamp {
   location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
 }
 
+export interface CollectedStamp {
+  id: number;
+  createdAt: Date;
+  method: string;
+  parkAbbreviation: string;
+}
+
 export interface UserParkVisit {
   code: string;
   timestamp: Date;

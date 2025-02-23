@@ -1,7 +1,7 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
 import DateHelper from '@/lib/date-helper';
-import type { Stamp } from '@/lib/mock/types';
+import type { CollectedStamp } from '@/lib/mock/types';
 import { FaTimes } from 'react-icons/fa';
 
 interface StampsDetailProps {
@@ -9,15 +9,15 @@ interface StampsDetailProps {
   handleClose: () => void;
 }
 
-const CollectedOn = ({ stamp }: { stamp: Stamp | null }) =>
+const CollectedOn = ({ stamp }: { stamp: CollectedStamp | null }) =>
   stamp == null ? (
     <p className='font-medium text-amber-600'>Stamp not yet collected</p>
   ) : (
-    <p className='font-medium'>Stamp collected on {DateHelper.stringify(stamp.timestamp)}</p>
+    <p className='font-medium'>Stamp collected on {DateHelper.stringify(stamp.createdAt)}</p>
   );
 
-const CollectedManually = ({ stamp }: { stamp: Stamp | null }) =>
-  stamp == null ? null : stamp.location !== null ? null : (
+const CollectedManually = ({ stamp }: { stamp: CollectedStamp | null }) =>
+  stamp == null ? null : stamp.method !== null ? null : (
     <p className='font-medium text-amber-600'>Stamp collected manually</p>
   );
 
