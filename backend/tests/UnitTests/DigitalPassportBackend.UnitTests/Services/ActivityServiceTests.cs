@@ -36,10 +36,29 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Throws(new NotFoundException("user not found"));
             _mockLocations.Setup(s => s.GetByAbbreviation(It.IsAny<string>()))
                 .Throws(new NotFoundException("location not found"));
+            _mockLocations.Setup(s => s.GetById(It.IsAny<int>()))
+                .Throws(new NotFoundException("location not found"));
             _mockLocations.Setup(s => s.GetByAbbreviation("CABE"))
                 .Returns(TestData.Parks[0]);
             _mockLocations.Setup(s => s.GetByAbbreviation("EBII"))
                 .Returns(TestData.Parks[1]);
+
+            // Setup GetByParkAndUser default mocks.
+            _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns([]);
+            _mockCollectedStamps.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns((CollectedStamp) null!);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns((PrivateNote) null!);
+            _mockParkVisits.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns([]);
+
+            // Setup location mocks.
+            foreach (var park in TestData.Parks)
+            {
+                _mockLocations.Setup(s => s.GetById(park.id))
+                    .Returns(park);
+            }
 
             // Setup activity mocks.
             SetupActivity0();
@@ -54,35 +73,6 @@ namespace DigitalPassportBackend.UnitTests.Services
                 _mockParkVisits.Object,
                 _mockLocations.Object,
                 _mockUsers.Object);
-        }
-
-        [Fact]
-        public void GetParkActivity_ReturnsParkActivity_IDsValidActivitiesExist()
-        {   
-            // Action
-            var result = _activities.GetParkActivity(TestData.Parks[0].id, TestData.Users[1].id);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Equal(TestData.BucketList[0].id, result.CompletedBucketListItems[0].Id);
-            Assert.Equal(TestData.ParkVisits[1].createdAt, result.LastVisited);
-            Assert.Equal(10, result.PrivateNote!.Id);
-            Assert.Equal(TestData.PrivateNotes[0].note, result.PrivateNote.Note);
-            Assert.Null(result.StampCollectedAt);
-        }
-
-        [Fact]
-        public void GetParkActivity_ReturnsEmptyParkActivity_IDsValidActivitiesNonexistent()
-        {   
-            // Action
-            var result = _activities.GetParkActivity(TestData.Parks[0].id, TestData.Users[0].id);
-
-            // Assert
-            Assert.NotNull(result);
-            Assert.Empty(result.CompletedBucketListItems);
-            Assert.Null(result.LastVisited);
-            Assert.Null(result.PrivateNote);
-            Assert.Null(result.StampCollectedAt);
         }
 
         [Fact]
@@ -214,13 +204,56 @@ namespace DigitalPassportBackend.UnitTests.Services
         }
 
         [Fact]
-        public void CollectStamp_ThrowsNotFoundException_WhenInvalidUserId()
+        public void CollectStamp_ThrowsNotFoundException_WhenInvalidUser()
         {
             Assert.Throws<NotFoundException>(() => _activities.CollectStamp(
-                TestData.Parks[0].parkAbbreviation,
+                "manual",
                 35.77267838903396, -78.67343795255313, 0.005,
                 StampCollectionMethod.location.GetDisplayName(), null,
                 9999));
+        }
+
+        [Fact]
+        public void GetParkActivity_ReturnsParkActivity_IDsValidActivitiesExist()
+        {   
+            // Action
+            var result = _activities.GetParkActivity(TestData.Parks[0].id, TestData.Users[1].id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(TestData.BucketList[0].id, result.CompletedBucketListItems[0].Id);
+            Assert.Equal(TestData.ParkVisits[1].createdAt, result.LastVisited);
+            Assert.Equal(10, result.PrivateNote!.Id);
+            Assert.Equal(TestData.PrivateNotes[0].note, result.PrivateNote.Note);
+            Assert.Null(result.StampCollectedAt);
+        }
+
+        [Fact]
+        public void GetParkActivity_ReturnsEmptyParkActivity_IDsValidActivitiesNonexistent()
+        {   
+            // Action
+            var result = _activities.GetParkActivity(TestData.Parks[0].id, TestData.Users[0].id);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Empty(result.CompletedBucketListItems);
+            Assert.Null(result.LastVisited);
+            Assert.Null(result.PrivateNote);
+            Assert.Null(result.StampCollectedAt);
+        }
+
+        [Fact]
+        public void GetParkActivity_ThrowsNotFoundException_WhenLocationDNE()
+        {
+            // Action and assert.
+            Assert.Throws<NotFoundException>(() => _activities.GetParkActivity(5, TestData.Users[0].id));
+        }
+
+        [Fact]
+        public void GetParkActivity_ThrowsNotFoundException_WhenUserDNE()
+        {
+            // Action and assert.
+            Assert.Throws<NotFoundException>(() => _activities.GetParkActivity(TestData.Parks[0].id, 9999));
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
