@@ -2,8 +2,9 @@ import { useParks, useParksGeo } from '@/hooks/queries/useParks';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg, dbgif, sjason } from '@/lib/debug';
 import type { Geopoint, Park, ParkGeoData } from '@/lib/mock/types';
-import { booleanPointInPolygon } from '@turf/turf';
+import { booleanIntersects, booleanPointInPolygon, buffer } from '@turf/turf';
 import { useEffect, useState } from 'react';
+import wkt from 'wellknown';
 
 // import the bounds from the geojson file, get the features and cast them to the correct type
 
@@ -31,17 +32,36 @@ const castGeopoint = (geopoint: Geopoint): GeoJSON.Feature<GeoJSON.Point> => {
   };
 };
 
-const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, parks: Park[], parksGeo: ParkGeoData[]): Park | undefined => {
-  console.log(parksGeo[0].boundaries);
-  parksGeo.forEach(park => {
-    for (const geometry of park.boundaries.geometries) {
-      if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
-        if (booleanPointInPolygon(point, geometry)) {
-          return parks.find((fullPark) => fullPark.abbreviation === park.abbreviation);
+const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, accuracy: number, parks: Park[], parksGeo: ParkGeoData[]): Park | undefined => {
+  for (const parkGeo of parksGeo) {
+    try {
+
+      const boundaries = wkt.parse(parkGeo.boundaries || "");
+      if (boundaries?.type === 'GeometryCollection') {
+        for (const geometry of boundaries!.geometries) {
+          if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+            // If point is within polygon, find and return matching park
+            if (booleanPointInPolygon(point, geometry)) {
+              return parks.find(park => park.abbreviation === parkGeo.abbreviation);
+            }
+            // Convert accuracy radius from meters to degrees
+            // At NC's latitude (~35°N), 1° is approximately 87,000 meters
+            const metersPerDegree = 87000;
+            const radiusInDegrees = accuracy / metersPerDegree;
+            // Create buffered point using accuracy radius
+            const bufferedPoint = buffer(point, radiusInDegrees, {units: 'degrees'}) as GeoJSON.Feature<GeoJSON.Polygon>;
+            
+            // Check if either the point is in the polygon or the buffer intersects it
+            if (booleanPointInPolygon(point, geometry) || booleanIntersects(bufferedPoint, geometry)) {
+              return parks.find(park => park.abbreviation === parkGeo.abbreviation);
+            }
+          }
         }
       }
+    } catch (error) {
+      console.error(`Failed to parse boundaries for park ${parkGeo.abbreviation}:`, error);
     }
-  });
+  }
   return undefined;
 };
 
@@ -64,7 +84,7 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
     }
 
     const point = castGeopoint(geopoint);
-    const park = parkCheck(point, parks, parksGeo);
+    const park = parkCheck(point, geopoint.accuracy, parks, parksGeo);
     dbgif(!park, 'ERROR', 'useParkCheck', 'park not found');
 
     setCurrentPark(park);

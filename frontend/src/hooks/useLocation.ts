@@ -40,7 +40,7 @@ export const useLocation = (spoof?: Geopoint) => {
           geopoint: {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-            accuracy: position.coords.accuracy / 111320,
+            accuracy: position.coords.accuracy,
           },
           error: null,
           isLoading: false,

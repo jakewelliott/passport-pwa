@@ -80,7 +80,7 @@ export interface ParkGeoData {
   abbreviation: string;
   parkName: string;
   coordinates: Geopoint;
-  boundaries: GeoJSON.GeometryCollection;
+  boundaries: string;
 }
 
 export interface CollectStampResponse {
