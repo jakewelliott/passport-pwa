@@ -73,6 +73,15 @@ public class ActivityService(
         }
     }
 
+    public List<CollectedStamp> GetCollectedStamps(int userId) {
+        var stamps = _collectedStampRepository.GetByUser(userId);
+        foreach (var stamp in stamps)
+        {
+            stamp.park = _locationsRepository.GetById(stamp.parkId);
+        }
+        return _collectedStampRepository.GetByUser(userId);
+    }
+
 
     public ParkActivity GetParkActivity(int locationId, int userId)
     {

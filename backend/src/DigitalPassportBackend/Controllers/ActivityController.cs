@@ -25,6 +25,14 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(_activityService.GetParkActivity(locationId, userId));
     }
 
+    [HttpGet("stamps/collected")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult GetCollectedStamps()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(_activityService.GetCollectedStamps(userId).Select(CollectedStampResponse.FromDomain).ToList());
+    }
+
     [HttpPost("stamps/{park_abbreviation}")]
     [Authorize(Roles = "visitor")]
     public IActionResult CollectStamp(
@@ -41,6 +49,18 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         {
             return new CollectStampResponse(
                 stamp.id,
+                stamp.createdAt,
+                stamp.method.GetDisplayName(),
+                stamp.park.parkAbbreviation
+            );
+        }
+    }
+
+    public record CollectedStampResponse(DateTime createdAt, string method, string parkAbbreviation)
+    {
+        public static CollectedStampResponse FromDomain(CollectedStamp stamp)
+        {
+            return new CollectedStampResponse(
                 stamp.createdAt,
                 stamp.method.GetDisplayName(),
                 stamp.park.parkAbbreviation
