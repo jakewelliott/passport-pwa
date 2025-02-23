@@ -15,6 +15,7 @@ export const API_AUTH_REGISTER_URL = `${API_AUTH_URL}/register/`;
 // user data
 export const API_USER_URL = `${API_URL}/user`;
 export const API_STAMPS_URL = `${API_URL}/activity/stamps`;
+export const API_COLLECTED_STAMPS_URL = `${API_URL}/activity/stamps/collected`;
 export const API_ACTIVITY_URL = `${API_URL}/activity/park`;
 
 // public data
