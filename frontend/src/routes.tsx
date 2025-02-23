@@ -21,6 +21,11 @@ import Stamps from './app/stamps';
 import { useEffect, useState } from 'react';
 import { useParkCheck } from './hooks/useParkCheck';
 import CollectStamp from '@/app/stamps/collect-stamp';
+import { useStamps } from './hooks/queries/useStamps';
+import { CollectedStamp } from './lib/mock/types';
+
+const isCollected = (code: string, stamps: CollectedStamp[]) =>
+  stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
 
 const RoleBasedRedirect = () => {
   const { data: user, isLoading } = useUser();
@@ -54,18 +59,16 @@ const LoggedInRoutes = () => {
   dbg('RENDER', 'LoggedInRoutes');
   const [showCollectModal, setShowCollectModal] = useState(false);
   const { park } = useParkCheck();
-
+  const { data: stamps } = useStamps();
   useEffect(() => {
     // Initial check
-    if (park) {
-      toast.success(`You are in ${park.parkName}`);
+    if (park && !isCollected(park.abbreviation, stamps ?? [])) {
       setShowCollectModal(true);
     }
 
     // Set up interval for checking every 5 minutes
     const interval = setInterval(() => {
-      if (park) {
-        toast.success(`You are in ${park.parkName}`);
+      if (park && !isCollected(park.abbreviation, stamps ?? [])) {
         setShowCollectModal(true);
       }
     }, 5 * 60 * 1000); // 5 minutes in milliseconds
