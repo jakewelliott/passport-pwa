@@ -1,9 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 using DigitalPassportBackend.Domain;
 
 using NetTopologySuite.Geometries;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils
 {
+    [ExcludeFromCodeCoverage]
     public static class TestData
     {
         public static readonly List<Park> Parks =
