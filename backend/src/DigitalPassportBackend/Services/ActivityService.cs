@@ -56,14 +56,7 @@ public class ActivityService(
             var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
             if (park != null && park.boundaries!.Intersects(locationWithInaccuracy))
             {
-                var collectedStamp = new CollectedStamp()
-                {
-                    location = userLocation,
-                    method = methodEnum,
-                    user = _userRepository.GetById(userId),
-                    park = park,
-                    createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
-                };
+                var collectedStamp = CreateStamp(userLocation, methodEnum, _userRepository.GetById(userId), park, dateTime);
                 return _collectedStampRepository.Create(collectedStamp);
             }
             else
@@ -73,14 +66,7 @@ public class ActivityService(
         }
         else
         {
-            var collectedStamp = new CollectedStamp()
-            {
-                location = userLocation,
-                method = methodEnum,
-                user = _userRepository.GetById(userId),
-                park = park,
-                createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
-            };
+            var collectedStamp = CreateStamp(userLocation, methodEnum, _userRepository.GetById(userId), park, dateTime);
             return _collectedStampRepository.Create(collectedStamp);
         }
     }
@@ -109,4 +95,20 @@ public class ActivityService(
         };
     }
 
+    private static CollectedStamp CreateStamp(
+        Point location,
+        StampCollectionMethod method,
+        User user,
+        Park park,
+        DateTime? dateTime)
+    {
+        return new CollectedStamp()
+            {
+                location = location,
+                method = method,
+                user = user,
+                park = park,
+                createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
+            };
+    }
 }
