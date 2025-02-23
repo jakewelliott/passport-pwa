@@ -43,11 +43,13 @@ namespace DigitalPassportBackend.UnitTests.Services
             _mockLocations.Setup(s => s.GetByAbbreviation("EBII"))
                 .Returns(TestData.Parks[1]);
 
-            // Setup GetByParkAndUser default mocks.
+            // Setup default mocks.
             _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns([]);
             _mockCollectedStamps.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns((CollectedStamp) null!);
+            _mockCollectedStamps.Setup(s => s.GetByUser(It.IsAny<int>()))
+                .Returns([]);
             _mockPrivateNotes.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns((PrivateNote) null!);
             _mockParkVisits.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
@@ -214,6 +216,31 @@ namespace DigitalPassportBackend.UnitTests.Services
         }
 
         [Fact]
+        public void GetCollectedStamps_ReturnsPopulatedList_WhenValidAndHasStamps()
+        {
+            var result = _activities.GetCollectedStamps(TestData.Users[3].id);
+
+            Assert.Single(result);
+            Assert.Contains(TestData.CollectedStamps[1], result);
+        }
+
+        [Fact]
+        public void GetCollectedStamps_ReturnsEmptyList_WhenValidAndHasNoStamps()
+        {
+            var result = _activities.GetCollectedStamps(TestData.Users[0].id);
+
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetCollectedStamps_ReturnsEmptyList_WhenInvalidUserId()
+        {
+            var result = _activities.GetCollectedStamps(9999);
+
+            Assert.Empty(result);
+        }
+
+        [Fact]
         public void GetParkActivity_ReturnsParkActivity_IDsValidActivitiesExist()
         {   
             // Action
@@ -290,6 +317,9 @@ namespace DigitalPassportBackend.UnitTests.Services
                 [TestData.ParkVisits[3]]);
         }
 
+        // Helper for mocking CollectedStampRepository.GetByUser(userId)
+        private readonly Dictionary<int, List<CollectedStamp>> _stampDict = [];
+
         // Helper for setting up activities.
         private void SetupActivity(int parkId, int userId,
             List<CompletedBucketListItem> completedBucketListItems,
@@ -297,12 +327,23 @@ namespace DigitalPassportBackend.UnitTests.Services
             PrivateNote? privateNote,
             List<ParkVisit> parkVisits)
         {
+            if (!_stampDict.ContainsKey(TestData.Users[userId].id))
+            {
+                _stampDict.Add(TestData.Users[userId].id, new());
+            }
+            if (collectedStamp is not null)
+            {
+                _stampDict[TestData.Users[userId].id].Add(collectedStamp);
+            }
+
             _mockUsers.Setup(s => s.GetById(TestData.Users[userId].id))
                 .Returns(TestData.Users[userId]);
             _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(completedBucketListItems);
             _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(collectedStamp);
+            _mockCollectedStamps.Setup(s => s.GetByUser(TestData.Users[userId].id))
+                .Returns(_stampDict[TestData.Users[userId].id]);
             _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(privateNote);
             _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
