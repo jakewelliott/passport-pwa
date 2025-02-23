@@ -36,14 +36,16 @@ public class ActivityService(
         int userId)
     {
         // validation checks
+        // valid user
+        _userRepository.GetById(userId);
         // valid collection method
         StampCollectionMethod methodEnum = StampCollectionMethod.location;
         if (!Enum.TryParse<StampCollectionMethod>(method, true, out methodEnum))
         {
             throw new ServiceException(StatusCodes.Status412PreconditionFailed, "Stamp collection method is not valid.");
         }
-        // not already collected
         var park = _locationsRepository.GetByAbbreviation(park_abbreviation);
+        // not already collected
         if (_collectedStampRepository.GetByParkAndUser(park.id, userId) != null)
         {
             throw new ServiceException(StatusCodes.Status409Conflict, "Stamp already collected for this park.");
@@ -54,7 +56,7 @@ public class ActivityService(
         if (method == StampCollectionMethod.location.GetDisplayName())
         {
             var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
-            if (park != null && park.boundaries!.Intersects(locationWithInaccuracy))
+            if (park.boundaries!.Intersects(locationWithInaccuracy))
             {
                 var collectedStamp = CreateStamp(userLocation, methodEnum, _userRepository.GetById(userId), park, dateTime);
                 return _collectedStampRepository.Create(collectedStamp);
