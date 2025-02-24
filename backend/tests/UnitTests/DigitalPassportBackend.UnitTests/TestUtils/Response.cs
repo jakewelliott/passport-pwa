@@ -6,6 +6,8 @@ using Microsoft.OpenApi.Extensions;
 
 using NetTopologySuite.Geometries;
 
+using static DigitalPassportBackend.Controllers.ActivityController;
+
 using static DigitalPassportBackend.Controllers.LocationsController;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils;
@@ -75,6 +77,20 @@ public static class Response
         } catch {
             return false;
         }
+    }
+
+    public static bool Equal(string abbr, CollectStampRequest expected, CollectStampResponse actual)
+    {
+        return abbr == actual.parkAbbreviation
+            && expected.method == actual.method
+            && expected.dateTime == actual.createdAt;
+    }
+
+    public static bool Equal(CollectedStamp expected, CollectedStampResponse actual)
+    {
+        return expected.createdAt == actual.createdAt
+            && expected.method.GetDisplayName() == actual.method
+            && expected.park.parkAbbreviation == actual.parkAbbreviation;
     }
 
     private static bool FieldEqual<T, U>(IEnumerable<T> a, Func<T, string?> funcA, IEnumerable<U> b, Func<U, string?> funcB)
