@@ -105,6 +105,30 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         }
 
         [Fact]
+        public void GetCollectedStamps_ReturnsEmptyList_WhenNoStampsCollected()
+        {
+            // Setup.
+            SetupUser(TestData.Users[1].id, "visitor");
+            _mockActivityService.Setup(s => s.GetCollectedStamps(TestData.Users[1].id))
+                .Returns([]);
+
+            // Action.
+            var result = _controller.GetCollectedStamps();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<List<CollectedStampResponse>>(okResult.Value);
+            Assert.Empty(resp);
+        }
+
+        [Fact]
+        public void GetCollectedStamps_ThrowsArgumentNullException_WhenInvalidUser()
+        {
+            // Act, no user setup
+            var exception = Assert.Throws<ArgumentNullException>(_controller.GetCollectedStamps);
+        }
+
+        [Fact]
         public void CollectStamp_ReturnsCollectedStampResponse_WhenValidParameters_AndStampNotCollected()
         {
             // Setup.
