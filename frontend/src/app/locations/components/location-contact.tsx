@@ -63,9 +63,7 @@ export const LocationContact = ({ park, parkActivity }: LocationContactProps) =>
           <p>{park.email}</p>
         </div>
       )}
-      {parkActivity && (
-        <AchievementsView parkActivity={parkActivity} park={park} />
-      )}
+      {parkActivity && <AchievementsView parkActivity={parkActivity} park={park} />}
     </div>
   );
 };

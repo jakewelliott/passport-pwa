@@ -11,10 +11,12 @@ import { CollectedStamp } from '@/lib/mock/types';
  */
 export const useStamps = () => {
   const { data: user } = useUser();
-  return useQuery<CollectedStamp[]>({
+  const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
     queryKey: ['stamps', user?.id],
     queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL)
   });
+  dbg('HOOK', 'useStamps', {data, isLoading});
+  return { data, isLoading, refetch };
 };
 
 /**
@@ -22,10 +24,10 @@ export const useStamps = () => {
  * @param code The code of the park to get the stamp for
  * @returns The stamp for the user
  */
-export const useStamp = (code: string) => {
+export const useStamp = (abbreviation: string) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
-  return { data: data?.find((stamp) => stamp.parkAbbreviation === code) || null, isLoading };
+  return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || null, isLoading };
 };
 
 export const useCollectStamp = (parkAbbreviation: string) => {
