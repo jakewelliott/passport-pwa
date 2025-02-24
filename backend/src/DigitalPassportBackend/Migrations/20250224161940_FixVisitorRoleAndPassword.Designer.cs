@@ -13,8 +13,8 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Migrations
 {
     [DbContext(typeof(DigitalPassportDbContext))]
-    [Migration("20250210000148_InitializeAdminUser")]
-    partial class InitializeAdminUser
+    [Migration("20250224161940_FixVisitorRoleAndPassword")]
+    partial class FixVisitorRoleAndPassword
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -154,8 +154,8 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<Polygon>("boundaries")
-                        .HasColumnType("polygon");
+                    b.Property<GeometryCollection>("boundaries")
+                        .HasColumnType("GEOMETRYCOLLECTION");
 
                     b.Property<string>("city")
                         .HasMaxLength(255)
@@ -528,11 +528,20 @@ namespace DigitalPassportBackend.Migrations
                         new
                         {
                             id = 1,
-                            createdAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
-                            password = "10000.W8QErvwJ94AvgfYwFpWiVw==.NBzuowM3sOx7dBKmq35kI6UZaZAR3ZLN44ehkZMcN1w=",
+                            createdAt = new DateTime(2025, 2, 24, 16, 19, 39, 965, DateTimeKind.Utc).AddTicks(700),
+                            password = "10000.+BpWBgK4g+t9PhXew0mJaw==.I7DoHtw5UKW7n7tXEJq4VzgztoTJTR1oWltkefGvrSU=",
                             role = "admin",
-                            updatedAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
+                            updatedAt = new DateTime(2025, 2, 24, 16, 19, 39, 965, DateTimeKind.Utc).AddTicks(680),
                             username = "superAdmin"
+                        },
+                        new
+                        {
+                            id = 2,
+                            createdAt = new DateTime(2025, 2, 24, 16, 19, 39, 971, DateTimeKind.Utc).AddTicks(5610),
+                            password = "10000.5LykVywtLYwz2tkLhA8Cdw==.sfq8aBfR+2Y6JUOibWeSChphRELZGiu2QpfhUyoBn5I=",
+                            role = "visitor",
+                            updatedAt = new DateTime(2025, 2, 24, 16, 19, 39, 971, DateTimeKind.Utc).AddTicks(5600),
+                            username = "testUser"
                         });
                 });
 

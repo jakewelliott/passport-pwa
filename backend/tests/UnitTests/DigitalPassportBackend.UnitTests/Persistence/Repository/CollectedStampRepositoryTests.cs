@@ -144,7 +144,7 @@ public class CollectedStampRepositoryTests
         Assert.Null(result);
     }
 
-        [Fact]
+    [Fact]
     public void GetByParkAndUser_ReturnNull_InvalidIDsNonexistingStamp()
     {
         // Arrange
@@ -156,6 +156,37 @@ public class CollectedStampRepositoryTests
 
         // Assert
         Assert.Null(result);
+    }
+
+    [Fact]
+    public void GetByUser_ReturnsPopulatedList_WhenValidUserWithStamps()
+    {
+        // Action.
+        var result = _repo.GetByUser(TestData.Users[3].id);
+
+        // Assert.
+        Assert.Single(result);
+        Assert.Contains(TestData.CollectedStamps[1], result);
+    }
+
+    [Fact]
+    public void GetByUser_ReturnsEmptyList_WhenValidUserWithNoStamps()
+    {
+        // Action.
+        var result = _repo.GetByUser(TestData.Users[0].id);
+
+        // Assert.
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void GetByUser_ReturnsEmptyList_WhenInvalidUser()
+    {
+        // Action.
+        var result = _repo.GetByUser(9999);
+        
+        // Assert.
+        Assert.Empty(result);
     }
 
     private static readonly CollectedStamp NewStamp = new()
