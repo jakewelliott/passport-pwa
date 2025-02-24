@@ -5,9 +5,6 @@ import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park } from '@/lib/mock/types';
 import { useEffect, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
-
-// TODO: fix scrolling bug when selecting stamp in last row
 
 const isVisited = (code: string, stamps: CollectedStamp[]) =>
   stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
@@ -44,13 +41,6 @@ export default function Stamps() {
     refetch();
   }, [refetch]);
 
-  const handleStampClick = (index: number, park: Park) => {
-    if (!isVisited(park.abbreviation, stamps ?? [])) {
-      toast.info(`You haven't collected the ${park.parkName} stamp yet!`);
-    }
-    setSelectedIndex(index);
-  };
-
   // TODO: toggle sort a/z, date last visited, date first achieved
   const sortedParks: Park[] = useMemo(() => {
     const achieved = parks?.filter((park) => isVisited(park.abbreviation, stamps ?? [])).sort(sortByName) || [];
@@ -68,7 +58,7 @@ export default function Stamps() {
             key={park.abbreviation}
             code={park.abbreviation}
             greyed={!isVisited(park.abbreviation, stamps ?? [])}
-            handleClick={() => handleStampClick(index, park)}
+            handleClick={() => setSelectedIndex(index)}
           />
         ))}
       </div>
