@@ -38,7 +38,12 @@ jobs:
 
     - name: Build and run Docker Compose
       run: |
-        ls -la
+        # Debug information
+        echo "=== nginx.conf permissions and location ==="
+        ls -la nginx.conf
+        echo "=== docker-compose.yml content ==="
+        cat docker-compose.yaml
+        echo "=== Starting docker-compose ==="
         docker-compose build
         docker-compose up -d
       
