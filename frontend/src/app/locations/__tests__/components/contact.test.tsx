@@ -66,9 +66,13 @@ describe('LocationContact', () => {
     expect(stampElement).toBeInTheDocument();
     parkActivityNew.stampCollectedAt = '';
     render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
-    const stampElements = screen.getAllByText('Stamp not yet collected');
+    var stampElements = screen.getAllByText('Stamp not yet collected');
+    const currentDate = new Date().toISOString();
+    parkActivityNew.stampCollectedAt = currentDate;
+    render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
+    stampElements = screen.getAllByText('Stamp collected ' + currentDate);
     expect(stampElements.length).toEqual(2);
-  })
+  });
 
   it('Renders bucket list items', () => {
     const parkNew = park;
@@ -78,7 +82,7 @@ describe('LocationContact', () => {
     render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
     const stampElements = screen.getByTestId("BLI");
     expect(stampElements).toBeInTheDocument();
-  })
+  });
 
   it('renders unchecked bucket list icon when required', () => {
     const parkNew = park;
@@ -87,5 +91,5 @@ describe('LocationContact', () => {
     render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
     const stampElements = screen.getByTestId("BLI");
     expect(stampElements).toBeInTheDocument();
-  })
+  });
 });
