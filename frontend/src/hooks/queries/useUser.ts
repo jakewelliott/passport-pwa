@@ -36,7 +36,7 @@ export const useUser = () => {
         dbg('QUERY', 'useUser');
         const userData = await fetchGet(API_USER_URL);
         setUser(userData); // Update Zustand store
-        dbg('QUERY', 'useUser', userData);
+        dbg('QUERY', 'useUser', userData.username);
         return userData;
       } catch (error) {
         dbg('ERROR', 'useUser', error);

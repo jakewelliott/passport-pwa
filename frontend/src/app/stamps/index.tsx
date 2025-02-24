@@ -10,23 +10,19 @@ const isVisited = (code: string, stamps: CollectedStamp[]) =>
   stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
 const sortByName = (a: Park, b: Park) => a.parkName.localeCompare(b.parkName);
 
-const StampView = ({
-  abbreviation,
-  handleClick,
-  greyed,
-}: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
+const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean }) => {
   return (
     <button
       onClick={handleClick}
       className='flex items-center justify-center p-2'
       type='button'
-      data-testid={`stamp-button-${abbreviation}`}
+      data-testid={`stamp-button-${code}`}
     >
       <img
-        src={`/stamps/${abbreviation}.svg`}
-        alt={`${abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
+        src={`/stamps/${code}.svg`}
+        alt={`${code} - ${greyed ? 'greyed out' : 'achieved'}`}
         className={greyed ? 'opacity-50 grayscale' : ''}
-        data-testid={`stamp-image-${abbreviation}`}
+        data-testid={`stamp-image-${code}`}
       />
     </button>
   );
@@ -58,7 +54,7 @@ export default function Stamps() {
     <div className='px-4 py-4'>
       <div className='grid grid-cols-3 gap-4' data-testid='stamps-grid'>
         {sortedParks.map((park, index) => (
-          <StampView
+          <Stamp
             key={park.abbreviation}
             code={park.abbreviation}
             greyed={!isVisited(park.abbreviation, stamps ?? [])}

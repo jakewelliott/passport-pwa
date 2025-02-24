@@ -2,7 +2,7 @@ import chalk from 'chalk';
 
 // variable to switch between production and development
 
-export const PRODUCTION = process.env.PROD === 'PROD';
+export const PRODUCTION = process.env.PROD === "PROD" ? true : false;
 export const DEBUG = !PRODUCTION;
 
 // switch this to true to mute all debug statements
