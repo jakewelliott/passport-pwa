@@ -48,7 +48,8 @@ public static class ServiceCollectionExtensions
     {
         services.AddCors(options => {
             options.AddPolicy(corsPolicyName, builder => {
-                builder.WithOrigins("https://localhost:" + configuration["NGNIX_PORT"], "https://localhost:" + configuration["FE_DEV_PORT"], "http://localhost:" + configuration["NGINX_PORT"], "http://localhost:" + configuration["FE_DEV_PORT"])
+                builder
+                    .SetIsOriginAllowed(_ => true)
                     .AllowAnyHeader()
                     .AllowCredentials()
                     .AllowAnyMethod();

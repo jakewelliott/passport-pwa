@@ -1,7 +1,12 @@
+using System.Diagnostics.CodeAnalysis;
+
 using DigitalPassportBackend.Domain;
+
+using NetTopologySuite.Geometries;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils
 {
+    [ExcludeFromCodeCoverage]
     public static class TestData
     {
         public static readonly List<Park> Parks =
@@ -20,6 +25,21 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 landmark = "Sugarloaf Dune, which has helped people find their way since 1663 and offers a great view of the Cape Fear River",
                 youCanFind = "the Venus flytrap, one of the rarest species of plants that eats bugs.",
                 trails = "■ 9 trails\n\n■ 1 wheelchair-accessible trail\n\n■ Kids TRACK Trail (follows Snow’s Cut Trail)\n\n■ 8.75 miles of hiking\n\n■ 1 mile of biking",
+                boundaries = new([new Polygon(new([ // Approximated off of Google Maps.
+                    new(34.055119779529406, -77.90104594653654),
+                    new(34.04649888776697, -77.90350265943654),
+                    new(34.0451418156539, -77.900443811041),
+                    new(34.04075113953932, -77.90147948415252),
+                    new(34.04224798642799, -77.90487552883268),
+                    new(34.04125009141853, -77.90916273366837),
+                    new(34.04248747948313, -77.91246243626662),
+                    new(34.03991289369798, -77.91075237141644),
+                    new(34.03779728400115, -77.9167496413892),
+                    new(34.03280742969894, -77.91431701389152),
+                    new(34.03067012766215, -77.91847743839043),
+                    new(34.050917086671674, -77.9279460007207),
+                    new(34.055119779529406, -77.90104594653654)
+                ]))]),
                 accesses = null,
                 website = "https://www.ncparks.gov/state-parks/carolina-beach-state-park"
             },
@@ -38,6 +58,17 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 landmark = "CSC and ECE departments",
                 youCanFind = "Stressed engineering students",
                 trails = "trail information",
+                boundaries = new([new Polygon(new([ // Approximated off of Google Maps.
+                    new(35.77252900760731, -78.67457215839467),
+                    new(35.77171945894093, -78.67294137514637),
+                    new(35.77138432079069, -78.67312376537808),
+                    new(35.77160194312696, -78.67362265630602),
+                    new(35.77148877958641, -78.67374603793336),
+                    new(35.77183262215322, -78.67444341234875),
+                    new(35.77196216910181, -78.67432720834124),
+                    new(35.77219244176546, -78.67479118636501),
+                    new(35.77252900760731, -78.67457215839467)
+                ]))]),
                 accesses = null,
                 website = "https://www.nscu.edu"
             }
@@ -249,6 +280,16 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 park = Parks[0],
                 userId = Users[2].id,
                 user = Users[2]
+            },
+            new()
+            {
+                id = 13,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = Parks[1].id,
+                park = Parks[1],
+                userId = Users[3].id,
+                user = Users[3]
             }
         ];
 
