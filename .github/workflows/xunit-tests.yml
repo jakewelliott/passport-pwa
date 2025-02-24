@@ -39,6 +39,9 @@ jobs:
         run: |
           echo 'ADMIN_PASS=${{secrets.ADMIN_PASS}}' >> .env
           echo 'API_TOKEN_KEY=${{secrets.API_TOKEN_KEY}}' >> .env
+          echo 'ADMIN_USER=${{secrets.ADMIN_USER}}' >> .env
+          echo 'TEST_USER=${{secrets.TEST_USER}}' >> .env
+          echo 'TEST_PASS=${{secrets.TEST_PASS}}' >> .env
 
       - run: echo "The workflow is now ready to test your code on the runner."
 
