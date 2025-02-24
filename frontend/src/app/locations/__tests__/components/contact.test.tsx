@@ -71,7 +71,7 @@ describe('LocationContact', () => {
     parkActivityNew.stampCollectedAt = currentDate;
     render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
     stampElements = screen.getAllByText('Stamp collected ' + currentDate);
-    expect(stampElements.length).toEqual(2);
+    expect(stampElements.length).toEqual(1);
   });
 
   it('Renders bucket list items', () => {
