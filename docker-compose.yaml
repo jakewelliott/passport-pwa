@@ -10,13 +10,6 @@ services:
     depends_on:
       - frontend
       - backend
-    volumes:
-      - ${PWD}/localhost+2-key.pem:/etc/nginx/localhost+2-key.pem:ro
-      - ${PWD}/localhost+2.pem:/etc/nginx/localhost+2.pem:ro
-      - type: bind
-        source: ${PWD}/nginx.conf
-        target: /etc/nginx/conf.d/default.conf
-        read_only: true
   # asp.net web application backend
   backend: 
     container_name: backend
