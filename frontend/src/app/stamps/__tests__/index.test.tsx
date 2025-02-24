@@ -111,7 +111,7 @@ describe('Stamps', () => {
     expect(unachievedStamp).toHaveClass('opacity-50', 'grayscale');
   });
 
-  it('shows toast message when clicking unvisited stamp', () => {
+  it('shows stamp details when clicking unvisited stamp', () => {
     renderStamps();
 
     // Click an unvisited stamp (third park onwards)
