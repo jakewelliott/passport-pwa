@@ -43,7 +43,7 @@ const AdminRoutes = () => {
   const locaiton = useLocation();
   const { data: user, isLoading } = useUser();
   if (isLoading) return <SplashScreen loadingMsg='checking permissions' />;
-  if (!isLoading && user?.role !== 'admin') {
+  if (!isLoading && user?.role != 'admin') {
     toast.error(`You are not authorized to access this page ${locaiton.pathname}`);
     return <Navigate to='/locations' replace />;
   }

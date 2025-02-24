@@ -21,5 +21,9 @@ export const SuperAdminButton = () => {
     login.mutate(credentials);
   };
 
-  return <RoundedButton data-testid='super-admin-button' title='SUPERADMIN' onClick={handleClick} />;
+  return (
+    <div data-testid='super-admin-button' onClick={handleClick}>
+      <RoundedButton title='SUPERADMIN' />
+    </div>
+  );
 };

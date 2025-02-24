@@ -65,12 +65,10 @@ export const fetchGet = async (url: string) => {
     credentials: 'include',
   });
 
-  dbg('FETCH', 'GET RESPONSE', { response });
-
   if (!response.ok) await fetchError(response);
 
   const data = await response.json();
-  dbg('FETCH', 'GET DATA', { data });
+  dbg('FETCH', 'GET RESPONSE', { response, data });
 
   return data;
 };

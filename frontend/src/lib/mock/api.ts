@@ -12,7 +12,7 @@ export const api = {
   // Parks
   getParks: () => parks,
   getParkActivity: () => park_activity,
-  getPark: (abbreviation: string) => parks.find((park: Park) => park.abbreviation === abbreviation),
+  getPark: (code: string) => parks.find((park: Park) => park.abbreviation === code),
 
   // Users
   getUserByID: (userId: number) => {

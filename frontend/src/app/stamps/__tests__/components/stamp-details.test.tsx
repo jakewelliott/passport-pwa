@@ -15,14 +15,14 @@ const mockUseStamp = useStamp as Mock;
 const mockUsePark = usePark as Mock;
 
 describe('StampDetails', () => {
-	const mockAddress: Address = {
-		title: '',
-		addressLineOne: '',
-		addressLineTwo: '',
-		city: '',
-		state: '',
-		zipcode: 0,
-	};
+  const mockAddress: Address = {
+    title: '',
+    addressLineOne: '',
+    addressLineTwo: '',
+    city: '',
+    state: '',
+    zipcode: 0,
+  };
 
   const mockPark: Park = {
     id: 1,
@@ -50,27 +50,27 @@ describe('StampDetails', () => {
   };
   const mockHandleClose = vi.fn();
 
-	beforeEach(() => {
-		vi.clearAllMocks();
-		mockUsePark.mockReturnValue({ data: mockPark });
-		mockUseStamp.mockReturnValue({ data: mockStamp });
-	});
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockUsePark.mockReturnValue({ data: mockPark });
+    mockUseStamp.mockReturnValue({ data: mockStamp });
+  });
 
-	it('renders stamp details correctly', () => {
-		renderWithClient(<StampDetails abbreviation='ENRI' handleClose={mockHandleClose} />);
+  it('renders stamp details correctly', () => {
+    renderWithClient(<StampDetails abbreviation='ENRI' handleClose={mockHandleClose} />);
 
-		// Verify park name is displayed
-		expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
+    // Verify park name is displayed
+    expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
 
     // Verify collection date is displayed
     expect(screen.getByText('Stamp collected on ' + dateHelper.stringify(mockStamp.createdAt).replace(',', ' at'))).toBeInTheDocument();
   });
 
-	// it('shows loading state when park data is loading', () => {
-	// 	mockUsePark.mockReturnValue({ data: null, isLoading: true });
+  // it('shows loading state when park data is loading', () => {
+  // 	mockUsePark.mockReturnValue({ data: null, isLoading: true });
 
-	// 	renderWithClient(<StampDetails abbreviation="ENRI" handleClose={mockHandleClose} />);
+  // 	renderWithClient(<StampDetails abbreviation="ENRI" handleClose={mockHandleClose} />);
 
-	// 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
-	// });
+  // 	expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+  // });
 });
