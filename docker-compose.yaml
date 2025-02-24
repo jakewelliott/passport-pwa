@@ -13,7 +13,10 @@ services:
     volumes:
       - ./localhost+2-key.pem:/etc/nginx/localhost+2-key.pem:ro
       - ./localhost+2.pem:/etc/nginx/localhost+2.pem:ro
-      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - type: bind
+        source: ./nginx.conf
+        target: /etc/nginx/conf.d/default.conf
+        read_only: true
   # asp.net web application backend
   backend: 
     container_name: backend
