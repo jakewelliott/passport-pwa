@@ -38,14 +38,6 @@ jobs:
 
     - name: Build and run Docker Compose
       run: |
-        # Debug information
-        echo "=== Current working directory ==="
-        pwd
-        echo "=== Directory contents ==="
-        ls -la
-        echo "=== Full path check ==="
-        readlink -f nginx.conf
-        echo "=== Starting docker-compose ==="
         docker-compose build
         docker-compose up -d
       
