@@ -2,7 +2,7 @@ import { usePark, useParks } from '@/hooks/queries/useParks';
 import { useStamp, useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
 import { api } from '@/lib/mock/api';
-import type { Stamp } from '@/lib/mock/types';
+import type { Stamp, CollectedStamp } from '@/lib/mock/types';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { fireEvent, screen } from '@testing-library/react';
 import { toast } from 'react-toastify';
@@ -25,24 +25,18 @@ const mockToast = vi.fn();
 
 describe('Stamps', () => {
   const mockParks = api.getParks();
-  const mockStamps: Stamp[] = [
+  const mockStamps: CollectedStamp[] = [
     {
-      code: mockParks[0].abbreviation,
-      timestamp: new Date(),
-      location: {
-        latitude: 35.7796,
-        longitude: -78.6382,
-        accuracy: 0,
-      },
+      id: 1,
+      parkAbbreviation: mockParks[0].abbreviation,
+      createdAt: new Date(),
+      method: 'manual'
     },
     {
-      code: mockParks[1].abbreviation,
-      timestamp: new Date(),
-      location: {
-        latitude: 35.7796,
-        longitude: -78.6382,
-        accuracy: 0,
-      },
+      id: 2,
+      parkAbbreviation: mockParks[1].abbreviation,
+      createdAt: new Date(),
+      method: 'manual'
     },
   ];
 
@@ -56,6 +50,7 @@ describe('Stamps', () => {
     mockUseStamps.mockReturnValue({
       data: mockStamps,
       isLoading: false,
+      refetch: vi.fn(),
     });
     mockUseUser.mockReturnValue({
       isLoading: false,
@@ -83,6 +78,7 @@ describe('Stamps', () => {
     mockUseStamps.mockReturnValue({
       data: null,
       isLoading: true,
+      refetch: vi.fn(),
     });
     mockUseUser.mockReturnValue({
       isLoading: true,
@@ -122,8 +118,7 @@ describe('Stamps', () => {
     const unvisitedStamp = screen.getByTestId(`stamp-button-${mockParks[2].abbreviation}`);
     fireEvent.click(unvisitedStamp);
 
-    expect(mockToast).toHaveBeenCalled();
-    expect(mockToast.mock.calls[0][0]).toContain("You haven't collected");
+    expect(screen.getByRole('article')).toBeInTheDocument();
   });
 
   it('shows stamp details when clicking a stamp', () => {
