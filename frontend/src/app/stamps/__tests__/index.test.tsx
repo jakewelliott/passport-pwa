@@ -2,7 +2,7 @@ import { usePark, useParks } from '@/hooks/queries/useParks';
 import { useStamp, useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
 import { api } from '@/lib/mock/api';
-import type { Stamp, CollectedStamp } from '@/lib/mock/types';
+import type { CollectedStamp } from '@/lib/mock/types';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { fireEvent, screen } from '@testing-library/react';
 import { toast } from 'react-toastify';
