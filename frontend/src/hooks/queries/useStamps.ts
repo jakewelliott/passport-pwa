@@ -11,12 +11,12 @@ import { CollectedStamp } from '@/lib/mock/types';
  */
 export const useStamps = () => {
   const { data: user } = useUser();
-  const { data, isLoading } = useQuery<CollectedStamp[]>({
+  const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
     queryKey: ['stamps', user?.id],
     queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL)
   });
   dbg('HOOK', 'useStamps', {data, isLoading});
-  return { data, isLoading };
+  return { data, isLoading, refetch };
 };
 
 /**
