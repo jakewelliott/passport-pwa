@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useUser } from './useUser';
 import { CollectStampRequest } from '@/lib/mock/types';
 import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
@@ -29,6 +29,8 @@ export const useStamp = (code: string) => {
 };
 
 export const useCollectStamp = (parkAbbreviation: string) => {
+  const queryClient = useQueryClient();
+
   return useMutation<string, Error, CollectStampRequest>({
     mutationFn: async ({ latitude, longitude, inaccuracyRadius, method, dateTime }) => {
       dbg('MUTATE', 'Collecting stamp', { latitude, longitude, inaccuracyRadius, method, dateTime });
@@ -42,7 +44,7 @@ export const useCollectStamp = (parkAbbreviation: string) => {
       return await response.text();
     },
     onSuccess: () => {
-      useStamps().refetch();
+      queryClient.invalidateQueries({ queryKey: ['stamps'] });
       toast.success('Stamp collected!');
     },
     onError: (error) => {
