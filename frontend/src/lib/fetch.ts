@@ -44,7 +44,7 @@ export const fetchPost = async (url: string, body: any) => {
     body: JSON.stringify(body),
   });
 
-  if (!response.ok) fetchError(response);
+  if (!response.ok) await fetchError(response);
 
   dbg('FETCH', 'POST RESPONSE', { response });
   return response;
@@ -66,7 +66,7 @@ export const fetchGet = async (url: string) => {
     credentials: 'include',
   });
 
-  if (!response.ok) fetchError(response);
+  if (!response.ok) await fetchError(response);
 
   const data = await response.json();
   dbg('FETCH', 'GET RESPONSE', { response, data });
@@ -74,8 +74,15 @@ export const fetchGet = async (url: string) => {
   return data;
 };
 
-const fetchError = (response: Response) => {
+const fetchError = async (response: Response) => {
   dbg('ERROR', 'FETCH', { response });
-  const msg = `${response.statusText}`;
-  throw new Error(`FETCH failed: ${msg}`);
+  var message = "";
+  try {
+    const errorData = await response.json();
+    const errorMessage = errorData.detail || "response.statusText";
+    message = errorMessage;
+  } catch (error) {
+    message = response.statusText;
+  }
+  throw new Error(message);
 };
