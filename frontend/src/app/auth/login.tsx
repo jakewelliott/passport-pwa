@@ -45,7 +45,8 @@ export default function LoginPage() {
   const handleAuth = (isLogin: boolean) => async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const formData = new FormData(formRef.current!);
+    if (!formRef.current) throw new Error('Form ref is not set');
+    const formData = new FormData(formRef.current);
     const validatedData = validateFields(formData);
     if (!validatedData) return;
 

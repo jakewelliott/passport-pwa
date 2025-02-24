@@ -19,7 +19,7 @@ export default function DetailTabs() {
   if (isParkLoading || isActivityLoading || !park ) return <LoadingPlaceholder />;
   return (
     <>
-      <LocationContact park={park} parkActivity={parkActivity!} />
+      <LocationContact park={park} parkActivity={parkActivity ?? undefined} />
       <LocationActionBar park={park} />
       <LocationMiniTabBar>
         <DetailsMiniTab park={park} />
