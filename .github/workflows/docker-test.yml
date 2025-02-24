@@ -38,6 +38,7 @@ jobs:
 
     - name: Build and run Docker Compose
       run: |
+        ls -la
         docker-compose build
         docker-compose up -d
       
@@ -62,5 +63,4 @@ jobs:
     - name: Shut down Docker Compose
       if: always()
       run: |
-        cd backend
         docker-compose down
