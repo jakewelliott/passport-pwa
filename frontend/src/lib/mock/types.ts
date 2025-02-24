@@ -18,7 +18,7 @@ export interface CollectedStamp {
 }
 
 export interface UserParkVisit {
-  code: string;
+  abbreviation: string;
   timestamp: Date;
 }
 
