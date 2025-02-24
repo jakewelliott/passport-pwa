@@ -3,7 +3,7 @@ import type { UserParkVisit, UserProfile } from '@/lib/mock/types';
 import userParkVisitsJson from '@/lib/mock/user_park_visits.json';
 
 const dummyVisit: UserParkVisit = {
-  code: 'CABE',
+  abbreviation: 'CABE',
   timestamp: new Date(),
 };
 

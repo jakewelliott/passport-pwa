@@ -1,11 +1,10 @@
 import { SuperAdminButton } from '@/app/auth/components/superadmin-button';
+import * as debug from '@/lib/debug';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen } from '@testing-library/react';
-import { describe, expect, it, vi, afterEach } from 'vitest';
-import * as debug from '@/lib/debug';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 describe('SuperAdmin Button', () => {
-
   afterEach(() => {
     vi.clearAllMocks();
   });
@@ -20,5 +19,4 @@ describe('SuperAdmin Button', () => {
     renderWithClient(<SuperAdminButton />);
     expect(screen.queryByText('SUPERADMIN')).not.toBeInTheDocument();
   });
-
 });

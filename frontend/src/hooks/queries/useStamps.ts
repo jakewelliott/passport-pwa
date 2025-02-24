@@ -1,4 +1,7 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { dbg } from '@/lib/debug';
+import { API_STAMPS_URL, fetchGet } from '@/lib/fetch';
+import type { Stamp } from '@/lib/mock/types';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useUser } from './useUser';
 import { CollectStampRequest } from '@/lib/mock/types';
 import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
@@ -15,6 +18,8 @@ export const useStamps = () => {
     queryKey: ['stamps', user?.id],
     queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL)
   });
+  dbg('HOOK', 'useStamps', { data, isLoading });
+  return { data, isLoading };
 };
 
 /**
@@ -22,7 +27,7 @@ export const useStamps = () => {
  * @param code The code of the park to get the stamp for
  * @returns The stamp for the user
  */
-export const useStamp = (code: string) => {
+export const useStamp = (abbreviation: string) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
   return { data: data?.find((stamp) => stamp.parkAbbreviation === code) || null, isLoading };

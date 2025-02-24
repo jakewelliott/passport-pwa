@@ -19,22 +19,20 @@ const AchievementsView = ({ parkActivity, park }: AchievementsViewProps) => {
           </p>
         </div>
       )}
-      {
-        park.bucketListItems &&
-        park.bucketListItems.length > 0 && (
-          <div className='top-0 flex'>
-            {parkActivity.completedBucketListItems[0]?.id ? (
-              <FaRegCheckSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-            ) : (
-              <FaRegSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-            )}
-            <p data-testid={'BLI'}>
-              Bucket List Item:
-              <br />
-              {park.bucketListItems[0].task}
-            </p>
-          </div>
-        )}
+      {park.bucketListItems && park.bucketListItems.length > 0 && (
+        <div className='top-0 flex'>
+          {parkActivity.completedBucketListItems[0]?.id ? (
+            <FaRegCheckSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+          ) : (
+            <FaRegSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+          )}
+          <p data-testid={'BLI'}>
+            Bucket List Item:
+            <br />
+            {park.bucketListItems[0].task}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
