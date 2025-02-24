@@ -51,8 +51,8 @@ public class DigitalPassportDbContext : DbContext
         {
             id = 2,
             username = _configuration["TEST_USER"]!,
-            password = hashedAdminPassword,
-            role = UserRole.admin,
+            password = hashedVisitorPassword,
+            role = UserRole.visitor,
             createdAt = DateTime.UtcNow,
         });
     }

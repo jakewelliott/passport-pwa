@@ -1,11 +1,10 @@
 import { dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
 
-// TODO: use correct port for dev, for some reason PROD wasnt working for me in docker
 const API_PORT = process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT;
-// const API_PORT = process.env.NGINX_PORT;
+const API_PROTOCOL = process.env.PROD === 'PROD' ? 'https' : 'http';
 
-export const API_URL = `http://localhost:${API_PORT}/api`;
+export const API_URL = `${API_PROTOCOL}://localhost:${API_PORT}/api`;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
