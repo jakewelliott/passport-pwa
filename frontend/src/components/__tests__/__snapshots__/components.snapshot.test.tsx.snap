@@ -44,8 +44,11 @@ exports[`Component Snapshots > Header renders correctly 1`] = `
       <div
         class="absolute right-4 w-[70px]"
         data-testid="balance-placeholder"
-      />
-       
+      >
+        <div
+          class="relative"
+        />
+      </div>
     </header>
   </div>
 </div>
