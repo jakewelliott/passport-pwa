@@ -60,6 +60,9 @@ const LoggedInRoutes = () => {
   const [showCollectModal, setShowCollectModal] = useState(false);
   const { park } = useParkCheck();
   const { data: stamps } = useStamps();
+  const { data: user } = useUser();
+  const isAdmin = user?.role === 'admin';
+
   useEffect(() => {
     // Initial check
     if (park && !isCollected(park.abbreviation, stamps ?? [])) {
@@ -86,7 +89,9 @@ const LoggedInRoutes = () => {
           <Route path=':abbreviation' element={<LocationDetail />} />
         </Route>
         {/* Stamps tab */}
-        <Route path='/stamps' element={<Stamps />} />
+        {!isAdmin && (
+          <Route path='/stamps' element={<Stamps />} />
+        )}
         {/* More tab */}
         <Route path='/more'>
           <Route index element={<More />} />
@@ -117,7 +122,7 @@ export const AppRoutes = () => {
 
   const { data: user, isLoading } = useUser();
   const isLoggedIn = user && !isLoading;
-
+  
   if (isLoading) return <SplashScreen loadingMsg='your role' />;
 
   return (
