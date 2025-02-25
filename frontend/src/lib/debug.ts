@@ -1,20 +1,11 @@
 import chalk from 'chalk';
 
-// variable to switch between production and development
-
-export const PRODUCTION = process.env.PROD === 'PROD';
-export const DEBUG = !PRODUCTION;
-
 // switch this to true to mute all debug statements
 const MUTED = false;
 
-// Custom logging function that writes to both console and terminal
-const log = (message: string): void => {
-  console.log(message);
-  if (import.meta.hot) {
-    import.meta.hot.send('terminal:log', { message });
-  }
-};
+// variable to switch between production and development
+export const PRODUCTION = process.env.PROD === 'PROD';
+export const DEBUG = !PRODUCTION || process.env.ADAM === 'ADAM'; // adam: i use docker to run the backend, but i do the frontend locally so i added this flag
 
 // debugging utility function & types
 const DebugControl = {
@@ -69,10 +60,9 @@ export const dbg = (t: DebugType, where: string, what?: unknown): void => {
     const location = padRight(where, 20);
     const message = what ? sjason(what) : '';
     const inlineMessage = message.length > 40 || message.includes('{') ? '(obj)' : message;
-    log(MessageColors[t](`${logType}\t${location}\t${inlineMessage}`));
-    // log(`${logType}\t${location}\t${inlineMessage}`);
+    console.log(MessageColors[t](`${logType}\t${location}\t${inlineMessage}`));
     if (inlineMessage === '(obj)') {
-      log(JSON.stringify(what, null, 2));
+      console.log(JSON.stringify(what, null, 2));
     }
   }
 };
@@ -84,7 +74,7 @@ export const dbgif = (cond: boolean, t: DebugType, where: string, what?: unknown
 };
 
 export const jason = (p: unknown): void => {
-  log(sjason(p));
+  console.log(sjason(p));
 };
 
 export const sjason = (p: unknown): string => {
