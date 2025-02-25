@@ -2,6 +2,7 @@ import { usePageTitle } from '@/hooks/usePageTitle';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import HeaderMenuButton from './header-menu-button';
+import { useUser } from '@/hooks/queries/useUser';
 
 export const BackButton = ({ hidden }: { hidden: boolean }) => {
   const navigate = useNavigate();
@@ -16,6 +17,8 @@ export const BackButton = ({ hidden }: { hidden: boolean }) => {
 
 const Header = () => {
   const { pageTitle, showBackButton } = usePageTitle();
+  const { data: user } = useUser();
+  if (!user) return null;
 
   return (
     <div className='fixed top-0 right-0 left-0 z-50'>
