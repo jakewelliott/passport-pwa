@@ -10,15 +10,16 @@ const TabBar = () => {
 
   const location = useLocation();
   const tabs = [
-    { name: 'Locations', path: '/locations', icon: <TbMap size={'24px'} /> },
-    { name: 'Stamps', path: '/stamps', icon: <FaStamp size={'24px'} /> },
-    { name: 'More', path: '/more', icon: <MdMoreHoriz size={'24px'} /> },
+    { name: 'Locations', path: '/locations', icon: <TbMap size={'24px'} />, roles: ['visitor', 'admin'] },
+    { name: 'Stamps', path: '/stamps', icon: <FaStamp size={'24px'} />, roles: ['visitor'] },
+    { name: 'More', path: '/more', icon: <MdMoreHoriz size={'24px'} />, roles: ['visitor', 'admin'] },
   ];
 
   return (
     <nav className='fixed right-0 bottom-0 left-0 bg-secondary_darkteal'>
       <ul className='flex h-16 items-center justify-around'>
         {tabs.map((tab) => (
+          tab.roles.includes(user.role) && (
           <li key={tab.name}>
             <Link to={tab.path} style={{ textDecoration: 'none' }}>
               <div
@@ -31,6 +32,7 @@ const TabBar = () => {
               </div>
             </Link>
           </li>
+          )
         ))}
       </ul>
     </nav>
