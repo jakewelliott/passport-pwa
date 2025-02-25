@@ -9,7 +9,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class TestConfiguration
 {
-    public static readonly string TestingResourcePath = $"{GetProjectRoot()}\\backend\\tests\\UnitTests\\DigitalPassportBackend.UnitTests\\resources";
+    public static readonly string TestingResourcePath = $"{GetProjectRoot()}/backend/tests/UnitTests/DigitalPassportBackend.UnitTests/resources";
 
     public static IConfiguration GetConfiguration()
     {
