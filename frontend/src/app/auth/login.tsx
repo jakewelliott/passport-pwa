@@ -5,7 +5,7 @@ import { useUser } from '@/hooks/queries/useUser';
 import { cn } from '@/lib/cn-helper';
 import { dbg } from '@/lib/debug';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { SuperAdminButton } from './components/superadmin-button';
 
@@ -17,16 +17,8 @@ const getInputStyles = (isError: boolean) =>
 			: 'border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal',
 	);
 
-export default function LoginPage() {
-	dbg('RENDER', 'LoginPage');
-	const [errors, setErrors] = useState({ username: false, password: false });
-	const [searchParams] = useSearchParams();
-	if (!searchParams.get('redirect')) searchParams.set('redirect', '/');
-	const formRef = useRef<HTMLFormElement>(null);
-	const loginMutation = useLogin();
-	const registerMutation = useRegister();
-
-	// redirect user to /parks if they are logged in
+// hook lives here since it's only used on this page
+const useRedirectIfLoggedIn = () => {
 	const navigate = useNavigate();
 	const { data: user } = useUser();
 
@@ -36,6 +28,15 @@ export default function LoginPage() {
 			navigate('/');
 		}
 	}, [user, navigate]);
+};
+
+export default function LoginPage() {
+	dbg('RENDER', 'LoginPage');
+	const [errors, setErrors] = useState({ username: false, password: false });
+	const formRef = useRef<HTMLFormElement>(null);
+	const loginMutation = useLogin();
+	const registerMutation = useRegister();
+	useRedirectIfLoggedIn(); // redirect user if they are logged in
 
 	const validateFields = (formData: FormData) => {
 		const username = formData.get('username') as string;
