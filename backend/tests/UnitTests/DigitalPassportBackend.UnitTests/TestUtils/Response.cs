@@ -93,6 +93,15 @@ public static class Response
             && expected.park.parkAbbreviation == actual.parkAbbreviation;
     }
 
+    public static bool Equal(Park expected, LocationGeoDataResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.parkAbbreviation == actual.abbreviation
+            && expected.parkName == actual.parkName
+            && Equal(expected.coordinates, actual.coordinates)
+            && expected.boundaries?.ToString() == actual.boundaries;
+    }
+
     private static bool FieldEqual<T, U>(IEnumerable<T> a, Func<T, string?> funcA, IEnumerable<U> b, Func<U, string?> funcB)
     {
         return a.Select(funcA).SequenceEqual(b.Select(funcB));
