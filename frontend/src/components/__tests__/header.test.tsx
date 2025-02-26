@@ -27,12 +27,19 @@ const renderWithProviders = (ui: React.ReactElement) => {
   );
 };
 
+// Update the mock setup
+const mockUseUser = vi.fn();
+vi.mock('@/hooks/queries/useUser', () => ({
+  useUser: () => mockUseUser(),
+}));
+
 describe('Header', () => {
   const mockUsePageTitle = vi.spyOn(usePageTitleHook, 'usePageTitle');
 
   beforeEach(() => {
     mockNavigate.mockClear();
     mockUsePageTitle.mockClear();
+    mockUseUser.mockReturnValue({ data: { id: 1, username: 'testuser', role: 'visitor' } });
   });
 
   it('hides back button at top level pages', () => {
@@ -141,6 +148,17 @@ describe('Header', () => {
 
     const backButton = screen.queryByRole('button', { name: /back/i });
     expect(backButton).not.toBeInTheDocument();
+  });
+
+  it('does not render when user data is null', () => {
+    mockUseUser.mockReturnValue({ data: null });
+    mockUsePageTitle.mockReturnValue({
+      pageTitle: 'Test',
+      showBackButton: false,
+    });
+
+    renderWithProviders(<Header />);
+    expect(screen.queryByRole('banner')).not.toBeInTheDocument();
   });
 });
 
