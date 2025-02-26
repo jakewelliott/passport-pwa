@@ -5,6 +5,8 @@ using DigitalPassportBackend.UnitTests.TestUtils;
 using DigitalPassportBackend.Domain;
 
 using Moq;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Http;
 
 namespace DigitalPassportBackend.UnitTests.Services;
 public class LocationsServiceTests
@@ -27,10 +29,14 @@ public class LocationsServiceTests
         _mockParkPhotos = new();
 
         // Add location data to mocked repositories.
+        SetupInvalidLocation();
         SetupLocation0();
         SetupLocation1();
-        SetupInvalidLocation();
         SetupAllLocations();
+
+        // Setup mock for UploadGeoJson update.
+        _mockLocations.Setup(s => s.Update(It.IsAny<Park>()))
+            .Returns<Park>(p => p);
 
         // Initialize LocationsService.
         _locations = new LocationsService(
@@ -203,9 +209,44 @@ public class LocationsServiceTests
         Assert.Empty(items);
     }
 
+    [Fact]
+    public void UploadGeoJson_UpdatesParks_WhenValidFile()
+    {
+        // Action.
+        var str = _locations.UploadGeoJson(TestFileHelper.Open("test_parks.json"));
+
+        // Assert.
+        Assert.Equal("Successfully imported data from the GeoJSON file.", str);
+    }
+
+    [Fact]
+    public void UploadGeoJson_UpdatesFoundParks_WhenExtraParks()
+    {
+        // Action.
+        var str = _locations.UploadGeoJson(TestFileHelper.Open("test_parks_extra.json"));
+
+        // Assert.
+        Assert.Equal("Successfully imported data from the GeoJSON file. There was an issue with feature 3. No park in the database was found with the specified park abbreviation.", str);
+    }
+
+    [Fact]
+    public void UploadGeoJson_ThrowsException_WhenInvalidFileType()
+    {
+        // Action and assert.
+        Assert.Throws<JsonReaderException>(() => _locations.UploadGeoJson(TestFileHelper.Open("test_parks_invalid.txt")));
+    }
+
+    [Fact]
+    public void UploadGeoJson_ThrowsException_WhenMissingRequiredField()
+    {
+        // Action and assert.
+        var e = Assert.Throws<ServiceException>(() => _locations.UploadGeoJson(TestFileHelper.Open("test_parks_invalid.json")));
+        Assert.Equal(StatusCodes.Status415UnsupportedMediaType, e.StatusCode);
+    }
+
     private void SetupAllLocations() {
         _mockLocations.Setup(s => s.GetAll())
-        .Returns(TestData.Parks);
+            .Returns(TestData.Parks);
     }
 
     // Park with all optional data fields except for park photos filled.
@@ -250,15 +291,15 @@ public class LocationsServiceTests
     // Nonexistent park.
     private void SetupInvalidLocation()
     {
-        _mockLocations.Setup(s => s.GetByAbbreviation("DMV"))
-            .Throws(new NotFoundException($"Park not found with abbreviation DMV"));
-        _mockParkAddresses.Setup(s => s.GetByLocationId(5))
+        _mockLocations.Setup(s => s.GetByAbbreviation(It.IsAny<string>()))
+            .Throws(new NotFoundException($"Park not found"));
+        _mockParkAddresses.Setup(s => s.GetByLocationId(It.IsAny<int>()))
             .Returns([]);
-        _mockBucketList.Setup(s => s.GetByLocationId(5))
+        _mockBucketList.Setup(s => s.GetByLocationId(It.IsAny<int>()))
             .Returns([]);
-        _mockParkIcons.Setup(s => s.GetByLocationId(5))
+        _mockParkIcons.Setup(s => s.GetByLocationId(It.IsAny<int>()))
             .Returns([]);
-        _mockParkPhotos.Setup(s => s.GetByLocationId(5))
+        _mockParkPhotos.Setup(s => s.GetByLocationId(It.IsAny<int>()))
             .Returns([]);
     }
 }
