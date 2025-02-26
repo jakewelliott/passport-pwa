@@ -1,4 +1,4 @@
-
+{
   "type" : "FeatureCollection", 
   "features" : [
     {
@@ -362,7 +362,6 @@
       }, 
       "properties" : {
         "FID" : 1, 
-        "PKABBR" : "CABE", 
         "PK_TYPE" : "SPA", 
         "PK_NAME" : "Carolina Beach", 
         "ACRES" : 701.39092255869514, 
