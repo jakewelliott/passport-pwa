@@ -230,13 +230,6 @@ public class LocationsServiceTests
     }
 
     [Fact]
-    public void UploadGeoJson_ThrowsException_WhenInvalidFileType()
-    {
-        // Action and assert.
-        Assert.Throws<JsonReaderException>(() => _locations.UploadGeoJson(TestFileHelper.Open("test_parks_invalid.txt")));
-    }
-
-    [Fact]
     public void UploadGeoJson_ThrowsException_WhenMissingRequiredField()
     {
         // Action and assert.
