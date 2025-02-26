@@ -16,7 +16,7 @@ describe('ImageModal', () => {
   const mockOnClose = vi.fn();
   const mockPhoto = {
     photoPath: 'test-image.jpg',
-    caption: 'Test Caption',
+    alt: 'Test Caption',
   };
 
   beforeEach(() => {

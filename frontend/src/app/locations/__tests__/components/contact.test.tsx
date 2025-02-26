@@ -1,6 +1,6 @@
 import { LocationContact } from '@/app/locations/components/location-contact';
 import { api } from '@/lib/mock/api';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import AchievementsView from '../../components/achievements-view';
 describe('LocationContact', () => {
@@ -91,5 +91,57 @@ describe('LocationContact', () => {
     render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
     const stampElements = screen.getByTestId("BLI");
     expect(stampElements).toBeInTheDocument();
+  });
+
+  describe('multiple addresses', () => {
+    it('shows only first two addresses by default', () => {
+      const parkWithManyAddresses = {
+        ...park,
+        addresses: [
+          { title: 'Address 1', addressLineOne: 'Address 1', addressLineTwo: '', city: 'City1', state: 'ST', zipcode: 12345 },
+          { title: 'Address 2', addressLineOne: 'Address 2', addressLineTwo: '', city: 'City2', state: 'ST', zipcode: 12346 },
+          { title: 'Address 3', addressLineOne: 'Address 3', addressLineTwo: '', city: 'City3', state: 'ST', zipcode: 12347 },
+        ]
+      };
+      
+      render(<LocationContact park={parkWithManyAddresses} parkActivity={parkActivity} />);
+      
+      expect(screen.getByText(/Address 1/)).toBeInTheDocument();
+      expect(screen.getByText(/Address 2/)).toBeInTheDocument();
+      expect(screen.queryByText(/Address 3/)).not.toBeInTheDocument();
+      expect(screen.getByText('Show More')).toBeInTheDocument();
+    });
+
+    it('toggles between showing all addresses and collapsing them', () => {
+      const parkWithManyAddresses = {
+        ...park,
+        addresses: [
+          { title: 'Address 1', addressLineOne: 'Address 1', addressLineTwo: '', city: 'City1', state: 'ST', zipcode: 12345 },
+          { title: 'Address 2', addressLineOne: 'Address 2', addressLineTwo: '', city: 'City2', state: 'ST', zipcode: 12346 },
+          { title: 'Address 3', addressLineOne: 'Address 3', addressLineTwo: '', city: 'City3', state: 'ST', zipcode: 12347 },
+        ]
+      };
+      
+      render(<LocationContact park={parkWithManyAddresses} parkActivity={parkActivity} />);
+      
+      // Initially only shows 2 addresses
+      expect(screen.queryByText(/Address 3/)).not.toBeInTheDocument();
+      
+      // Click "Show More"
+      fireEvent.click(screen.getByText('Show More'));
+      
+      // Should now show all addresses
+      expect(screen.getByText(/Address 1/)).toBeInTheDocument();
+      expect(screen.getByText(/Address 2/)).toBeInTheDocument();
+      expect(screen.getByText(/Address 3/)).toBeInTheDocument();
+      expect(screen.getByText('Show Less')).toBeInTheDocument();
+      
+      // Click "Show Less"
+      fireEvent.click(screen.getByText('Show Less'));
+      
+      // Should hide the third address again
+      expect(screen.queryByText(/Address 3/)).not.toBeInTheDocument();
+      expect(screen.getByText('Show More')).toBeInTheDocument();
+    });
   });
 });

@@ -57,7 +57,9 @@ exports[`Component Snapshots > Header renders correctly 1`] = `
 exports[`Component Snapshots > ImageModal renders correctly 1`] = `
 <div>
   <div
+    aria-modal="true"
     class="fixed inset-0 flex items-center justify-center bg-system_black"
+    role="dialog"
     style="z-index: 9999;"
   >
     <span
@@ -73,17 +75,11 @@ exports[`Component Snapshots > ImageModal renders correctly 1`] = `
         style="transform: translate(0px, 0px) scale(1);"
       >
         <img
-          alt="Test Image"
+          alt="Photo"
           class="max-h-screen max-w-full object-contain"
           src="/photos/test.jpg"
         />
       </div>
-    </div>
-    <div
-      class="absolute right-0 bottom-4 left-0 bg-system_black bg-opacity-50 p-2 text-center text-system_white"
-      data-testid="caption-container"
-    >
-      Test Image
     </div>
   </div>
 </div>

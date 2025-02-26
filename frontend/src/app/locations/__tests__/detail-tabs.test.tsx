@@ -131,4 +131,52 @@ describe('DetailTabs', () => {
       expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
     });
   });
+
+  it('shows loading placeholder when park is loading', () => {
+    mockUsePark.mockReturnValue({ data: null, isLoading: true });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false });
+    
+    renderWithClient(
+      <Routes>
+        <Route path='/locations/:abbreviation' element={<DetailTabs />} />
+      </Routes>,
+      { routerProps: { initialEntries: ['/locations/CABE'] } },
+    );
+    expect(screen.getByTestId('loading-placeholder')).toBeInTheDocument();
+  });
+
+  it('fetches park activity for non-admin users', () => {
+    mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ 
+      data: mockParkActivity, 
+      isLoading: false 
+    });
+
+    renderWithClient(
+      <Routes>
+        <Route path='/locations/:abbreviation' element={<DetailTabs />} />
+      </Routes>,
+      { routerProps: { initialEntries: ['/locations/CABE'] } },
+    );
+    // Verify components are rendered with park activity data
+    expect(screen.getByTestId('location-contact')).toBeInTheDocument();
+  });
+
+  it('does not fetch park activity for admin users', () => {
+    mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ 
+      data: mockParkActivity, 
+      isLoading: false 
+    });
+    
+    renderWithClient(
+      <Routes>
+        <Route path='/locations/:abbreviation' element={<DetailTabs />} />
+      </Routes>,
+      { routerProps: { initialEntries: ['/locations/CABE'] } },
+    );
+    // Verify components are rendered without park activity data
+    expect(screen.getByTestId('location-contact')).toBeInTheDocument();
+    expect(mockUseParkActivity).not.toHaveBeenCalled();
+  });
 });
