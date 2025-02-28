@@ -14,7 +14,7 @@ const toStringLong = (date: Date) =>
     minute: '2-digit',
     hour12: true,
     timeStyle: undefined,
-    dateStyle: undefined
+    dateStyle: undefined,
   });
 
 const toStringShort = (date: Date) =>

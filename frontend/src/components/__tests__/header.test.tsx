@@ -1,8 +1,8 @@
 import * as usePageTitleHook from '@/hooks/usePageTitle';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Header, { BackButton } from '../header';
 
 // Mock the useNavigate hook
@@ -20,10 +20,8 @@ const renderWithProviders = (ui: React.ReactElement) => {
   const queryClient = new QueryClient();
   return render(
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        {ui}
-      </BrowserRouter>
-    </QueryClientProvider>
+      <BrowserRouter>{ui}</BrowserRouter>
+    </QueryClientProvider>,
   );
 };
 
