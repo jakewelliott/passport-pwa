@@ -15,8 +15,9 @@ export default function DetailTabs() {
   const parkAbbreviation = abbreviation as Uppercase<string>;
   const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
   const { data: user, isLoading: isUserLoading } = useUser();
-  const { data: parkActivity, isLoading: isActivityLoading } = (!isUserLoading && user?.role != 'admin') ? useParkActivity(park?.id ?? 0) : {data: null, isLoading: false};
-  if (isParkLoading || isActivityLoading || !park ) return <LoadingPlaceholder />;
+  const { data: parkActivity, isLoading: isActivityLoading } =
+    !isUserLoading && user?.role !== 'admin' ? useParkActivity(park?.id ?? 0) : { data: null, isLoading: false };
+  if (isParkLoading || isActivityLoading || !park) return <LoadingPlaceholder />;
   return (
     <>
       <LocationContact park={park} parkActivity={parkActivity ?? undefined} />

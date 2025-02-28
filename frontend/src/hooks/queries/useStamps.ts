@@ -1,10 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useUser } from './useUser';
-import { CollectStampRequest } from '@/lib/mock/types';
-import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import { dbg } from '@/lib/debug';
+import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
+import type { CollectStampRequest } from '@/lib/mock/types';
+import type { CollectedStamp } from '@/lib/mock/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { CollectedStamp } from '@/lib/mock/types';
+import { useUser } from './useUser';
 /**
  * Gets all of the local user's stamps, empty array if user is not loaded
  * @returns The stamps for the user
@@ -13,9 +13,9 @@ export const useStamps = () => {
   const { data: user } = useUser();
   const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
     queryKey: ['stamps', user?.id],
-    queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL)
+    queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL),
   });
-  dbg('HOOK', 'useStamps', {data, isLoading});
+  dbg('HOOK', 'useStamps', { data, isLoading });
   return { data, isLoading, refetch };
 };
 
@@ -36,7 +36,7 @@ export const useCollectStamp = (parkAbbreviation: string) => {
   return useMutation<string, Error, CollectStampRequest>({
     mutationFn: async ({ latitude, longitude, inaccuracyRadius, method, dateTime }) => {
       dbg('MUTATE', 'Collecting stamp', { latitude, longitude, inaccuracyRadius, method, dateTime });
-      const response = await fetchPost(API_STAMPS_URL + '/' + parkAbbreviation, {
+      const response = await fetchPost(`${API_STAMPS_URL}/${parkAbbreviation}`, {
         latitude,
         longitude,
         inaccuracyRadius,

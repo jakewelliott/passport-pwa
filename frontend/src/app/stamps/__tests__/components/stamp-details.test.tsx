@@ -1,12 +1,12 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
-import type { Address, Park, CollectedStamp } from '@/lib/mock/types';
+import dateHelper from '@/lib/date-helper';
+import type { Address, CollectedStamp, Park } from '@/lib/mock/types';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { StampDetails } from '../../components/stamp-details';
-import dateHelper from '@/lib/date-helper';
 // Mock the hooks
 vi.mock('@/hooks/queries/useStamps');
 vi.mock('@/hooks/queries/useParks');
@@ -46,7 +46,7 @@ describe('StampDetails', () => {
     parkAbbreviation: 'ENRI',
     createdAt: new Date('2024-01-01T12:00:00.000Z'),
     method: 'manual',
-    id: 0
+    id: 0,
   };
   const mockHandleClose = vi.fn();
 
@@ -63,7 +63,9 @@ describe('StampDetails', () => {
     expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
 
     // Verify collection date is displayed
-    expect(screen.getByText('Stamp collected on ' + dateHelper.stringify(mockStamp.createdAt).replace(',', ' at'))).toBeInTheDocument();
+    expect(
+      screen.getByText(`Stamp collected on ${dateHelper.stringify(mockStamp.createdAt).replace(',', ' at')}`),
+    ).toBeInTheDocument();
   });
 
   // it('shows loading state when park data is loading', () => {

@@ -119,7 +119,7 @@ describe('NotesMiniTab', () => {
   it('synchronizes local note with remote note when remote note differs', () => {
     const localNote = 'Local note';
     const remoteNote = 'Remote note';
-    
+
     mockedUseParkNotesStore.mockReturnValue({
       getNote: () => localNote,
       setNote: mockSetNote,
@@ -137,7 +137,7 @@ describe('NotesMiniTab', () => {
 
   it('does not synchronize when remote note matches local note', () => {
     const sameNote = 'Same note';
-    
+
     mockedUseParkNotesStore.mockReturnValue({
       getNote: () => sameNote,
       setNote: mockSetNote,
@@ -180,10 +180,7 @@ describe('NotesMiniTab', () => {
     fireEvent.click(saveButton);
 
     await waitFor(() => {
-      expect(mockMutate).toHaveBeenCalledWith(
-        { parkId: mockParkId, note: '' },
-        expect.any(Object)
-      );
+      expect(mockMutate).toHaveBeenCalledWith({ parkId: mockParkId, note: '' }, expect.any(Object));
     });
   });
 });
