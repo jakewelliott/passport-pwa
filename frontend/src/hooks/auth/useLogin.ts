@@ -1,12 +1,11 @@
 import { dbg } from '@/lib/debug';
-import { API_AUTH_LOGIN_URL } from '@/lib/fetch';
-import { fetchPost } from '@/lib/fetch';
+import { API_AUTH_LOGIN_URL, fetchPost } from '@/lib/fetch';
 import type { LoginCredentials } from '@/lib/mock/types';
 import { queryClient } from '@/lib/tanstack-local-storage';
 import { decodeToken } from '@/lib/token-helper';
 import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 /**
@@ -15,6 +14,8 @@ import { toast } from 'react-toastify';
  */
 export const useLogin = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get('redirect');
 
   return useMutation<string, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
@@ -36,7 +37,7 @@ export const useLogin = () => {
         toast.success(`Welcome back, ${username}`);
       }, 1000);
 
-      navigate('/');
+      navigate(redirect ?? '/');
     },
     onError: (error) => {
       dbg('ERROR', 'useLogin', error);

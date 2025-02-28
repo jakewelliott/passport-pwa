@@ -1,3 +1,4 @@
+import { API_ACTIVITY_URL, fetchGet, fetchPut } from '@/lib/fetch';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Note {
@@ -5,42 +6,17 @@ interface Note {
   note: string;
 }
 
-const BASE_URL = `http://localhost:${process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT}/api`;
-
-const fetchNote = async (parkId: number): Promise<Note> => {
-  const response = await fetch(`${BASE_URL}/activity/park/${parkId}`);
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  const data = await response.json();
-  return data.privateNote;
-};
-
-const updateNote = async (parkId: number, note: string): Promise<Note> => {
-  const response = await fetch(`${BASE_URL}/activity/park/${parkId}/note`, {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ note }),
-  });
-  if (!response.ok) {
-    throw new Error('Network response was not ok');
-  }
-  return await response.json();
-};
-
 export const useNote = (parkId: number) => {
   return useQuery<Note>({
     queryKey: ['note', parkId],
-    queryFn: () => fetchNote(parkId),
+    queryFn: () => fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
   });
 };
 
 export const useUpdateNote = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ parkId, note }: { parkId: number; note: string }) => updateNote(parkId, note),
+    mutationFn: ({ parkId, note }: { parkId: number; note: string }) => fetchPut(`${API_ACTIVITY_URL}/${parkId}`, note),
     onSuccess: (data, variables) => {
       queryClient.setQueryData(['note', variables.parkId], data);
     },
