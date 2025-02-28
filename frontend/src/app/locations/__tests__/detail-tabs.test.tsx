@@ -129,7 +129,7 @@ describe('DetailTabs', () => {
     await waitFor(() => {
       const achievementsElement = screen.getByTestId('achievements-view');
       expect(achievementsElement).toHaveTextContent(/Stamp collected/);
-      expect(achievementsElement).toHaveTextContent(/2024-02-16/);
+      expect(achievementsElement).toHaveTextContent("2/16/24 at 6:48 AM");
 
       expect(achievementsElement).toHaveTextContent(/Bucket List Item/);
       expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
