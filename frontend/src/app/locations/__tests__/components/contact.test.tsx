@@ -3,6 +3,8 @@ import { api } from '@/lib/mock/api';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import AchievementsView from '../../components/achievements-view';
+import DateHelper from '@/lib/date-helper';
+
 describe('LocationContact', () => {
   const park = api.getParks()[0];
   const parkActivity = api.getParkActivity()[0];
@@ -53,7 +55,7 @@ describe('LocationContact', () => {
 
   it ('renders achievements', () => {
     render(<LocationContact park={park} parkActivity={parkActivity} />);
-    const stampElement = screen.getByText('Stamp collected Yesterday');
+    const stampElement = screen.getByText('Stamp collected on 2/16/24 at 1:48 AM');
     expect(stampElement).toBeInTheDocument();
     expect(screen.queryAllByTestId('BLI').length).toBe(0);
   });
@@ -70,7 +72,7 @@ describe('LocationContact', () => {
     const currentDate = new Date().toISOString();
     parkActivityNew.stampCollectedAt = currentDate;
     render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
-    stampElements = screen.getAllByText('Stamp collected ' + currentDate);
+    stampElements = screen.getAllByText('Stamp collected on ' + DateHelper.stringify(new Date(currentDate)).replace(',', ' at'));
     expect(stampElements.length).toEqual(1);
   });
 

@@ -1,5 +1,6 @@
 import type { Park, ParkActivity } from '@/lib/mock/types';
 import { FaRegCheckSquare, FaRegSquare, FaStamp } from 'react-icons/fa';
+import DateHelper from '@/lib/date-helper';
 
 interface AchievementsViewProps {
   parkActivity: ParkActivity;
@@ -14,7 +15,7 @@ const AchievementsView = ({ parkActivity, park }: AchievementsViewProps) => {
           <FaStamp size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
           <p>
             {parkActivity.stampCollectedAt
-              ? `Stamp collected ${parkActivity.stampCollectedAt}`
+              ? `Stamp collected on ${DateHelper.stringify(new Date(parkActivity.stampCollectedAt)).replace(',', ' at')}`
               : 'Stamp not yet collected'}
           </p>
         </div>
