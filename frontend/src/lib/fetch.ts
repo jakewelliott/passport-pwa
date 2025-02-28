@@ -1,10 +1,8 @@
 import { dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
 
-const API_PORT = process.env.PROD === 'PROD' ? process.env.NGINX_PORT : process.env.API_DEV_PORT;
-const API_PROTOCOL = process.env.PROD === 'PROD' ? 'https' : 'http';
-
-export const API_URL = `${API_PROTOCOL}://localhost:${API_PORT}/api`;
+const API_PORT = process.env.NGINX_PORT;
+export const API_URL = `https://localhost:${API_PORT}/api`;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
@@ -23,6 +21,7 @@ export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
 
 const getAuthHeaders = (): Record<string, string> => {
   const token = Cookies.get('token');
+  console.log('token', token);
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
@@ -30,9 +29,6 @@ export const fetchPost = async (url: string, body: any) => {
   dbg('FETCH', 'POST', { url, body });
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     ...getAuthHeaders(),
   };
 
@@ -53,9 +49,6 @@ export const fetchPost = async (url: string, body: any) => {
 export const fetchGet = async (url: string) => {
   dbg('FETCH', 'GET', { url });
   const headers: Record<string, string> = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Authorization',
     ...getAuthHeaders(),
   };
 
@@ -75,12 +68,32 @@ export const fetchGet = async (url: string) => {
   return data;
 };
 
+export const fetchPut = async (url: string, body: any) => {
+  dbg('FETCH', 'PUT', { url, body });
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+    ...getAuthHeaders(),
+  };
+
+  const response = await fetch(url, {
+    method: 'PUT',
+    headers,
+    credentials: 'include',
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) await fetchError(response);
+
+  dbg('FETCH', 'PUT RESPONSE', { response });
+  return response;
+};
+
 const fetchError = async (response: Response) => {
   dbg('ERROR', 'FETCH', { response });
-  var message = "";
+  let message = '';
   try {
     const errorData = await response.json();
-    const errorMessage = errorData.detail || "response.statusText";
+    const errorMessage = errorData.detail || response.statusText;
     message = errorMessage;
   } catch (error) {
     message = response.statusText;

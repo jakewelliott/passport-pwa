@@ -1,12 +1,11 @@
 import { dbg } from '@/lib/debug';
-import { fetchPost } from '@/lib/fetch';
-import { API_AUTH_REGISTER_URL } from '@/lib/fetch';
+import { API_AUTH_REGISTER_URL, fetchPost } from '@/lib/fetch';
 import type { LoginCredentials } from '@/lib/mock/types';
 import { queryClient } from '@/lib/tanstack-local-storage';
 import { decodeToken } from '@/lib/token-helper';
 import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 /**
  * Registers a new user and redirects to the home page
@@ -14,6 +13,8 @@ import { toast } from 'react-toastify';
  */
 export const useRegister = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const redirect = searchParams.get('redirect');
 
   return useMutation<string, Error, LoginCredentials>({
     mutationFn: async ({ username, password }) => {
@@ -35,7 +36,7 @@ export const useRegister = () => {
         toast.success(`Successfully registered as ${username}`);
       }, 1000);
 
-      navigate('/');
+      navigate(redirect ?? '/');
     },
     onError: (error) => {
       dbg('ERROR', 'useRegister', error);
