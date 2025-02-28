@@ -4,12 +4,15 @@ import { screen, waitFor } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 import DetailTabs from '../detail-tabs';
+import { useUser } from '@/hooks/queries/useUser';
 
 // Mock the hooks
 vi.mock('@/hooks/queries/useParks');
+vi.mock('@/hooks/queries/useUser');
 
 const mockUsePark = usePark as Mock;
 const mockUseParkActivity = useParkActivity as Mock;
+const mockUseUser = useUser as Mock;
 
 describe('DetailTabs', () => {
   const mockPark = {
@@ -56,6 +59,7 @@ describe('DetailTabs', () => {
     vi.clearAllMocks();
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
     mockUseParkActivity.mockReturnValue({ data: mockParkActivity, isLoading: false });
+    mockUseUser.mockReturnValue({ data: { role: 'user' }, isLoading: false });
   });
 
   const renderDetailTabs = () => {
@@ -163,6 +167,7 @@ describe('DetailTabs', () => {
   });
 
   it('does not fetch park activity for admin users', () => {
+    mockUseUser.mockReturnValue({ data: { role: 'admin' }, isLoading: false });
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
     mockUseParkActivity.mockReturnValue({ 
       data: mockParkActivity, 
