@@ -65,13 +65,13 @@ const LoggedInRoutes = () => {
 
   useEffect(() => {
     // Initial check
-    if (park && !isCollected(park.abbreviation, stamps ?? [])) {
+    if (park && !isAdmin && !isCollected(park.abbreviation, stamps ?? [])) {
       setShowCollectModal(true);
     }
 
     // Set up interval for checking every 5 minutes
     const interval = setInterval(() => {
-      if (park && !isCollected(park.abbreviation, stamps ?? [])) {
+      if (park && !isAdmin && !isCollected(park.abbreviation, stamps ?? [])) {
         setShowCollectModal(true);
       }
     }, 5 * 60 * 1000); // 5 minutes in milliseconds
