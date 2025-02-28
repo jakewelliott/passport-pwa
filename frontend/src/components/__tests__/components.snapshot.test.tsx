@@ -70,7 +70,7 @@ describe('Component Snapshots', () => {
 
   it('ImageModal renders correctly', () => {
     const { container } = render(
-      <ImageModal photo={{ photoPath: 'test.jpg', caption: 'Test Image' }} onClose={() => {}} />,
+      <ImageModal photo={{ photoPath: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />,
     );
     expect(container).toMatchSnapshot();
   });
