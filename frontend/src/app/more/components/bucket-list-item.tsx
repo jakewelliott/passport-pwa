@@ -1,64 +1,53 @@
-import type { Park } from '@/lib/mock/types';
+import { useParks } from '@/hooks/queries/useParks';
 import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
+import DateHelper from '@/lib/date-helper';
+import { useLocation } from '@/hooks/useLocation';
+import { useUpdateBucketListItem } from '@/hooks/queries/useBucketList';
+import { CompletedBucketListItem, BucketListItemInterface } from '@/lib/mock/types';
 
-const park: Park = {
-  abbreviation: 'CABE',
-  parkName: 'Sample Data',
-  addresses: [
-    {
-      title: 'Secondary Address:',
-      addressLineOne: '1234 Main St',
-      city: 'Raleigh',
-      state: 'NC',
-      zipcode: 27606,
-      addressLineTwo: '',
-    },
-    {
-      title: 'Tertiary Address:',
-      addressLineOne: '1234 Main St',
-      city: 'Raleigh',
-      state: 'NC',
-      zipcode: 27606,
-      addressLineTwo: '',
-    },
-  ],
-  coordinates: { latitude: 35.2023, longitude: -78.9761, accuracy: 0 },
-  phone: 5555555555,
-  email: 'email@ncparks.gov',
-  website: 'ncparks.gov',
-  establishedYear: '2003',
-  landmark: 'My House',
-  youCanFind: 'My items',
-  trails: 'The driveway',
-  icons: [{ iconName: 'Paddling-Red.svg' }, { iconName: 'RVCamping-Green.svg' }, { iconName: 'Playground-Blue.svg' }],
-  photos: [
-    {
-      photoPath: './photos/CABE.jpg',
-      alt: '',
-    },
-    {
-      photoPath: './photos/CACR.jpg',
-      alt: '',
-    },
-    {
-      photoPath: './photos/CACR.jpg',
-      alt: '',
-    },
-  ],
-  id: 0,
-  bucketListItems: [],
-};
+interface BucketListItemProps {
+  bucketListItem: BucketListItemInterface;
+  completedItems: CompletedBucketListItem[];
+}
 
-export const BucketListItem = () => {
-  const hasValidBucketListItem = park.bucketListItems?.[0]?.task?.length >= 0;
+export const BucketListItem = ({ bucketListItem, completedItems }: BucketListItemProps) => {
+  const isCompleted = completedItems.some(item => item.id === bucketListItem.id);
+  const { data: parks } = useParks();
+  const park = parks?.find(park => park.id === bucketListItem.park);
+  const useUpdateBucketListItemMutation = useUpdateBucketListItem();
+  const userLocation = useLocation();
+
+  function updateBucketListItem(id: number, status: string): void {
+    const useUpdateBucketListItemMutation = useUpdateBucketListItem(id);
+    useUpdateBucketListItemMutation.mutate({
+      latitude: userLocation.geopoint?.latitude ?? 0, 
+      longitude: userLocation.geopoint?.longitude ?? 0, 
+      status: status, 
+      updatedAt: new Date()
+    }, {
+      onSuccess: () => {
+        if (status === 'completed') {
+          completedItems.push({
+            id: bucketListItem.id,
+            park: bucketListItem.park,
+            updatedAt: DateHelper.stringify(new Date())
+          });
+        } else {
+          completedItems = completedItems.filter(item => item.id !== bucketListItem.id);
+        }
+      }
+    });
+  }
+
   return (
     <div className='my-2.5 flex items-start'>
-      {hasValidBucketListItem ? (
+      {isCompleted ? (
         <FaRegCheckSquare
           data-testid='checked-icon'
           size={'24px'}
           strokeWidth={3}
           style={{ paddingRight: '5px', paddingTop: '3px' }}
+          onClick={() => updateBucketListItem(bucketListItem.id, 'not completed')}
         />
       ) : (
         <FaRegSquare
@@ -66,13 +55,16 @@ export const BucketListItem = () => {
           size={'24px'}
           strokeWidth={3}
           style={{ paddingRight: '5px', paddingTop: '3px' }}
+          onClick={() => updateBucketListItem(bucketListItem.id, 'completed')}
         />
       )}
       <div className='flex w-full flex-col justify-center'>
-        <p>Participate</p>
+        <p>{bucketListItem.task}</p>
         <div className='flex flex-wrap items-center justify-between gap-2'>
-          <p className='p-mini text-main_green'>Raleigh</p>
-          <p className='p-mini'>1/1/2025</p>
+          <p className='p-mini text-main_green'>{park?.addresses[0].city ?? ''}</p>
+          {isCompleted && (
+            <p className='p-mini'>{DateHelper.toStringShort(new Date(completedItems.find(item => item.id === bucketListItem.id)?.updatedAt ?? ''))}</p>
+          )}
         </div>
       </div>
     </div>

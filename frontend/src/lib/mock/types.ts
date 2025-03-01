@@ -104,3 +104,15 @@ export interface CollectStampRequest {
   method: string;
   dateTime: Date;
 }
+
+export interface CompletedBucketListItem {
+  id: number;
+  park: number;
+  updatedAt: string;
+}
+
+export interface BucketListItemInterface {
+  id: number;
+  task: string;
+  park: number;
+};
