@@ -117,7 +117,9 @@ namespace DigitalPassportBackend.UnitTests.Services
         _mockCollectedStamps.Setup(s => s.Create(It.IsAny<CollectedStamp>()))
                 .Returns(expected);
 
-        // Action.
+        try
+        {
+            // Action.
         var result = _activities.CollectStamp(
             TestData.Parks[0].parkAbbreviation,
             stamp.location.X, stamp.location.Y, 0.005,
@@ -127,6 +129,13 @@ namespace DigitalPassportBackend.UnitTests.Services
 
         // Assert.
         Assert.Equal(expected, result);
+        }
+        catch (ServiceException e)
+            {
+                var park = TestData.Parks[0];
+                throw new Exception($"Test failed. Park boundaries: {park.boundaries}, Test coordinates: ({stamp.location.X}, {stamp.location.Y})", e);
+            }
+        
         }
 
         [Fact]
