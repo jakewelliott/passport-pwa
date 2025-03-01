@@ -1,4 +1,3 @@
-import park_activity from './park_activity';
 import parks from './parks';
 import { userProfile } from './user';
 
@@ -9,9 +8,11 @@ import type { Geopoint, Park } from './types';
 // For now, this will do as a mock API.
 
 export const api = {
+  // ADAM: don't add anything here, it's just holding up the tests
+  // but should really be replaced by JSON served on the backend
+
   // Parks
   getParks: () => parks,
-  getParkActivity: () => park_activity,
   getPark: (abbreviation: string) => parks.find((park: Park) => park.abbreviation === abbreviation),
 
   // Users
