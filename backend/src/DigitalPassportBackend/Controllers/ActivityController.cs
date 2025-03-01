@@ -41,7 +41,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkAbbreviation, request.longitude, request.latitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
     }
 
-    [HttpPost("notes/{parkAbbreviation:string}")]
+    [HttpPost("notes/{parkAbbreviation}")]
     [Authorize(Roles = "visitor")]
     public IActionResult CreateNote(string parkAbbreviation, [FromBody] PrivateNoteRequest req)
     {
@@ -49,7 +49,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(PrivateNoteResponse.FromDomain(_activityService.CreatePrivateNote(parkAbbreviation, userId, req.note)));
     }
     
-    [HttpPost("notes/{noteId:int}")]
+    [HttpPost("notes/update/{noteId}")]
     [Authorize(Roles = "visitor")]
     public IActionResult UpdateNote(int noteId, [FromBody] PrivateNoteRequest req)
     {
