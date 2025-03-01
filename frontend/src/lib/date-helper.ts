@@ -7,10 +7,15 @@ const fromString = (date: string) => {
 
 const toStringLong = (date: Date) =>
   date.toLocaleString('default', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    weekday: 'long',
+    month: 'numeric',
+    day: 'numeric', 
+    year: '2-digit',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    timeStyle: undefined,
+    dateStyle: undefined,
+    timeZone: 'America/New_York'
   });
 
 const toStringShort = (date: Date) =>

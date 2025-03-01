@@ -34,13 +34,6 @@ const ICON_SVG = [
 
 type IconName = (typeof ICON_SVG)[number];
 
-// const filterIcons = (r: string) => ICON_SVG.filter((icon): icon is IconName => icon.includes(r));
-
-// const activityIcons = filterIcons('Red');
-// const amenityIcons = filterIcons('Blue');
-// const campingIcons = filterIcons('Green');
-// const blazeIcons = filterIcons('Blaze');
-
 type IconSize = 'sm' | 'md' | 'lg';
 
 const sizeMap = {

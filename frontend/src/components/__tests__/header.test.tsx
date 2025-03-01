@@ -2,6 +2,7 @@ import * as usePageTitleHook from '@/hooks/usePageTitle';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Header, { BackButton } from '../header';
 
 // Mock the useNavigate hook
@@ -14,12 +15,31 @@ vi.mock('react-router-dom', async () => {
   };
 });
 
+// Add this helper function at the top level
+const renderWithProviders = (ui: React.ReactElement) => {
+  const queryClient = new QueryClient();
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        {ui}
+      </BrowserRouter>
+    </QueryClientProvider>
+  );
+};
+
+// Update the mock setup
+const mockUseUser = vi.fn();
+vi.mock('@/hooks/queries/useUser', () => ({
+  useUser: () => mockUseUser(),
+}));
+
 describe('Header', () => {
   const mockUsePageTitle = vi.spyOn(usePageTitleHook, 'usePageTitle');
 
   beforeEach(() => {
     mockNavigate.mockClear();
     mockUsePageTitle.mockClear();
+    mockUseUser.mockReturnValue({ data: { id: 1, username: 'testuser', role: 'visitor' } });
   });
 
   it('hides back button at top level pages', () => {
@@ -28,11 +48,7 @@ describe('Header', () => {
       showBackButton: false,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     expect(screen.queryByText('Back')).not.toBeInTheDocument();
     expect(screen.getByText('Stamps')).toBeInTheDocument();
@@ -44,11 +60,7 @@ describe('Header', () => {
       showBackButton: true,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     expect(screen.getByText('Back')).toBeInTheDocument();
     expect(screen.getByText('Park Details')).toBeInTheDocument();
@@ -60,11 +72,7 @@ describe('Header', () => {
       showBackButton: true,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     const backButton = screen.getByText('Back').closest('button');
     if (!backButton) {
@@ -80,11 +88,7 @@ describe('Header', () => {
       showBackButton: true,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     const header = screen.getByRole('banner');
     const expectedClasses = ['relative', 'flex', 'items-center', 'justify-center', 'bg-secondary_darkteal', 'p-4'];
@@ -103,11 +107,7 @@ describe('Header', () => {
       showBackButton: false,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     expect(screen.getByText('Custom Page Title')).toBeInTheDocument();
   });
@@ -118,11 +118,7 @@ describe('Header', () => {
       showBackButton: false,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     const balancePlaceholder = screen.getByTestId('balance-placeholder');
     expect(balancePlaceholder).toBeInTheDocument();
@@ -135,11 +131,7 @@ describe('Header', () => {
       showBackButton: true,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     const backButton = screen.getByRole('button', { name: /back/i });
     expect(backButton).toBeInTheDocument();
@@ -152,14 +144,21 @@ describe('Header', () => {
       showBackButton: false,
     });
 
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<Header />);
 
     const backButton = screen.queryByRole('button', { name: /back/i });
     expect(backButton).not.toBeInTheDocument();
+  });
+
+  it('does not render when user data is null', () => {
+    mockUseUser.mockReturnValue({ data: null });
+    mockUsePageTitle.mockReturnValue({
+      pageTitle: 'Test',
+      showBackButton: false,
+    });
+
+    renderWithProviders(<Header />);
+    expect(screen.queryByRole('banner')).not.toBeInTheDocument();
   });
 });
 
@@ -169,22 +168,14 @@ describe('BackButton', () => {
   });
 
   it('renders nothing when hidden prop is true', () => {
-    render(
-      <BrowserRouter>
-        <BackButton hidden={true} />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<BackButton hidden={true} />);
 
     const backButton = screen.queryByRole('button', { name: /back/i });
     expect(backButton).not.toBeInTheDocument();
   });
 
   it('renders back button with correct icon and text', () => {
-    render(
-      <BrowserRouter>
-        <BackButton hidden={false} />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<BackButton hidden={false} />);
 
     const backButton = screen.getByRole('button', { name: /back/i });
     expect(backButton).toBeInTheDocument();
@@ -193,11 +184,7 @@ describe('BackButton', () => {
   });
 
   it('navigates back when clicked', () => {
-    render(
-      <BrowserRouter>
-        <BackButton hidden={false} />
-      </BrowserRouter>,
-    );
+    renderWithProviders(<BackButton hidden={false} />);
 
     const backButton = screen.getByRole('button', { name: /back/i });
     fireEvent.click(backButton);

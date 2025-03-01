@@ -18,6 +18,7 @@ const dummy: Park = {
   coordinates: {
     latitude: 10,
     longitude: 10,
+    accuracy: 0,
   },
   phone: 1234567890,
   icons: [],

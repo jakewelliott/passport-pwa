@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using static DigitalPassportBackend.Controllers.LocationsController;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.UnitTests.TestUtils;
+using Microsoft.AspNetCore.Http;
 
 namespace DigitalPassportBackend.UnitTests.Controllers;
 public class LocationsControllerTests
@@ -85,7 +86,6 @@ public class LocationsControllerTests
         var locations = new List<Park>();
         _mockLocationsService.Setup(s => s.GetAll()).Returns(locations);
 
-
         // Act
         var result = _controller.GetAll();
 
@@ -94,6 +94,75 @@ public class LocationsControllerTests
         var okResult = Assert.IsType<OkObjectResult>(result);
         var returnedLocations = Assert.IsType<List<LocationResponse>>(okResult.Value);
         Assert.Empty(returnedLocations);
+    }
+
+    [Fact]
+    public void UploadGeoJson_ReturnsSuccess_WhenValidGeoJsonFile()
+    {
+        // Setup.
+        _mockLocationsService.Setup(s => s.UploadGeoJson(It.IsAny<IFormFile>()))
+            .Returns("Successfully imported data from the GeoJSON file.");
+        
+        // Action.
+        var result = _controller.UploadGeoJson(TestFileHelper.Open("test_parks.json"));
+
+        // Assert.
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var str = Assert.IsType<string>(okResult.Value);
+        Assert.Equal("Successfully imported data from the GeoJSON file.", str);
+    }
+
+    [Fact]
+    public void UploadGeoJson_ThrowsException_WhenInvalidFileType()
+    {
+        // Action and assert.
+        var e = Assert.Throws<ServiceException>(() => _controller.UploadGeoJson(TestFileHelper.Open("test_parks_invalid.txt")));
+        Assert.Equal(StatusCodes.Status415UnsupportedMediaType, e.StatusCode);
+    }
+
+    [Fact]
+    public void UploadGeoJson_ThrowsException_WhenNullFile()
+    {
+        // Action and assert.
+        var e = Assert.Throws<ServiceException>(() => _controller.UploadGeoJson(null!));
+        Assert.Equal(StatusCodes.Status415UnsupportedMediaType, e.StatusCode);
+    }
+
+    [Fact]
+    public void GetGeoData_ReturnsPopulatedList_WhenLocationsExist()
+    {
+        // Setup.
+        SetupLocation(TestData.Parks[0]);
+        SetupLocation(TestData.Parks[1]);
+        _mockLocationsService.Setup(s => s.GetAll())
+            .Returns(_locations);
+
+        // Action.
+        var result = _controller.GetGeoData();
+
+        // Assert.
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var list = Assert.IsType<List<LocationGeoDataResponse>>(okResult.Value);
+        Assert.Equal(_locations.Count, list.Count);
+        Assert.True(Response.Equal(TestData.Parks[0], list[0]));
+        Assert.True(Response.Equal(TestData.Parks[1], list[1]));
+    }
+
+    [Fact]
+    public void GetGeoData_ReturnsEmptyList_WhenLocationsDNE()
+    {
+        // Setup.
+        var locations = new List<Park>();
+        _mockLocationsService.Setup(s => s.GetAll())
+            .Returns(locations);
+        
+        // Action.
+        var result = _controller.GetGeoData();
+
+        // Assert.
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var list = Assert.IsType<List<LocationGeoDataResponse>>(okResult.Value);
+        Assert.Empty(list);
     }
 
     private void SetupLocation(Park park)

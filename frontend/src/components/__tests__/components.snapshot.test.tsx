@@ -10,6 +10,7 @@ import RoundedButton from '../rounded-button';
 import { SplashScreen } from '../splash-screen';
 import TabBar from '../tab-bar';
 import { TrailIcons } from '../trail-icons';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
@@ -35,6 +36,14 @@ vi.mock('@/hooks/usePageTitle', () => ({
 }));
 
 describe('Component Snapshots', () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
   it('TabBar renders correctly', () => {
     const { container } = render(
       <BrowserRouter>
@@ -61,16 +70,18 @@ describe('Component Snapshots', () => {
 
   it('ImageModal renders correctly', () => {
     const { container } = render(
-      <ImageModal photo={{ photoPath: 'test.jpg', caption: 'Test Image' }} onClose={() => {}} />,
+      <ImageModal photo={{ photoPath: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />,
     );
     expect(container).toMatchSnapshot();
   });
 
   it('Header renders correctly', () => {
     const { container } = render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>,
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </QueryClientProvider>,
     );
     expect(container).toMatchSnapshot();
   });

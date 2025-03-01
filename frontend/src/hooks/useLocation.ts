@@ -6,6 +6,7 @@ interface LocationState {
   geopoint: {
     latitude: number;
     longitude: number;
+    accuracy: number;
   } | null;
   error: string | null;
   isLoading: boolean;
@@ -39,6 +40,7 @@ export const useLocation = (spoof?: Geopoint) => {
           geopoint: {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
+            accuracy: position.coords.accuracy / 87000,
           },
           error: null,
           isLoading: false,

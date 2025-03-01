@@ -62,5 +62,4 @@ jobs:
     - name: Shut down Docker Compose
       if: always()
       run: |
-        cd backend
         docker-compose down
