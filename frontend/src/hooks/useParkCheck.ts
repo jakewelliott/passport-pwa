@@ -2,7 +2,7 @@ import { useParks, useParksGeo } from '@/hooks/queries/useParks';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg, dbgif, sjason } from '@/lib/debug';
 import type { Geopoint, Park, ParkGeoData } from '@/lib/mock/types';
-import { buffer, booleanIntersects, booleanPointInPolygon } from '@turf/turf';
+import { booleanIntersects, booleanPointInPolygon, buffer } from '@turf/turf';
 import { useEffect, useState } from 'react';
 import wkt from 'wellknown';
 
@@ -32,28 +32,24 @@ const castGeopoint = (geopoint: Geopoint): GeoJSON.Feature<GeoJSON.Point> => {
   };
 };
 
-const parkCheck = (
-  point: GeoJSON.Feature<GeoJSON.Point>,
-  accuracy: number,
-  parks: Park[],
-  parksGeo: ParkGeoData[],
-): Park | undefined => {
+const parkCheck = (point: GeoJSON.Feature<GeoJSON.Point>, accuracy: number, parks: Park[], parksGeo: ParkGeoData[]): Park | undefined => {
   for (const parkGeo of parksGeo) {
     try {
-      const boundaries = wkt.parse(parkGeo.boundaries || '');
+
+      const boundaries = wkt.parse(parkGeo.boundaries || "");
       if (boundaries?.type === 'GeometryCollection') {
-        for (const geometry of boundaries?.geometries || []) {
+        for (const geometry of boundaries!.geometries) {
           if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
             // If point is within polygon, find and return matching park
             if (booleanPointInPolygon(point, geometry)) {
-              return parks.find((park) => park.abbreviation === parkGeo.abbreviation);
+              return parks.find(park => park.abbreviation === parkGeo.abbreviation);
             }
             // Create buffered point using accuracy radius
-            const bufferedPoint = buffer(point, accuracy, { units: 'degrees' }) as GeoJSON.Feature<GeoJSON.Polygon>;
-
+            const bufferedPoint = buffer(point, accuracy, {units: 'degrees'}) as GeoJSON.Feature<GeoJSON.Polygon>;
+            
             // Check if either the point is in the polygon or the buffer intersects it
             if (booleanPointInPolygon(point, geometry) || booleanIntersects(bufferedPoint, geometry)) {
-              return parks.find((park) => park.abbreviation === parkGeo.abbreviation);
+              return parks.find(park => park.abbreviation === parkGeo.abbreviation);
             }
           }
         }
@@ -88,7 +84,7 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
     dbgif(!park, 'ERROR', 'useParkCheck', 'park not found');
 
     setCurrentPark(park);
-  }, [geopoint, parks, parksGeo]);
+  }, [geopoint, parks]);
 
   dbgif(parksLoading, 'HOOK', 'useParkCheck', 'parks loading');
   dbgif(geopointLoading, 'HOOK', 'useParkCheck', 'geopoint loading');

@@ -55,7 +55,7 @@ describe('LoginPage', () => {
   it('shows validation errors when submitting empty field', async () => {
     renderLoginPage();
     fireEvent.change(screen.getByPlaceholderText('Username'), {
-      target: { value: 'username' },
+      target: { value: 'username' }
     });
     fireEvent.click(screen.getByText('Login'));
 
@@ -64,10 +64,10 @@ describe('LoginPage', () => {
     });
 
     fireEvent.change(screen.getByPlaceholderText('Password'), {
-      target: { value: 'password' },
+      target: { value: 'password' }
     });
     fireEvent.change(screen.getByPlaceholderText('Username'), {
-      target: { value: '' },
+      target: { value: '' }
     });
     fireEvent.click(screen.getByText('Login'));
 

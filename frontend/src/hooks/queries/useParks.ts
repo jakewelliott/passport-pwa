@@ -1,5 +1,5 @@
-import { API_PARKGEO_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
-import type { Park, ParkGeoData } from '@/lib/mock/types';
+import { API_ACTIVITY_URL, API_PARKGEO_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
+import { ParkGeoData, type Park, type ParkActivity } from '@/lib/mock/types';
 import { useQuery } from '@tanstack/react-query';
 
 // ADAM:
@@ -17,6 +17,13 @@ export const usePark = (abbreviation: string) => {
   return useQuery<Park>({
     queryKey: ['park', abbreviation],
     queryFn: async () => await fetchGet(`${API_PARKS_URL}/${abbreviation}`),
+  });
+};
+
+export const useParkActivity = (parkId: number) => {
+  return useQuery<ParkActivity>({
+    queryKey: ['parkActivity', parkId],
+    queryFn: async () => await fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
   });
 };
 
