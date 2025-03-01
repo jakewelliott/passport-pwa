@@ -89,11 +89,11 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         }
     }
 
-    public record BucketListItemResponse(string task)
+    public record BucketListItemResponse(int id,string task)
     {
         public static BucketListItemResponse FromDomain(BucketListItem bucketListItem)
         {
-            return new BucketListItemResponse(bucketListItem.task);
+            return new BucketListItemResponse(bucketListItem.id, bucketListItem.task);
         }
     }
 

@@ -8,6 +8,8 @@ interface AchievementsViewProps {
 }
 
 const AchievementsView = ({ parkActivity, park }: AchievementsViewProps) => {
+
+
   return (
     <div className='flex flex-col gap-3' data-testid='achievements-view'>
       {parkActivity.stampCollectedAt !== undefined && (
@@ -23,17 +25,21 @@ const AchievementsView = ({ parkActivity, park }: AchievementsViewProps) => {
       {
         park.bucketListItems &&
         park.bucketListItems.length > 0 && (
-          <div className='top-0 flex'>
-            {parkActivity.completedBucketListItems[0]?.id ? (
-              <FaRegCheckSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-            ) : (
-              <FaRegSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-            )}
-            <p data-testid={'BLI'}>
-              Bucket List Item:
-              <br />
-              {park.bucketListItems[0].task}
-            </p>
+          <div className='flex flex-col gap-2'>
+            {park.bucketListItems.map((item, index) => (
+              <div key={index} className='top-0 flex'>
+                {parkActivity.completedBucketListItems.some(completed => completed.id === item.id) ? (
+                  <FaRegCheckSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+                ) : (
+                  <FaRegSquare size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+                )}
+                <p data-testid={'BLI'}>
+                  Bucket List Item:
+                  <br />
+                  {item.task}
+                </p>
+              </div>
+            ))}
           </div>
         )}
     </div>

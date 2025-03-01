@@ -77,9 +77,9 @@ describe('LocationContact', () => {
   });
 
   it('Renders bucket list items', () => {
-    const parkNew = park;
-    parkNew.bucketListItems.push({task: "Bucket"})
-    const parkActivityNew = parkActivity;
+    const parkNew = { ...park, bucketListItems: [...park.bucketListItems] };
+    parkNew.bucketListItems.push({id: 0, task: "Bucket"});
+    const parkActivityNew = { ...parkActivity, completedBucketListItems: [...parkActivity.completedBucketListItems] };
     parkActivityNew.completedBucketListItems.push({id: 0});
     render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
     const stampElements = screen.getByTestId("BLI");
@@ -87,9 +87,9 @@ describe('LocationContact', () => {
   });
 
   it('renders unchecked bucket list icon when required', () => {
-    const parkNew = park;
-    parkNew.bucketListItems.push({task: "Bucket"})
-    const parkActivityNew = parkActivity;
+    const parkNew = { ...park, bucketListItems: [...park.bucketListItems] };
+    parkNew.bucketListItems.push({id: 0, task: "Bucket"});
+    const parkActivityNew = { ...parkActivity };
     render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
     const stampElements = screen.getByTestId("BLI");
     expect(stampElements).toBeInTheDocument();
