@@ -12,10 +12,9 @@ interface ImageModalProps {
 
 export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
   return (
-    <div 
-      role="dialog"
-      aria-modal="true"
-      className='fixed inset-0 flex items-center justify-center bg-system_black' 
+    <dialog
+      aria-modal='true'
+      className='fixed inset-0 flex items-center justify-center bg-system_black'
       style={{ zIndex: 9999 }}
     >
       <span
@@ -41,6 +40,6 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
           {photo.alt}
         </div>
       )}
-    </div>
+    </dialog>
   );
 };

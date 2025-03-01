@@ -4,17 +4,11 @@ export interface Geopoint {
   accuracy: number;
 }
 
-export interface Stamp {
-  code: string;
-  timestamp: Date;
-  location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
-}
-
 export interface CollectedStamp {
   id: number;
+  parkAbbreviation: string;
   createdAt: Date;
   method: string;
-  parkAbbreviation: string;
 }
 
 export interface UserParkVisit {
@@ -51,7 +45,7 @@ export interface Park {
   website: string;
   addresses: Address[];
   icons: { iconName: string }[];
-  bucketListItems: { task: string }[];
+  bucketListItems: { task: string }[]; // i think we should drop this as a field on backend and just combine them on the client
   photos: { photoPath: string; alt: string }[];
   abbreviation: string;
 }
@@ -65,14 +59,36 @@ export interface Address {
   zipcode: number;
 }
 
-export interface ParkActivity {
-  completedBucketListItems: { id: number }[];
-  stampCollectedAt: string;
-  privateNote: {
-    id: number;
-    note: string;
-  };
-  lastVisited: string;
+export interface ParkNote {
+  id: number;
+  userId: number;
+  parkAbbreviation: string;
+  note: string;
+  createdAt: Date;
+  updatedAt: Date;
+  // TODO: add soft deletes
+}
+
+export interface BucketListActivity {
+  id: number;
+  parkId: number;
+  task: string;
+}
+
+export interface BucketListCompletion {
+  // A record that links a user to a bucket list activity with completion metadata
+  id: number; // composite key (id, userId)
+  userId: number;
+  completedAt: Date;
+  deleted: boolean; // For soft deletes
+}
+
+// Frontend-only type for displaying bucket list items with their completion status
+export interface BucketListItem extends BucketListActivity {
+  // Completion status - these will be undefined if the item is not completed by the current user
+  completionId?: number; // ID of the completion record
+  completedAt?: Date; // When the item was completed
+  deleted?: boolean; // If the completion was soft-deleted
 }
 
 export interface Trail {

@@ -10,7 +10,11 @@ const isVisited = (code: string, stamps: CollectedStamp[]) =>
   stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
 const sortByName = (a: Park, b: Park) => a.parkName.localeCompare(b.parkName);
 
-const StampView = ({ abbreviation, handleClick, greyed }: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
+const StampView = ({
+  abbreviation,
+  handleClick,
+  greyed,
+}: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
   return (
     <button
       onClick={handleClick}
