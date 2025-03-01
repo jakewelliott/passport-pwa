@@ -4,8 +4,6 @@ using DigitalPassportBackend.Services;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using NetTopologySuite.Geometries;
-using System.Text.Json;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -33,14 +31,30 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(_activityService.GetCollectedStamps(userId).Select(CollectedStampResponse.FromDomain).ToList());
     }
 
-    [HttpPost("stamps/{park_abbreviation}")]
+    [HttpPost("stamps/{parkAbbreviation}")]
     [Authorize(Roles = "visitor")]
     public IActionResult CollectStamp(
-        string park_abbreviation, 
+        string parkAbbreviation, 
         [FromBody] CollectStampRequest request)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(park_abbreviation, request.longitude, request.latitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
+        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkAbbreviation, request.longitude, request.latitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
+    }
+
+    [HttpPost("notes/{parkAbbreviation:string}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult CreateNote(string parkAbbreviation, [FromBody] PrivateNoteRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(PrivateNoteResponse.FromDomain(_activityService.CreatePrivateNote(parkAbbreviation, userId, req.note)));
+    }
+    
+    [HttpPost("notes/{noteId:int}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult UpdateNote(int noteId, [FromBody] PrivateNoteRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(PrivateNoteResponse.FromDomain(_activityService.UpdatePrivateNote(noteId, userId, req.note)));
     }
 
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
@@ -73,6 +87,18 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         double inaccuracyRadius,
         string method, 
         DateTime? dateTime)
+    {
+    }
+
+    public record PrivateNoteResponse(int id, string note)
+    {
+        public static PrivateNoteResponse FromDomain(PrivateNote note)
+        {
+            return new PrivateNoteResponse(note.id, note.note);
+        }
+    }
+
+    public record PrivateNoteRequest(string note)
     {
     }
 }
