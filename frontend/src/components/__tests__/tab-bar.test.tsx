@@ -57,12 +57,11 @@ describe('TabBar', () => {
 
     expect(screen.getByText('Locations')).toBeInTheDocument();
     expect(screen.getByText('More')).toBeInTheDocument();
-    expect(screen.getByText('Stamps')).toBeInTheDocument();
+    expect(screen.queryByText('Stamps')).not.toBeInTheDocument();
 
     // Verify correct links
     expect(screen.getByText('Locations').closest('a')).toHaveAttribute('href', '/locations');
     expect(screen.getByText('More').closest('a')).toHaveAttribute('href', '/more');
-    expect(screen.getByText('Stamps').closest('a')).toHaveAttribute('href', '/stamps');
   });
 
   it('returns null when user data is loading', () => {

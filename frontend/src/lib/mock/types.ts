@@ -1,6 +1,7 @@
 export interface Geopoint {
   latitude: number;
   longitude: number;
+  accuracy: number;
 }
 
 export interface Stamp {
@@ -9,8 +10,15 @@ export interface Stamp {
   location: Geopoint; // If a user manually collects a stamp while outside of a park, the location will be where they collected the stamp.
 }
 
+export interface CollectedStamp {
+  id: number;
+  createdAt: Date;
+  method: string;
+  parkAbbreviation: string;
+}
+
 export interface UserParkVisit {
-  code: string;
+  abbreviation: string;
   timestamp: Date;
 }
 
@@ -33,10 +41,7 @@ export interface LoginResponse {
 export interface Park {
   id: number;
   parkName: string;
-  coordinates: {
-    longitude: number;
-    latitude: number;
-  };
+  coordinates: Geopoint;
   phone: number;
   email: string;
   establishedYear: string;
@@ -75,4 +80,27 @@ export interface Trail {
   trailIcons: string[];
   distance: string;
   description: string;
+}
+
+export interface ParkGeoData {
+  id: number;
+  abbreviation: string;
+  parkName: string;
+  coordinates: Geopoint;
+  boundaries: string;
+}
+
+export interface CollectStampResponse {
+  id: number;
+  createdAt: string;
+  method: string;
+  parkAbbreviation: string;
+}
+
+export interface CollectStampRequest {
+  latitude: number;
+  longitude: number;
+  inaccuracyRadius: number;
+  method: string;
+  dateTime: Date;
 }

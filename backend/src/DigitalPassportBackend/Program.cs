@@ -69,7 +69,7 @@ var app = builder.Build();
     }
 
     app.UseCors(corsPolicyName);
-
+    app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
 

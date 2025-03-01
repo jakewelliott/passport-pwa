@@ -1,12 +1,17 @@
+using System.Diagnostics.CodeAnalysis;
+
 using DigitalPassportBackend.Domain;
 
 using Microsoft.OpenApi.Extensions;
 
 using NetTopologySuite.Geometries;
 
+using static DigitalPassportBackend.Controllers.ActivityController;
+
 using static DigitalPassportBackend.Controllers.LocationsController;
 
 namespace DigitalPassportBackend.UnitTests.TestUtils;
+[ExcludeFromCodeCoverage]
 public static class Response
 {
     public static bool Equal(Park park, LocationResponse resp)
@@ -72,6 +77,29 @@ public static class Response
         } catch {
             return false;
         }
+    }
+
+    public static bool Equal(string abbr, CollectStampRequest expected, CollectStampResponse actual)
+    {
+        return abbr == actual.parkAbbreviation
+            && expected.method == actual.method
+            && expected.dateTime == actual.createdAt;
+    }
+
+    public static bool Equal(CollectedStamp expected, CollectedStampResponse actual)
+    {
+        return expected.createdAt == actual.createdAt
+            && expected.method.GetDisplayName() == actual.method
+            && expected.park.parkAbbreviation == actual.parkAbbreviation;
+    }
+
+    public static bool Equal(Park expected, LocationGeoDataResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.parkAbbreviation == actual.abbreviation
+            && expected.parkName == actual.parkName
+            && Equal(expected.coordinates, actual.coordinates)
+            && expected.boundaries?.ToString() == actual.boundaries;
     }
 
     private static bool FieldEqual<T, U>(IEnumerable<T> a, Func<T, string?> funcA, IEnumerable<U> b, Func<U, string?> funcB)

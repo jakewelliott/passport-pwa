@@ -1,32 +1,33 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
 import DateHelper from '@/lib/date-helper';
-import type { Stamp } from '@/lib/mock/types';
+import type { CollectedStamp } from '@/lib/mock/types';
 import { FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 interface StampsDetailProps {
   abbreviation: string;
   handleClose: () => void;
 }
 
-const CollectedOn = ({ stamp }: { stamp: Stamp | null }) =>
+const CollectedOn = ({ stamp }: { stamp: CollectedStamp | null }) =>
   stamp == null ? (
     <p className='font-medium text-amber-600'>Stamp not yet collected</p>
   ) : (
-    <p className='font-medium'>Stamp collected on {DateHelper.stringify(stamp.timestamp)}</p>
+    <p className='font-medium'>Stamp collected on {DateHelper.stringify(new Date(stamp.createdAt)).replace(',', ' at')}</p>
   );
 
-const CollectedManually = ({ stamp }: { stamp: Stamp | null }) =>
-  stamp == null ? null : stamp.location !== null ? null : (
-    <p className='font-medium text-amber-600'>Stamp collected manually</p>
+const CollectedManually = ({ stamp }: { stamp: CollectedStamp | null }) =>
+  stamp == null ? null : stamp.method !== 'manual' ? null : (
+    <p className='warning'>Stamp collected manually</p>
   );
 
 export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailProps) => {
-  const { data: stamp, isLoading: stampLoading } = useStamp(code);
+  const { data: stamp } = useStamp(code);
   const { data: park, isLoading: parkLoading } = usePark(code);
+  const location = park?.addresses[0] ? park?.addresses[0].city + ", NC" : 'NC';
 
   if (parkLoading || !park) return null;
-  if (stampLoading || !stamp) return null;
 
   const closeHandlers = {
     onClick: handleClose,
@@ -40,16 +41,17 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
   return (
     <>
       {/* Dark overlay */}
-      <div className='fixed inset-0 bg-black opacity-75' style={{ zIndex: 40 }} {...closeHandlers} />
+      <div className='fixed inset-0 bg-system_black opacity-65' style={{ zIndex: 40 }} {...closeHandlers} />
       {/* Dialog */}
       <div className='fixed inset-0 flex items-center justify-center' style={{ zIndex: 50 }} {...closeHandlers}>
         <article
           className='relative mx-4 w-full max-w-sm rounded-lg bg-supporting_lightblue p-4 shadow-xl'
-          {...closeHandlers}
+          onClick={(e) => e.stopPropagation()}
+          onKeyDown={(e) => e.stopPropagation()}
         >
           <header className='mb-4'>
             <div className='flex items-center justify-between'>
-              <h3 className='text-center font-semibold text-xl'>{park.parkName}</h3>
+              <h3 className='text-center'>{park.parkName}</h3>
               <button
                 className='rounded-full p-2 transition-colors hover:bg-black/10'
                 onClick={handleClose}
@@ -65,15 +67,15 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
               <img src={`/stamps/${code}.svg`} alt={`${code} stamp`} className='h-32 w-32' />
             </div>
             <div className='space-y-2'>
-              <p className='text-supporting_inactiveblue'>{park.addresses[0].city}</p>
+              <p className='text-supporting_inactiveblue'>{location}</p>
               <CollectedOn stamp={stamp} />
               <CollectedManually stamp={stamp || null} />
-              <a
-                href={`/locations/${park.abbreviation}`}
-                className='inline-block text-blue-600 transition-colors hover:text-blue-800 hover:underline'
+              <Link
+                to={`/locations/${park.abbreviation}`}
+                className='inline-block link'
               >
                 View Park Details <span aria-hidden='true'>&gt;</span>
-              </a>
+              </Link>
             </div>
           </div>
         </article>

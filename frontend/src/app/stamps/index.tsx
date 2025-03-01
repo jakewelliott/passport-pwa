@@ -3,29 +3,26 @@ import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
-import type { Park } from '@/lib/mock/types';
-import { useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
+import type { CollectedStamp, Park } from '@/lib/mock/types';
+import { useEffect, useMemo, useState } from 'react';
 
-// TODO: fix scrolling bug when selecting stamp in last row
-
-const isVisited = (code: string, stamps: { code: string }[] | undefined) =>
-  stamps?.some((stamp) => stamp.code === code) ?? false;
+const isVisited = (code: string, stamps: CollectedStamp[]) =>
+  stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
 const sortByName = (a: Park, b: Park) => a.parkName.localeCompare(b.parkName);
 
-const Stamp = ({ code, handleClick, greyed }: { code: string; handleClick: () => void; greyed: boolean }) => {
+const StampView = ({ abbreviation, handleClick, greyed }: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
   return (
     <button
       onClick={handleClick}
       className='flex items-center justify-center p-2'
       type='button'
-      data-testid={`stamp-button-${code}`}
+      data-testid={`stamp-button-${abbreviation}`}
     >
       <img
-        src={`/stamps/${code}.svg`}
-        alt={`${code} - ${greyed ? 'greyed out' : 'achieved'}`}
+        src={`/stamps/${abbreviation}.svg`}
+        alt={`${abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
         className={greyed ? 'opacity-50 grayscale' : ''}
-        data-testid={`stamp-image-${code}`}
+        data-testid={`stamp-image-${abbreviation}`}
       />
     </button>
   );
@@ -37,20 +34,17 @@ export default function Stamps() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const { data: parks, isLoading: parksLoading } = useParks();
-  const { data: stamps, isLoading: stampsLoading } = useStamps();
+  const { data: stamps, isLoading: stampsLoading, refetch } = useStamps();
   const { isLoading: userLoading } = useUser();
 
-  const handleStampClick = (index: number, park: Park) => {
-    if (!isVisited(park.abbreviation, stamps)) {
-      toast.info(`You haven't collected the ${park.parkName} stamp yet!`);
-    }
-    setSelectedIndex(index);
-  };
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
 
   // TODO: toggle sort a/z, date last visited, date first achieved
   const sortedParks: Park[] = useMemo(() => {
-    const achieved = parks?.filter((park) => isVisited(park.abbreviation, stamps)).sort(sortByName) || [];
-    const notAchieved = parks?.filter((park) => !isVisited(park.abbreviation, stamps)).sort(sortByName) || [];
+    const achieved = parks?.filter((park) => isVisited(park.abbreviation, stamps ?? [])).sort(sortByName) || [];
+    const notAchieved = parks?.filter((park) => !isVisited(park.abbreviation, stamps ?? [])).sort(sortByName) || [];
     return [...achieved, ...notAchieved];
   }, [parks, stamps]);
 
@@ -60,11 +54,11 @@ export default function Stamps() {
     <div className='px-4 py-4'>
       <div className='grid grid-cols-3 gap-4' data-testid='stamps-grid'>
         {sortedParks.map((park, index) => (
-          <Stamp
+          <StampView
             key={park.abbreviation}
-            code={park.abbreviation}
-            greyed={!isVisited(park.abbreviation, stamps)}
-            handleClick={() => handleStampClick(index, park)}
+            abbreviation={park.abbreviation}
+            greyed={!isVisited(park.abbreviation, stamps ?? [])}
+            handleClick={() => setSelectedIndex(index)}
           />
         ))}
       </div>

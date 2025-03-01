@@ -5,14 +5,19 @@ import { TransformComponent, TransformWrapper } from 'react-zoom-pan-pinch';
 interface ImageModalProps {
   photo: {
     photoPath: string;
-    caption?: string;
+    alt?: string;
   };
   onClose: () => void;
 }
 
 export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
   return (
-    <div className='fixed inset-0 flex items-center justify-center bg-system_black' style={{ zIndex: 9999 }}>
+    <div 
+      role="dialog"
+      aria-modal="true"
+      className='fixed inset-0 flex items-center justify-center bg-system_black' 
+      style={{ zIndex: 9999 }}
+    >
       <span
         className='absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system_white'
         {...a11yOnClick(onClose)}
@@ -23,17 +28,17 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
         <TransformComponent>
           <img
             src={`/photos/${photo.photoPath}`}
-            alt={photo.caption || 'Photo'}
+            alt={photo.alt || 'Photo'}
             className='max-h-screen max-w-full object-contain'
           />
         </TransformComponent>
       </TransformWrapper>
-      {photo.caption && (
+      {photo.alt && (
         <div
           data-testid='caption-container'
           className='absolute right-0 bottom-4 left-0 bg-system_black bg-opacity-50 p-2 text-center text-system_white'
         >
-          {photo.caption}
+          {photo.alt}
         </div>
       )}
     </div>

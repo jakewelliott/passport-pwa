@@ -1,17 +1,22 @@
-import { api } from '@/lib/mock/api';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useUser } from './useUser';
+import { CollectStampRequest } from '@/lib/mock/types';
+import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
+import { dbg } from '@/lib/debug';
+import { toast } from 'react-toastify';
+import { CollectedStamp } from '@/lib/mock/types';
 /**
  * Gets all of the local user's stamps, empty array if user is not loaded
  * @returns The stamps for the user
  */
 export const useStamps = () => {
-  // re-use our query hooks whenever possible
   const { data: user } = useUser();
-  return useQuery({
+  const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
     queryKey: ['stamps', user?.id],
-    queryFn: () => api.getUserStampsByID(user?.id || 0),
+    queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL)
   });
+  dbg('HOOK', 'useStamps', {data, isLoading});
+  return { data, isLoading, refetch };
 };
 
 /**
@@ -19,8 +24,37 @@ export const useStamps = () => {
  * @param code The code of the park to get the stamp for
  * @returns The stamp for the user
  */
-export const useStamp = (code: string) => {
+export const useStamp = (abbreviation: string) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
-  return { data: data?.find((stamp) => stamp.code === code) || null, isLoading };
+  return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || null, isLoading };
+};
+
+export const useCollectStamp = (parkAbbreviation: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<string, Error, CollectStampRequest>({
+    mutationFn: async ({ latitude, longitude, inaccuracyRadius, method, dateTime }) => {
+      dbg('MUTATE', 'Collecting stamp', { latitude, longitude, inaccuracyRadius, method, dateTime });
+      const response = await fetchPost(API_STAMPS_URL + '/' + parkAbbreviation, {
+        latitude,
+        longitude,
+        inaccuracyRadius,
+        method,
+        dateTime,
+      });
+      return await response.text();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['stamps'] });
+      toast.success('Stamp collected!');
+    },
+    onError: (error) => {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error('An unknown error occurred');
+      }
+    },
+  });
 };

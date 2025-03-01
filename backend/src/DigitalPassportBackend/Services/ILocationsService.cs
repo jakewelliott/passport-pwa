@@ -1,6 +1,7 @@
 
 using DigitalPassportBackend.Domain;
 
+
 namespace DigitalPassportBackend.Services;
 
 public interface ILocationsService
@@ -12,4 +13,6 @@ public interface ILocationsService
     Park GetByAbbreviation(string locationAbbrev);
     List<ParkIcon> GetIconsByLocationId(int id);
     List<ParkPhoto> GetParkPhotosByLocationId(int id);
+    string UploadGeoJson(IFormFile file);
+
 }
