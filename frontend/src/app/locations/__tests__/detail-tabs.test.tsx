@@ -47,18 +47,18 @@ describe('DetailTabs', () => {
 
   const mockParkActivity = {
     completedBucketListItems: [{ id: 7 }],
-    stampCollectedAt: '2024-02-16T06:48:06',
+    stampCollectedAt: '2024-02-16T06:48:06Z',
     privateNote: {
       id: 1,
       note: 'Hello!',
     },
-    lastVisited: '2025-02-15T06:48:06',
+    lastVisited: '2025-02-15T06:48:06Z',
   };
 
   beforeEach(() => {
     vi.clearAllMocks();
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
-    mockUseParkActivity.mockReturnValue({ data: mockParkActivity, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: mockParkActivity, isLoading: false, refetch: () => {} });
     mockUseUser.mockReturnValue({ data: { role: 'user' }, isLoading: false });
   });
 
@@ -73,7 +73,7 @@ describe('DetailTabs', () => {
 
   it('shows loading placeholder when data is loading', async () => {
     mockUsePark.mockReturnValue({ data: null, isLoading: true });
-    mockUseParkActivity.mockReturnValue({ data: null, isLoading: true });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: true, refetch: () => {} });
 
     renderDetailTabs();
     expect(await screen.findByTestId('loading-placeholder')).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe('DetailTabs', () => {
 
   it('shows loading placeholder when park data is null', async () => {
     mockUsePark.mockReturnValue({ data: null, isLoading: false });
-    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false, refetch: () => {} });
 
     renderDetailTabs();
     expect(await screen.findByTestId('loading-placeholder')).toBeInTheDocument();
@@ -129,7 +129,7 @@ describe('DetailTabs', () => {
     await waitFor(() => {
       const achievementsElement = screen.getByTestId('achievements-view');
       expect(achievementsElement).toHaveTextContent(/Stamp collected/);
-      expect(achievementsElement).toHaveTextContent("2/16/24 at 6:48 AM");
+      expect(achievementsElement).toHaveTextContent("2/16/24 at 1:48 AM");
 
       expect(achievementsElement).toHaveTextContent(/Bucket List Item/);
       expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
@@ -138,7 +138,7 @@ describe('DetailTabs', () => {
 
   it('shows loading placeholder when park is loading', () => {
     mockUsePark.mockReturnValue({ data: null, isLoading: true });
-    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false, refetch: () => {} });
     
     renderWithClient(
       <Routes>
@@ -153,7 +153,8 @@ describe('DetailTabs', () => {
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
     mockUseParkActivity.mockReturnValue({ 
       data: mockParkActivity, 
-      isLoading: false 
+      isLoading: false,
+      refetch: () => {}
     });
 
     renderWithClient(

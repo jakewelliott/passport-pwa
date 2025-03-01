@@ -2,6 +2,7 @@ import RoundedButton from '@/components/rounded-button';
 import { useCollectStamp } from '@/hooks/queries/useStamps';
 import type { Park } from '@/lib/mock/types';
 import { useLocation as useUserLocation } from '@/hooks/useLocation';
+import { useParkActivity } from '@/hooks/queries/useParks';
 
 interface CollectStampProps {
   park: Park;
@@ -11,6 +12,7 @@ interface CollectStampProps {
 export default function CollectStamp({ park, onClose }: CollectStampProps) {
   const collectStampMutation = useCollectStamp(park.abbreviation);
   const userLocation = useUserLocation();
+  const {refetch} = useParkActivity(park.id);
 
   return (
     <div className='fixed inset-0 flex items-center justify-center bg-secondary_lightblue' style={{ zIndex: 9999 }}>
@@ -34,6 +36,7 @@ export default function CollectStamp({ park, onClose }: CollectStampProps) {
             method: 'location',
             dateTime: new Date(),
           });
+          refetch();
           onClose();
         }} />
         <img src={`/stamps/${park.abbreviation}.svg`} width={'150px'} alt={`${park.parkName} stamp`} />

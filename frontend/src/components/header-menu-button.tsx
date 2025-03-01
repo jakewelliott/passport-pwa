@@ -1,3 +1,4 @@
+import { usePark, useParkActivity } from "@/hooks/queries/useParks";
 import { useCollectStamp } from "@/hooks/queries/useStamps";
 import { useLocation as useUserLocation } from '@/hooks/useLocation';
 import { useParkCheck } from "@/hooks/useParkCheck";
@@ -12,6 +13,8 @@ const HeaderMenuButton = () => {
     const collectStampMutation = useCollectStamp(location.pathname.split('/')[2]);
     const userLocation = useUserLocation();
     const parkCheck = useParkCheck();
+    const {data: park} = usePark(location.pathname.split('/')[2]);
+    const {refetch} = useParkActivity(park?.id ?? 0);
     
     useEffect(() => {
       const handleClickOutside = (event: MouseEvent) => {
@@ -34,6 +37,7 @@ const HeaderMenuButton = () => {
         method: atPark,
         dateTime: new Date(),
       });
+      refetch();
       setIsOpen(false);
     };
   
