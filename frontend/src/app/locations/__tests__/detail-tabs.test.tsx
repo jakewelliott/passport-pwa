@@ -1,17 +1,18 @@
-import { usePark, useParkActivity } from '@/hooks/queries/useParks';
+import { useBucketList } from '@/hooks/queries/useBucketList';
+import { usePark } from '@/hooks/queries/useParks';
+import { useUser } from '@/hooks/queries/useUser';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen, waitFor } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 import DetailTabs from '../detail-tabs';
-import { useUser } from '@/hooks/queries/useUser';
 
 // Mock the hooks
 vi.mock('@/hooks/queries/useParks');
 vi.mock('@/hooks/queries/useUser');
 
 const mockUsePark = usePark as Mock;
-const mockUseParkActivity = useParkActivity as Mock;
+const mockUseParkActivity = useBucketList as Mock;
 const mockUseUser = useUser as Mock;
 
 describe('DetailTabs', () => {

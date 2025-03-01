@@ -11,13 +11,20 @@ export const API_AUTH_REGISTER_URL = `${API_AUTH_URL}/register/`;
 
 // user data
 export const API_USER_URL = `${API_URL}/user`;
-export const API_STAMPS_URL = `${API_URL}/activity/stamps`;
-export const API_COLLECTED_STAMPS_URL = `${API_URL}/activity/stamps/collected`;
-export const API_ACTIVITY_URL = `${API_URL}/activity/park`;
 
-// public data
+// park data
 export const API_PARKS_URL = `${API_URL}/locations`;
 export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
+
+// activity data (stamps & bucket list)
+export const API_STAMPS_URL = `${API_URL}/activity/stamps`;
+export const API_STAMPS_COLLECTED_URL = `${API_URL}/activity/stamps/collected`;
+export const API_BUCKET_LIST_URL = `${API_URL}/activity/bucketlist`;
+export const API_BUCKET_LIST_COMPLETED_URL = `${API_URL}/activity/bucketlist/completed`;
+
+// TODO: change me after backend is updated
+export const API_NOTES_URL = `${API_URL}/activity`;
+// export const API_NOTES_URL = `${API_URL}/activity/notes`;
 
 const getAuthHeaders = (): Record<string, string> => {
   const token = Cookies.get('token');
