@@ -3,36 +3,35 @@ import DateHelper from '@/lib/date-helper';
 import { api } from '@/lib/mock/api';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import AchievementsView from '../../components/bucket-list-view';
+import { BucketListView } from '../../components/bucket-list-view';
 
 describe('LocationContact', () => {
 	const park = api.getParks()[0];
-	const parkActivity = api.getParkActivity()[0];
 
 	it('renders park name', () => {
-		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		render(<LocationContact park={park} />);
 		expect(screen.getByText(park.parkName)).toBeInTheDocument();
 	});
 
 	it('renders GPS coordinates', () => {
-		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		render(<LocationContact park={park} />);
 		expect(screen.getByText(`GPS: ${park.coordinates.latitude}, ${park.coordinates.longitude}`)).toBeInTheDocument();
 	});
 
 	it('renders phone number', () => {
-		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		render(<LocationContact park={park} />);
 		expect(screen.getByText(park.phone)).toBeInTheDocument();
 	});
 
 	it('renders email', () => {
-		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		render(<LocationContact park={park} />);
 		if (park.email) {
 			expect(screen.getByText(park.email)).toBeInTheDocument();
 		}
 	});
 
 	it('renders address when provided', () => {
-		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		render(<LocationContact park={park} />);
 		if (park.addresses?.[0]) {
 			const addressText = screen.getByText((content, element) => {
 				return (
@@ -48,29 +47,26 @@ describe('LocationContact', () => {
 	});
 
 	it('renders contact icons', () => {
-		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		render(<LocationContact park={park} />);
 		const svgElements = document.querySelectorAll('svg');
 		expect(svgElements.length).toBeGreaterThanOrEqual(1);
 	});
 
 	it('renders achievements', () => {
-		render(<LocationContact park={park} parkActivity={parkActivity} />);
+		render(<LocationContact park={park} />);
 		const stampElement = screen.getByText('Stamp collected on 2/16/24 at 1:48 AM');
 		expect(stampElement).toBeInTheDocument();
 		expect(screen.queryAllByTestId('BLI').length).toBe(0);
 	});
 
 	it('shows correct stamp text', () => {
-		const parkActivityNew = parkActivity;
-		render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
+		render(<BucketListView park={park} />);
 		const stampElement = screen.getByText('Stamp not yet collected');
 		expect(stampElement).toBeInTheDocument();
-		parkActivityNew.stampCollectedAt = '';
-		render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
+		render(<BucketListView park={park} />);
 		let stampElements = screen.getAllByText('Stamp not yet collected');
 		const currentDate = new Date().toISOString();
-		parkActivityNew.stampCollectedAt = currentDate;
-		render(<AchievementsView park={park} parkActivity={parkActivityNew} />);
+		render(<BucketListView park={park} />);
 		stampElements = screen.getAllByText(
 			`Stamp collected on ${DateHelper.stringify(new Date(currentDate)).replace(',', ' at')}`,
 		);
@@ -80,9 +76,7 @@ describe('LocationContact', () => {
 	it('Renders bucket list items', () => {
 		const parkNew = park;
 		parkNew.bucketListItems.push({ task: 'Bucket' });
-		const parkActivityNew = parkActivity;
-		parkActivityNew.completedBucketListItems.push({ id: 0 });
-		render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
+		render(<BucketListView park={parkNew} />);
 		const stampElements = screen.getByTestId('BLI');
 		expect(stampElements).toBeInTheDocument();
 	});
@@ -90,8 +84,7 @@ describe('LocationContact', () => {
 	it('renders unchecked bucket list icon when required', () => {
 		const parkNew = park;
 		parkNew.bucketListItems.push({ task: 'Bucket' });
-		const parkActivityNew = parkActivity;
-		render(<AchievementsView park={parkNew} parkActivity={parkActivityNew} />);
+		render(<BucketListView park={parkNew} />);
 		const stampElements = screen.getByTestId('BLI');
 		expect(stampElements).toBeInTheDocument();
 	});
@@ -128,7 +121,7 @@ describe('LocationContact', () => {
 				],
 			};
 
-			render(<LocationContact park={parkWithManyAddresses} parkActivity={parkActivity} />);
+			render(<LocationContact park={parkWithManyAddresses} />);
 
 			expect(screen.getByText(/Address 1/)).toBeInTheDocument();
 			expect(screen.getByText(/Address 2/)).toBeInTheDocument();
@@ -167,7 +160,7 @@ describe('LocationContact', () => {
 				],
 			};
 
-			render(<LocationContact park={parkWithManyAddresses} parkActivity={parkActivity} />);
+			render(<LocationContact park={parkWithManyAddresses} />);
 
 			// Initially only shows 2 addresses
 			expect(screen.queryByText(/Address 3/)).not.toBeInTheDocument();
