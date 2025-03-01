@@ -1,7 +1,6 @@
 import { dbg } from '@/lib/debug';
-import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
-import type { CollectStampRequest } from '@/lib/mock/types';
-import type { CollectedStamp } from '@/lib/mock/types';
+import { API_STAMPS_COLLECTED_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
+import type { CollectStampRequest, CollectedStamp } from '@/lib/mock/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useUser } from './useUser';
@@ -13,7 +12,7 @@ export const useStamps = () => {
   const { data: user } = useUser();
   const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
     queryKey: ['stamps', user?.id],
-    queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL),
+    queryFn: async () => await fetchGet(API_STAMPS_COLLECTED_URL),
   });
   dbg('HOOK', 'useStamps', { data, isLoading });
   return { data, isLoading, refetch };
@@ -26,8 +25,8 @@ export const useStamps = () => {
  */
 export const useStamp = (abbreviation: string) => {
   // re-use our query hooks whenever possible
-  const { data, isLoading } = useStamps();
-  return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || null, isLoading };
+  const { data, ...hook } = useStamps();
+  return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) ?? undefined, ...hook };
 };
 
 export const useCollectStamp = (parkAbbreviation: string) => {
