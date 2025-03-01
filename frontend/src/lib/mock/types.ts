@@ -51,7 +51,7 @@ export interface Park {
   website: string;
   addresses: Address[];
   icons: { iconName: string }[];
-  bucketListItems: { task: string }[];
+  bucketListItems: { id: number; task: string }[];
   photos: { photoPath: string; alt: string }[];
   abbreviation: string;
 }
