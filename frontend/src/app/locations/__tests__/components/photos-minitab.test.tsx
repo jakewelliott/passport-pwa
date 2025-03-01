@@ -1,7 +1,7 @@
 import { PhotoGalleryMiniTab } from '@/app/locations/components/photos-minitab';
 import type { Park } from '@/lib/mock/types';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, expect, it, beforeEach } from 'vitest';
 
 describe('PhotoGalleryMiniTab', () => {
   const mockPhotos: Park['photos'] = [
@@ -66,13 +66,13 @@ describe('PhotoGalleryMiniTab', () => {
   it('opens ImageModal when photo is clicked', () => {
     render(<PhotoGalleryMiniTab photos={mockPhotos} />);
     const firstPhoto = screen.getAllByRole('img')[0];
-
+    
     fireEvent.click(firstPhoto);
-
+    
     // Check if modal is rendered
     const modalContainer = screen.getByRole('dialog', { hidden: true });
     expect(modalContainer).toBeInTheDocument();
-
+    
     // Check if the correct image is displayed
     const modalImage = screen.getAllByRole('img').at(-1); // Get the last image (modal image)
     expect(modalImage).toHaveAttribute('src', `/photos/${mockPhotos[0].photoPath}`);
@@ -81,15 +81,15 @@ describe('PhotoGalleryMiniTab', () => {
 
   it('closes ImageModal when close button is clicked', () => {
     render(<PhotoGalleryMiniTab photos={mockPhotos} />);
-
+    
     // Open modal
     const firstPhoto = screen.getAllByRole('img')[0];
     fireEvent.click(firstPhoto);
-
+    
     // Find and click close button (using the × symbol)
     const closeButton = screen.getByText('×');
     fireEvent.click(closeButton);
-
+    
     // Verify modal is closed by checking that only the grid images remain
     const remainingImages = screen.getAllByRole('img');
     expect(remainingImages).toHaveLength(mockPhotos.length);

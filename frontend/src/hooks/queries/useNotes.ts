@@ -1,4 +1,4 @@
-import { API_NOTES_URL, fetchGet, fetchPut } from '@/lib/fetch';
+import { API_ACTIVITY_URL, fetchGet, fetchPut } from '@/lib/fetch';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Note {
@@ -9,14 +9,14 @@ interface Note {
 export const useNote = (parkId: number) => {
   return useQuery<Note>({
     queryKey: ['note', parkId],
-    queryFn: () => fetchGet(`${API_NOTES_URL}/${parkId}`),
+    queryFn: () => fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
   });
 };
 
 export const useUpdateNote = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ parkId, note }: { parkId: number; note: string }) => fetchPut(`${API_NOTES_URL}/${parkId}`, note),
+    mutationFn: ({ parkId, note }: { parkId: number; note: string }) => fetchPut(`${API_ACTIVITY_URL}/${parkId}`, note),
     onSuccess: (data, variables) => {
       queryClient.setQueryData(['note', variables.parkId], data);
     },
