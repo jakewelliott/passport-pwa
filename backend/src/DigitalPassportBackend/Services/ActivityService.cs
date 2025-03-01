@@ -2,8 +2,6 @@
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
-using DigitalPassportBackend.Security;
-using DigitalPassportBackend.Secutiry;
 
 using Microsoft.OpenApi.Extensions;
 
@@ -82,7 +80,6 @@ public class ActivityService(
         return _collectedStampRepository.GetByUser(userId);
     }
 
-
     public ParkActivity GetParkActivity(int locationId, int userId)
     {
         // Verify that the location and user exists.
@@ -108,6 +105,35 @@ public class ActivityService(
             },
             LastVisited = lastVisited?.createdAt
         };
+    }
+
+    public PrivateNote CreatePrivateNote(string parkAbbr, int userId, string note)
+    {
+        // Check if there is already a note in the database.
+        var locationId = _locationsRepository.GetByAbbreviation(parkAbbr).id;
+        if (_privateNoteRepository.GetByParkAndUser(locationId, userId) is null)
+        {
+            throw new ServiceException(StatusCodes.Status409Conflict, "A private note for this park already exists.");
+        }
+
+        return _privateNoteRepository.Create(
+            new()
+            {
+                note = note,
+                user = _userRepository.GetById(userId)
+            });
+    }
+
+    public PrivateNote UpdatePrivateNote(int noteId, int userId, string note)
+    {
+        var pn = _privateNoteRepository.GetById(noteId);
+        if (pn.userId != userId)
+        {
+            throw new ServiceException(StatusCodes.Status403Forbidden, "You cannot edit this note.");
+        }
+        pn.note = note;
+        return _privateNoteRepository.Update(pn);
+
     }
 
     private static CollectedStamp CreateStamp(
