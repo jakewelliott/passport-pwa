@@ -47,12 +47,12 @@ describe('DetailTabs', () => {
 
   const mockParkActivity = {
     completedBucketListItems: [{ id: 7 }],
-    stampCollectedAt: '2024-02-16T06:48:06',
+    stampCollectedAt: '2024-02-16T06:48:06Z',
     privateNote: {
       id: 1,
       note: 'Hello!',
     },
-    lastVisited: '2025-02-15T06:48:06',
+    lastVisited: '2025-02-15T06:48:06Z',
   };
 
   beforeEach(() => {
@@ -129,7 +129,7 @@ describe('DetailTabs', () => {
     await waitFor(() => {
       const achievementsElement = screen.getByTestId('achievements-view');
       expect(achievementsElement).toHaveTextContent(/Stamp collected/);
-      expect(achievementsElement).toHaveTextContent("2/16/24 at 6:48 AM");
+      expect(achievementsElement).toHaveTextContent("2/16/24 at 1:48 AM");
 
       expect(achievementsElement).toHaveTextContent(/Bucket List Item/);
       expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
