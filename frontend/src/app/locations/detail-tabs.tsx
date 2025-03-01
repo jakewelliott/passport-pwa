@@ -9,13 +9,19 @@ import { useParams } from 'react-router-dom';
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import { usePark, useParkActivity } from '@/hooks/queries/useParks';
 import { useUser } from '@/hooks/queries/useUser';
+import { useEffect } from 'react';
 
 export default function DetailTabs() {
   const { abbreviation } = useParams();
   const parkAbbreviation = abbreviation as Uppercase<string>;
   const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
   const { data: user, isLoading: isUserLoading } = useUser();
-  const { data: parkActivity, isLoading: isActivityLoading } = (!isUserLoading && user?.role != 'admin') ? useParkActivity(park?.id ?? 0) : {data: null, isLoading: false};
+  const { data: parkActivity, isLoading: isActivityLoading, refetch: refetchParkActivity } = (!isUserLoading && user?.role != 'admin') ? useParkActivity(park?.id ?? 0) : {data: null, isLoading: false, refetch: () => {}};
+
+  useEffect(() => {
+    refetchParkActivity();
+  }, [refetchParkActivity]);
+
   if (isParkLoading || isActivityLoading || !park ) return <LoadingPlaceholder />;
   return (
     <>

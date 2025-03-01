@@ -58,7 +58,7 @@ describe('DetailTabs', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
-    mockUseParkActivity.mockReturnValue({ data: mockParkActivity, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: mockParkActivity, isLoading: false, refetch: () => {} });
     mockUseUser.mockReturnValue({ data: { role: 'user' }, isLoading: false });
   });
 
@@ -73,7 +73,7 @@ describe('DetailTabs', () => {
 
   it('shows loading placeholder when data is loading', async () => {
     mockUsePark.mockReturnValue({ data: null, isLoading: true });
-    mockUseParkActivity.mockReturnValue({ data: null, isLoading: true });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: true, refetch: () => {} });
 
     renderDetailTabs();
     expect(await screen.findByTestId('loading-placeholder')).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe('DetailTabs', () => {
 
   it('shows loading placeholder when park data is null', async () => {
     mockUsePark.mockReturnValue({ data: null, isLoading: false });
-    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false, refetch: () => {} });
 
     renderDetailTabs();
     expect(await screen.findByTestId('loading-placeholder')).toBeInTheDocument();
@@ -138,7 +138,7 @@ describe('DetailTabs', () => {
 
   it('shows loading placeholder when park is loading', () => {
     mockUsePark.mockReturnValue({ data: null, isLoading: true });
-    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false });
+    mockUseParkActivity.mockReturnValue({ data: null, isLoading: false, refetch: () => {} });
     
     renderWithClient(
       <Routes>
@@ -153,7 +153,8 @@ describe('DetailTabs', () => {
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
     mockUseParkActivity.mockReturnValue({ 
       data: mockParkActivity, 
-      isLoading: false 
+      isLoading: false,
+      refetch: () => {}
     });
 
     renderWithClient(
