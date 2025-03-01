@@ -107,33 +107,32 @@ public class ActivityService(
         };
     }
 
-    public PrivateNote CreatePrivateNote(string parkAbbr, int userId, string note)
+    public PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, string updatedAt)
     {
         // Check if there is already a note in the database.
-        var locationId = _locationsRepository.GetByAbbreviation(parkAbbr).id;
-        if (_privateNoteRepository.GetByParkAndUser(locationId, userId) is null)
+        var location = _locationsRepository.GetByAbbreviation(parkAbbr);
+        var privateNote = _privateNoteRepository.GetByParkAndUser(location.id, userId);
+        if (privateNote != null)
         {
-            throw new ServiceException(StatusCodes.Status409Conflict, "A private note for this park already exists.");
+            // Update it
+            privateNote.note = note;
+            privateNote.updatedAt = DateTime.Parse(updatedAt);
+            return _privateNoteRepository.Update(privateNote);
         }
-
-        return _privateNoteRepository.Create(
-            new()
+        else
+        {
+            // Create it
+            return _privateNoteRepository.Create(new()
             {
                 note = note,
-                user = _userRepository.GetById(userId)
+                user = _userRepository.GetById(userId),
+                userId = userId,
+                park = location,
+                parkId = location.id,
+                createdAt = DateTime.Parse(updatedAt),
+                updatedAt = DateTime.Parse(updatedAt)
             });
-    }
-
-    public PrivateNote UpdatePrivateNote(int noteId, int userId, string note)
-    {
-        var pn = _privateNoteRepository.GetById(noteId);
-        if (pn.userId != userId)
-        {
-            throw new ServiceException(StatusCodes.Status403Forbidden, "You cannot edit this note.");
         }
-        pn.note = note;
-        return _privateNoteRepository.Update(pn);
-
     }
 
     private static CollectedStamp CreateStamp(

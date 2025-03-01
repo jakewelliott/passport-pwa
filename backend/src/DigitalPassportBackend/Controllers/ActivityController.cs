@@ -42,21 +42,13 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpPost("notes/{parkAbbreviation}")]
-    [Authorize(Roles = "visitor")]
-    public IActionResult CreateNote(string parkAbbreviation, [FromBody] PrivateNoteRequest req)
+    [Authorize(Roles = "visitor,admin")]
+    public IActionResult CreateUpdateNote(string parkAbbreviation, [FromBody] PrivateNoteRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(PrivateNoteResponse.FromDomain(_activityService.CreatePrivateNote(parkAbbreviation, userId, req.note)));
+        return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkAbbreviation, userId, req.note, req.updatedAt)));
     }
     
-    [HttpPost("notes/update/{noteId}")]
-    [Authorize(Roles = "visitor")]
-    public IActionResult UpdateNote(int noteId, [FromBody] PrivateNoteRequest req)
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(PrivateNoteResponse.FromDomain(_activityService.UpdatePrivateNote(noteId, userId, req.note)));
-    }
-
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
     {
         public static CollectStampResponse FromDomain(CollectedStamp stamp)
@@ -98,7 +90,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record PrivateNoteRequest(string note)
+    public record PrivateNoteRequest(string note, string updatedAt)
     {
     }
 }
