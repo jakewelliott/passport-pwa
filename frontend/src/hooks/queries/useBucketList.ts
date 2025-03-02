@@ -1,4 +1,4 @@
-import type { BucketListCompletion, BucketListItem } from '@/lib/mock/types';
+import type { BucketListCompletion, BucketListItem } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useLocation } from '../useLocation';
 import { useUser } from './useUser';

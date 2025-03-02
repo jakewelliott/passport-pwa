@@ -1,8 +1,8 @@
 import { dbg } from '@/lib/debug';
 import { API_AUTH_REGISTER_URL, fetchPost } from '@/lib/fetch';
-import type { LoginCredentials } from '@/lib/mock/types';
 import { queryClient } from '@/lib/tanstack-local-storage';
 import { decodeToken } from '@/lib/token-helper';
+import type { LoginCredentials } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { useNavigate, useSearchParams } from 'react-router-dom';

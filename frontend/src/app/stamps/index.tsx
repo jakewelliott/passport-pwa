@@ -3,7 +3,7 @@ import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
-import type { CollectedStamp, Park } from '@/lib/mock/types';
+import type { CollectedStamp, Park } from '@/types';
 import { useMemo, useState } from 'react';
 
 const isVisited = (code: string, stamps: CollectedStamp[]) =>

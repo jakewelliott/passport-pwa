@@ -1,6 +1,6 @@
 import dummyMapper from '@/lib/dummy-mapper';
-import type { UserParkVisit, UserProfile } from '@/lib/mock/types';
 import userParkVisitsJson from '@/lib/mock/user_park_visits.json';
+import type { UserParkVisit, UserProfile } from '@/types';
 
 const dummyVisit: UserParkVisit = {
   abbreviation: 'CABE',

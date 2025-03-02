@@ -1,5 +1,5 @@
 import { API_ACTIVITY_URL, API_PARKGEO_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
-import type { Park, ParkActivity, ParkGeoData } from '@/lib/mock/types';
+import type { Park, ParkActivity, ParkGeoData } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
 // ADAM:
