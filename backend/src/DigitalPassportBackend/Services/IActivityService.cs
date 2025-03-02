@@ -9,4 +9,5 @@ public interface IActivityService
     ParkActivity GetParkActivity(int locationId, int userId);
     PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, DateTime updatedAt);
     CompletedBucketListItem UpdateBucketListItem(int itemId, int userId, double latitude, double longitude, bool status, DateTime dateTime);
+    public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId);
 }
