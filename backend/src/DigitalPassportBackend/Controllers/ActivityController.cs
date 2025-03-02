@@ -50,12 +50,12 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkAbbreviation, userId, req.note, req.updatedAt)));
     }
 
-    [HttpPut("bucket-list/{bucket_list_id}")]
+    [HttpPut("bucket-list/{bucketListId}")]
     [Authorize(Roles = "visitor")]
-    public IActionResult UpdateBucketListItem(int bucket_list_id, [FromBody] UpdateBucketListRequest req)
+    public IActionResult UpdateBucketListItem(int bucketListId, [FromBody] UpdateBucketListRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(UpdateBucketListResponse.FromDomain(_activityService.UpdateBucketListItem(bucket_list_id, userId, req.latitude, req.latitude, req.status, req.dateTime)));
+        return Ok(UpdateBucketListResponse.FromDomain(_activityService.UpdateBucketListItem(bucketListId, userId, req.latitude, req.latitude, req.status, req.dateTime)));
     }
     
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
