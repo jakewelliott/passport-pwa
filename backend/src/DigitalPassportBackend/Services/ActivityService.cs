@@ -142,8 +142,9 @@ public class ActivityService(
         // Verify the bucket list item ID.
         var bucketListItem = _bucketListItemRepository.GetById(itemId);
 
-        // Get the user.
+        // Get the user and location.
         var user = _userRepository.GetById(userId);
+        var location = _locationsRepository.GetById((int)bucketListItem.parkId!);
 
         // Check if there is already a completed bucket list item in the database.
         var item = _completedBucketListItemRepository.GetByBucketListItemAndUser(itemId, userId);
@@ -157,8 +158,8 @@ public class ActivityService(
                 created_at = dateTime,
                 updated_at = dateTime,
                 deleted = !status,
-                park = bucketListItem.park!,
-                parkId = bucketListItem.park!.id,
+                park = location,
+                parkId = location.id,
                 bucketListItem = bucketListItem,
                 bucketListItemId = bucketListItem.id,
                 user = user,

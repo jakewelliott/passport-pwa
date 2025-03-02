@@ -50,7 +50,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkAbbreviation, userId, req.note, req.updatedAt)));
     }
 
-    [HttpPut("bucket-list/status/{bucket_list_id}")]
+    [HttpPut("bucket-list/{bucket_list_id}")]
     [Authorize(Roles = "visitor")]
     public IActionResult UpdateBucketListItem(int bucket_list_id, [FromBody] UpdateBucketListRequest req)
     {
