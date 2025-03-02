@@ -10,6 +10,7 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Services;
 
 public class ActivityService(
+    IBucketListItemRepository bucketListItemRepository,
     ICompletedBucketListItemRepository completedBucketListItemRepository,
     ICollectedStampRepository collectedStampRepository,
     IPrivateNoteRepository privateNoteRepository,
@@ -17,6 +18,7 @@ public class ActivityService(
     ILocationsRepository locationsRepository,
     IUserRepository userRepository) : IActivityService
 {
+    private readonly IBucketListItemRepository _bucketListItemRepository = bucketListItemRepository;
     private readonly ICompletedBucketListItemRepository _completedBucketListItemRepository = completedBucketListItemRepository;
     private readonly ICollectedStampRepository _collectedStampRepository = collectedStampRepository;
     private readonly IPrivateNoteRepository _privateNoteRepository = privateNoteRepository;
@@ -107,7 +109,7 @@ public class ActivityService(
         };
     }
 
-    public PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, string updatedAt)
+    public PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, DateTime updatedAt)
     {
         // Check if there is already a note in the database.
         var location = _locationsRepository.GetByAbbreviation(parkAbbr);
@@ -116,7 +118,7 @@ public class ActivityService(
         {
             // Update it
             privateNote.note = note;
-            privateNote.updatedAt = DateTime.Parse(updatedAt);
+            privateNote.updatedAt = updatedAt;
             return _privateNoteRepository.Update(privateNote);
         }
         else
@@ -129,9 +131,45 @@ public class ActivityService(
                 userId = userId,
                 park = location,
                 parkId = location.id,
-                createdAt = DateTime.Parse(updatedAt),
-                updatedAt = DateTime.Parse(updatedAt)
+                createdAt = updatedAt,
+                updatedAt = updatedAt
             });
+        }
+    }
+
+    public CompletedBucketListItem UpdateBucketListItem(int itemId, int userId, double latitude, double longitude, bool status, DateTime dateTime)
+    {
+        // Verify the bucket list item ID.
+        var bucketListItem = _bucketListItemRepository.GetById(itemId);
+
+        // Get the user.
+        var user = _userRepository.GetById(userId);
+
+        // Check if there is already a completed bucket list item in the database.
+        var item = _completedBucketListItemRepository.GetByBucketListItemAndUser(itemId, userId);
+
+        if (item is null)
+        {
+            // Create and save a new completed bucket list item.
+            return _completedBucketListItemRepository.Create(new()
+            {
+                location = new(longitude, latitude),
+                created_at = dateTime,
+                updated_at = dateTime,
+                deleted = !status,
+                park = bucketListItem.park!,
+                parkId = bucketListItem.park!.id,
+                bucketListItem = bucketListItem,
+                bucketListItemId = bucketListItem.id,
+                user = user,
+                userId = user.id
+            });
+        }
+        else
+        {
+            // Update and save the item.
+            item.deleted = !status;
+            return _completedBucketListItemRepository.Update(item);
         }
     }
 
