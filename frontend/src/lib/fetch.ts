@@ -1,8 +1,8 @@
-import { dbg } from '@/lib/debug';
+import { DEBUG, dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
 
-const API_PORT = process.env.NGINX_PORT;
-export const API_URL = `https://localhost:${API_PORT}/api`;
+const API_PORT = DEBUG ? process.env.API_DEV_PORT : process.env.NGINX_PORT;
+export const API_URL = `http://localhost:${API_PORT}/api`;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
@@ -21,7 +21,6 @@ export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
 
 const getAuthHeaders = (): Record<string, string> => {
   const token = Cookies.get('token');
-  console.log('token', token);
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
