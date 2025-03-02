@@ -6,17 +6,19 @@ const fromString = (date: string) => {
 };
 
 const toStringLong = (date: Date) =>
-  date.toLocaleString('default', {
-    month: 'numeric',
-    day: 'numeric',
-    year: '2-digit',
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: true,
-    timeStyle: undefined,
-    dateStyle: undefined,
-    timeZone: 'America/New_York',
-  });
+  date
+    .toLocaleString('default', {
+      month: 'numeric',
+      day: 'numeric',
+      year: '2-digit',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeStyle: undefined,
+      dateStyle: undefined,
+      timeZone: 'America/New_York',
+    })
+    .replace(',', ' at');
 
 const toStringShort = (date: Date) =>
   date.toLocaleString('default', {
