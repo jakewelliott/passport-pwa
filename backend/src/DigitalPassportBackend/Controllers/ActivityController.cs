@@ -4,6 +4,7 @@ using DigitalPassportBackend.Services;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using NetTopologySuite.Geometries;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -48,6 +49,14 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkAbbreviation, userId, req.note, req.updatedAt)));
     }
+
+    [HttpPut("bucket-list/status/{bucket_list_id}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult UpdateBucketListItem(int bucket_list_id, [FromBody] UpdateBucketListRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(UpdateBucketListResponse.FromDomain(_activityService.UpdateBucketListItem(bucket_list_id, userId, req.latitude, req.latitude, req.status, req.dateTime)));
+    }
     
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
     {
@@ -90,7 +99,19 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record PrivateNoteRequest(string note, string updatedAt)
+    public record PrivateNoteRequest(string note, DateTime updatedAt)
     {
+    }
+
+    public record UpdateBucketListRequest(double latitude, double longitude, bool status, DateTime dateTime)
+    {
+    }
+
+    public record UpdateBucketListResponse(int bucketListItemId, bool status)
+    {
+        public static UpdateBucketListResponse FromDomain(CompletedBucketListItem item)
+        {
+            return new UpdateBucketListResponse(item.bucketListItemId, !item.deleted);
+        }
     }
 }
