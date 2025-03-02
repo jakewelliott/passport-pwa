@@ -169,9 +169,16 @@ public class ActivityService(
         else
         {
             // Update and save the item.
+            item.location = new(longitude, latitude);
             item.deleted = !status;
             return _completedBucketListItemRepository.Update(item);
         }
+    }
+
+    public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
+    {
+        return [.. _completedBucketListItemRepository.GetByUser(userId)
+            .Where(i => !i.deleted)];
     }
 
     private static CollectedStamp CreateStamp(
