@@ -9,6 +9,8 @@ interface LocationState {
 }
 
 export const useLocation = (spoof?: Geopoint) => {
+  dbg('HOOK', 'useLocation');
+
   const [location, setLocation] = useState<LocationState>({
     geopoint: spoof ?? null,
     error: null,
@@ -16,12 +18,15 @@ export const useLocation = (spoof?: Geopoint) => {
   });
 
   useEffect(() => {
+    dbg('EFFECT', 'useLocation', 'updating...');
+
     if (spoof) {
-      dbg('HOOK', 'useLocation', 'spoofing location');
+      dbg('EFFECT', 'useLocation', 'spoofing location');
       return;
     }
 
     if (!navigator.geolocation) {
+      dbg('EFFECT', 'useLocation', 'geolocation not supported');
       setLocation((prev) => ({
         ...prev,
         error: 'Geolocation is not supported by your browser',
@@ -41,6 +46,7 @@ export const useLocation = (spoof?: Geopoint) => {
           error: null,
           isLoading: false,
         });
+        dbg('EFFECT', 'useLocation', 'location updated');
       },
       (error) => {
         setLocation((prev) => ({
@@ -48,6 +54,7 @@ export const useLocation = (spoof?: Geopoint) => {
           error: error.message,
           isLoading: false,
         }));
+        dbg('ERROR', 'useLocation', error);
       },
     );
   }, [spoof]);

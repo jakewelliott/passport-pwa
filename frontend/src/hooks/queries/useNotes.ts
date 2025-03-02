@@ -1,3 +1,4 @@
+import { dbg } from '@/lib/debug';
 import { API_ACTIVITY_URL, fetchGet, fetchPut } from '@/lib/fetch';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -7,6 +8,8 @@ interface Note {
 }
 
 export const useNote = (parkId: number) => {
+  dbg('HOOK', 'useNote', parkId);
+
   return useQuery<Note>({
     queryKey: ['note', parkId],
     queryFn: () => fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
