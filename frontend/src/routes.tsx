@@ -3,6 +3,7 @@ import CollectStamp from '@/app/stamps/collect-stamp';
 import { SplashScreen } from '@/components/splash-screen';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
+import type { CollectedStamp } from '@/types';
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -22,7 +23,6 @@ import Stamps from './app/stamps';
 import { BucketList } from './components/bucket-list';
 import { useStamps } from './hooks/queries/useStamps';
 import { useParkCheck } from './hooks/useParkCheck';
-import type { CollectedStamp } from './lib/mock/types';
 
 const isCollected = (code: string, stamps: CollectedStamp[]) =>
 	stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;

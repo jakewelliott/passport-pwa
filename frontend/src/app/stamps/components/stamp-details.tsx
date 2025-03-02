@@ -1,7 +1,7 @@
 import { StampCollectedOn } from '@/components/stamp-collected-on';
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
-import type { CollectedStamp } from '@/lib/mock/types';
+import type { CollectedStamp } from '@/types';
 import { FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -59,8 +59,8 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 						</div>
 						<div className='space-y-2'>
 							<p className='text-supporting_inactiveblue'>{location}</p>
-							<StampCollectedOn date={stamp?.createdAt?.toISOString()} />
-							<CollectedManually stamp={stamp || null} />
+							<StampCollectedOn stamp={stamp} />
+							<CollectedManually stamp={stamp} />
 							<Link to={`/locations/${park.abbreviation}`} className='link inline-block'>
 								View Park Details <span aria-hidden='true'>&gt;</span>
 							</Link>

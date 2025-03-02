@@ -1,6 +1,6 @@
 import { dbg } from '@/lib/debug';
 import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
-import type { CollectedStamp, CollectStampRequest } from '@/lib/mock/types';
+import type { CollectStampRequest, CollectedStamp } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useUser } from './useUser';
