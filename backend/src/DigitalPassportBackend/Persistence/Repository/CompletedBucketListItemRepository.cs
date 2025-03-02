@@ -50,4 +50,10 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
         return _digitalPassportDbContext.CompletedBucketListItems.Where(s => s.parkId == locationId && s.userId == userId).ToList();
     }
 
+    public CompletedBucketListItem? GetByBucketListItemAndUser(int bucketListItemId, int userId)
+    {
+        return _digitalPassportDbContext.CompletedBucketListItems
+            .Where(i => i.bucketListItemId == bucketListItemId && i.userId == userId)
+            .FirstOrDefault();
+    }
 }
