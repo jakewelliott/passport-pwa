@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using NetTopologySuite.Geometries;
+using NetTopologySuite.Index.HPRtree;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -56,6 +57,19 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(UpdateBucketListResponse.FromDomain(_activityService.UpdateBucketListItem(bucketListId, userId, req.latitude, req.latitude, req.status, req.dateTime)));
+    }
+
+    [HttpGet("bucket-list")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult GetCompletedBucketListItems()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var result = new List<CompletedBucketListItemsResponse>();
+        foreach (var item in _activityService.GetCompletedBucketListItems(userId))
+        {
+            result.Add(CompletedBucketListItemsResponse.FromDomain(item));
+        }
+        return Ok(result);
     }
     
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
@@ -111,7 +125,15 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     {
         public static UpdateBucketListResponse FromDomain(CompletedBucketListItem item)
         {
-            return new UpdateBucketListResponse(item.bucketListItemId, !item.deleted);
+            return new(item.bucketListItemId, !item.deleted);
+        }
+    }
+
+    public record CompletedBucketListItemsResponse(int bucketListItemId, int parkId, DateTime updatedAt)
+    {
+        public static CompletedBucketListItemsResponse FromDomain(CompletedBucketListItem item)
+        {
+            return new(item.bucketListItemId, item.parkId, item.updated_at);
         }
     }
 }
