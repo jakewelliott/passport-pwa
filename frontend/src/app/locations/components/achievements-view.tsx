@@ -7,33 +7,33 @@ import type { CollectedStamp, Park } from '@/types';
 import { FaStamp } from 'react-icons/fa';
 
 interface AchievementsViewProps {
-	park: Park;
+  park: Park;
 }
 
 const StampView = ({ stamp }: { stamp?: CollectedStamp }) => {
-	return (
-		<div className='my-2.5 flex items-start'>
-			<FaStamp size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
-			<div className='flex w-full flex-col justify-center'>
-				<StampCollectedOn stamp={stamp} />
-			</div>
-		</div>
-	);
+  return (
+    <div className='my-2.5 flex items-start'>
+      <FaStamp size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
+      <div className='flex w-full flex-col justify-center'>
+        <StampCollectedOn stamp={stamp} />
+      </div>
+    </div>
+  );
 };
 
 const AchievementsView = ({ park }: AchievementsViewProps) => {
-	const { data: parkActivity, isLoading: isParkActivityLoading } = useParkActivity(park.id);
+  const { data: parkActivity, isLoading: isParkActivityLoading } = useParkActivity(park.id);
 
-	if (isParkActivityLoading || !parkActivity) return <LoadingPlaceholder what='your achievements' />;
+  if (isParkActivityLoading || !parkActivity) return <LoadingPlaceholder what='your achievements' />;
 
-	dbg('MISC', 'parkActivity', parkActivity);
+  dbg('MISC', 'parkActivity', parkActivity);
 
-	return (
-		<div className='flex flex-col gap-3' data-testid='achievements-view'>
-			<StampView stamp={parkActivity.stampCollectedAt} />
-			<BucketList parkId={park.id} />
-		</div>
-	);
+  return (
+    <div className='flex flex-col gap-3' data-testid='achievements-view'>
+      <StampView stamp={parkActivity.stampCollectedAt} />
+      <BucketList parkId={park.id} />
+    </div>
+  );
 };
 
 export default AchievementsView;
