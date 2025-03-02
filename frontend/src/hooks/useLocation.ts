@@ -3,11 +3,7 @@ import type { Geopoint } from '@/lib/mock/types';
 import { useEffect, useState } from 'react';
 
 interface LocationState {
-  geopoint: {
-    latitude: number;
-    longitude: number;
-    accuracy: number;
-  } | null;
+  geopoint: Geopoint | null;
   error: string | null;
   isLoading: boolean;
 }

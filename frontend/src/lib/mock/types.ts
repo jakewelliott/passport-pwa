@@ -105,14 +105,17 @@ export interface CollectStampRequest {
   dateTime: Date;
 }
 
-export interface CompletedBucketListItem {
-  id: number;
-  park: number;
+export interface BucketListCompletion {
+  userId: number;
+  itemId: number;
+  geopoint: Geopoint;
   updatedAt: string;
+  completed: boolean;
+  deleted: boolean;
 }
 
-export interface BucketListItemInterface {
+export interface BucketListItem {
   id: number;
+  parkId: number;
   task: string;
-  park: number;
-};
+}
