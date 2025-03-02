@@ -2,7 +2,7 @@ import park_activity from './park_activity';
 import parks from './parks';
 import { userProfile } from './user';
 
-import type { Geopoint, Park } from './types';
+import type { Geopoint, Park } from '@/types';
 
 // ADAM: We should design our API to allow us to do as much on the client side as possible.
 // Can't rely on the service layer if you're offline!
