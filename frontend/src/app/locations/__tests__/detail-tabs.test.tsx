@@ -1,10 +1,10 @@
 import { usePark, useParkActivity } from '@/hooks/queries/useParks';
+import { useUser } from '@/hooks/queries/useUser';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen, waitFor } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 import DetailTabs from '../detail-tabs';
-import { useUser } from '@/hooks/queries/useUser';
 
 // Mock the hooks
 vi.mock('@/hooks/queries/useParks');
@@ -129,7 +129,7 @@ describe('DetailTabs', () => {
     await waitFor(() => {
       const achievementsElement = screen.getByTestId('achievements-view');
       expect(achievementsElement).toHaveTextContent(/Stamp collected/);
-      expect(achievementsElement).toHaveTextContent("2/16/24 at 1:48 AM");
+      expect(achievementsElement).toHaveTextContent('2/16/24 at 1:48 AM');
 
       expect(achievementsElement).toHaveTextContent(/Bucket List Item/);
       expect(achievementsElement).toHaveTextContent(/Find a venus flytrap/);
@@ -139,7 +139,7 @@ describe('DetailTabs', () => {
   it('shows loading placeholder when park is loading', () => {
     mockUsePark.mockReturnValue({ data: null, isLoading: true });
     mockUseParkActivity.mockReturnValue({ data: null, isLoading: false, refetch: () => {} });
-    
+
     renderWithClient(
       <Routes>
         <Route path='/locations/:abbreviation' element={<DetailTabs />} />
@@ -151,10 +151,10 @@ describe('DetailTabs', () => {
 
   it('fetches park activity for non-admin users', () => {
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
-    mockUseParkActivity.mockReturnValue({ 
-      data: mockParkActivity, 
+    mockUseParkActivity.mockReturnValue({
+      data: mockParkActivity,
       isLoading: false,
-      refetch: () => {}
+      refetch: () => {},
     });
 
     renderWithClient(
@@ -170,11 +170,11 @@ describe('DetailTabs', () => {
   it('does not fetch park activity for admin users', () => {
     mockUseUser.mockReturnValue({ data: { role: 'admin' }, isLoading: false });
     mockUsePark.mockReturnValue({ data: mockPark, isLoading: false });
-    mockUseParkActivity.mockReturnValue({ 
-      data: mockParkActivity, 
-      isLoading: false 
+    mockUseParkActivity.mockReturnValue({
+      data: mockParkActivity,
+      isLoading: false,
     });
-    
+
     renderWithClient(
       <Routes>
         <Route path='/locations/:abbreviation' element={<DetailTabs />} />
