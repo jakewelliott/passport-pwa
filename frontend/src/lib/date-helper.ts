@@ -8,14 +8,14 @@ const fromString = (date: string) => {
 const toStringLong = (date: Date) =>
   date.toLocaleString('default', {
     month: 'numeric',
-    day: 'numeric', 
+    day: 'numeric',
     year: '2-digit',
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
     timeStyle: undefined,
     dateStyle: undefined,
-    timeZone: 'America/New_York'
+    timeZone: 'America/New_York',
   });
 
 const toStringShort = (date: Date) =>

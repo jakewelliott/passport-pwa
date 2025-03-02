@@ -30,13 +30,13 @@ describe('Stamps', () => {
       id: 1,
       parkAbbreviation: mockParks[0].abbreviation,
       createdAt: new Date(),
-      method: 'manual'
+      method: 'manual',
     },
     {
       id: 2,
       parkAbbreviation: mockParks[1].abbreviation,
       createdAt: new Date(),
-      method: 'manual'
+      method: 'manual',
     },
   ];
 

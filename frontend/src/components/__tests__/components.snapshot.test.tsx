@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
@@ -10,7 +11,6 @@ import RoundedButton from '../rounded-button';
 import { SplashScreen } from '../splash-screen';
 import TabBar from '../tab-bar';
 import { TrailIcons } from '../trail-icons';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({

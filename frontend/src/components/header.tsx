@@ -1,8 +1,8 @@
+import { useUser } from '@/hooks/queries/useUser';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import HeaderMenuButton from './header-menu-button';
-import { useUser } from '@/hooks/queries/useUser';
 
 export const BackButton = ({ hidden }: { hidden: boolean }) => {
   const navigate = useNavigate();
