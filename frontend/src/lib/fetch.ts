@@ -40,7 +40,7 @@ export const fetchPost = async (url: string, body: any) => {
 
   if (!response.ok) await fetchError(response);
 
-  dbg('FETCH', 'POST RESPONSE', { response });
+  // dbg('FETCH', 'POST RESPONSE', { response });
   return response;
 };
 
@@ -57,12 +57,12 @@ export const fetchGet = async (url: string) => {
     credentials: 'include',
   });
 
-  dbg('FETCH', 'GET RESPONSE', { response });
+  // dbg('FETCH', 'GET RESPONSE', { response });
 
   if (!response.ok) await fetchError(response);
 
   const data = await response.json();
-  dbg('FETCH', 'GET DATA', { data });
+  // dbg('FETCH', 'GET DATA', { data });
 
   return data;
 };
@@ -83,7 +83,7 @@ export const fetchPut = async (url: string, body: any) => {
 
   if (!response.ok) await fetchError(response);
 
-  dbg('FETCH', 'PUT RESPONSE', { response });
+  // dbg('FETCH', 'PUT RESPONSE', { response });
   return response;
 };
 

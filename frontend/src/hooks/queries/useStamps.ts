@@ -1,7 +1,6 @@
 import { dbg } from '@/lib/debug';
 import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
-import type { CollectStampRequest } from '@/lib/mock/types';
-import type { CollectedStamp } from '@/lib/mock/types';
+import type { CollectedStamp, CollectStampRequest } from '@/lib/mock/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useUser } from './useUser';
@@ -10,12 +9,12 @@ import { useUser } from './useUser';
  * @returns The stamps for the user
  */
 export const useStamps = () => {
+  dbg('HOOK', 'useStamps');
   const { data: user } = useUser();
   const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
     queryKey: ['stamps', user?.id],
     queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL),
   });
-  dbg('HOOK', 'useStamps', { data, isLoading });
   return { data, isLoading, refetch };
 };
 
