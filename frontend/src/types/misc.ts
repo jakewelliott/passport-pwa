@@ -3,7 +3,7 @@
 export interface Geopoint {
   latitude: number;
   longitude: number;
-  accuracy: number;
+  inaccuracyRadius: number;
 }
 
 export interface LoginCredentials {

@@ -2,7 +2,7 @@ import { useParks, useParksGeo } from '@/hooks/queries/useParks';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg, dbgif, sjason } from '@/lib/debug';
 import type { Geopoint, Park, ParkGeoData } from '@/types';
-import { buffer, booleanIntersects, booleanPointInPolygon } from '@turf/turf';
+import { booleanIntersects, booleanPointInPolygon, buffer } from '@turf/turf';
 import { useEffect, useState } from 'react';
 import wkt from 'wellknown';
 
@@ -84,7 +84,7 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
     }
 
     const point = castGeopoint(geopoint);
-    const park = parkCheck(point, geopoint.accuracy, parks, parksGeo);
+    const park = parkCheck(point, geopoint.inaccuracyRadius, parks, parksGeo);
     dbgif(!park, 'ERROR', 'useParkCheck', 'park not found');
 
     setCurrentPark(park);
