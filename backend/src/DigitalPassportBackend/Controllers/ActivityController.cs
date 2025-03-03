@@ -78,7 +78,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(CompletedBucketListItemResponse.FromDomain(result));
     }
 
-    [HttpPost("visit")]
+    [HttpGet("visit")]
     [Authorize(Roles = "visitor")]
     public IActionResult GetLatestVisitedParks()
     {

@@ -52,10 +52,9 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
 
     public List<ParkVisit> GetLatestByUser(int userId)
     {
-        return [.. _digitalPassportDbContext.ParkVisits
+        return _digitalPassportDbContext.ParkVisits
             .Where(i => i.userId == userId)
             .OrderByDescending(i => i.createdAt)
-            .GroupBy(i => i.parkId)
-            .Select(i => i.First())];
+						.ToList();
     }
 }
