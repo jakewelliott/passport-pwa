@@ -1,3 +1,4 @@
+import { fetchPost } from '@/lib/fetch';
 import type { BucketListCompletion, BucketListItem } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useLocation } from '../useLocation';
@@ -30,10 +31,16 @@ const useCompletedBucketListItems = (userId: number) => {
     {
       userId: userId,
       itemId: 2,
-      geopoint: { latitude: 7, longitude: 8, accuracy: 0 },
-      updatedAt: new Date().toISOString(),
+      latitude: 7,
+      longitude: 8,
+      inaccuracyRadius: 0,
+      updatedAt: new Date(),
       completed: true,
       deleted: false,
+      parkId: 1,
+      parkAbbreviation: 'MOCK',
+      id: 0,
+      createdAt: new Date(),
     },
   ];
 
@@ -47,30 +54,22 @@ const useCompletedBucketListItems = (userId: number) => {
  *  Call mutate with the itemId to toggle the completion status
  */
 const useToggleCompletion = (userId: number) => {
-  const { data: completedItems } = useCompletedBucketListItems(userId);
+  const { data: completedItems, refetch } = useCompletedBucketListItems(userId);
   const { geopoint } = useLocation();
 
   // ADAM: not sure if this logic should be done on frontend or backend (b/c caching)
   // maybe toggling could just be a POST request to like /bucketlist/{parkId}/{itemId}
-  const toggleCompletion = (itemId: number): BucketListCompletion => {
+  const getToggledValue = (itemId: number): boolean => {
     const item = completedItems?.find((item) => item.itemId === itemId);
     const newStatus = item ? !item.completed : true; // set status to true if item doesn't exist yet
-
-    return {
-      userId: userId,
-      itemId: itemId,
-      geopoint: geopoint ?? { latitude: 0, longitude: 0, accuracy: 0 },
-      completed: newStatus,
-      updatedAt: new Date().toISOString(),
-      deleted: false,
-    };
+    return newStatus;
   };
 
   return useMutation({
     mutationFn: (itemId: number) => {
-      const newCompletion = toggleCompletion(itemId);
-      return Promise.resolve(newCompletion);
-      // TODO: send object to backend with PUT request
+      return fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, {
+        completed: getToggledValue(itemId),
+      });
     },
   });
 };

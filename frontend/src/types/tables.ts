@@ -40,3 +40,9 @@ export interface ParkGeoData {
   coordinates: Geopoint;
   boundaries: string;
 }
+
+export interface BucketListItem {
+  id: number;
+  parkId: number;
+  task: string;
+}

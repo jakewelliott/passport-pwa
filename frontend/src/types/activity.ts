@@ -1,5 +1,3 @@
-import type { Geopoint } from './misc';
-
 // type for anything that a user can create, update, or delete
 interface UserActivity {
   id: number;
@@ -9,6 +7,8 @@ interface UserActivity {
   deleted: boolean;
 }
 
+export type PutRequest<T> = Omit<T, keyof UserActivity>;
+
 // user activity related to a park
 interface ParkActivity extends UserActivity {
   parkId: number;
@@ -16,8 +16,11 @@ interface ParkActivity extends UserActivity {
 }
 
 export interface CollectedStamp extends ParkActivity {
+  latitude: number;
+  longitude: number;
+  inaccuracyRadius: number;
   method: string;
-  geopoint: Geopoint;
+  dateTime: Date;
 }
 
 export interface ParkVisit extends ParkActivity {
@@ -30,6 +33,8 @@ export interface ParkNote extends ParkActivity {
 
 export interface BucketListCompletion extends ParkActivity {
   itemId: number;
-  geopoint: Geopoint;
+  latitude: number;
+  longitude: number;
+  inaccuracyRadius: number;
   completed: boolean;
 }
