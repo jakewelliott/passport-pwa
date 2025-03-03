@@ -1,3 +1,7 @@
+import type { CollectedStamp, UserActivity } from './activity';
+
+export type PutRequest<T> = Omit<T, keyof UserActivity>;
+
 export interface LoginResponse {
   token: string;
 }
@@ -9,10 +13,4 @@ export interface CollectStampResponse {
   parkAbbreviation: string;
 }
 
-export interface CollectStampRequest {
-  latitude: number;
-  longitude: number;
-  inaccuracyRadius: number;
-  method: string;
-  dateTime: Date;
-}
+export type CollectStampRequest = Omit<PutRequest<CollectedStamp>, 'id' | 'parkId'>;
