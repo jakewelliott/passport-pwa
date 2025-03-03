@@ -5,6 +5,7 @@ import type { Geopoint, Park, ParkGeoData } from '@/types';
 import { booleanIntersects, booleanPointInPolygon, buffer } from '@turf/turf';
 import { useEffect, useState } from 'react';
 import wkt from 'wellknown';
+import { useVisitPark } from './queries/useVisitPark';
 
 // import the bounds from the geojson file, get the features and cast them to the correct type
 
@@ -73,6 +74,8 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
   const { geopoint, isLoading: geopointLoading } = useLocation(spoof);
   const { data: parksGeo, isLoading: parksGeoLoading } = useParksGeo();
 
+  const { mutate: markParkAsVisited } = useVisitPark();
+
   useEffect(() => {
     dbg('EFFECT', 'useParkCheck', 'checking park');
 
@@ -87,8 +90,12 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
     const park = parkCheck(point, geopoint.inaccuracyRadius, parks, parksGeo);
     dbgif(!park, 'ERROR', 'useParkCheck', 'park not found');
 
+    if (park) {
+      markParkAsVisited(park.id);
+    }
+
     setCurrentPark(park);
-  }, [geopoint, parks, parksGeo]);
+  }, [geopoint, parks, parksGeo, markParkAsVisited]);
 
   dbgif(parksLoading, 'HOOK', 'useParkCheck', 'parks loading');
   dbgif(geopointLoading, 'HOOK', 'useParkCheck', 'geopoint loading');
