@@ -161,6 +161,7 @@ public class CompletedBucketListItemRepositoryTests
     {
         id = 5,
         location = new(35.7810, -78.6485), // Skipped class and got burgers 😋🍔
+        deleted = false,
         park = TestData.Parks[1],
         bucketListItem = TestData.BucketList[1],
         user = TestData.Users[1]

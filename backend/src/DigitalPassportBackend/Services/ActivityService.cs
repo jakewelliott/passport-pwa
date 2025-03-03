@@ -9,16 +9,16 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Services;
 
 public class ActivityService(
-    ICompletedBucketListItemRepository completedBucketListItemRepository,
     IBucketListItemRepository bucketListItemRepository,
+    ICompletedBucketListItemRepository completedBucketListItemRepository,
     ICollectedStampRepository collectedStampRepository,
     IPrivateNoteRepository privateNoteRepository,
     IParkVisitRepository parkVisitRepository,
     ILocationsRepository locationsRepository,
     IUserRepository userRepository) : IActivityService
 {
-    private readonly ICompletedBucketListItemRepository _completedBucketListItemRepository = completedBucketListItemRepository;
     private readonly IBucketListItemRepository _bucketListItemRepository = bucketListItemRepository;
+    private readonly ICompletedBucketListItemRepository _completedBucketListItemRepository = completedBucketListItemRepository;
     private readonly ICollectedStampRepository _collectedStampRepository = collectedStampRepository;
     private readonly IPrivateNoteRepository _privateNoteRepository = privateNoteRepository;
     private readonly IParkVisitRepository _parkVisitRepository = parkVisitRepository;
@@ -108,7 +108,7 @@ public class ActivityService(
         };
     }
 
-    public PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, string updatedAt)
+    public PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, DateTime updatedAt)
     {
         // Check if there is already a note in the database.
         var location = _locationsRepository.GetByAbbreviation(parkAbbr);
@@ -117,7 +117,7 @@ public class ActivityService(
         {
             // Update it
             privateNote.note = note;
-            privateNote.updatedAt = DateTime.Parse(updatedAt);
+            privateNote.updatedAt = updatedAt;
             return _privateNoteRepository.Update(privateNote);
         }
         else
@@ -130,10 +130,54 @@ public class ActivityService(
                 userId = userId,
                 park = location,
                 parkId = location.id,
-                createdAt = DateTime.Parse(updatedAt),
-                updatedAt = DateTime.Parse(updatedAt)
+                createdAt = updatedAt,
+                updatedAt = updatedAt
             });
         }
+    }
+
+    public CompletedBucketListItem UpdateBucketListItem(int itemId, int userId, double latitude, double longitude, bool status, DateTime dateTime)
+    {
+        // Verify the bucket list item ID.
+        var bucketListItem = _bucketListItemRepository.GetById(itemId);
+
+        // Get the user and location.
+        var user = _userRepository.GetById(userId);
+        var location = _locationsRepository.GetById((int)bucketListItem.parkId!);
+
+        // Check if there is already a completed bucket list item in the database.
+        var item = _completedBucketListItemRepository.GetByUser(userId).FirstOrDefault(i => i.bucketListItemId == itemId);
+
+        if (item is null)
+        {
+            // Create and save a new completed bucket list item.
+            return _completedBucketListItemRepository.Create(new()
+            {
+                location = new(longitude, latitude),
+                created_at = dateTime,
+                updated_at = dateTime,
+                deleted = !status,
+                park = location,
+                parkId = location.id,
+                bucketListItem = bucketListItem,
+                bucketListItemId = bucketListItem.id,
+                user = user,
+                userId = user.id
+            });
+        }
+        else
+        {
+            // Update and save the item.
+            item.location = new(longitude, latitude);
+            item.deleted = !status;
+            return _completedBucketListItemRepository.Update(item);
+        }
+    }
+
+    public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
+    {
+        return [.. _completedBucketListItemRepository.GetByUser(userId)
+            .Where(i => i.deleted == false)];
     }
 
     private static CollectedStamp CreateStamp(
@@ -155,10 +199,6 @@ public class ActivityService(
 
 		public List<BucketListItem> GetBucketListItems() {
 			return _bucketListItemRepository.GetAll();
-		}
-
-		public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId) {
-			return _completedBucketListItemRepository.GetByUser(userId);
 		}
 
 		public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude, double inaccuracyRadius) {
@@ -195,6 +235,7 @@ public class ActivityService(
 				return _completedBucketListItemRepository.Create(new() { 
 					bucketListItemId = itemId, 
 					userId = userId, 
+					deleted = false,
 					location = (Point)userLocation, 
 					parkId = bucketListItem.parkId.Value 
 				});

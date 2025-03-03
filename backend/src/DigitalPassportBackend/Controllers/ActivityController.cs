@@ -5,6 +5,7 @@ using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using NetTopologySuite.Geometries;
+using NetTopologySuite.Index.HPRtree;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -137,7 +138,23 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record PrivateNoteRequest(string note, string updatedAt)
+    public record PrivateNoteRequest(string note, DateTime updatedAt)
+    {
+    }
+
+    public record UpdateBucketListRequest(double latitude, double longitude, bool status, DateTime dateTime)
+    {
+    }
+
+    public record UpdateBucketListResponse(int bucketListItemId, bool status)
+    {
+        public static UpdateBucketListResponse FromDomain(CompletedBucketListItem item)
+        {
+            return new(item.bucketListItemId, !item.deleted);
+        }
+    }
+
+    public record CompletedBucketListItemsResponse(int bucketListItemId, int parkId, DateTime updatedAt)
     {
     }
 
