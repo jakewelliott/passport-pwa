@@ -1,6 +1,6 @@
 import { DEBUG, dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
-
+import { toast } from 'react-toastify';
 const API_PORT = DEBUG ? process.env.API_DEV_PORT : process.env.NGINX_PORT;
 export const API_URL = `http://localhost:${API_PORT}/api`;
 
@@ -103,5 +103,6 @@ const fetchError = async (response: Response) => {
   } catch (error) {
     message = response.statusText;
   }
+  toast.error(message);
   throw new Error(message);
 };
