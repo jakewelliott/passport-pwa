@@ -31,10 +31,9 @@ export interface ParkNote extends ParkActivity {
   note: string;
 }
 
-export interface BucketListCompletion extends ParkActivity {
-  itemId: number;
-  latitude: number;
-  longitude: number;
-  inaccuracyRadius: number;
-  completed: boolean;
+export interface BucketListCompletion {
+  id: number;
+  bucketListItemId: number;
+  createdAt: Date;
+  deleted: boolean;
 }

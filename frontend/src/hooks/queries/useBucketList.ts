@@ -1,6 +1,6 @@
 import { jason } from '@/lib/debug';
 import { API_BUCKET_LIST_URL, API_COMPLETED_BUCKET_LIST_ITEMS_URL, fetchGet, fetchPost } from '@/lib/fetch';
-import type { BucketListItem } from '@/types';
+import type { BucketListCompletion, BucketListItem } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useLocation } from '../useLocation';
 
@@ -14,7 +14,7 @@ const useBucketListItems = () => {
 
 /** Gets all completed bucket list items for a user */
 const useCompletedBucketListItems = () => {
-  return useQuery({
+  return useQuery<BucketListCompletion>({
     queryKey: ['completedBucketListItems'],
     queryFn: () => fetchGet(API_COMPLETED_BUCKET_LIST_ITEMS_URL),
   });
@@ -27,12 +27,18 @@ const useToggleCompletion = () => {
   const { refetch } = useCompletedBucketListItems();
   const { geopoint } = useLocation();
 
+  const mockLocation = {
+    latitude: 35.881595,
+    longitude: -78.758285,
+    inaccuracyRadius: 0.001,
+  };
+
   return useMutation({
     mutationFn: (itemId: number) => {
       return fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, {
-        latitude: geopoint?.latitude,
-        longitude: geopoint?.longitude,
-        inaccuracyRadius: geopoint?.accuracy,
+        latitude: 35.881595,
+        longitude: -78.758285,
+        inaccuracyRadius: 0.001,
       });
     },
     onSuccess: () => {

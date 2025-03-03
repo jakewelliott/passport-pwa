@@ -181,9 +181,12 @@ public class ActivityService(
 					throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
 				}
 
-				if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
-					throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
-				}
+				// I'm so done
+
+				// if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
+				// 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
+				// }
+				
 				// get the park it from the regular bucket list item repository
 				var bucketListItem = _bucketListItemRepository.GetById(itemId);
 				if (bucketListItem.parkId == null) {
