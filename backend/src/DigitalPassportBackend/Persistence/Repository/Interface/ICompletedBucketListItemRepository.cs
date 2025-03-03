@@ -6,5 +6,5 @@ public interface ICompletedBucketListItemRepository : IRepository<CompletedBucke
 {
     List<CompletedBucketListItem> GetByParkAndUser(int locationId, int userId);
 		List<CompletedBucketListItem> GetByUser(int userId);
-		CompletedBucketListItem GetByItemAndUser(int itemId, int userId);
+		CompletedBucketListItem? GetByItemAndUser(int itemId, int userId);
 }

@@ -12,5 +12,5 @@ public interface IActivityService
 		// adding these to make our life easier on the frontend
 		List<BucketListItem> GetBucketListItems();
 		List<CompletedBucketListItem> GetCompletedBucketListItems(int userId);
-		CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, Point location);
+		CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude, double inaccuracyRadius);
 }
