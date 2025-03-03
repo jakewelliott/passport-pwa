@@ -74,11 +74,43 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude, req.inaccuracyRadius);
+        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude);
         return Ok(CompletedBucketListItemResponse.FromDomain(result));
     }
 
-    public record ToggleBucketListItemCompletionRequest(double longitude, double latitude, double inaccuracyRadius)
+    [HttpPost("visit")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult GetLatestVisitedParks()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(_activityService.GetAllLatestParkVisits(userId).Select(ParkVisitResponse.FromDomain));
+    }
+
+    [HttpPost("visit/{parkAbbreviation}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult VisitPark(string parkAbbreviation, [FromBody] VisitParkRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(ParkVisitResponse.FromDomain(_activityService.VisitPark(userId, parkAbbreviation, req.longitude, req.latitude, req.inaccuracyRadius)));
+    }
+
+    public record VisitParkRequest(double longitude, double latitude, double inaccuracyRadius)
+    {
+    }
+
+    public record ParkVisitResponse(int id, DateTime createdAt, string parkAbbreviation)
+    {
+        public static ParkVisitResponse FromDomain(ParkVisit visit)
+        {
+            return new(
+                visit.id,
+                visit.createdAt,
+                visit.park.parkAbbreviation
+            );
+        }
+    }
+
+    public record ToggleBucketListItemCompletionRequest(double longitude, double latitude)
     {
     }
 
