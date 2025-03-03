@@ -56,7 +56,8 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 		[Authorize(Roles = "visitor")]
 		public IActionResult GetBucketListItems()
 		{
-			return Ok(_activityService.GetBucketListItems());
+			var items = _activityService.GetBucketListItems();
+			return Ok(items.Select(BucketListItemResponse.FromDomain));
 		}
 
 		[HttpGet("bucketlist/completed")]
@@ -64,7 +65,8 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 		public IActionResult GetCompletedBucketListItems()
 		{
 			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-			return Ok(_activityService.GetCompletedBucketListItems(userId));
+			var items = _activityService.GetCompletedBucketListItems(userId);
+			return Ok(items.Select(CompletedBucketListItemResponse.FromDomain));
 		}
 
 		[HttpPost("bucketlist/{itemId}")]
@@ -72,11 +74,25 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 		public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
 		{
 			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-			return Ok(_activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude, req.inaccuracyRadius));
+			var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude, req.inaccuracyRadius);
+			return Ok(CompletedBucketListItemResponse.FromDomain(result));
 		}
 
 		public record ToggleBucketListItemCompletionRequest(double longitude, double latitude, double inaccuracyRadius)
     {
+    }
+
+    public record CompletedBucketListItemResponse(int id, int bucketListItemId, DateTime createdAt, bool deleted)
+    {
+        public static CompletedBucketListItemResponse FromDomain(CompletedBucketListItem item)
+        {
+            return new CompletedBucketListItemResponse(
+                item.id,
+                item.bucketListItemId,
+                item.created_at,
+                item.deleted
+            );
+        }
     }
 
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
@@ -123,5 +139,19 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     public record PrivateNoteRequest(string note, string updatedAt)
     {
+    }
+
+    public record BucketListItemResponse(int id, string task, DateTime createdAt, int? parkId, string? parkName)
+    {
+        public static BucketListItemResponse FromDomain(BucketListItem item)
+        {
+            return new BucketListItemResponse(
+                item.id,
+                item.task,
+                item.createdAt,
+                item.parkId,
+                item.park?.parkName
+            );
+        }
     }
 }

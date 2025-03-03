@@ -1,5 +1,6 @@
+import { jason } from '@/lib/debug';
 import { API_BUCKET_LIST_URL, API_COMPLETED_BUCKET_LIST_ITEMS_URL, fetchGet, fetchPost } from '@/lib/fetch';
-import type { BucketListCompletion, BucketListItem } from '@/types';
+import type { BucketListItem } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useLocation } from '../useLocation';
 
@@ -46,11 +47,18 @@ export const useBucketList = (parkId?: number) => {
   const { data: allCompletedItems, isLoading: isLoadingCompletedItems } = useCompletedBucketListItems();
   const { mutate: toggleCompletion, isPending: isMarkingAsComplete } = useToggleCompletion();
 
-  const isLoading = isLoadingAllItems || isLoadingCompletedItems || isMarkingAsComplete;
+  const isLoading =
+    isLoadingAllItems || isLoadingCompletedItems || isMarkingAsComplete || !allItems || !allCompletedItems;
+
+  jason({ allCompletedItems });
 
   // filtering logic
-  const parkItems = allItems?.filter((item: BucketListItem) => item.parkId === parkId);
-  const parkCompletedItems = allCompletedItems?.filter((item: BucketListCompletion) => item.itemId === parkId);
+  const parkItems = allItems?.filter((item: BucketListItem) => item.parkId === parkId) ?? [];
+  // turn this into a list of ids
+  const parkItemsIds = parkItems?.map((item: BucketListItem) => item.id) ?? [];
+
+  // I have no idea why the backend is responding this way
+  const parkCompletedItems = allCompletedItems.filter((item: any) => parkItemsIds.includes(item.bucketListItemId));
 
   return {
     items: parkId === undefined ? allItems : parkItems,
