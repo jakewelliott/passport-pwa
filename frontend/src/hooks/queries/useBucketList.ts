@@ -1,4 +1,3 @@
-import { dbg } from '@/lib/debug';
 import { API_BUCKET_LIST_URL, API_COMPLETED_BUCKET_LIST_ITEMS_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import type { BucketListCompletion, BucketListItem } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -27,17 +26,16 @@ const useToggleCompletion = () => {
   const { refetch } = useCompletedBucketListItems();
   const { geopoint } = useLocation();
 
-  dbg('MISC', 'utc', geopoint);
-
   return useMutation({
-    mutationFn: async (itemId: number) => {
-      const response = await fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, {
+    mutationFn: (itemId: number) => {
+      return fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, {
         latitude: geopoint?.latitude,
         longitude: geopoint?.longitude,
         inaccuracyRadius: geopoint?.accuracy,
       });
+    },
+    onSuccess: () => {
       refetch();
-      return response;
     },
   });
 };
