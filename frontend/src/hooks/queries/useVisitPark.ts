@@ -1,8 +1,9 @@
 import { useLocation } from '@/hooks/useLocation';
-import { dbg } from '@/lib/debug';
+import { dbg, jason } from '@/lib/debug';
 import { API_VISIT_HISTORY_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import type { ParkVisit } from '@/types/tables';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { useParks } from './useParks';
 
 /** Gets the visit history for the current user */
 const useVisitsHistory = () =>
@@ -15,7 +16,12 @@ const useVisitsHistory = () =>
 const useVisitMutation = () => {
   const { geopoint } = useLocation();
   return useMutation({
-    mutationFn: (parkId: number) => fetchPost(`${API_VISIT_HISTORY_URL}/${parkId}`, geopoint),
+    mutationFn: (parkAbbreviation: string) =>
+      fetchPost(`${API_VISIT_HISTORY_URL}/${parkAbbreviation}`, {
+        longitude: geopoint?.longitude,
+        latitude: geopoint?.latitude,
+        inaccuracyRadius: geopoint?.inaccuracyRadius,
+      }),
   });
 };
 
@@ -23,24 +29,34 @@ const useVisitMutation = () => {
 export const useVisitPark = () => {
   const query = useVisitsHistory();
   const mutation = useVisitMutation();
+  const { data: parks } = useParks();
 
-  const mutate = (parkId: number) => {
-    dbg('MUTATE', 'useVisitPark', `visiting park ${parkId}`);
+  const mutate = (parkAbbreviation: string) => {
+    dbg('MUTATE', 'useVisitPark', `visiting park ${parkAbbreviation}`);
 
     // make sure we have the data to check
-    if (query.isLoading || query.data === undefined) {
+    if (query.isLoading || query.data === undefined || parks === undefined) {
       dbg('ERROR', 'useVisitPark', 'waiting on query for timecheck');
       return;
     }
 
+    const park = parks.find((park) => park.abbreviation === parkAbbreviation);
+
+    if (!park) {
+      dbg('ERROR', 'useVisitPark', `park ${parkAbbreviation} not found`);
+      return;
+    }
+
+    jason({ park });
+
     // check if we've visited the park in the last 24 hours
-    const lastVisit = query.data.find((visit) => visit.parkId === parkId);
+    const lastVisit = query.data.find((visit) => visit.parkId === park.id);
     if (lastVisit && lastVisit.createdAt > new Date(Date.now() - 24 * 60 * 60 * 1000)) {
       dbg('ERROR', 'useVisitPark', 'already visited the park in the last 24 hours');
       return;
     }
 
-    mutation.mutate(parkId, {
+    mutation.mutate(parkAbbreviation, {
       onSuccess: () => {
         query.refetch();
       },

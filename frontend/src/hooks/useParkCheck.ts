@@ -91,7 +91,7 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
     dbgif(!park, 'ERROR', 'useParkCheck', 'park not found');
 
     if (park) {
-      markParkAsVisited(park.id);
+      markParkAsVisited(park.abbreviation);
     }
 
     setCurrentPark(park);
