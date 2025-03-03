@@ -52,7 +52,7 @@ public static class Response
             && FieldEqual(icons, i => i.icon.GetDisplayName().Replace("_", "-"), resp, r => r.iconName);
     }
 
-    public static bool Equal(IEnumerable<BucketListItem> bucketList, BucketListItemResponse[] resp)
+    public static bool Equal(IEnumerable<BucketListItem> bucketList, DigitalPassportBackend.Controllers.LocationsController.BucketListItemResponse[] resp)
     {
         bucketList = [.. bucketList.OrderBy(i => i.task)];
         resp = [.. resp.OrderBy(i => i.task)];
