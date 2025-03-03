@@ -163,14 +163,11 @@ public class ActivityService(
         return _bucketListItemRepository.GetAll();
     }
 
-    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude, double inaccuracyRadius) {
+    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude) {
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
-        var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
     
         var item = _bucketListItemRepository.GetById(itemId);
-        if (item == null) {
-            throw new ServiceException(StatusCodes.Status404NotFound, "Bucket list item not found.");
-        }
+
         var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
         if (completion != null) {
             completion.deleted = !completion.deleted;
@@ -204,11 +201,19 @@ public class ActivityService(
         }
     }
 
-    public ParkVisit VisitPark(int userId, string parkAbbr)
+    public ParkVisit VisitPark(int userId, string parkAbbr, double longitude, double latitude, double inaccuracyRadius)
     {
         var park = _locationsRepository.GetByAbbreviation(parkAbbr);
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
+        var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
+        if (!park.boundaries!.Intersects(locationWithInaccuracy))
+        {
+            throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
+        }
+        
         return _parkVisitRepository.Create(new()
         {
+            location = new(longitude, latitude),
             createdAt = DateTime.Now,
             updatedAt = DateTime.Now,
             parkId = park.id,
@@ -216,5 +221,10 @@ public class ActivityService(
             userId = userId,
             user = _userRepository.GetById(userId)
         });
+    }
+
+    public List<ParkVisit> GetAllLatestParkVisits(int userId)
+    {
+        return _parkVisitRepository.GetLatestByUser(userId);
     }
 }
