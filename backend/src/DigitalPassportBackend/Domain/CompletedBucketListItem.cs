@@ -16,9 +16,8 @@ public class CompletedBucketListItem
     public DateTime created_at { get; set; } = DateTime.UtcNow;
     [Column("updated_at")]
     public DateTime updated_at { get; set; } = DateTime.UtcNow;
-
     [Column("deleted")]
-    public bool deleted { get; set; } = false;
+    public required bool deleted { get; set; } = false;
 
     // References
     [ForeignKey("park")]

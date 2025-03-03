@@ -12,6 +12,7 @@ namespace DigitalPassportBackend.UnitTests.Services
 {
     public class ActivityServiceTests
     {
+        private readonly Mock<IBucketListItemRepository> _mockBucketList;
         private readonly Mock<ICompletedBucketListItemRepository> _mockCompletedBucketList;
         private readonly Mock<ICollectedStampRepository> _mockCollectedStamps;
         private readonly Mock<IPrivateNoteRepository> _mockPrivateNotes;
@@ -24,6 +25,7 @@ namespace DigitalPassportBackend.UnitTests.Services
         public ActivityServiceTests()
         {
             // Initialize mocked repositories.
+            _mockBucketList = new();
             _mockCompletedBucketList = new();
             _mockCollectedStamps = new();
             _mockPrivateNotes = new();
@@ -81,6 +83,7 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Initialize ActivityService.
             _activities = new(
+                _mockBucketList.Object,
                 _mockCompletedBucketList.Object,
                 _mockCollectedStamps.Object,
                 _mockPrivateNotes.Object,
