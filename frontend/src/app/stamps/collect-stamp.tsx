@@ -19,7 +19,7 @@ export default function CollectStamp({ park, onClose }: CollectStampProps) {
 		const collected: PutRequest<CollectedStamp> = {
 			latitude: userLocation.geopoint?.latitude || 0,
 			longitude: userLocation.geopoint?.longitude || 0,
-			inaccuracyRadius: userLocation.geopoint?.accuracy || 0,
+			inaccuracyRadius: userLocation.geopoint?.inaccuracyRadius || 0,
 			method: 'location',
 			dateTime: new Date(),
 			parkId: park.id, // these get ignored by the backend

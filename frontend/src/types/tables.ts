@@ -1,3 +1,5 @@
+// Types for tables in the database
+
 import type { Address, Geopoint } from './misc';
 
 export interface UserProfile {

@@ -1,5 +1,6 @@
 // type for anything that a user can create, update, or delete
-interface UserActivity {
+
+export interface UserActivity {
   id: number;
   userId: number;
   createdAt: Date;
@@ -7,10 +8,8 @@ interface UserActivity {
   deleted: boolean;
 }
 
-export type PutRequest<T> = Omit<T, keyof UserActivity>;
-
 // user activity related to a park
-interface ParkActivity extends UserActivity {
+export interface ParkActivity extends UserActivity {
   parkId: number;
   parkAbbreviation: string;
 }
