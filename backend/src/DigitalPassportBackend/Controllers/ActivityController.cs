@@ -69,12 +69,16 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
 		[HttpPost("bucketlist/{itemId}")]
 		[Authorize(Roles = "visitor")]
-		public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] Point location)
+		public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
 		{
 			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-			return Ok(_activityService.ToggleBucketListItemCompletion(itemId, userId, location));
+			return Ok(_activityService.ToggleBucketListItemCompletion(itemId, userId, req.latitude, req.longitude, req.inaccuracyRadius));
 		}
-    
+
+		public record ToggleBucketListItemCompletionRequest(double latitude, double longitude, double inaccuracyRadius)
+    {
+    }
+
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
     {
         public static CollectStampResponse FromDomain(CollectedStamp stamp)

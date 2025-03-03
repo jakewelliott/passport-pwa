@@ -161,7 +161,10 @@ public class ActivityService(
 			return _completedBucketListItemRepository.GetByUser(userId);
 		}
 
-		public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, Point location) {
+		public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude, double inaccuracyRadius) {
+			var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
+			var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
+		
 			var item = _bucketListItemRepository.GetById(itemId);
 			if (item == null) {
 				throw new ServiceException(StatusCodes.Status404NotFound, "Bucket list item not found.");
@@ -172,12 +175,26 @@ public class ActivityService(
 				return _completedBucketListItemRepository.Update(completion);
 			}
 			else {
-				// get the park it from the regular bucket list item repository
-				var parkId = _bucketListItemRepository.GetById(itemId).parkId;
-				if (parkId == null) {
+				// make sure we're in the park
+				var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
+				if (park == null) {
 					throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
 				}
-				return _completedBucketListItemRepository.Create(new() { bucketListItemId = itemId, userId = userId, location = location, parkId = parkId.Value });
+
+				if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
+					throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
+				}
+				// get the park it from the regular bucket list item repository
+				var bucketListItem = _bucketListItemRepository.GetById(itemId);
+				if (bucketListItem.parkId == null) {
+					throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
+				}
+				return _completedBucketListItemRepository.Create(new() { 
+					bucketListItemId = itemId, 
+					userId = userId, 
+					location = (Point)locationWithInaccuracy, 
+					parkId = bucketListItem.parkId.Value 
+				});
 			}
 		}
 }
