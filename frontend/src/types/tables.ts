@@ -48,3 +48,11 @@ export interface BucketListItem {
   parkId: number;
   task: string;
 }
+
+export interface ParkVisit {
+  id: number;
+  parkId: number;
+  userId: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
