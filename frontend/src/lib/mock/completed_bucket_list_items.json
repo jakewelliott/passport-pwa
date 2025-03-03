@@ -1,0 +1,33 @@
+{
+"completed_bucket_list_items": [
+	{
+		"id" : 1,
+		"location" : "POINT (35.879787 -78.756331)",
+		"created_at" : "2025-03-03T07:39:16.613Z",
+		"updated_at" : "2025-03-03T07:39:16.613Z",
+		"park" : 44,
+		"bucket_list_item" : 42,
+		"user" : 3,
+		"deleted" : 1
+	},
+	{
+		"id" : 2,
+		"location" : "POINT (-78.758285 35.881595)",
+		"created_at" : "2025-03-03T08:29:39.129Z",
+		"updated_at" : "2025-03-03T08:29:39.129Z",
+		"park" : 7,
+		"bucket_list_item" : 6,
+		"user" : 3,
+		"deleted" : 1
+	},
+	{
+		"id" : 3,
+		"location" : "POINT (-78.758285 35.881595)",
+		"created_at" : "2025-03-03T08:35:53.224Z",
+		"updated_at" : "2025-03-03T08:35:53.224Z",
+		"park" : 3,
+		"bucket_list_item" : 3,
+		"user" : 3,
+		"deleted" : 0
+	}
+]}
