@@ -51,47 +51,45 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkAbbreviation, userId, req.note, req.updatedAt)));
     }
 
-		// ADAM: added these for frontend type safety
+    // ADAM: added these for frontend type safety
 
-		[HttpGet("bucketlist")]
-		[Authorize(Roles = "visitor")]
-		public IActionResult GetBucketListItems()
-		{
-			var items = _activityService.GetBucketListItems();
-			return Ok(items.Select(BucketListItemResponse.FromDomain));
-		}
+    [HttpGet("bucketlist")]
+    public IActionResult GetBucketListItems()
+    {
+        var items = _activityService.GetBucketListItems();
+        return Ok(items.Select(BucketListItemResponse.FromDomain));
+    }
 
-		[HttpGet("bucketlist/completed")]
-		[Authorize(Roles = "visitor")]
-		public IActionResult GetCompletedBucketListItems()
-		{
-			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-			var items = _activityService.GetCompletedBucketListItems(userId);
-			return Ok(items.Select(CompletedBucketListItemResponse.FromDomain));
-		}
+    [HttpGet("bucketlist/completed")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult GetCompletedBucketListItems()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var items = _activityService.GetCompletedBucketListItems(userId);
+        return Ok(items.Select(CompletedBucketListItemResponse.FromDomain));
+    }
 
-		[HttpPost("bucketlist/{itemId}")]
-		[Authorize(Roles = "visitor")]
-		public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
-		{
-			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-			var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude, req.inaccuracyRadius);
-			return Ok(CompletedBucketListItemResponse.FromDomain(result));
-		}
+    [HttpPost("bucketlist/{itemId}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude, req.inaccuracyRadius);
+        return Ok(CompletedBucketListItemResponse.FromDomain(result));
+    }
 
-		public record ToggleBucketListItemCompletionRequest(double longitude, double latitude, double inaccuracyRadius)
+    public record ToggleBucketListItemCompletionRequest(double longitude, double latitude, double inaccuracyRadius)
     {
     }
 
-    public record CompletedBucketListItemResponse(int id, int bucketListItemId, DateTime createdAt, bool deleted)
+    public record CompletedBucketListItemResponse(int id, int bucketListItemId, DateTime updatedAt)
     {
         public static CompletedBucketListItemResponse FromDomain(CompletedBucketListItem item)
         {
             return new CompletedBucketListItemResponse(
                 item.id,
                 item.bucketListItemId,
-                item.created_at,
-                item.deleted
+                item.updated_at
             );
         }
     }
@@ -139,22 +137,6 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     public record PrivateNoteRequest(string note, DateTime updatedAt)
-    {
-    }
-
-    public record UpdateBucketListRequest(double latitude, double longitude, bool status, DateTime dateTime)
-    {
-    }
-
-    public record UpdateBucketListResponse(int bucketListItemId, bool status)
-    {
-        public static UpdateBucketListResponse FromDomain(CompletedBucketListItem item)
-        {
-            return new(item.bucketListItemId, !item.deleted);
-        }
-    }
-
-    public record CompletedBucketListItemsResponse(int bucketListItemId, int parkId, DateTime updatedAt)
     {
     }
 
