@@ -11,9 +11,15 @@ export const API_AUTH_REGISTER_URL = `${API_AUTH_URL}/register/`;
 
 // user data
 export const API_USER_URL = `${API_URL}/user`;
-export const API_STAMPS_URL = `${API_URL}/activity/stamps`;
-export const API_COLLECTED_STAMPS_URL = `${API_URL}/activity/stamps/collected`;
 export const API_ACTIVITY_URL = `${API_URL}/activity/park`;
+
+// stamps
+export const API_STAMPS_URL = `${API_URL}/activity/stamps`;
+export const API_COLLECTED_STAMPS_URL = `${API_STAMPS_URL}/collected`;
+
+// bucket list
+export const API_BUCKET_LIST_URL = `${API_URL}/activity/bucketlist`;
+export const API_COMPLETED_BUCKET_LIST_ITEMS_URL = `${API_BUCKET_LIST_URL}/completed`;
 
 // public data
 export const API_PARKS_URL = `${API_URL}/locations`;
