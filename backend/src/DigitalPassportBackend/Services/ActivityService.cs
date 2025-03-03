@@ -1,4 +1,3 @@
-
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
@@ -11,6 +10,7 @@ namespace DigitalPassportBackend.Services;
 
 public class ActivityService(
     ICompletedBucketListItemRepository completedBucketListItemRepository,
+    IBucketListItemRepository bucketListItemRepository,
     ICollectedStampRepository collectedStampRepository,
     IPrivateNoteRepository privateNoteRepository,
     IParkVisitRepository parkVisitRepository,
@@ -18,6 +18,7 @@ public class ActivityService(
     IUserRepository userRepository) : IActivityService
 {
     private readonly ICompletedBucketListItemRepository _completedBucketListItemRepository = completedBucketListItemRepository;
+    private readonly IBucketListItemRepository _bucketListItemRepository = bucketListItemRepository;
     private readonly ICollectedStampRepository _collectedStampRepository = collectedStampRepository;
     private readonly IPrivateNoteRepository _privateNoteRepository = privateNoteRepository;
     private readonly IParkVisitRepository _parkVisitRepository = parkVisitRepository;
@@ -151,4 +152,32 @@ public class ActivityService(
                 createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
             };
     }
+
+		public List<BucketListItem> GetBucketListItems() {
+			return _bucketListItemRepository.GetAll();
+		}
+
+		public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId) {
+			return _completedBucketListItemRepository.GetByUser(userId);
+		}
+
+		public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, Point location) {
+			var item = _bucketListItemRepository.GetById(itemId);
+			if (item == null) {
+				throw new ServiceException(StatusCodes.Status404NotFound, "Bucket list item not found.");
+			}
+			var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
+			if (completion != null) {
+				completion.deleted = !completion.deleted;
+				return _completedBucketListItemRepository.Update(completion);
+			}
+			else {
+				// get the park it from the regular bucket list item repository
+				var parkId = _bucketListItemRepository.GetById(itemId).parkId;
+				if (parkId == null) {
+					throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
+				}
+				return _completedBucketListItemRepository.Create(new() { bucketListItemId = itemId, userId = userId, location = location, parkId = parkId.Value });
+			}
+		}
 }

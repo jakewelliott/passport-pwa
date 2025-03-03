@@ -4,6 +4,7 @@ using DigitalPassportBackend.Services;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using NetTopologySuite.Geometries;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -48,6 +49,31 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkAbbreviation, userId, req.note, req.updatedAt)));
     }
+
+		// ADAM: added these for frontend type safety
+
+		[HttpGet("bucketlist")]
+		[Authorize(Roles = "visitor")]
+		public IActionResult GetBucketListItems()
+		{
+			return Ok(_activityService.GetBucketListItems());
+		}
+
+		[HttpGet("bucketlist/completed")]
+		[Authorize(Roles = "visitor")]
+		public IActionResult GetCompletedBucketListItems()
+		{
+			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+			return Ok(_activityService.GetCompletedBucketListItems(userId));
+		}
+
+		[HttpPost("bucketlist/{itemId}")]
+		[Authorize(Roles = "visitor")]
+		public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] Point location)
+		{
+			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+			return Ok(_activityService.ToggleBucketListItemCompletion(itemId, userId, location));
+		}
     
     public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
     {
@@ -74,7 +100,8 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record CollectStampRequest( double latitude, 
+    public record CollectStampRequest(
+				double latitude, 
         double longitude,
         double inaccuracyRadius,
         string method, 
