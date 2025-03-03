@@ -72,10 +72,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 		public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
 		{
 			var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-			return Ok(_activityService.ToggleBucketListItemCompletion(itemId, userId, req.latitude, req.longitude, req.inaccuracyRadius));
+			return Ok(_activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude, req.inaccuracyRadius));
 		}
 
-		public record ToggleBucketListItemCompletionRequest(double latitude, double longitude, double inaccuracyRadius)
+		public record ToggleBucketListItemCompletionRequest(double longitude, double latitude, double inaccuracyRadius)
     {
     }
 
