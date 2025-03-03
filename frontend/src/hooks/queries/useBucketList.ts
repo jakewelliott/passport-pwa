@@ -1,4 +1,3 @@
-import { jason } from '@/lib/debug';
 import { API_BUCKET_LIST_URL, API_COMPLETED_BUCKET_LIST_ITEMS_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import type { BucketListCompletion, BucketListItem } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -6,7 +5,7 @@ import { useLocation } from '../useLocation';
 
 /** Gets all bucket list items for all parks */
 const useBucketListItems = () => {
-  return useQuery({
+  return useQuery<BucketListItem[]>({
     queryKey: ['bucketListItems'],
     queryFn: () => fetchGet(API_BUCKET_LIST_URL),
   });
@@ -14,7 +13,7 @@ const useBucketListItems = () => {
 
 /** Gets all completed bucket list items for a user */
 const useCompletedBucketListItems = () => {
-  return useQuery<BucketListCompletion>({
+  return useQuery<BucketListCompletion[]>({
     queryKey: ['completedBucketListItems'],
     queryFn: () => fetchGet(API_COMPLETED_BUCKET_LIST_ITEMS_URL),
   });
@@ -27,19 +26,9 @@ const useToggleCompletion = () => {
   const { refetch } = useCompletedBucketListItems();
   const { geopoint } = useLocation();
 
-  const mockLocation = {
-    latitude: 35.881595,
-    longitude: -78.758285,
-    inaccuracyRadius: 0.001,
-  };
-
   return useMutation({
     mutationFn: (itemId: number) => {
-      return fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, {
-        latitude: 35.881595,
-        longitude: -78.758285,
-        inaccuracyRadius: 0.001,
-      });
+      return fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, geopoint);
     },
     onSuccess: () => {
       refetch();
@@ -56,15 +45,11 @@ export const useBucketList = (parkId?: number) => {
   const isLoading =
     isLoadingAllItems || isLoadingCompletedItems || isMarkingAsComplete || !allItems || !allCompletedItems;
 
-  jason({ allCompletedItems });
-
-  // filtering logic
+  // filtering logic (useMemo?)
   const parkItems = allItems?.filter((item: BucketListItem) => item.parkId === parkId) ?? [];
-  // turn this into a list of ids
   const parkItemsIds = parkItems?.map((item: BucketListItem) => item.id) ?? [];
-
-  // I have no idea why the backend is responding this way
-  const parkCompletedItems = allCompletedItems.filter((item: any) => parkItemsIds.includes(item.bucketListItemId));
+  const parkCompletedItems =
+    allCompletedItems?.filter((item: any) => parkItemsIds.includes(item.bucketListItemId)) ?? [];
 
   return {
     items: parkId === undefined ? allItems : parkItems,
