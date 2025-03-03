@@ -192,7 +192,7 @@ public class ActivityService(
 				return _completedBucketListItemRepository.Create(new() { 
 					bucketListItemId = itemId, 
 					userId = userId, 
-					location = (Point)locationWithInaccuracy, 
+					location = (Point)userLocation, 
 					parkId = bucketListItem.parkId.Value 
 				});
 			}
