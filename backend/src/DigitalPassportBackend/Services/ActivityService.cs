@@ -136,44 +136,6 @@ public class ActivityService(
         }
     }
 
-    public CompletedBucketListItem UpdateBucketListItem(int itemId, int userId, double latitude, double longitude, bool status, DateTime dateTime)
-    {
-        // Verify the bucket list item ID.
-        var bucketListItem = _bucketListItemRepository.GetById(itemId);
-
-        // Get the user and location.
-        var user = _userRepository.GetById(userId);
-        var location = _locationsRepository.GetById((int)bucketListItem.parkId!);
-
-        // Check if there is already a completed bucket list item in the database.
-        var item = _completedBucketListItemRepository.GetByUser(userId).FirstOrDefault(i => i.bucketListItemId == itemId);
-
-        if (item is null)
-        {
-            // Create and save a new completed bucket list item.
-            return _completedBucketListItemRepository.Create(new()
-            {
-                location = new(longitude, latitude),
-                created_at = dateTime,
-                updated_at = dateTime,
-                deleted = !status,
-                park = location,
-                parkId = location.id,
-                bucketListItem = bucketListItem,
-                bucketListItemId = bucketListItem.id,
-                user = user,
-                userId = user.id
-            });
-        }
-        else
-        {
-            // Update and save the item.
-            item.location = new(longitude, latitude);
-            item.deleted = !status;
-            return _completedBucketListItemRepository.Update(item);
-        }
-    }
-
     public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
     {
         return [.. _completedBucketListItemRepository.GetByUser(userId)
@@ -197,48 +159,62 @@ public class ActivityService(
             };
     }
 
-		public List<BucketListItem> GetBucketListItems() {
-			return _bucketListItemRepository.GetAll();
-		}
+    public List<BucketListItem> GetBucketListItems() {
+        return _bucketListItemRepository.GetAll();
+    }
 
-		public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude, double inaccuracyRadius) {
-			var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
-			var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
-		
-			var item = _bucketListItemRepository.GetById(itemId);
-			if (item == null) {
-				throw new ServiceException(StatusCodes.Status404NotFound, "Bucket list item not found.");
-			}
-			var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
-			if (completion != null) {
-				completion.deleted = !completion.deleted;
-				return _completedBucketListItemRepository.Update(completion);
-			}
-			else {
-				// make sure we're in the park
-				var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
-				if (park == null) {
-					throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
-				}
+    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude, double inaccuracyRadius) {
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
+        var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
+    
+        var item = _bucketListItemRepository.GetById(itemId);
+        if (item == null) {
+            throw new ServiceException(StatusCodes.Status404NotFound, "Bucket list item not found.");
+        }
+        var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
+        if (completion != null) {
+            completion.deleted = !completion.deleted;
+            return _completedBucketListItemRepository.Update(completion);
+        }
+        else {
+            // make sure we're in the park
+            var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
+            if (park == null) {
+                throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
+            }
 
-				// I'm so done
+            // I'm so done
 
-				// if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
-				// 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
-				// }
-				
-				// get the park it from the regular bucket list item repository
-				var bucketListItem = _bucketListItemRepository.GetById(itemId);
-				if (bucketListItem.parkId == null) {
-					throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
-				}
-				return _completedBucketListItemRepository.Create(new() { 
-					bucketListItemId = itemId, 
-					userId = userId, 
-					deleted = false,
-					location = (Point)userLocation, 
-					parkId = bucketListItem.parkId.Value 
-				});
-			}
-		}
+            // if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
+            // 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
+            // }
+            
+            // get the park it from the regular bucket list item repository
+            var bucketListItem = _bucketListItemRepository.GetById(itemId);
+            if (bucketListItem.parkId == null) {
+                throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
+            }
+            return _completedBucketListItemRepository.Create(new() { 
+                bucketListItemId = itemId, 
+                userId = userId, 
+                deleted = false,
+                location = (Point)userLocation, 
+                parkId = bucketListItem.parkId.Value 
+            });
+        }
+    }
+
+    public ParkVisit VisitPark(int userId, string parkAbbr)
+    {
+        var park = _locationsRepository.GetByAbbreviation(parkAbbr);
+        return _parkVisitRepository.Create(new()
+        {
+            createdAt = DateTime.Now,
+            updatedAt = DateTime.Now,
+            parkId = park.id,
+            park = park,
+            userId = userId,
+            user = _userRepository.GetById(userId)
+        });
+    }
 }

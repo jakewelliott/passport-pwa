@@ -34,6 +34,5 @@ export interface ParkNote extends ParkActivity {
 export interface BucketListCompletion {
   id: number;
   bucketListItemId: number;
-  createdAt: Date;
-  deleted: boolean;
+  updatedAt: Date;
 }
