@@ -49,11 +49,11 @@ export const useLocation = (spoof?: Geopoint) => {
         dbg('EFFECT', 'useLocation', 'location updated');
       },
       (error) => {
-        setLocation((prev) => ({
-          ...prev,
+        setLocation({
+          geopoint: null,
           error: error.message,
           isLoading: false,
-        }));
+        });
         dbg('ERROR', 'useLocation', error);
       },
     );
