@@ -12,6 +12,7 @@
     "rules": {
       "recommended": true,
       "correctness": {
+        "useExhaustiveDependencies": "off",
         "noUnusedImports": "warn"
       },
       "suspicious": {
