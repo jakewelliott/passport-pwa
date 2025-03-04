@@ -1,6 +1,6 @@
 import { useParks, useParksGeo } from '@/hooks/queries/useParks';
 import { useLocation } from '@/hooks/useLocation';
-import { dbg, dbgif, sjason } from '@/lib/debug';
+import { dbg, dbgif, jason, sjason } from '@/lib/debug';
 import type { Geopoint, Park, ParkGeoData } from '@/types';
 import { booleanIntersects, booleanPointInPolygon, buffer } from '@turf/turf';
 import { useEffect, useState } from 'react';
@@ -63,7 +63,14 @@ const parkCheck = (
       console.error(`Failed to parse boundaries for park ${parkGeo.abbreviation}:`, error);
     }
   }
+  dbg('ERROR', 'parkCheck', 'no park found');
   return undefined;
+};
+
+const spoofB: Geopoint = {
+  latitude: 35.2132591913576,
+  longitude: -81.2934631963392,
+  inaccuracyRadius: 1,
 };
 
 // TODO: add a mutation to update park visits
@@ -71,7 +78,7 @@ const parkCheck = (
 export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
   const [currentPark, setCurrentPark] = useState<Park | undefined>(undefined);
   const { data: parks, isLoading: parksLoading } = useParks();
-  const { geopoint, isLoading: geopointLoading } = useLocation(spoof);
+  const { geopoint, isLoading: geopointLoading } = useLocation(spoofB);
   const { data: parksGeo, isLoading: parksGeoLoading } = useParksGeo();
 
   const { mutate: markParkAsVisited } = useVisitPark();
@@ -87,6 +94,7 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
     }
 
     const point = castGeopoint(geopoint);
+    jason({ point });
     const park = parkCheck(point, geopoint.inaccuracyRadius, parks, parksGeo);
     dbgif(!park, 'ERROR', 'useParkCheck', 'park not found');
 
@@ -95,7 +103,7 @@ export const useParkCheck = (spoof?: Geopoint): ParkCheckResult => {
     }
 
     setCurrentPark(park);
-  }, [geopoint, parks, parksGeo, markParkAsVisited]);
+  }, [geopoint]);
 
   dbgif(parksLoading, 'HOOK', 'useParkCheck', 'parks loading');
   dbgif(geopointLoading, 'HOOK', 'useParkCheck', 'geopoint loading');
