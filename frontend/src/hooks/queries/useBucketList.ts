@@ -27,12 +27,8 @@ const useToggleCompletion = () => {
   const { geopoint } = useLocation();
 
   return useMutation({
-    mutationFn: (itemId: number) => {
-      return fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, geopoint);
-    },
-    onSuccess: () => {
-      refetch();
-    },
+    mutationFn: (itemId: number) => fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, geopoint),
+    onSuccess: () => refetch(),
   });
 };
 
