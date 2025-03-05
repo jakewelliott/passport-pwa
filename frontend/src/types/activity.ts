@@ -8,26 +8,26 @@ export interface UserActivity {
   deleted: boolean;
 }
 
-// user activity related to a park
-export interface ParkActivity extends UserActivity {
-  parkId: number;
-  parkAbbreviation: string;
-}
-
-export interface CollectedStamp extends ParkActivity {
+export interface CollectedStamp {
   latitude: number;
   longitude: number;
   inaccuracyRadius: number;
   method: string;
   dateTime: Date;
+  parkId: number;
+  parkAbbreviation: string;
 }
 
-export interface ParkVisit extends ParkActivity {
+export interface ParkVisit {
   timestamp: Date;
+  parkId: number;
+  parkAbbreviation: string;
 }
 
-export interface ParkNote extends ParkActivity {
+export interface ParkNote {
   note: string;
+  parkId: number;
+  parkAbbreviation: string;
 }
 
 export interface BucketListCompletion {
