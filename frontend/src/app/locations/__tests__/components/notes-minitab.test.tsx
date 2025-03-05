@@ -1,7 +1,7 @@
 import { NotesMiniTab } from '@/app/locations/components/notes-minitab';
 import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
 import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
-import { renderWithClient } from '@/lib/test-wrapper';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';

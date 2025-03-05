@@ -3,7 +3,7 @@ import type { Park, Trail } from '@/types/tables';
 import { parks } from './parks.json';
 import { trail_icons } from './trail_icons.json';
 import { trails } from './trails.json';
-import { PARK_SPECIAL_CASES, toCamelCase } from './type-mapper';
+import { PARK_SPECIAL_CASES, toCamelCase } from '../type-mapper';
 
 // parks have geojson coordinates that need to be parsed
 
@@ -29,8 +29,6 @@ export function transformPark(parkData: (typeof parks)[0]): Park {
 
 const transformedParks = parks.map(transformPark);
 export { transformedParks as parks };
-const mockPark = transformedParks[0];
-export { mockPark };
 
 // trails need to be parsed into the correct format and combined with their icons
 

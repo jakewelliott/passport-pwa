@@ -4,7 +4,8 @@
 		"backend": "dotnet run --project backend/src/DigitalPassportBackend dev",
 		"docker": "docker compose up --build"
 	},
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4"
-  }
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"nock": "^14.0.1"
+	}
 }
