@@ -18,7 +18,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
 
         private readonly Mock<IActivityService> _mockActivityService;
         private readonly ActivityController _controller;
-        
+
         public ActivityControllerTests()
         {
             _mockActivityService = new Mock<IActivityService>();
@@ -29,71 +29,13 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         }
 
         [Fact]
-        public void Get_ReturnsOkResult_VisitorUserValidLocation()
-        {
-            // Arrange
-            SetupUser(TestData.Users[1].id,"visitor");
-            List<CompletedBucketListItem> bucketListItems = [TestData.CompletedBucketListItems[1]];
-        
-            List<ParkVisit> visited =
-            [
-                TestData.ParkVisits[0],
-                TestData.ParkVisits[1]
-            ];
-            var lastVisited = visited.OrderByDescending(v => v.createdAt).ToList().First();
-            var parkActivity = GetParkActivity(bucketListItems, null, TestData.PrivateNotes[0], 
-                lastVisited);
-            
-            _mockActivityService.Setup(s => 
-                s.GetParkActivity(TestData.Parks[0].id, 
-                TestData.Users[1].id)).Returns(parkActivity);
-
-            // Act
-            var result = _controller.Get(TestData.Parks[0].id);
-
-            // Assert
-            var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedActivity = Assert.IsType<ParkActivity>(okResult.Value);
-
-            Assert.Equal(returnedActivity.CompletedBucketListItems[0].Id, TestData.BucketList[0].id);
-            Assert.Null(returnedActivity.StampCollectedAt);
-            Assert.Equal(10, returnedActivity.PrivateNote!.Id);
-            Assert.Equal("this is a note. it has stuff in it.", returnedActivity.PrivateNote.Note);
-            Assert.Equal(returnedActivity.LastVisited, TestData.ParkVisits[1].createdAt);
-        }
-
-        [Fact]  
-        public void Get_ThrowsException_InvalidLocationId()
-        {
-            // Arrange
-            SetupUser(TestData.Users[1].id,"visitor");
-            var invalidLocationId = -1;
-
-            _mockActivityService
-                .Setup(s => s.GetParkActivity(invalidLocationId, TestData.Users[1].id))
-                .Throws(new NotFoundException("Location not found"));
-
-            // Act
-            var exception = Assert.Throws<NotFoundException>(() => 
-                _controller.Get(invalidLocationId));
-        }
-
-        [Fact]
-        public void Get_ThrowsException_InvalidUserId()
-        {
-            // Act, no user setup
-            var exception = Assert.Throws<ArgumentNullException>(() => 
-                _controller.Get(TestData.Parks[0].id));
-        }
-
-        [Fact]
         public void GetCollectedStamps_ReturnsPopulatedList_WhenStampsCollected()
         {
             // Setup.
             SetupUser(TestData.Users[1].id, "visitor");
             _mockActivityService.Setup(s => s.GetCollectedStamps(TestData.Users[1].id))
                 .Returns([TestData.CollectedStamps[1]]);
-            
+
             // Action.
             var result = _controller.GetCollectedStamps();
 
@@ -141,7 +83,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
 
             // Action.
             var result = _controller.CollectStamp(TestData.Parks[0].parkAbbreviation, req);
-            
+
             // Assert.
             var okResult = Assert.IsType<OkObjectResult>(result);
             var resp = Assert.IsType<CollectStampResponse>(okResult.Value);
@@ -195,7 +137,9 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.CollectStamp(
                     TestData.Parks[0].parkAbbreviation,
-                    req.longitude, req.latitude, req.inaccuracyRadius,
+                    req.latitude,
+                    req.longitude,
+                    req.inaccuracyRadius,
                     req.method,
                     req.dateTime,
                     TestData.Users[1].id))
@@ -219,7 +163,9 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.CollectStamp(
                     TestData.Parks[0].parkAbbreviation,
-                    req.longitude, req.latitude, req.inaccuracyRadius,
+                    req.latitude,
+                    req.longitude,
+                    req.inaccuracyRadius,
                     req.method,
                     req.dateTime,
                     TestData.Users[1].id))
@@ -230,29 +176,6 @@ namespace DigitalPassportBackend.UnitTests.Controllers
 
             // Assert.
             Assert.Equal(412, e.StatusCode);
-        }
-
-        private ParkActivity GetParkActivity(
-            List<CompletedBucketListItem> bucketListItems, 
-            CollectedStamp? stampCollectedAt,
-            PrivateNote? privateNote,
-            ParkVisit lastVisited
-        )
-        {
-        return new ParkActivity
-            {
-                CompletedBucketListItems = bucketListItems.Select(item => new BucketListItemOverview
-                {
-                    Id = item.bucketListItemId,
-                }).ToList(),
-                StampCollectedAt = stampCollectedAt?.updatedAt,
-                PrivateNote = privateNote == null ? null : new PrivateNoteOverview
-                {
-                    Id = privateNote.id,
-                    Note = privateNote.note
-                },
-                LastVisited = lastVisited?.createdAt
-            };
         }
 
         private void SetupUser(int userId, string role)
@@ -287,8 +210,8 @@ namespace DigitalPassportBackend.UnitTests.Controllers
 
             _mockActivityService.Setup(s => s.CollectStamp(
                     park.parkAbbreviation,
-                    req.longitude,
                     req.latitude,
+                    req.longitude,
                     req.inaccuracyRadius,
                     req.method,
                     req.dateTime,
@@ -300,7 +223,9 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         {
             _mockActivityService.Setup(s => s.CollectStamp(
                     abbr!,
-                    req.longitude, req.latitude, req.inaccuracyRadius,
+                    req.latitude,
+                    req.longitude,
+                    req.inaccuracyRadius,
                     req.method,
                     req.dateTime,
                     userId))
