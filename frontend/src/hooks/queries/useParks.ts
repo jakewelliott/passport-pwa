@@ -1,5 +1,5 @@
-import { API_ACTIVITY_URL, API_PARKGEO_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
-import type { Park, ParkActivity, ParkGeoData } from '@/types';
+import { API_PARKGEO_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
+import type { Park, ParkGeoData } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
 // ADAM:
@@ -30,13 +30,6 @@ export const usePark = (abbreviation: string) => {
 export const useParkById = (id: number) => {
   const hook = useParks();
   return { ...hook, data: hook.data?.find((park) => park.id === id) };
-};
-
-export const useParkActivity = (parkId: number) => {
-  return useQuery<ParkActivity>({
-    queryKey: ['parkActivity', parkId],
-    queryFn: async () => await fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
-  });
 };
 
 export const useParksGeo = () => {

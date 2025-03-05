@@ -81,33 +81,6 @@ public class ActivityService(
         return _collectedStampRepository.GetByUser(userId);
     }
 
-    public ParkActivity GetParkActivity(int locationId, int userId)
-    {
-        // Verify that the location and user exists.
-        _locationsRepository.GetById(locationId);
-        _userRepository.GetById(userId);
-
-        var bucketListItems = _completedBucketListItemRepository.GetByParkAndUser(locationId, userId);
-        var stampCollectedAt = _collectedStampRepository.GetByParkAndUser(locationId, userId);
-        var privateNote = _privateNoteRepository.GetByParkAndUser(locationId, userId);
-        var lastVisited = _parkVisitRepository.GetByParkAndUser(locationId, userId).FirstOrDefault();
-
-        return new ParkActivity
-        {
-            CompletedBucketListItems = bucketListItems.Select(item => new BucketListItemOverview
-            {
-                Id = item.bucketListItemId,
-            }).ToList(),
-            StampCollectedAt = stampCollectedAt?.updatedAt,
-            PrivateNote = privateNote == null ? null : new PrivateNoteOverview
-            {
-                Id = privateNote.id,
-                Note = privateNote.note
-            },
-            LastVisited = lastVisited?.createdAt
-        };
-    }
-
     public PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, DateTime updatedAt)
     {
         // Check if there is already a note in the database.

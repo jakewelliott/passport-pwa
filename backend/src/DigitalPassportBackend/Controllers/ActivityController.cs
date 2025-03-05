@@ -17,14 +17,6 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     private readonly IActivityService _activityService = activityService;
 
-    [HttpGet("park/{locationId}")]
-    [Authorize(Roles = "visitor")]
-    public IActionResult Get(int locationId)
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(_activityService.GetParkActivity(locationId, userId));
-    }
-
     [HttpGet("stamps/collected")]
     [Authorize(Roles = "visitor")]
     public IActionResult GetCollectedStamps()
