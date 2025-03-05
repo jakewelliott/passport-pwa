@@ -23,9 +23,10 @@ export const useStamps = () => {
  * @param code The code of the park to get the stamp for
  * @returns The stamp for the user
  */
-export const useStamp = (abbreviation: string) => {
+export const useStamp = (abbreviation: string | undefined) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
+  if (abbreviation === undefined) return { data: null, isLoading };
   return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || null, isLoading };
 };
 

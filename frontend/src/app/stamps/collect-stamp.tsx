@@ -1,5 +1,5 @@
 import RoundedButton from '@/components/rounded-button';
-import { useStampMutation } from '@/hooks/queries/useStamps';
+import { useStamp, useStampMutation } from '@/hooks/queries/useStamps';
 import { useLocation } from '@/hooks/useLocation';
 import { useParkCheck } from '@/hooks/useParkCheck';
 import { a11yOnClick } from '@/lib/a11y';
@@ -17,8 +17,10 @@ export default function CollectStamp() {
 
 	const hidden = !visible || !park || isLoading || !geopoint;
 
+	const { data: stamp, isLoading: stampLoading } = useStamp(park?.abbreviation);
+
 	useEffect(() => {
-		if (park !== undefined) setVisible(true);
+		if (park !== undefined && stampLoading === false && stamp === null) setVisible(true);
 	}, [park]);
 
 	// This is AIDs. I will fix later.
@@ -47,7 +49,6 @@ export default function CollectStamp() {
 	// }, [park, stamps, isAdmin]);
 
 	const handleCollectStamp = () => {
-
 		if (hidden) return; // keep ts happy
 
 		const collected: CollectStampRequest = {
@@ -78,7 +79,7 @@ export default function CollectStamp() {
 				>
 					&times;
 				</span>
-				<h1 className='text-secondary_darkteal uppercase'>WOOHOO!</h1>
+				<h1 className='text-secondary_darkteal uppercase'>Woohoo!</h1>
 				<p>
 					Your location indicates that you are at {park.parkName}. You have not collected the badge at this location
 					yet.{' '}
