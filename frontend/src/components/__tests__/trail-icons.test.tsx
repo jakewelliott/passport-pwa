@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { TrailIcon, TrailIcons } from '../trail-icons';
 
-const mockTrail = trails[0];
+const mockTrail = { ...trails[0], trailIcons: ['Hiking-Red', 'Biking-Red', 'Swimming-Red'] };
 
 describe('TrailIcon', () => {
 	it('renders with default props', () => {
@@ -29,9 +29,7 @@ describe('TrailIcon', () => {
 		const img = screen.getByAltText('Camping');
 		expect(img).toHaveAttribute('src', '/icons/park/Camping-Green.svg');
 	});
-});
 
-describe('TrailIcons', () => {
 	it('renders multiple icons', () => {
 		render(<TrailIcons trail={mockTrail} />);
 		expect(screen.getByAltText('Hiking')).toBeInTheDocument();
@@ -40,12 +38,13 @@ describe('TrailIcons', () => {
 	});
 
 	it('handles empty trailIcons array', () => {
-		const { container } = render(<TrailIcons trail={mockTrail} />);
+		const { container } = render(<TrailIcons trail={{ ...mockTrail, trailIcons: [] }} />);
 		expect(container.firstChild).toBeNull();
 	});
 
 	it('handles undefined trailIcons', () => {
-		const { container } = render(<TrailIcons trail={mockTrail} />);
+		// @ts-ignore
+		const { container } = render(<TrailIcons trail={{ ...mockTrail, trailIcons: undefined }} />);
 		expect(container.firstChild).toBeNull();
 	});
 
