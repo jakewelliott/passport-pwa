@@ -1,4 +1,5 @@
 import { useParks } from '@/hooks/queries/useParks';
+import { parks } from '@/lib/mock';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen } from '@testing-library/react';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -26,13 +27,13 @@ describe('Locations', () => {
 
 	it('renders list of parks when data is available', () => {
 		mockUseParks.mockReturnValue({
-			data: mockParks,
+			data: parks,
 			isLoading: false,
 		});
 
 		renderWithClient(<Locations />);
 
-		const parkElements = screen.getAllByText(mockParks[0].parkName);
-		expect(parkElements).toHaveLength(mockParks.length);
+		const parkElements = screen.getAllByText(parks[0].parkName);
+		expect(parkElements).toHaveLength(parks.length);
 	});
 });

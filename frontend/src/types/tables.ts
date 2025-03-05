@@ -56,3 +56,26 @@ export interface ParkVisit {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CollectedStamp {
+  id: number;
+  latitude: number;
+  longitude: number;
+  inaccuracyRadius: number;
+  method: string;
+  dateTime: Date;
+  parkId: number;
+  parkAbbreviation: string;
+}
+
+export interface ParkNote {
+  note: string;
+  parkId: number;
+  parkAbbreviation: string;
+}
+
+export interface BucketListCompletion {
+  id: number;
+  bucketListItemId: number;
+  updatedAt: Date;
+}

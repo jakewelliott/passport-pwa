@@ -1,14 +1,15 @@
 import { usePark, useParks } from '@/hooks/queries/useParks';
 import { useStamp, useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
-import { mockPark } from '@/lib/mock';
+import { collectedStamps, mockPark } from '@/lib/mock';
 import { renderWithClient } from '@/lib/test-wrapper';
-import type { CollectedStamp } from '@/types';
 import { fireEvent, screen } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import type { Mock } from 'vitest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import Stamps from '../';
+import StampsScreen from '../';
+
+
 // Mock the hooks and toast
 vi.mock('@/hooks/queries/useParks');
 vi.mock('@/hooks/queries/useStamps');
@@ -25,38 +26,6 @@ const mockToast = vi.fn();
 describe('Stamps', () => {
 	const mockParks = [mockPark];
 
-	// TODO: add mock stamps to mock.ts
-	const mockStamps: CollectedStamp[] = [
-		{
-			id: 1,
-			parkAbbreviation: mockParks[0].abbreviation,
-			createdAt: new Date(),
-			method: 'manual',
-			latitude: 0,
-			longitude: 0,
-			inaccuracyRadius: 0,
-			dateTime: new Date(),
-			parkId: 0,
-			userId: 0,
-			updatedAt: new Date(),
-			deleted: false
-		},
-		{
-			id: 2,
-			parkAbbreviation: mockParks[1].abbreviation,
-			createdAt: new Date(),
-			method: 'manual',
-			latitude: 0,
-			longitude: 0,
-			inaccuracyRadius: 0,
-			dateTime: new Date(),
-			parkId: 0,
-			userId: 0,
-			updatedAt: new Date(),
-			deleted: false
-		},
-	];
-
 	beforeEach(() => {
 		vi.clearAllMocks();
 		// Setup default mock returns
@@ -65,7 +34,7 @@ describe('Stamps', () => {
 			isLoading: false,
 		});
 		mockUseStamps.mockReturnValue({
-			data: mockStamps,
+			data: collectedStamps,
 			isLoading: false,
 			refetch: vi.fn(),
 		});
@@ -73,7 +42,7 @@ describe('Stamps', () => {
 			isLoading: false,
 		});
 		mockUseStamp.mockReturnValue({
-			data: mockStamps[0],
+			data: collectedStamps[0],
 			isLoading: false,
 		});
 		mockUsePark.mockReturnValue({
@@ -84,7 +53,7 @@ describe('Stamps', () => {
 	});
 
 	const renderStamps = () => {
-		renderWithClient(<Stamps />);
+		renderWithClient(<StampsScreen />);
 	};
 
 	it('shows nothing when data is loading', () => {

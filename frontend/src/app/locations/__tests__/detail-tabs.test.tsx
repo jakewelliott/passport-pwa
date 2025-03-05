@@ -1,5 +1,6 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useUser } from '@/hooks/queries/useUser';
+import { mockPark } from '@/lib/mock';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen, waitFor } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
@@ -14,35 +15,6 @@ const mockUsePark = usePark as Mock;
 const mockUseUser = useUser as Mock;
 
 describe('DetailTabs', () => {
-	const mockPark = {
-		id: 45,
-		parkName: 'Carolina Beach State Park',
-		coordinates: {
-			longitude: -77.9066,
-			latitude: 34.0472,
-		},
-		phone: 9104588206,
-		email: 'carolina.beach@ncparks.gov',
-		establishedYear: '1969',
-		landmark: 'Sugarloaf Dune',
-		youCanFind: 'the Venus flytrap',
-		trails: '■ 9 trails\n\n■ 1 wheelchair-accessible trail',
-		website: 'https://www.ncparks.gov/state-parks/carolina-beach-state-park',
-		addresses: [
-			{
-				title: 'Main Address',
-				addressesLineOne: '1010 State Park Road',
-				addressesLineTwo: '',
-				city: 'Carolina Beach',
-				state: 'NC',
-				zipcode: 28428,
-			},
-		],
-		icons: [{ iconName: 'CamperCabins-Green' }],
-		bucketListItems: [{ task: 'Find a venus flytrap' }],
-		photos: [{ photoPath: 'CABE.jpg', alt: 'Carolina Beach State Park main image' }],
-		abbreviation: 'CABE',
-	};
 
 	beforeEach(() => {
 		vi.clearAllMocks();

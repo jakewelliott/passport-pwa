@@ -34,6 +34,8 @@ export function transformTrail(trailData: (typeof trails)[0]): Trail {
 
 const transformedTrails = trails.map(transformTrail);
 
+// json exports
+
 export { bucket_list_items as bucketListItems } from './bucket_list_items.json';
 export { collected_stamps as collectedStamps } from './collected_stamps.json';
 export { completed_bucket_list_items as completedBucketListItems } from './completed_bucket_list_items.json';
