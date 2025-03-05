@@ -1,6 +1,6 @@
 import DateHelper from '@/lib/date-helper';
 import type { CollectedStamp } from '@/types';
-export const StampCollectedOn = ({ stamp }: { stamp?: CollectedStamp }) => {
+export const StampCollectedOn = ({ stamp }: { stamp?: CollectedStamp | null }) => {
 	const d = new Date(stamp?.dateTime ?? '');
 	const dateString =
 		stamp !== null && stamp !== undefined ? `Stamp collected on ${DateHelper.stringify(d)}` : 'Stamp not yet collected';

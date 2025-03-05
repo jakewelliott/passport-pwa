@@ -4,8 +4,8 @@ import type { BucketListCompletion, BucketListItem } from '@/types';
 import { FaRegCheckSquare, FaRegSquare } from 'react-icons/fa';
 
 const CompletedAtView = ({ updatedAt }: { updatedAt: Date }) => (
-	<div className='flex flex-wrap items-center justify-end gap-2'>
-		<p className='p-mini'>{DateHelper.toStringShort(updatedAt)}</p>
+	<div className='flex flex-wrap items-center justify-end gap-2 py-2'>
+		<p className='p-mini'>Completed on {DateHelper.toStringLong(new Date(updatedAt))}</p>
 	</div>
 );
 

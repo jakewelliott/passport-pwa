@@ -10,7 +10,7 @@ interface AchievementsViewProps {
 	park: Park;
 }
 
-const StampView = ({ stamp }: { stamp?: CollectedStamp }) => {
+const StampView = ({ stamp }: { stamp?: CollectedStamp | null }) => {
 	return (
 		<div className='my-2.5 flex items-start'>
 			<FaStamp size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
@@ -24,7 +24,7 @@ const StampView = ({ stamp }: { stamp?: CollectedStamp }) => {
 const AchievementsView = ({ park }: AchievementsViewProps) => {
 	const { data: stamp, isLoading } = useStamp(park.abbreviation);
 
-	if (isLoading || !stamp) return <LoadingPlaceholder what='your achievements' />;
+	if (isLoading) return <LoadingPlaceholder what='your achievements' />;
 
 	dbg('MISC', 'stamp', stamp);
 
