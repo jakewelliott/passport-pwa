@@ -1,4 +1,4 @@
-import { useCollectStamp } from '@/hooks/queries/useStamps';
+import { useStampMutation } from '@/hooks/queries/useStamps';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import { useEffect, useRef, useState } from 'react';
@@ -9,7 +9,7 @@ export const ManualStampButton = () => {
 	dbg('RENDER', 'ManualStampButton');
 	const [isOpen, setIsOpen] = useState(false);
 	const menuRef = useRef<HTMLDivElement>(null);
-	const { mutate } = useCollectStamp(location.pathname.split('/')[2]);
+	const { mutate } = useStampMutation();
 	const { geopoint } = useLocation();
 
 	useEffect(() => {
@@ -33,6 +33,7 @@ export const ManualStampButton = () => {
 			inaccuracyRadius: geopoint.inaccuracyRadius,
 			method: 'manual',
 			dateTime: new Date(),
+			parkAbbreviation: 'AAA', // ignored by API but useful in collect-stamp.tsx
 		});
 		setIsOpen(false);
 	};
