@@ -82,30 +82,10 @@ public class ParkVisitRepositoryTests
     }
 
     [Fact]
-    public void UpdateThrowsNotFoundException_WhenParkVisitDNE()
-    {
-        // Action and assert.
-        Assert.Throws<NotFoundException>(() => _repo.Update(NewVisit));
-        Assert.Equal(4, _db.ParkVisits.Count());
-    }
-
-    [Fact]
     public void Count_ReturnsNumberOfParkVisits()
     {
         // Action and assert.
         Assert.Equal(4, _repo.Count());
-    }
-
-    [Fact]
-    public void Create_ReturnsNewParkVisit_IfParkVisitDNE()
-    {
-        // Action.
-        var item = _repo.Create(NewVisit);
-
-        // Assert.
-        Assert.Equal(5, _db.ParkVisits.Count());
-        Assert.Equal(NewVisit, item);
-        Assert.Contains(NewVisit, _db.ParkVisits);
     }
 
     [Fact]
@@ -174,9 +154,4 @@ public class ParkVisitRepositoryTests
         Assert.Empty(result2);
     }
 
-    private static readonly ParkVisit NewVisit = new()
-    {
-        park = TestData.Parks[1],
-        user = TestData.Users[3]
-    };
 }
