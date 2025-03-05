@@ -1,6 +1,4 @@
-import type { CollectedStamp, UserActivity } from './activity';
-
-export type PutRequest<T> = Omit<T, keyof UserActivity>;
+import type { CollectedStamp } from './tables';
 
 export interface LoginResponse {
   token: string;
@@ -13,4 +11,4 @@ export interface CollectStampResponse {
   parkAbbreviation: string;
 }
 
-export type CollectStampRequest = Omit<PutRequest<CollectedStamp>, 'id' | 'parkId'>;
+export type CollectStampRequest = Omit<CollectedStamp, 'id' | 'parkId'>;
