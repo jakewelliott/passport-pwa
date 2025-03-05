@@ -2,7 +2,9 @@ import { DEBUG, dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 const API_PORT = DEBUG ? process.env.API_DEV_PORT : process.env.NGINX_PORT;
-export const API_URL = `http://localhost:${API_PORT}/api`;
+const PROTOCOL = DEBUG ? 'http' : 'https';
+
+export const API_URL = `${PROTOCOL}://localhost:${API_PORT}/api`;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
