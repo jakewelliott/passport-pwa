@@ -10,8 +10,8 @@ interface StampsDetailProps {
 	handleClose: () => void;
 }
 
-const CollectedManually = ({ stamp }: { stamp: CollectedStamp | null }) =>
-	stamp == null ? null : stamp.method !== 'manual' ? null : <p className='warning'>Stamp collected manually</p>;
+const CollectedManually = ({ stamp }: { stamp?: CollectedStamp }) =>
+	!stamp ? null : stamp.method !== 'manual' ? null : <p className='warning'>Stamp collected manually</p>;
 
 export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailProps) => {
 	const { data: stamp } = useStamp(code);
@@ -60,7 +60,7 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 						<div className='space-y-2'>
 							<p className='text-supporting_inactiveblue'>{location}</p>
 							{/* TODO: fix this */}
-							<StampCollectedOn stamp={stamp ?? undefined} />
+							<StampCollectedOn stamp={stamp} />
 							<CollectedManually stamp={stamp} />
 							<Link to={`/locations/${park.abbreviation}`} className='link inline-block'>
 								View Park Details <span aria-hidden='true'>&gt;</span>

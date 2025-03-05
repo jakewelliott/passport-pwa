@@ -23,16 +23,19 @@ interface BucketListItemViewProps {
 }
 
 export const BucketListItemView = ({ item, completion, handler, address }: BucketListItemViewProps) => {
-	const Icon = completion !== undefined ? FaRegCheckSquare : FaRegSquare;
+
+	const completed = completion !== undefined;
+
+	const Icon = completed ? FaRegCheckSquare : FaRegSquare;
 
 	return (
 		<div key={item.id} className='my-2.5 flex items-start' {...a11yOnClick(handler)}>
 			<Icon size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
 			<div className='flex w-full flex-col justify-center'>
 				<p>{item.task}</p>
-				<div className='flex flex-wrap items-center justify-between gap-2'>
+				<div className='flex flex-wrap items-center gap-2'>
 					{address && <AddressView address={address} />}
-					{completion && <CompletedAtView updatedAt={completion.updatedAt} />}
+					{completed && <CompletedAtView updatedAt={completion.updatedAt} />}
 				</div>
 			</div>
 		</div>

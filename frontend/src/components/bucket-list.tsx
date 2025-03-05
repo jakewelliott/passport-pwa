@@ -14,12 +14,14 @@ export const BucketList = ({ parkId, showAddress = false }: BucketListProps) => 
 	const { items, completed, toggleCompletion, isLoading } = useBucketList(parkId);
 	const { data: parks } = useParks();
 
-	if (isLoading || !items || !completed) return <LoadingPlaceholder what='Your bucket list' />;
+	if (isLoading || !items) return <LoadingPlaceholder what='Your bucket list' />;
 
 	const addressHelper = (item: BucketListItem) => {
 		const park = parks?.find((park) => park.id === item.parkId);
 		return park?.addresses[0].addressLineOne;
 	};
+
+	const completedHelper = (item: BucketListItem) => completed?.find((completed: BucketListCompletion) => completed.bucketListItemId === item.id);
 
 	return (
 		<div className='flex flex-col'>
@@ -27,7 +29,7 @@ export const BucketList = ({ parkId, showAddress = false }: BucketListProps) => 
 				<BucketListItemView
 					key={item.id}
 					item={item}
-					completion={completed?.find((completed: BucketListCompletion) => completed.bucketListItemId === item.id)}
+					completion={completedHelper(item)}
 					handler={() => toggleCompletion(item.id)}
 					address={showAddress ? addressHelper(item) : undefined}
 				/>
