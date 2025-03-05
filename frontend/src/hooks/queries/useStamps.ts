@@ -1,7 +1,7 @@
 import { dbg } from '@/lib/debug';
 import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@/lib/fetch';
-import type { CollectedStamp, PutRequest } from '@/types';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import type { CollectStampRequest, CollectedStamp } from '@/types';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useUser } from './useUser';
 /**
@@ -29,17 +29,17 @@ export const useStamp = (abbreviation: string) => {
   return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || null, isLoading };
 };
 
-export const useCollectStamp = (parkAbbreviation: string) => {
-  const queryClient = useQueryClient();
+export const useStampMutation = () => {
+  const { refetch } = useStamps();
 
-  return useMutation<string, Error, PutRequest<CollectedStamp>>({
-    mutationFn: async (stamp: PutRequest<CollectedStamp>) => {
+  return useMutation<string, Error, CollectStampRequest>({
+    mutationFn: async (stamp: CollectStampRequest) => {
       dbg('MUTATE', 'Collecting stamp', { stamp });
-      const response = await fetchPost(`${API_STAMPS_URL}/${parkAbbreviation}`, stamp);
+      const response = await fetchPost(`${API_STAMPS_URL}/${stamp.parkAbbreviation}`, stamp);
       return await response.text();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['stamps'] });
+      refetch();
       toast.success('Stamp collected!');
     },
     onError: (error) => {

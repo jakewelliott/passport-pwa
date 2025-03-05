@@ -40,7 +40,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         [FromBody] CollectStampRequest request)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkAbbreviation, request.longitude, request.latitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
+        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkAbbreviation, request.latitude, request.longitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
     }
 
     [HttpPost("notes/{parkAbbreviation}")]

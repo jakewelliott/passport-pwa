@@ -1,51 +1,92 @@
 import RoundedButton from '@/components/rounded-button';
-import { useParkActivity } from '@/hooks/queries/useParks';
-import { useCollectStamp } from '@/hooks/queries/useStamps';
-import { useLocation as useUserLocation } from '@/hooks/useLocation';
+import { useStampMutation } from '@/hooks/queries/useStamps';
+import { useLocation } from '@/hooks/useLocation';
+import { useParkCheck } from '@/hooks/useParkCheck';
 import { a11yOnClick } from '@/lib/a11y';
-import type { CollectedStamp, Park, PutRequest } from '@/types';
+import { dbg } from '@/lib/debug';
+import type { CollectStampRequest } from '@/types';
+import { useEffect, useState } from 'react';
 
-interface CollectStampProps {
-	park: Park;
-	onClose: () => void;
-}
+export default function CollectStamp() {
+	const { mutate: collectStamp } = useStampMutation();
+	const { park, isLoading } = useParkCheck();
+	const [visible, setVisible] = useState(false);
+	const { geopoint } = useLocation();
 
-export default function CollectStamp({ park, onClose }: CollectStampProps) {
-	const collectStampMutation = useCollectStamp(park.abbreviation);
-	const userLocation = useUserLocation();
-	const { refetch } = useParkActivity(park.id);
+	const close = () => setVisible(false);
+
+	const hidden = !visible || !park || isLoading || !geopoint;
+
+	useEffect(() => {
+		if (park !== undefined) setVisible(true);
+	}, [park]);
+
+	// This is AIDs. I will fix later.
+
+	// useEffect(() => {
+	// 	dbg('EFFECT', 'LoggedInRoutes');
+
+	// 	// Initial check
+	// 	if (park && !isAdmin && !isCollected(park.abbreviation, stamps ?? [])) {
+	// 		setShowCollectModal(true);
+	// 	}
+
+	// 	// Set up interval for checking every 5 minutes
+	// 	const interval = setInterval(
+	// 		() => {
+	// 			dbg('EFFECT', 'LoggedInRoutes', 'Checking if stamp is collected');
+	// 			if (park && !isAdmin && !isCollected(park.abbreviation, stamps ?? [])) {
+	// 				setShowCollectModal(true);
+	// 			}
+	// 		},
+	// 		5 * 60 * 1000,
+	// 	); // 5 minutes in milliseconds
+
+	// 	// Cleanup interval on unmount
+	// 	return () => clearInterval(interval);
+	// }, [park, stamps, isAdmin]);
 
 	const handleCollectStamp = () => {
-		const collected: PutRequest<CollectedStamp> = {
-			latitude: userLocation.geopoint?.latitude || 0,
-			longitude: userLocation.geopoint?.longitude || 0,
-			inaccuracyRadius: userLocation.geopoint?.inaccuracyRadius || 0,
+
+		if (hidden) return; // keep ts happy
+
+		const collected: CollectStampRequest = {
+			latitude: geopoint?.latitude ?? 0,
+			longitude: geopoint?.longitude ?? 0,
+			inaccuracyRadius: geopoint?.inaccuracyRadius ?? 0,
 			method: 'location',
 			dateTime: new Date(),
-			parkId: park.id, // these get ignored by the backend
-			parkAbbreviation: park.abbreviation, // these get ignored by the backend
+			parkAbbreviation: park.abbreviation,
 		};
-		collectStampMutation.mutate(collected);
-		refetch();
-		onClose();
+
+		// mark the stamp as collected
+		collectStamp(collected);
+
+		// close this screen
+		close();
 	};
+
+	if (hidden) return null;
+	dbg('RENDER', 'CollectStamp', park.abbreviation);
 
 	return (
 		<div className='fixed inset-0 flex items-center justify-center bg-secondary_lightblue' style={{ zIndex: 9999 }}>
-			<div className='m-auto flex max-w-3xl flex-col items-center gap-8 text-center'>
+			<div className='m-auto flex max-w-3xl flex-col items-center gap-8 p-2 text-center'>
 				<span
 					className='absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-supporting_darkgray'
-					{...a11yOnClick(onClose)}
+					{...a11yOnClick(close)}
 				>
 					&times;
 				</span>
-				<h1 className='text-secondary_darkteal uppercase'>Woohoo!!!</h1>
-				<p className='p-large'>
+				<h1 className='text-secondary_darkteal uppercase'>WOOHOO!</h1>
+				<p>
 					Your location indicates that you are at {park.parkName}. You have not collected the badge at this location
 					yet.{' '}
 				</p>
 				<RoundedButton title={'Collect!'} onClick={handleCollectStamp} />
-				<img src={`/stamps/${park.abbreviation}.svg`} width={'150px'} alt={`${park.parkName} stamp`} />
+				<div className='aspect-square w-48'>
+					<img src={`/stamps/${park.abbreviation}.svg`} alt={`${park.parkName} stamp`} />
+				</div>
 			</div>
 		</div>
 	);

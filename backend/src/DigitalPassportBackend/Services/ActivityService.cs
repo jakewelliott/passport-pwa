@@ -27,8 +27,8 @@ public class ActivityService(
 
     public CollectedStamp CollectStamp(
         string park_abbreviation,
-        double longitude,
         double latitude,
+        double longitude,
         double inaccuracyRadius,
         string method,
         DateTime? dateTime,
@@ -51,7 +51,7 @@ public class ActivityService(
         }
 
         // collect the stamp
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
         if (method == StampCollectionMethod.location.GetDisplayName())
         {
             var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
@@ -160,11 +160,11 @@ public class ActivityService(
     }
 
     public List<BucketListItem> GetBucketListItems() {
-        return _bucketListItemRepository.GetAll();
+        return _bucketListItemRepository.GetAll();	
     }
 
-    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude) {
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
+    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double latitude, double longitude) {
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
     
         var item = _bucketListItemRepository.GetById(itemId);
 
@@ -201,10 +201,10 @@ public class ActivityService(
         }
     }
 
-    public ParkVisit VisitPark(int userId, string parkAbbr, double longitude, double latitude, double inaccuracyRadius)
+    public ParkVisit VisitPark(int userId, string parkAbbr, double latitude, double longitude, double inaccuracyRadius)
     {
         var park = _locationsRepository.GetByAbbreviation(parkAbbr);
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
         var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
         if (!park.boundaries!.Intersects(locationWithInaccuracy))
         {
@@ -213,7 +213,7 @@ public class ActivityService(
         
         return _parkVisitRepository.Create(new()
         {
-            location = new(longitude, latitude),
+            location = new(latitude, longitude),
             createdAt = DateTime.Now,
             updatedAt = DateTime.Now,
             parkId = park.id,

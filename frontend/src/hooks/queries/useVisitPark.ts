@@ -1,5 +1,5 @@
 import { useLocation } from '@/hooks/useLocation';
-import { dbg, jason } from '@/lib/debug';
+import { dbg } from '@/lib/debug';
 import { API_VISIT_HISTORY_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import type { ParkVisit } from '@/types/tables';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -47,11 +47,9 @@ export const useVisitPark = () => {
       return;
     }
 
-    jason({ park });
-
     // check if we've visited the park in the last 24 hours
     const lastVisit = query.data.find((visit) => visit.parkId === park.id);
-    if (lastVisit && lastVisit.createdAt > new Date(Date.now() - 24 * 60 * 60 * 1000)) {
+    if (lastVisit && lastVisit.updatedAt > new Date(Date.now() - 24 * 60 * 60 * 1000)) {
       dbg('ERROR', 'useVisitPark', 'already visited the park in the last 24 hours');
       return;
     }
