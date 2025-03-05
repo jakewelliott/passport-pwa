@@ -1,5 +1,6 @@
 import { useStampMutation } from '@/hooks/queries/useStamps';
 import { useLocation } from '@/hooks/useLocation';
+import { useParkCheck } from '@/hooks/useParkCheck';
 import { dbg } from '@/lib/debug';
 import { useEffect, useRef, useState } from 'react';
 import { FaEllipsisV } from 'react-icons/fa';
@@ -11,6 +12,7 @@ export const ManualStampButton = () => {
 	const menuRef = useRef<HTMLDivElement>(null);
 	const { mutate } = useStampMutation();
 	const { geopoint } = useLocation();
+	const { park } = useParkCheck();
 
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
@@ -27,13 +29,19 @@ export const ManualStampButton = () => {
 			toast.error('Unable to see your current location.');
 			return;
 		}
+
+		if (!park) {
+			toast.error('You are not currently in a park.');
+			return;
+		}
+
 		mutate({
 			latitude: geopoint.latitude,
 			longitude: geopoint.longitude,
 			inaccuracyRadius: geopoint.inaccuracyRadius,
 			method: 'manual',
 			dateTime: new Date(),
-			parkAbbreviation: 'AAA', // ignored by API but useful in collect-stamp.tsx
+			parkAbbreviation: park?.abbreviation,
 		});
 		setIsOpen(false);
 	};
