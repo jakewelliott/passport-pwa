@@ -6,6 +6,7 @@ import { dbg } from '@/lib/debug';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import LoginPage from './app/auth/login';
+import { LogoutScreen } from './app/auth/logout';
 import Locations from './app/locations';
 import LocationDetail from './app/locations/detail-tabs';
 import More from './app/more';
@@ -96,6 +97,7 @@ export const AppRoutes = () => {
 	return (
 		<Routes>
 			<Route path='/login' element={<LoginPage />} />
+			<Route path='/logout' element={<LogoutScreen />} />
 			<Route path='/' element={<RoleBasedRedirect />} />
 			<Route path='/admin/*' element={<AdminRoutes />} />
 			<Route path='/*' element={isLoggedIn ? <LoggedInRoutes /> : <RoleBasedRedirect />} />
