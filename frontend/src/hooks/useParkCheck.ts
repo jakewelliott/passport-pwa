@@ -27,7 +27,7 @@ const castGeopoint = (geopoint: Geopoint): GeoJSON.Feature<GeoJSON.Point> => {
     type: 'Feature',
     geometry: {
       type: 'Point',
-      coordinates: [geopoint.longitude, geopoint.latitude],
+      coordinates: [geopoint.latitude, geopoint.longitude],
     },
     properties: {},
   };
@@ -45,8 +45,12 @@ const parkCheck = (
       if (boundaries?.type === 'GeometryCollection') {
         for (const geometry of boundaries?.geometries ?? []) {
           if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+            console.log('we trying');
+            console.log(parkGeo.abbreviation);
+            console.log(parkGeo.coordinates);
             // If point is within polygon, find and return matching park
             if (booleanPointInPolygon(point, geometry)) {
+              console.log('hmm');
               return parks.find((park) => park.abbreviation === parkGeo.abbreviation);
             }
             // Create buffered point using accuracy radius
@@ -68,8 +72,8 @@ const parkCheck = (
 };
 
 const spoofB: Geopoint = {
-  latitude: 35.2132591913576,
-  longitude: -81.2934631963392,
+  latitude: 35.8806,
+  longitude: -78.75825,
   inaccuracyRadius: 1,
 };
 
