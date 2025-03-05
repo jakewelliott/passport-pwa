@@ -42,13 +42,9 @@ exports[`Component Snapshots > Header renders correctly 1`] = `
         Test Title
       </h4>
       <div
-        class="absolute right-4 w-[70px]"
+        class="absolute right-4 w-[70px] bg-red-500"
         data-testid="balance-placeholder"
-      >
-        <div
-          class="relative"
-        />
-      </div>
+      />
     </header>
   </div>
 </div>
@@ -56,10 +52,9 @@ exports[`Component Snapshots > Header renders correctly 1`] = `
 
 exports[`Component Snapshots > ImageModal renders correctly 1`] = `
 <div>
-  <div
+  <dialog
     aria-modal="true"
     class="fixed inset-0 flex items-center justify-center bg-system_black"
-    role="dialog"
     style="z-index: 9999;"
   >
     <span
@@ -87,7 +82,7 @@ exports[`Component Snapshots > ImageModal renders correctly 1`] = `
     >
       Test Image
     </div>
-  </div>
+  </dialog>
 </div>
 `;
 
@@ -328,32 +323,14 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
         style="height: 48px; width: 48px;"
       >
         <img
-          alt="Hiking"
-          src="/icons/park/Hiking-Red.svg"
+          alt="Paddling"
+          src="/icons/park/Paddling.svg"
         />
       </div>
       <div
         class="text-sm text-center"
       >
-        Hiking
-      </div>
-    </div>
-    <div
-      class="flex flex-col items-center gap-1"
-    >
-      <div
-        class="aspect-square"
-        style="height: 48px; width: 48px;"
-      >
-        <img
-          alt="Camping"
-          src="/icons/park/Camping-Green.svg"
-        />
-      </div>
-      <div
-        class="text-sm text-center"
-      >
-        Camping
+        Paddling
       </div>
     </div>
   </div>

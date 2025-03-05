@@ -1,3 +1,4 @@
+import type { Geopoint } from '@/types';
 import type { Park, Trail } from '@/types/tables';
 import { parks } from './parks.json';
 import { trail_icons } from './trail_icons.json';
@@ -6,10 +7,20 @@ import { PARK_SPECIAL_CASES, toCamelCase } from './type-mapper';
 
 // parks have geojson coordinates that need to be parsed
 
+export function parseGeopoint(pointString: string): Geopoint {
+  const coordinates = pointString.replace('POINT (', '').replace(')', '').trim().split(' ');
+
+  return {
+    latitude: parseFloat(coordinates[1]),
+    longitude: parseFloat(coordinates[0]),
+    inaccuracyRadius: 0.001, // Set a default value or modify as needed
+  };
+}
+
 export function transformPark(parkData: (typeof parks)[0]): Park {
   return {
     ...toCamelCase(parkData, PARK_SPECIAL_CASES),
-    coordinates: JSON.parse(parkData.coordinates.replace(')', ']').replace('POINT (', '[')),
+    coordinates: parseGeopoint(parkData.coordinates),
     addresses: [],
     icons: [],
     photos: [],
