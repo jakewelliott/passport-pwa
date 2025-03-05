@@ -1,4 +1,4 @@
-import { mockPark } from '@/lib/mock/mock';
+import { mockPark } from '@/lib/mock';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -7,7 +7,7 @@ import CollectStamp from '../collect-stamp';
 describe('CollectStamp', () => {
 
 	beforeEach(() => {
-		renderWithClient(<CollectStamp park={mockPark} onClose={() => { }} />);
+		renderWithClient(<CollectStamp />);
 	});
 
 	it('renders the congratulatory header', () => {

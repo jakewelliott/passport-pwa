@@ -1,7 +1,7 @@
 import { usePark, useParks } from '@/hooks/queries/useParks';
 import { useStamp, useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
-import { mockPark } from '@/lib/mock/mock';
+import { mockPark } from '@/lib/mock';
 import { renderWithClient } from '@/lib/test-wrapper';
 import type { CollectedStamp } from '@/types';
 import { fireEvent, screen } from '@testing-library/react';

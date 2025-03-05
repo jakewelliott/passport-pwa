@@ -1,6 +1,6 @@
 import { LocationContact } from '@/app/locations/components/location-contact';
 import DateHelper from '@/lib/date-helper';
-import { mockPark as park } from '@/lib/mock/mock';
+import { mockPark as park } from '@/lib/mock';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import AchievementsView from '../../components/achievements-view';
