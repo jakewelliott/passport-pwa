@@ -72,10 +72,15 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     [HttpGet("visit")]
     [Authorize(Roles = "visitor")]
-    public IActionResult GetLatestVisitedParks()
+    public IActionResult GetVisitedParks()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(_activityService.GetAllLatestParkVisits(userId).Select(ParkVisitResponse.FromDomain));
+				var result = _activityService.GetParkVisits(userId).Select(i => new {
+					id = i.id,
+					createdAt = i.createdAt,
+					parkId = i.parkId,
+				});
+        return Ok(result);
     }
 
     [HttpPost("visit/{parkAbbreviation}")]

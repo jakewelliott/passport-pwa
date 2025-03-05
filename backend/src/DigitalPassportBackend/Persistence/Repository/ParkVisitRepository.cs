@@ -50,11 +50,18 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
         return _digitalPassportDbContext.ParkVisits.Where(s => s.parkId == locationId && s.userId == userId).OrderByDescending(v => v.createdAt).ToList();
     }
 
-    public List<ParkVisit> GetLatestByUser(int userId)
+    public List<ParkVisit> GetAllByUser(int userId)
     {
         return _digitalPassportDbContext.ParkVisits
             .Where(i => i.userId == userId)
             .OrderByDescending(i => i.createdAt)
-						.ToList();
+            .ToList();
     }
+
+		public bool HasVisitedParkToday(int userId, int parkId)
+		{
+			return _digitalPassportDbContext.ParkVisits
+				.Where(v => v.userId == userId && v.parkId == parkId && v.createdAt.Date == DateTime.Today)
+				.Any();
+		}
 }

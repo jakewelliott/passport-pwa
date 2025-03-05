@@ -11,5 +11,5 @@ public interface IActivityService
 	List<CompletedBucketListItem> GetCompletedBucketListItems(int userId);
 	CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double longitude, double latitude);
 	ParkVisit VisitPark(int userId, string parkAbbr, double longitude, double latitude, double inaccuracyRadius);
-	List<ParkVisit> GetAllLatestParkVisits(int userId);
+	List<ParkVisit> GetParkVisits(int userId);
 }

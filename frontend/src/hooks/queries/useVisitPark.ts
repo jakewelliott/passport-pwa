@@ -22,6 +22,9 @@ const useVisitMutation = () => {
         latitude: geopoint?.latitude,
         inaccuracyRadius: geopoint?.inaccuracyRadius,
       }),
+    onError: (error) => {
+      dbg('ERROR', 'useVisitMutation', error);
+    },
   });
 };
 
@@ -48,7 +51,7 @@ export const useVisitPark = () => {
     }
 
     // check if we've visited the park in the last 24 hours
-    const lastVisit = query.data.find((visit) => visit.parkId === park.id);
+    const lastVisit = query.data.find((visit: ParkVisit) => visit.parkId === park.id);
     if (lastVisit && lastVisit.updatedAt > new Date(Date.now() - 24 * 60 * 60 * 1000)) {
       dbg('ERROR', 'useVisitPark', 'already visited the park in the last 24 hours');
       return;
