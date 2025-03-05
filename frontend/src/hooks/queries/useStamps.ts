@@ -27,7 +27,7 @@ export const useStamp = (abbreviation: string | undefined) => {
   // re-use our query hooks whenever possible
   const { data, isLoading } = useStamps();
   if (abbreviation === undefined) return { data: undefined, isLoading };
-  return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || null, isLoading };
+  return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || undefined, isLoading };
 };
 
 export const useStampMutation = () => {
