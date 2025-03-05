@@ -14,7 +14,7 @@ interface LocationState {
 const SPOOF_LOCATION: Geopoint = {
   latitude: 35.87,
   longitude: -78.76,
-  inaccuracyRadius: 0.0001,
+  inaccuracyRadius: 0.001,
 };
 
 // const SPOOF_LOCATION = null;

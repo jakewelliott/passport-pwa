@@ -147,23 +147,33 @@ public class ActivityService(
             return _completedBucketListItemRepository.Update(completion);
         }
         else {
-            // make sure we're in the park
+
+						// make sure the park is valid
             var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
             if (park == null) {
-                throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
+                throw new ServiceException(StatusCodes.Status404NotFound, $"Park {item.parkId} not found.");
             }
 
-            // I'm so done
+						// make sure the bucket list item is valid
+						var bucketListItem = _bucketListItemRepository.GetById(itemId);
+            if (bucketListItem == null) {
+                throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
+            }
+
+            
+						// we will let users check off items even if they are not in the park
+						// TODO @V: should we check if the user has ever visited the park?
 
             // if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
             // 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
             // }
-            
-            // get the park it from the regular bucket list item repository
-            var bucketListItem = _bucketListItemRepository.GetById(itemId);
-            if (bucketListItem.parkId == null) {
-                throw new ServiceException(StatusCodes.Status404NotFound, "Park not found.");
-            }
+
+						// TODO: @V are all bucket list items associated with a park? if not, then we need to handle that case here
+						// for now I'm just going to throw an error if we fail a null check
+						if (bucketListItem.parkId.HasValue == false) {
+							throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
+						}
+
             return _completedBucketListItemRepository.Create(new() { 
                 bucketListItemId = itemId, 
                 userId = userId, 
@@ -179,10 +189,26 @@ public class ActivityService(
         var park = _locationsRepository.GetByAbbreviation(parkAbbr);
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
         var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
-        if (!park.boundaries!.Intersects(locationWithInaccuracy))
-        {
-            throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
-        }
+
+				Console.WriteLine($"User Location: {userLocation}, Location with Inaccuracy: {locationWithInaccuracy}");
+
+				// TODO: @V
+				// we can't visit a park manually, rn its just automatically done
+				// so throwing an error for the user to read will prolly confuse them
+				// we should throw an error but not show it on the frontend
+				// what error code should we throw? 409?
+
+				// TODO: test this
+				if (_parkVisitRepository.HasVisitedParkToday(userId, park.id)) {
+					throw new ServiceException(StatusCodes.Status409Conflict, "You have already visited this park today.");
+				}
+
+				// TODO: I couldn't get this to work, I tried plotting it on the map and it was correct
+				// I tried different points, digits, and inaccuracies
+
+				// if (park.boundaries!.Intersects(locationWithInaccuracy) == false) {
+				// 		throw new ServiceException(StatusCodes.Status409Conflict, "Client thinks we are in the park but backend disagrees.");
+				// }
         
         return _parkVisitRepository.Create(new()
         {
@@ -196,8 +222,8 @@ public class ActivityService(
         });
     }
 
-    public List<ParkVisit> GetAllLatestParkVisits(int userId)
+    public List<ParkVisit> GetParkVisits(int userId)
     {
-        return _parkVisitRepository.GetLatestByUser(userId);
+        return _parkVisitRepository.GetAllByUser(userId);
     }
 }
