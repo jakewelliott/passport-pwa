@@ -1,11 +1,31 @@
 import { LocationContact } from '@/app/locations/components/location-contact';
+import { useBucketList } from '@/hooks/queries/useBucketList';
+import { useStamp } from '@/hooks/queries/useStamps';
 import DateHelper from '@/lib/date-helper';
-import { mockPark as park } from '@/lib/mock';
+import { bucketListItems, collectedStamps, completedBucketListItems, mockPark as park } from '@/lib/testing/mock/tables';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { type Mock, beforeAll, describe, expect, it, vi } from 'vitest';
 import AchievementsView from '../../components/achievements-view';
 
+const mockStamp = collectedStamps[0];
+const mockBucketList = bucketListItems;
+const mockCompletedBucketList = completedBucketListItems;
+
+const mockUseStamp = useStamp as Mock;
+const mockUseBucketList = useBucketList as Mock;
+
 describe('LocationContact', () => {
+	beforeAll(() => {
+		vi.clearAllMocks();
+		mockUseStamp.mockReturnValue({ data: mockStamp, isLoading: false });
+		mockUseBucketList.mockReturnValue({
+			items: mockBucketList,
+			completed: mockCompletedBucketList,
+			toggleCompletion: vi.fn(),
+			isLoading: false,
+		});
+	});
+
 	it('renders park name', () => {
 		render(<LocationContact park={park} />);
 		expect(screen.getByText(park.parkName)).toBeInTheDocument();

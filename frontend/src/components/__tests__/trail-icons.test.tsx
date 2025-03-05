@@ -1,4 +1,4 @@
-import { trails } from '@/lib/mock';
+import { trails } from '@/lib/testing/mock/tables';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { TrailIcon, TrailIcons } from '../trail-icons';

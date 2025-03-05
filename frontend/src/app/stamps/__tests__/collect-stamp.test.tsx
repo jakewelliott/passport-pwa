@@ -1,5 +1,5 @@
-import { mockPark } from '@/lib/mock';
-import { renderWithClient } from '@/lib/test-wrapper';
+import { mockPark } from '@/lib/testing/mock/tables';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import CollectStamp from '../collect-stamp';
@@ -11,7 +11,7 @@ describe('CollectStamp', () => {
 	});
 
 	it('renders the congratulatory header', () => {
-		expect(screen.getByText('Woohoo!!!')).toBeInTheDocument();
+		expect(screen.getByText('Woohoo!')).toBeInTheDocument();
 	});
 
 	it('displays the park name in the message', () => {
