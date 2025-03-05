@@ -17,14 +17,13 @@ const AddressView = ({ address }: { address: string }) => (
 
 interface BucketListItemViewProps {
 	item: BucketListItem;
-	completion: BucketListCompletion;
+	completion?: BucketListCompletion;
 	handler: () => void;
 	address?: string;
 }
 
 export const BucketListItemView = ({ item, completion, handler, address }: BucketListItemViewProps) => {
-	const isCompleted = completion && completion.deleted === false;
-	const Icon = isCompleted ? FaRegCheckSquare : FaRegSquare;
+	const Icon = completion !== undefined ? FaRegCheckSquare : FaRegSquare;
 
 	return (
 		<div key={item.id} className='my-2.5 flex items-start' {...a11yOnClick(handler)}>
@@ -33,7 +32,7 @@ export const BucketListItemView = ({ item, completion, handler, address }: Bucke
 				<p>{item.task}</p>
 				<div className='flex flex-wrap items-center justify-between gap-2'>
 					{address && <AddressView address={address} />}
-					{isCompleted && <CompletedAtView updatedAt={completion.createdAt} />}
+					{completion && <CompletedAtView updatedAt={completion.updatedAt} />}
 				</div>
 			</div>
 		</div>
