@@ -5,7 +5,6 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import AchievementsView from '../../components/achievements-view';
 
-
 describe('LocationContact', () => {
 	it('renders park name', () => {
 		render(<LocationContact park={park} />);
@@ -59,16 +58,12 @@ describe('LocationContact', () => {
 	});
 
 	it('shows correct stamp text', () => {
-		const parkActivityNew = parkActivity;
-		parkActivityNew.stampCollectedAt = '';
 		render(<AchievementsView park={park} />);
 		const stampElement = screen.getByText('Stamp not yet collected');
 		expect(stampElement).toBeInTheDocument();
-		parkActivityNew.stampCollectedAt = '';
 		render(<AchievementsView park={park} />);
 		let stampElements = screen.getAllByText('Stamp not yet collected');
 		const currentDate = new Date().toISOString();
-		parkActivityNew.stampCollectedAt = currentDate;
 		render(<AchievementsView park={park} />);
 		stampElements = screen.getAllByText(
 			`Stamp collected on ${DateHelper.stringify(new Date(currentDate)).replace(',', ' at')}`,
@@ -77,20 +72,13 @@ describe('LocationContact', () => {
 	});
 
 	it('Renders bucket list items', () => {
-		const parkNew = { ...park, bucketListItems: [...park.bucketListItems] };
-		parkNew.bucketListItems.push({ id: 0, task: 'Bucket' });
-		const parkActivityNew = { ...parkActivity, completedBucketListItems: [...parkActivity.completedBucketListItems] };
-		parkActivityNew.completedBucketListItems.push({ id: 0 });
-		render(<AchievementsView park={parkNew} />);
+		render(<AchievementsView park={park} />);
 		const stampElements = screen.getByTestId('BLI');
 		expect(stampElements).toBeInTheDocument();
 	});
 
 	it('renders unchecked bucket list icon when required', () => {
-		const parkNew = { ...park, bucketListItems: [...park.bucketListItems] };
-		parkNew.bucketListItems.push({ id: 0, task: 'Bucket' });
-		// const parkActivityNew = { ...parkActivity };
-		render(<AchievementsView park={parkNew} />);
+		render(<AchievementsView park={park} />);
 		const stampElements = screen.getByTestId('BLI');
 		expect(stampElements).toBeInTheDocument();
 	});
