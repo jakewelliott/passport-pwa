@@ -1,5 +1,7 @@
-import type { Park } from '@/types/tables';
+import type { Park, Trail } from '@/types/tables';
 import { parks } from './parks.json';
+import { trail_icons } from './trail_icons.json';
+import { trails } from './trails.json';
 import { PARK_SPECIAL_CASES, toCamelCase } from './type-mapper';
 
 // parks have geojson coordinates that need to be parsed
@@ -19,6 +21,19 @@ export { transformedParks as parks };
 const mockPark = transformedParks[0];
 export { mockPark };
 
+// trails need to be parsed into the correct format and combined with their icons
+
+export function transformTrail(trailData: (typeof trails)[0]): Trail {
+  return {
+    ...trailData,
+    trailIcons: trail_icons.filter((icon) => icon.trail === trailData.id).map((icon) => icon.icon),
+    trailName: trailData.trail_name,
+    distance: trailData.length,
+  } as Trail;
+}
+
+const transformedTrails = trails.map(transformTrail);
+
 export { bucket_list_items as bucketListItems } from './bucket_list_items.json';
 export { collected_stamps as collectedStamps } from './collected_stamps.json';
 export { completed_bucket_list_items as completedBucketListItems } from './completed_bucket_list_items.json';
@@ -28,8 +43,8 @@ export { park_photos as parkPhotos } from './park_photos.json';
 export { park_visits as parkVisits } from './park_visits.json';
 export { private_notes as privateNotes } from './private_notes.json';
 export { trail_icons as trailIcons } from './trail_icons.json';
-export { trails } from './trails.json';
 export { users } from './users.json';
+export { transformedTrails as trails };
 
 // {} bucket_list_items.json
 // i collected_stamps.json
