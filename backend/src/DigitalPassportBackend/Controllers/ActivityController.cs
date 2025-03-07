@@ -35,6 +35,8 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkAbbreviation, request.latitude, request.longitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
     }
 
+		// TODO: add a get request for a note
+
     [HttpPost("notes/{parkAbbreviation}")]
     [Authorize(Roles = "visitor,admin")]
     public IActionResult CreateUpdateNote(string parkAbbreviation, [FromBody] PrivateNoteRequest req)
@@ -63,10 +65,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     [HttpPost("bucketlist/{itemId}")]
     [Authorize(Roles = "visitor")]
-    public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
+    public IActionResult ToggleBucketListItemCompletion(int itemId)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude);
+        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId);
         return Ok(CompletedBucketListItemResponse.FromDomain(result));
     }
 
@@ -107,9 +109,8 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record ToggleBucketListItemCompletionRequest(double longitude, double latitude)
-    {
-    }
+    public record ToggleBucketListItemCompletionRequest(DateTime dateTime)
+    {}
 
     public record CompletedBucketListItemResponse(int id, int bucketListItemId, DateTime updatedAt)
     {
@@ -118,7 +119,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
             return new CompletedBucketListItemResponse(
                 item.id,
                 item.bucketListItemId,
-                item.updated_at
+                item.updatedAt
             );
         }
     }

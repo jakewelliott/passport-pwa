@@ -48,13 +48,3 @@ export function renderWithClient(ui: React.ReactElement, options: RenderOptions 
 			),
 	};
 }
-
-// For cases where you need a QueryClient instance in your test
-export function createWrapper() {
-	const testQueryClient = createTestQueryClient();
-	return ({ children }: { children: React.ReactNode }) => (
-		<QueryClientProvider client={testQueryClient}>
-			<BrowserRouter>{children}</BrowserRouter>
-		</QueryClientProvider>
-	);
-}
