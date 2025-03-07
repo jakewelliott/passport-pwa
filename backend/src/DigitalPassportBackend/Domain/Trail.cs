@@ -10,7 +10,7 @@ public class Trail
     public int id { get; init; }
     [Column("trail_name")]
     public required string trailName { get; set; }
-    public string? length { get; set; }
+    public string? distance { get; set; }
     [Column(TypeName="longtext")]
     public required string description { get; set; }
     [Column("created_at")]

@@ -136,50 +136,25 @@ public class ActivityService(
         return _bucketListItemRepository.GetAll();	
     }
 
-    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double latitude, double longitude) {
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
-    
-        var item = _bucketListItemRepository.GetById(itemId);
+    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId) {
 
+        var item = _bucketListItemRepository.GetById(itemId);
+				if (item == null) {
+          throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
+        }
+
+				// see if the user has already completed the item
         var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
         if (completion != null) {
+            // if so, toggle it
             completion.deleted = !completion.deleted;
             return _completedBucketListItemRepository.Update(completion);
-        }
-        else {
-
-						// make sure the park is valid
-            var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
-            if (park == null) {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Park {item.parkId} not found.");
-            }
-
-						// make sure the bucket list item is valid
-						var bucketListItem = _bucketListItemRepository.GetById(itemId);
-            if (bucketListItem == null) {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
-            }
-
-            
-						// we will let users check off items even if they are not in the park
-						// TODO @V: should we check if the user has ever visited the park?
-
-            // if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
-            // 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
-            // }
-
-						// TODO: @V are all bucket list items associated with a park? if not, then we need to handle that case here
-						// for now I'm just going to throw an error if we fail a null check
-						if (bucketListItem.parkId.HasValue == false) {
-							throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
-						}
-
+        } else {
+            // if not, create a new completion
             return _completedBucketListItemRepository.Create(new() { 
                 bucketListItemId = itemId, 
                 userId = userId, 
                 deleted = false,
-                location = (Point)userLocation, 
-                parkId = bucketListItem.parkId.Value 
             });
         }
     }
