@@ -28,19 +28,27 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     [HttpPost("stamps/{parkAbbreviation}")]
     [Authorize(Roles = "visitor")]
     public IActionResult CollectStamp(
-        string parkAbbreviation, 
+        string parkAbbreviation,
         [FromBody] CollectStampRequest request)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkAbbreviation, request.latitude, request.longitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
     }
 
-    [HttpPost("notes/{parkAbbreviation}")]
+    [HttpPost("notes/{parkId}")]
     [Authorize(Roles = "visitor,admin")]
-    public IActionResult CreateUpdateNote(string parkAbbreviation, [FromBody] PrivateNoteRequest req)
+    public IActionResult CreateUpdateNote(int parkId, [FromBody] PrivateNoteRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkAbbreviation, userId, req.note, req.updatedAt)));
+        return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkId, userId, req.note, req.updatedAt)));
+    }
+
+    [HttpGet("notes/{parkId}")]
+    [Authorize(Roles = "visitor,admin")]
+    public IActionResult GetParkNote(int parkId)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(PrivateNoteResponse.FromDomain(_activityService.GetParkNote(parkId, userId)));
     }
 
     // ADAM: added these for frontend type safety
@@ -75,11 +83,12 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     public IActionResult GetVisitedParks()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-				var result = _activityService.GetParkVisits(userId).Select(i => new {
-					id = i.id,
-					createdAt = i.createdAt,
-					parkId = i.parkId,
-				});
+        var result = _activityService.GetParkVisits(userId).Select(i => new
+        {
+            id = i.id,
+            createdAt = i.createdAt,
+            parkId = i.parkId,
+        });
         return Ok(result);
     }
 
@@ -149,10 +158,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     public record CollectStampRequest(
-				double latitude, 
+                double latitude,
         double longitude,
         double inaccuracyRadius,
-        string method, 
+        string method,
         DateTime? dateTime)
     {
     }
