@@ -13,7 +13,6 @@ export const API_AUTH_REGISTER_URL = `${API_AUTH_URL}/register/`;
 
 // user data
 export const API_USER_URL = `${API_URL}/user`;
-export const API_ACTIVITY_URL = `${API_URL}/activity/park`;
 export const API_VISIT_HISTORY_URL = `${API_URL}/activity/visit`;
 
 // stamps
@@ -27,6 +26,9 @@ export const API_COMPLETED_BUCKET_LIST_ITEMS_URL = `${API_BUCKET_LIST_URL}/compl
 // public data
 export const API_PARKS_URL = `${API_URL}/locations`;
 export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
+
+// notes
+export const API_NOTES_URL = `${API_URL}/activity/notes`;
 
 const getAuthHeaders = (): Record<string, string> => {
   const token = Cookies.get('token');

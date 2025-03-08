@@ -72,7 +72,8 @@ public class ActivityService(
         }
     }
 
-    public List<CollectedStamp> GetCollectedStamps(int userId) {
+    public List<CollectedStamp> GetCollectedStamps(int userId)
+    {
         var stamps = _collectedStampRepository.GetByUser(userId);
         foreach (var stamp in stamps)
         {
@@ -81,10 +82,10 @@ public class ActivityService(
         return _collectedStampRepository.GetByUser(userId);
     }
 
-    public PrivateNote CreateUpdatePrivateNote(string parkAbbr, int userId, string note, DateTime updatedAt)
+    public PrivateNote CreateUpdatePrivateNote(int parkId, int userId, string note, DateTime updatedAt)
     {
         // Check if there is already a note in the database.
-        var location = _locationsRepository.GetByAbbreviation(parkAbbr);
+        var location = _locationsRepository.GetById(parkId);
         var privateNote = _privateNoteRepository.GetByParkAndUser(location.id, userId);
         if (privateNote != null)
         {
@@ -123,63 +124,71 @@ public class ActivityService(
         DateTime? dateTime)
     {
         return new CollectedStamp()
-            {
-                location = location,
-                method = method,
-                user = user,
-                park = park,
-                createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
-            };
+        {
+            location = location,
+            method = method,
+            user = user,
+            park = park,
+            createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
+        };
     }
 
-    public List<BucketListItem> GetBucketListItems() {
-        return _bucketListItemRepository.GetAll();	
+    public List<BucketListItem> GetBucketListItems()
+    {
+        return _bucketListItemRepository.GetAll();
     }
 
-    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double latitude, double longitude) {
+    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double latitude, double longitude)
+    {
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
-    
+
         var item = _bucketListItemRepository.GetById(itemId);
 
         var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
-        if (completion != null) {
+        if (completion != null)
+        {
             completion.deleted = !completion.deleted;
             return _completedBucketListItemRepository.Update(completion);
         }
-        else {
+        else
+        {
 
-						// make sure the park is valid
+            // make sure the park is valid
             var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
-            if (park == null) {
+            if (park == null)
+            {
                 throw new ServiceException(StatusCodes.Status404NotFound, $"Park {item.parkId} not found.");
             }
 
-						// make sure the bucket list item is valid
-						var bucketListItem = _bucketListItemRepository.GetById(itemId);
-            if (bucketListItem == null) {
+            // make sure the bucket list item is valid
+            var bucketListItem = _bucketListItemRepository.GetById(itemId);
+            if (bucketListItem == null)
+            {
                 throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
             }
 
-            
-						// we will let users check off items even if they are not in the park
-						// TODO @V: should we check if the user has ever visited the park?
+
+            // we will let users check off items even if they are not in the park
+            // TODO @V: should we check if the user has ever visited the park?
 
             // if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
             // 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
             // }
 
-						// TODO: @V are all bucket list items associated with a park? if not, then we need to handle that case here
-						// for now I'm just going to throw an error if we fail a null check
-						if (bucketListItem.parkId.HasValue == false) {
-							throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
-						}
+            // TODO: @V are all bucket list items associated with a park? if not, then we need to handle that case here
+            // for now I'm just going to throw an error if we fail a null check
+            if (bucketListItem.parkId.HasValue == false)
+            {
+                throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
+            }
 
-            return _completedBucketListItemRepository.Create(new() { 
-                bucketListItemId = itemId, 
-                userId = userId, 
+            return _completedBucketListItemRepository.Create(new()
+            {
+                bucketListItemId = itemId,
+                userId = userId,
                 deleted = false,
-                location = (Point)userLocation, 
-                parkId = bucketListItem.parkId.Value 
+                location = (Point)userLocation,
+                parkId = bucketListItem.parkId.Value
             });
         }
     }
@@ -190,26 +199,27 @@ public class ActivityService(
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
         var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
 
-				Console.WriteLine($"User Location: {userLocation}, Location with Inaccuracy: {locationWithInaccuracy}");
+        Console.WriteLine($"User Location: {userLocation}, Location with Inaccuracy: {locationWithInaccuracy}");
 
-				// TODO: @V
-				// we can't visit a park manually, rn its just automatically done
-				// so throwing an error for the user to read will prolly confuse them
-				// we should throw an error but not show it on the frontend
-				// what error code should we throw? 409?
+        // TODO: @V
+        // we can't visit a park manually, rn its just automatically done
+        // so throwing an error for the user to read will prolly confuse them
+        // we should throw an error but not show it on the frontend
+        // what error code should we throw? 409?
 
-				// TODO: test this
-				if (_parkVisitRepository.HasVisitedParkToday(userId, park.id)) {
-					throw new ServiceException(StatusCodes.Status409Conflict, "You have already visited this park today.");
-				}
+        // TODO: test this
+        if (_parkVisitRepository.HasVisitedParkToday(userId, park.id))
+        {
+            throw new ServiceException(StatusCodes.Status409Conflict, "You have already visited this park today.");
+        }
 
-				// TODO: I couldn't get this to work, I tried plotting it on the map and it was correct
-				// I tried different points, digits, and inaccuracies
+        // TODO: I couldn't get this to work, I tried plotting it on the map and it was correct
+        // I tried different points, digits, and inaccuracies
 
-				// if (park.boundaries!.Intersects(locationWithInaccuracy) == false) {
-				// 		throw new ServiceException(StatusCodes.Status409Conflict, "Client thinks we are in the park but backend disagrees.");
-				// }
-        
+        // if (park.boundaries!.Intersects(locationWithInaccuracy) == false) {
+        // 		throw new ServiceException(StatusCodes.Status409Conflict, "Client thinks we are in the park but backend disagrees.");
+        // }
+
         return _parkVisitRepository.Create(new()
         {
             location = new(latitude, longitude),
@@ -226,4 +236,15 @@ public class ActivityService(
     {
         return _parkVisitRepository.GetAllByUser(userId);
     }
+
+    public PrivateNote GetParkNote(int parkId, int userId)
+    {
+        var note = _privateNoteRepository.GetByParkAndUser(parkId, userId);
+        if (note == null)
+        {
+            note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.Now);
+        }
+        return note;
+    }
+
 }
