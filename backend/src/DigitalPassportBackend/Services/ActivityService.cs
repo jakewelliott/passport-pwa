@@ -247,4 +247,9 @@ public class ActivityService(
         return note;
     }
 
+    public List<PrivateNote> GetNotes(int userId)
+    {
+        return _privateNoteRepository.GetByUser(userId);
+    }
+
 }

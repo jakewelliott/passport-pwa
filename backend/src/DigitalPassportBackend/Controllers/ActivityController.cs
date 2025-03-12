@@ -51,6 +51,14 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(PrivateNoteResponse.FromDomain(_activityService.GetParkNote(parkId, userId)));
     }
 
+    [HttpGet("notes")]
+    [Authorize(Roles = "visitor,admin")]
+    public IActionResult GetNotes()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(_activityService.GetNotes(userId).Select(PrivateNoteResponse.FromDomain).ToList());
+    }
+
     // ADAM: added these for frontend type safety
 
     [HttpGet("bucketlist")]
