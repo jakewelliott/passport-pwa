@@ -29,7 +29,7 @@ export const MyNotes = () => {
               <p className="mb-2 text-gray-500 text-sm">
                 Last updated:{" "}
                 {generalNotesUpdated
-                  ? dateHelper.stringify(generalNotesUpdated)
+                  ? dateHelper.toStringLong(new Date(generalNotesUpdated))
                   : "Not Available"}
               </p>
               <p
@@ -61,7 +61,9 @@ export const MyNotes = () => {
                   <p className="mb-2 text-gray-500 text-sm">
                     Last updated:{" "}
                     {getUpdatedAt(park.abbreviation)
-                      ? dateHelper.stringify(getUpdatedAt(park.abbreviation)!)
+                      ? dateHelper.toStringLong(
+                          new Date(getUpdatedAt(park.abbreviation)!)
+                        )
                       : "Not Available"}
                   </p>
                   <p
