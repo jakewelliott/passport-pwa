@@ -4,9 +4,9 @@ import { persist } from 'zustand/middleware';
 type ParkNoteKey = string | 'generalNotes';
 type NoteData = {
   content: string;
-  updatedAt: Date;
+  updatedAt: number;
 };
-const EMPTY_NOTES: Record<ParkNoteKey, NoteData> = { generalNotes: {content: '', updatedAt: new Date()} };
+const EMPTY_NOTES: Record<ParkNoteKey, NoteData> = { generalNotes: {content: '', updatedAt: Date.now()} };
 
 interface NotesStore {
   notes: Record<ParkNoteKey, NoteData>;
@@ -14,7 +14,7 @@ interface NotesStore {
   getKeys: () => ParkNoteKey[];
   getNoteContent: (key: ParkNoteKey) => string | undefined;
   getNote: (key: ParkNoteKey) => NoteData | undefined;
-  getUpdatedAt: (key: ParkNoteKey) => Date | undefined;
+  getUpdatedAt: (key: ParkNoteKey) => number | undefined;
   removeNote: (key: ParkNoteKey) => void;
   clearNotes: () => void;
 }
@@ -30,7 +30,7 @@ export const useParkNotesStore = create<NotesStore>()(
             ...state.notes, 
             [key]: {
               content: value,
-              updatedAt: new Date()
+              updatedAt: Date.now(),
             } } 
         }));
       },
