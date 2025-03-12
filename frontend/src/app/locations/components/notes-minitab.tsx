@@ -13,18 +13,19 @@ export const NotesMiniTab = ({
   abbreviation: string;
   parkId: number;
 }) => {
-  const { getNote, setNote } = useParkNotesStore();
-  const { data: remoteNote, isLoading } = useNote(parkId);
+  const { getNoteContent: getNote, setNote } = useParkNotesStore();
+  const { data: remoteNote, isLoading, refetch } = useNote(parkId);
   const updateNoteMutation = useUpdateNote();
 
   const [noteValue, setNoteValue] = useState(getNote(abbreviation) || "");
 
   useEffect(() => {
+    refetch();
     if (remoteNote && remoteNote.note !== getNote(abbreviation)) {
       setNote(abbreviation, remoteNote.note);
       setNoteValue(remoteNote.note);
     }
-  }, [remoteNote, abbreviation, getNote, setNote]);
+  }, [remoteNote, abbreviation, getNote, setNote, refetch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newNote = e.target.value;

@@ -1,31 +1,42 @@
-import { useParks } from '@/hooks/queries/useParks';
-import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
-import { a11yOnClick } from '@/lib/a11y';
-import { useNavigate } from 'react-router-dom';
-import ListRow from '../../components/list-row';
+import { useParks } from "@/hooks/queries/useParks";
+import { useParkNotesStore } from "@/hooks/store/useParkNotesStore";
+import { a11yOnClick } from "@/lib/a11y";
+import dateHelper from "@/lib/date-helper";
+import { useNavigate } from "react-router-dom";
+import ListRow from "../../components/list-row";
 
 export const MyNotes = () => {
   const navigate = useNavigate();
-  const { getNote, getKeys } = useParkNotesStore();
+  const { getNoteContent, getKeys, getUpdatedAt } = useParkNotesStore();
   const { data: parks } = useParks();
 
-  const generalNotes = getNote('generalNotes') || '';
+  const generalNotes = getNoteContent("generalNotes") || "";
+  const generalNotesUpdated = getUpdatedAt("generalNotes");
   const allNotes = getKeys();
-  const parksWithNotes = parks?.filter((park) => allNotes.includes(park.abbreviation)) || [];
+  const parksWithNotes =
+    parks?.filter((park) => allNotes.includes(park.abbreviation)) || [];
 
   return (
-    <div className='container mx-auto px-4 py-4'>
-      <div className='space-y-4'>
-        <div {...a11yOnClick(() => navigate('/more/my-notes/general-notes'))} className='cursor-pointer'>
+    <div className="container mx-auto px-4 py-4">
+      <div className="space-y-4">
+        <div
+          {...a11yOnClick(() => navigate("/more/my-notes/general-notes"))}
+          className="cursor-pointer"
+        >
           <ListRow>
-            <div className='flex flex-col gap-1'>
+            <div className="flex flex-col gap-1">
               <h3>General Notes</h3>
-              <p className='mb-2 text-gray-500 text-sm'>Last updated: Not available</p>
+              <p className="mb-2 text-gray-500 text-sm">
+                Last updated:{" "}
+                {generalNotesUpdated
+                  ? dateHelper.stringify(generalNotesUpdated)
+                  : "Not Available"}
+              </p>
               <p
-                className='overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words'
-                style={{ hyphens: 'auto' }}
+                className="overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words"
+                style={{ hyphens: "auto" }}
               >
-                {generalNotes || 'No general notes yet'}
+                {generalNotes || "No general notes yet"}
               </p>
             </div>
           </ListRow>
@@ -33,24 +44,31 @@ export const MyNotes = () => {
 
         {/* Park Notes section */}
         {parksWithNotes.length === 0 ? (
-          <p className='text-gray-600'>No park notes found.</p>
+          <p className="text-gray-600">No park notes found.</p>
         ) : (
           parksWithNotes.map((park) => (
             <div
               key={park.abbreviation}
-              {...a11yOnClick(() => navigate(`/locations/${park.abbreviation}?tab=notes`))}
-              className='cursor-pointer'
+              {...a11yOnClick(() =>
+                navigate(`/locations/${park.abbreviation}?tab=notes`)
+              )}
+              className="cursor-pointer"
             >
               <ListRow>
-                <div className='flex flex-col gap-1'>
+                <div className="flex flex-col gap-1">
                   <h3>{park.parkName}</h3>
                   <p>{park.addresses[0]?.city}</p>
-                  <p className='mb-2 text-gray-500 text-sm'>Last updated: Not available</p>
+                  <p className="mb-2 text-gray-500 text-sm">
+                    Last updated:{" "}
+                    {getUpdatedAt(park.abbreviation)
+                      ? dateHelper.stringify(getUpdatedAt(park.abbreviation)!)
+                      : "Not Available"}
+                  </p>
                   <p
-                    className='overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words'
-                    style={{ hyphens: 'auto' }}
+                    className="overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words"
+                    style={{ hyphens: "auto" }}
                   >
-                    {getNote(park.abbreviation)}
+                    {getNoteContent(park.abbreviation)}
                   </p>
                 </div>
               </ListRow>
