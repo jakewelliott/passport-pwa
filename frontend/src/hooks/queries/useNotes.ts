@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 interface Note {
   parkAbbreviation: string;
   note: string;
+  updatedAt: string;
 }
 
 export const useNote = (parkId: number) => {

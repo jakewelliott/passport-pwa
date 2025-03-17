@@ -19,7 +19,7 @@ export const MyNotes = () => {
     clearNotes();
     if (remoteNotes) {
       remoteNotes.forEach((note) => {
-        setNote(note.parkAbbreviation, note.note);
+        setNote(note.parkAbbreviation, note.note, new Date(note.updatedAt).getTime());
       });
     }
   }, [remoteNotes]);
@@ -42,7 +42,7 @@ export const MyNotes = () => {
               <h3>General Notes</h3>
               <p className="mb-2 text-gray-500 text-sm">
                 Last updated:{" "}
-                {generalNotesUpdated
+                {generalNotesUpdated != undefined
                   ? dateHelper.toStringLong(new Date(generalNotesUpdated))
                   : "Not Available"}
               </p>
