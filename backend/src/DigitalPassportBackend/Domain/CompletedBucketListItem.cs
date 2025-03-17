@@ -22,7 +22,7 @@ public class CompletedBucketListItem
     // References
     [ForeignKey("park")]
     [Column("park")]
-    public int parkId { get; set; }
+    public int? parkId { get; set; }
     public Park? park { get; set; }
     
     [ForeignKey("bucket_list_item")]
