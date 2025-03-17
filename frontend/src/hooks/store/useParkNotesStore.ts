@@ -4,13 +4,13 @@ import { persist } from 'zustand/middleware';
 type ParkNoteKey = string | 'generalNotes';
 type NoteData = {
   content: string;
-  updatedAt: number;
+  updatedAt: number | undefined;
 };
-const EMPTY_NOTES: Record<ParkNoteKey, NoteData> = { generalNotes: {content: '', updatedAt: Date.now()} };
+const EMPTY_NOTES: Record<ParkNoteKey, NoteData> = { generalNotes: {content: '', updatedAt: undefined} };
 
 interface NotesStore {
   notes: Record<ParkNoteKey, NoteData>;
-  setNote: (key: ParkNoteKey, value: string) => void;
+  setNote: (key: ParkNoteKey, value: string, updatedAt: number) => void;
   getKeys: () => ParkNoteKey[];
   getNoteContent: (key: ParkNoteKey) => string | undefined;
   getNote: (key: ParkNoteKey) => NoteData | undefined;
@@ -24,13 +24,13 @@ export const useParkNotesStore = create<NotesStore>()(
     (set, get) => ({
       notes: EMPTY_NOTES,
 
-      setNote: (key, value) => {
+      setNote: (key, value, updatedAt) => {
         set((state) => ({ 
           notes: { 
             ...state.notes, 
             [key]: {
               content: value,
-              updatedAt: Date.now(),
+              updatedAt: updatedAt,
             } } 
         }));
       },

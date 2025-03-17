@@ -22,7 +22,7 @@ export const NotesMiniTab = ({
   useEffect(() => {
     refetch();
     if (remoteNote && remoteNote.note !== getNote(abbreviation)) {
-      setNote(abbreviation, remoteNote.note);
+      setNote(abbreviation, remoteNote.note, new Date(remoteNote.updatedAt).getTime());
       setNoteValue(remoteNote.note);
     }
   }, [remoteNote, abbreviation, getNote, setNote, refetch]);
@@ -30,7 +30,7 @@ export const NotesMiniTab = ({
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newNote = e.target.value;
     setNoteValue(newNote);
-    setNote(abbreviation, newNote);
+    setNote(abbreviation, newNote, Date.now());
     updateNoteMutation.mutate({ parkId, note: newNote });
   };
 
