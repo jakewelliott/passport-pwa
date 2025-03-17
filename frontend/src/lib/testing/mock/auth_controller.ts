@@ -1,7 +1,7 @@
 import type { UserProfile } from '@/types';
-import { testUser } from '.';
+import { testUser } from './utils';
 
-export const Get = (): UserProfile => testUser;
+export const GetUser = (): UserProfile => testUser;
 
 export const Register = (): UserProfile => testUser;
 

@@ -8,9 +8,9 @@ import type {
   VisitParkRequest,
   VisitParkResponse,
 } from '@/types';
-import { postUserContent, selectById, selectByUser } from '.';
-import { Get as GetPark } from './locations_controller';
+import { GetPark } from './locations_controller';
 import { bucketListItems, collectedStamps, completedBucketListItems, parkVisits } from './tables/index';
+import { postUserContent, selectById, selectByUser } from './utils';
 
 // helper function
 const postWithPark = <T>(abbreviation: string, req: T) => {
@@ -26,28 +26,27 @@ const postWithPark = <T>(abbreviation: string, req: T) => {
 // GET ENDPOINTS
 //
 
-export const mGetCollectedStamps = () => selectByUser(collectedStamps);
+export const GetCollectedStamps = () => selectByUser(collectedStamps);
 
-export const mGetBucketListItems = () => bucketListItems;
+export const GetBucketListItems = () => bucketListItems;
 
-export const mGetCompletedBucketListItems = () => selectByUser(completedBucketListItems);
+export const GetCompletedBucketListItems = () => selectByUser(completedBucketListItems);
 
-export const mGetVisitedParks = () => selectByUser(parkVisits);
+export const GetVisitedParks = () => selectByUser(parkVisits);
 
 //
 // POST ENDPOINTS
 //
 
-export const mPostCollectStamp = (param: string, req: CollectStampRequest): CollectStampResponse =>
+export const PostCollectStamp = (param: string, req: CollectStampRequest): CollectStampResponse =>
   postWithPark(param, req);
 
-export const mPostCreateUpdateNote = (param: string, req: ParkNoteRequest): ParkNoteResponse =>
-  postWithPark(param, req);
+export const PostCreateUpdateNote = (param: string, req: ParkNoteRequest): ParkNoteResponse => postWithPark(param, req);
 
-export const mPostVisitPark = (parkAbbreviation: string, req: VisitParkRequest): VisitParkResponse =>
+export const PostVisitPark = (parkAbbreviation: string, req: VisitParkRequest): VisitParkResponse =>
   postWithPark(parkAbbreviation, req);
 
-export const mPostToggleBucketListItemCompletion = (
+export const PostToggleBucketListItemCompletion = (
   itemId: number,
   req: ToggleBucketListItemCompletionRequest,
 ): ToggleBucketListItemCompletionResponse => {
