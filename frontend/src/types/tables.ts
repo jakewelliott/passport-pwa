@@ -70,8 +70,8 @@ export interface CollectedStamp {
 
 export interface ParkNote {
   note: string;
-  parkId: number;
   parkAbbreviation: string;
+  updatedAt: Date;
 }
 
 export interface BucketListCompletion {
