@@ -14,9 +14,7 @@ export const EditGeneralNotes = () => {
       setNote('generalNotes', generalNotes, Date.now());
       navigate("/more/my-notes");
     } catch (error) {
-      // Handle storage errors (e.g., quota exceeded)
       console.error("Failed to save notes:", error);
-      // You might want to show a user-friendly error message here
     }
   };
 
