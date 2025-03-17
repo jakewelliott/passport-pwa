@@ -30,8 +30,11 @@ public class DigitalPassportDbContext : DbContext
             .ToList()
             .ForEach(p =>
             {
-                p.SetColumnType("varchar(255)");
-                p.SetMaxLength(255);
+                if (p.GetColumnType() != "longtext")
+                {
+                    p.SetColumnType("varchar(255)");
+                    p.SetMaxLength(255);
+                }
             });
 
         var hashedAdminPassword = new PasswordHasher().HashPassword(_configuration["ADMIN_PASS"]!);
