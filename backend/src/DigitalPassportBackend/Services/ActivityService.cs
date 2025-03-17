@@ -167,28 +167,13 @@ public class ActivityService(
                 throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
             }
 
-
-            // we will let users check off items even if they are not in the park
-            // TODO @V: should we check if the user has ever visited the park?
-
-            // if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
-            // 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
-            // }
-
-            // TODO: @V are all bucket list items associated with a park? if not, then we need to handle that case here
-            // for now I'm just going to throw an error if we fail a null check
-            if (bucketListItem.parkId.HasValue == false)
-            {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
-            }
-
             return _completedBucketListItemRepository.Create(new()
             {
                 bucketListItemId = itemId,
                 userId = userId,
                 deleted = false,
-                location = (Point)userLocation,
-                parkId = bucketListItem.parkId.Value
+                location = userLocation,
+                parkId = bucketListItem.parkId
             });
         }
     }
