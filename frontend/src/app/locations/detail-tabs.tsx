@@ -11,22 +11,22 @@ import { usePark } from '@/hooks/queries/useParks';
 import { dbg } from '@/lib/debug';
 
 export default function DetailTabs() {
-  dbg('RENDER', 'Location DetailTabs');
-  const { abbreviation } = useParams();
-  const parkAbbreviation = abbreviation as Uppercase<string>;
-  const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
+	dbg('RENDER', 'Location DetailTabs');
+	const { abbreviation } = useParams();
+	const parkAbbreviation = abbreviation as Uppercase<string>;
+	const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
 
-  if (isParkLoading || !park) return <LoadingPlaceholder what='park' />;
+	if (isParkLoading || !park) return <LoadingPlaceholder what='park' />;
 
-  return (
-    <>
-      <LocationContact park={park} />
-      <LocationActionBar park={park} />
-      <LocationMiniTabBar>
-        <DetailsMiniTab park={park} />
-        <PhotoGalleryMiniTab photos={park.photos} />
-        <NotesMiniTab abbreviation={park.abbreviation} parkId={park.id} />
-      </LocationMiniTabBar>
-    </>
-  );
+	return (
+		<>
+			<LocationContact park={park} />
+			<LocationActionBar park={park} />
+			<LocationMiniTabBar>
+				<DetailsMiniTab park={park} />
+				<PhotoGalleryMiniTab photos={park.photos} />
+				<NotesMiniTab parkId={park.id} />
+			</LocationMiniTabBar>
+		</>
+	);
 }
