@@ -249,7 +249,14 @@ public class ActivityService(
 
     public List<PrivateNote> GetNotes(int userId)
     {
-        return _privateNoteRepository.GetByUser(userId);
+        return _privateNoteRepository.GetByUser(userId).Select(x =>
+        {
+            if (x.parkId != null)
+            {
+                x.park = _locationsRepository.GetById(x.parkId.Value);
+            }
+            return x;
+        }).ToList();
     }
 
 }

@@ -3,7 +3,7 @@ import { API_NOTES_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 interface Note {
-  id: number;
+  parkAbbreviation: string;
   note: string;
 }
 
@@ -15,6 +15,17 @@ export const useNote = (parkId: number) => {
     queryFn: () => fetchGet(`${API_NOTES_URL}/${parkId}`),
   });
 };
+
+export const useGetAllNotes = () => {
+  dbg('HOOK', 'useGetAllNotes');
+
+  const { data, refetch } = useQuery<Note[]>({
+    queryKey: ['notes'],
+    queryFn: async () => await fetchGet(API_NOTES_URL),
+  });
+
+  return { data, refetch };
+}
 
 export const useUpdateNote = () => {
   const queryClient = useQueryClient();

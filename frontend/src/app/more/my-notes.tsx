@@ -1,14 +1,28 @@
+import { useGetAllNotes } from "@/hooks/queries/useNotes";
 import { useParks } from "@/hooks/queries/useParks";
 import { useParkNotesStore } from "@/hooks/store/useParkNotesStore";
 import { a11yOnClick } from "@/lib/a11y";
 import dateHelper from "@/lib/date-helper";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ListRow from "../../components/list-row";
 
 export const MyNotes = () => {
   const navigate = useNavigate();
-  const { getNoteContent, getKeys, getUpdatedAt } = useParkNotesStore();
+  const { getNoteContent, getKeys, getUpdatedAt, clearNotes, setNote } =
+    useParkNotesStore();
   const { data: parks } = useParks();
+  const { data: remoteNotes, refetch } = useGetAllNotes();
+
+  useEffect(() => {
+    refetch();
+    clearNotes();
+    if (remoteNotes) {
+      remoteNotes.forEach((note) => {
+        setNote(note.parkAbbreviation, note.note);
+      });
+    }
+  }, [remoteNotes]);
 
   const generalNotes = getNoteContent("generalNotes") || "";
   const generalNotesUpdated = getUpdatedAt("generalNotes");
