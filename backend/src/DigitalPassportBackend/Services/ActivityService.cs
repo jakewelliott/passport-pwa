@@ -85,8 +85,8 @@ public class ActivityService(
     public PrivateNote CreateUpdatePrivateNote(int parkId, int userId, string note, DateTime updatedAt)
     {
         // Check if there is already a note in the database.
-        var location = _locationsRepository.GetById(parkId);
-        var privateNote = _privateNoteRepository.GetByParkAndUser(location.id, userId);
+        var locationId = parkId == 0 ? 0 : _locationsRepository.GetById(parkId).id;
+        var privateNote = _privateNoteRepository.GetByParkAndUser(locationId, userId);
         if (privateNote != null)
         {
             // Update it
@@ -102,8 +102,8 @@ public class ActivityService(
                 note = note,
                 user = _userRepository.GetById(userId),
                 userId = userId,
-                park = location,
-                parkId = location.id,
+                park = locationId == 0 ? null : _locationsRepository.GetById(locationId),
+                parkId = locationId,
                 createdAt = updatedAt,
                 updatedAt = updatedAt
             });
@@ -244,6 +244,7 @@ public class ActivityService(
         {
             note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.Now);
         }
+        note.parkId = parkId;
         return note;
     }
 
@@ -254,6 +255,8 @@ public class ActivityService(
             if (x.parkId != null)
             {
                 x.park = _locationsRepository.GetById(x.parkId.Value);
+            } else {
+                x.parkId = 0;
             }
             return x;
         }).ToList();
