@@ -174,11 +174,11 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     {
     }
 
-    public record PrivateNoteResponse(int id, string note)
+    public record PrivateNoteResponse(string parkAbbreviation, string note)
     {
         public static PrivateNoteResponse FromDomain(PrivateNote note)
         {
-            return new PrivateNoteResponse(note.id, note.note);
+            return new PrivateNoteResponse(note.park != null ? note.park.parkAbbreviation : "generalNotes", note.note);
         }
     }
 
