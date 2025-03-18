@@ -46,6 +46,8 @@ namespace DigitalPassportBackend.UnitTests.Services
             }).ToList();
 
             // Setup exception mocks.
+            _mockBucketList.Setup(s => s.GetById(It.IsAny<int>()))
+                .Throws(new NotFoundException("Bucket List Item not found"));
             _mockUsers.Setup(s => s.GetById(It.IsAny<int>()))
                 .Throws(new NotFoundException("user not found"));
             _mockLocations.Setup(s => s.GetByAbbreviation(It.IsAny<string>()))
@@ -394,6 +396,23 @@ namespace DigitalPassportBackend.UnitTests.Services
         }
 
         [Fact]
+        public void ToggleBucketListItemCompletion_ReturnsNewBucketListItem_WhenItemWasCreated()
+        {
+            // Setup.
+            _mockBucketList.Setup(s => s.GetById(TestData.BucketList[0].id))
+                .Returns(TestData.BucketList[0]);
+
+            // Action.
+            var result = _activities.ToggleBucketListItemCompletion(
+                TestData.BucketList[0].id,
+                TestData.Users[0].id,
+                0, 1);
+            
+            // Assert.
+            Assert.False(result.deleted);
+        }
+
+        [Fact]
         public void ToggleBucketListItemCompletion_ReturnsToggledBucketListItem_WhenItemWasDeleted()
         {
             // Action.
@@ -404,6 +423,18 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Assert.
             Assert.False(result.deleted);
+        }
+
+        [Fact]
+        public void ToggleBucketListItemCompletion_ThrowsNotFoundException_WhenInvalidBucketListItem()
+        {
+            // Action and assert.
+            Assert.Throws<NotFoundException>(() => 
+                _activities.ToggleBucketListItemCompletion(
+                    5,
+                    TestData.Users[1].id,
+                    0, 0));
+
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
@@ -486,6 +517,8 @@ namespace DigitalPassportBackend.UnitTests.Services
             {
                 _mockCompletedBucketList.Setup(s => s.GetByItemAndUser(i.bucketListItemId, i.userId))
                     .Returns(i);
+                _mockBucketList.Setup(s => s.GetById(i.bucketListItemId))
+                    .Returns(i.bucketListItem!);
             }
         }
     }
