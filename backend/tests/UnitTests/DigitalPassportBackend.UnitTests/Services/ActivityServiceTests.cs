@@ -73,6 +73,19 @@ namespace DigitalPassportBackend.UnitTests.Services
             _mockParkVisits.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns([]);
 
+            // Setup create/update mocks.
+            _mockCompletedBucketList.Setup(s => s.Create(It.IsAny<CompletedBucketListItem>()))
+                .Returns<CompletedBucketListItem>(i => {
+                    i.created_at = DateTime.UtcNow;
+                    i.updated_at = DateTime.UtcNow;
+                    return i;
+                });
+            _mockCompletedBucketList.Setup(s => s.Update(It.IsAny<CompletedBucketListItem>()))
+                .Returns<CompletedBucketListItem>(i => {
+                    i.updated_at = DateTime.UtcNow;
+                    return i;
+                });
+
             // Setup location mocks.
             foreach (var park in TestData.Parks)
             {
@@ -380,7 +393,21 @@ namespace DigitalPassportBackend.UnitTests.Services
             }
         }
 
-        // Setup User 1, Park 0 - Bucket list, deleted bucket list, no stamps, private notes, last visit
+        [Fact]
+        public void ToggleBucketListItemCompletion_ReturnsToggledBucketListItem_WhenItemWasDeleted()
+        {
+            // Action.
+            var result = _activities.ToggleBucketListItemCompletion(
+                TestData.CompletedBucketListItems[3].bucketListItemId,
+                TestData.CompletedBucketListItems[3].userId,
+                0, 0);
+
+            // Assert.
+            Assert.False(result.deleted);
+        }
+
+        // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
+        // User 1, Park 1 - deleted bucket list item, no stamps, no private notes, no visits
         private void SetupActivity0()
         {
             // get data formatted correctly
@@ -390,15 +417,21 @@ namespace DigitalPassportBackend.UnitTests.Services
                 TestData.ParkVisits[1]
             ];
 
+            // List of all completed bucket list items.
+            List<CompletedBucketListItem> cbli = [
+                TestData.CompletedBucketListItems[1],
+                TestData.CompletedBucketListItems[3]
+            ];
+
             // setup mocked functions
             SetupActivity(0, 1,
-                [
-                    TestData.CompletedBucketListItems[1],
-                    TestData.CompletedBucketListItems[3]
-                ],
+                [cbli[0]],
                 null,
                 TestData.PrivateNotes[0],
                 [.. visited.OrderByDescending(v => v.createdAt)]);
+            SetupActivity(1, 1, [cbli[1]], null, null, []);
+            _mockCompletedBucketList.Setup(s => s.GetByUser(TestData.Users[1].id))
+                .Returns(cbli);
         }
 
         // Setup User 0, Park 0 - no data
@@ -440,8 +473,6 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns(TestData.Users[userId]);
             _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(completedBucketListItems);
-            _mockCompletedBucketList.Setup(s => s.GetByUser(TestData.Users[userId].id))
-                .Returns(completedBucketListItems);
             _mockCollectedStamps.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(collectedStamp);
             _mockCollectedStamps.Setup(s => s.GetByUser(TestData.Users[userId].id))
@@ -450,6 +481,12 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns(privateNote);
             _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(parkVisits);
+
+            foreach (var i in completedBucketListItems)
+            {
+                _mockCompletedBucketList.Setup(s => s.GetByItemAndUser(i.bucketListItemId, i.userId))
+                    .Returns(i);
+            }
         }
     }
 }
