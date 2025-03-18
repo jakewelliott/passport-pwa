@@ -31,6 +31,22 @@ public static class Response
         }
     }
 
+    public static bool Equal(PrivateNote expected, PrivateNoteResponse actual)
+    {
+        if (expected.park == null)
+        {
+            return actual.parkAbbreviation == "generalNotes"
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+        else
+        {
+            return expected.park.parkAbbreviation == actual.parkAbbreviation
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+    }
+
     public static bool Equal(Park park, LocationResponse resp)
     {
         return park.id == resp.id
