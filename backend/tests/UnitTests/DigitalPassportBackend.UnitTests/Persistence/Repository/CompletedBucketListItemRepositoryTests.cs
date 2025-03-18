@@ -1,3 +1,5 @@
+using System.Net.NetworkInformation;
+
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
@@ -114,14 +116,17 @@ public class CompletedBucketListItemRepositoryTests
         var locationId = TestData.CompletedBucketListItems[0].parkId;
         var userId = TestData.CompletedBucketListItems[0].userId;
 
+        int realId = locationId.GetValueOrDefault();
+
         // Act
-        var result = _repo.GetByParkAndUser(locationId, userId);
+        var result = _repo.GetByParkAndUser(realId, userId);
 
         // Assert
         Assert.NotEmpty(result);
 
         var counter = 0;
-        foreach (var item in result) {
+        foreach (var item in result)
+        {
             Assert.Equal(locationId, item.parkId);
             Assert.Equal(userId, item.userId);
             Assert.Equal(TestData.CompletedBucketListItems[counter].id, item.id);
@@ -146,9 +151,12 @@ public class CompletedBucketListItemRepositoryTests
         var locationId = TestData.CompletedBucketListItems[0].parkId;
         var userId = TestData.CompletedBucketListItems[0].userId;
 
+        int realId = locationId.GetValueOrDefault();
+
+
         // Act
         var result0 = _repo.GetByParkAndUser(invalidLocationId, userId);
-        var result1 = _repo.GetByParkAndUser(locationId, invalidUserId);
+        var result1 = _repo.GetByParkAndUser(realId, invalidUserId);
         var result2 = _repo.GetByParkAndUser(invalidLocationId, invalidUserId);
 
         // Assert
