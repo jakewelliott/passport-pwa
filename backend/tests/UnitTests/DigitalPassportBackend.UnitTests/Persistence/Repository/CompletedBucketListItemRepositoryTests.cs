@@ -56,7 +56,7 @@ public class CompletedBucketListItemRepositoryTests
 
         // Assert.
         Assert.Equal(TestData.CompletedBucketListItems[0], item);
-        Assert.Equal(2, _db.CompletedBucketListItems.Count());
+        Assert.Equal(3, _db.CompletedBucketListItems.Count());
         Assert.DoesNotContain(TestData.CompletedBucketListItems[0], _db.CompletedBucketListItems);
     }
 
@@ -78,7 +78,7 @@ public class CompletedBucketListItemRepositoryTests
         var oldItem = _repo.Update(newItem);
 
         // Assert.
-        Assert.Equal(3, _db.CompletedBucketListItems.Count());
+        Assert.Equal(4, _db.CompletedBucketListItems.Count());
         Assert.Equal(TestData.CompletedBucketListItems[1], oldItem);
         Assert.Contains(newItem, _db.CompletedBucketListItems);
     }
@@ -94,7 +94,7 @@ public class CompletedBucketListItemRepositoryTests
     [Fact]
     public void Count_ReturnsNumberOfItems()
     {
-        Assert.Equal(3, _repo.Count());
+        Assert.Equal(4, _repo.Count());
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public class CompletedBucketListItemRepositoryTests
         var item = _repo.Create(NewItem);
 
         // Assert.
-        Assert.Equal(4, _db.CompletedBucketListItems.Count());
+        Assert.Equal(5, _db.CompletedBucketListItems.Count());
         Assert.Equal(NewItem, item);
         Assert.Contains(NewItem, _db.CompletedBucketListItems);
     }
