@@ -92,54 +92,54 @@ namespace DigitalPassportBackend.UnitTests.Services
                 _mockUsers.Object);
         }
 
-        // [Fact]
-        // public void CollectStamp_ReturnsCollectedStamp_WhenStampCollectedByLocation_AndStampNotCollected()
-        // {
-        //     // Setup with expected result.
-        //     var stamp = new CollectedStamp()
-        //     {
-        //         location = new(34.04919197876853, -77.90944281388691),
-        //         method = StampCollectionMethod.location,
-        //         user = TestData.Users[1],
-        //         park = TestData.Parks[0],
-        //         createdAt = DateTime.UtcNow
-        //     };
+        [Fact]
+        public void CollectStamp_ReturnsCollectedStamp_WhenStampCollectedByLocation_AndStampNotCollected()
+        {
+            // Setup with expected result.
+            var stamp = new CollectedStamp()
+            {
+                location = new(34.04919197876853, -77.90944281388691),
+                method = StampCollectionMethod.location,
+                user = TestData.Users[1],
+                park = TestData.Parks[0],
+                createdAt = DateTime.UtcNow
+            };
 
-        // var expected = new CollectedStamp()
-        // {
-        //     location = stamp.location,
-        //     method = stamp.method,
-        //     userId = stamp.user.id,
-        //     user = stamp.user,
-        //     parkId = stamp.park.id,
-        //     park = stamp.park,
-        //     createdAt = stamp.createdAt,
-        //     updatedAt = stamp.createdAt
-        // };
+            var expected = new CollectedStamp()
+            {
+                location = stamp.location,
+                method = stamp.method,
+                userId = stamp.user.id,
+                user = stamp.user,
+                parkId = stamp.park.id,
+                park = stamp.park,
+                createdAt = stamp.createdAt,
+                updatedAt = stamp.createdAt
+            };
 
-        // _mockCollectedStamps.Setup(s => s.Create(It.IsAny<CollectedStamp>()))
-        //         .Returns(expected);
+            _mockCollectedStamps.Setup(s => s.Create(It.IsAny<CollectedStamp>()))
+                    .Returns(expected);
 
-        // try
-        // {
-        //     // Action.
-        // var result = _activities.CollectStamp(
-        //     TestData.Parks[0].parkAbbreviation,
-        //     stamp.location.X, stamp.location.Y, 0.005,
-        //     stamp.method.GetDisplayName(),
-        //     stamp.createdAt,
-        //     stamp.user.id);
+            try
+            {
+                // Action.
+                var result = _activities.CollectStamp(
+                    TestData.Parks[0].parkAbbreviation,
+                    stamp.location.X, stamp.location.Y, 0.005,
+                    stamp.method.GetDisplayName(),
+                    stamp.createdAt,
+                    stamp.user.id);
 
-        // // Assert.
-        // Assert.Equal(expected, result);
-        // }
-        // catch (ServiceException e)
-        //     {
-        //         var park = TestData.Parks[0];
-        //         throw new Exception($"Test failed. Park boundaries: {park.boundaries}, Test coordinates: ({stamp.location.X}, {stamp.location.Y})", e);
-        //     }
+                // Assert.
+                Assert.Equal(expected, result);
+            }
+            catch (ServiceException e)
+            {
+                var park = TestData.Parks[0];
+                throw new Exception($"Test failed. Park boundaries: {park.boundaries}, Test coordinates: ({stamp.location.X}, {stamp.location.Y})", e);
+            }
         
-        // }
+        }
 
         [Fact]
         public void CollectStamp_ReturnsCollectedStamp_WhenStampCollectedManually_AndStampNotCollected()
@@ -264,6 +264,82 @@ namespace DigitalPassportBackend.UnitTests.Services
             Assert.Empty(result);
         }
 
+        [Fact]
+        public void CreateUpdatePrivateNote_ReturnsNote_WhenNoteDNE()
+        {
+            // Setup.
+            var time = DateTime.UtcNow;
+            var expected = new PrivateNote()
+            {
+                id = 5,
+                note = "this is a test note",
+                park = TestData.Parks[0],
+                parkId = TestData.Parks[0].id,
+                user = TestData.Users[3],
+                userId = TestData.Users[3].id,
+                createdAt = time,
+                updatedAt = time
+            };
+            _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>()))
+                .Returns(expected);
+            _mockLocations.Setup(s => s.GetById((int)expected.parkId))
+                .Returns(expected.park);
+            _mockUsers.Setup(s => s.GetById(expected.userId))
+                .Returns(expected.user);
+
+            // Action.
+            var result = _activities.CreateUpdatePrivateNote((int)expected.parkId, expected.userId, expected.note, time);
+            
+            // Assert.
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void CreateUpdatePrivateNote_ReturnsNote_WhenNoteExists()
+        {
+            // Setup.
+            var time = DateTime.UtcNow;
+            var expected = TestData.PrivateNotes[0];
+            expected.note = "updated note";
+            expected.updatedAt = time;
+            _mockLocations.Setup(s => s.GetById((int)expected.parkId!))
+                .Returns(expected.park!);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(expected.parkId, expected.userId))
+                .Returns(TestData.PrivateNotes[0]);
+            _mockPrivateNotes.Setup(s => s.Update(expected))
+                .Returns(expected);
+            
+            // Action.
+            var result = _activities.CreateUpdatePrivateNote((int)expected.parkId!, expected.userId, expected.note, time);
+
+            // Assert.
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void CreateUpdatePrivateNote_ReturnsNote_WhenNoLocation()
+        {
+            // Setup.
+            var time = DateTime.UtcNow;
+            var expected = new PrivateNote()
+            {
+                id = 5,
+                note = "this is a test note",
+                parkId = 0,
+                user = TestData.Users[3],
+                userId = TestData.Users[3].id,
+                createdAt = time,
+                updatedAt = time
+            };
+            _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>()))
+                .Returns(expected);
+
+            // Action.
+            var result = _activities.CreateUpdatePrivateNote(0, expected.userId, expected.note, time);
+
+            // Assert.
+            Assert.Equal(expected, result);
+        }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
         private void SetupActivity0()
