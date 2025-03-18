@@ -152,20 +152,8 @@ public class ActivityService(
         }
         else
         {
-
-            // make sure the park is valid
-            var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
-            if (park == null)
-            {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Park {item.parkId} not found.");
-            }
-
             // make sure the bucket list item is valid
             var bucketListItem = _bucketListItemRepository.GetById(itemId);
-            if (bucketListItem == null)
-            {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
-            }
 
             return _completedBucketListItemRepository.Create(new()
             {
