@@ -58,6 +58,8 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns(parks[1]);
 
             // Setup default mocks.
+            _mockBucketList.Setup(s => s.GetAll())
+                .Returns(TestData.BucketList);
             _mockCompletedBucketList.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns([]);
             _mockCompletedBucketList.Setup(s => s.GetByUser(It.IsAny<int>()))
@@ -362,6 +364,20 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Assert.
             Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetBucketListItems_ReturnsPopulatedList()
+        {
+            // Action.
+            var result = _activities.GetBucketListItems();
+
+            // Assert.
+            Assert.Equal(TestData.BucketList.Count, result.Count);
+            foreach (var item in TestData.BucketList)
+            {
+                Assert.Contains(item, result);
+            }
         }
 
         // Setup User 1, Park 0 - Bucket list, deleted bucket list, no stamps, private notes, last visit
