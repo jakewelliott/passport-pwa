@@ -242,6 +242,163 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             Assert.True(Response.Equal(null, req, resp));
         }
 
+        [Fact]
+        public void GetParkNote_ReturnsNote_WhenValidNoteCreated()
+        {
+            // Setup.
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetParkNote(TestData.Parks[0].id, TestData.Users[1].id))
+                .Returns(TestData.PrivateNotes[0]);
+
+            // Action.
+            var result = _controller.GetParkNote(TestData.Parks[0].id);
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<PrivateNoteResponse>(okResult.Value);
+            Assert.True(Response.Equal(TestData.PrivateNotes[0], resp));
+        }
+
+        [Fact]
+        public void GetParkNote_ReturnsGeneralNote_WhenValidNoteCreated()
+        {
+            // Setup.
+            PrivateNote generalNote = new()
+            {
+                id = 7,
+                note = "This is a general note!",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = 0,
+                park = null,
+                userId = TestData.Users[1].id,
+                user = TestData.Users[1]
+            };
+
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetParkNote(0, TestData.Users[1].id))
+                .Returns(generalNote);
+
+            // Action.
+            var result = _controller.GetParkNote(0);
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<PrivateNoteResponse>(okResult.Value);
+            Assert.True(Response.Equal(generalNote, resp));
+        }
+
+        [Fact]
+        public void GetParkNote_ReturnsEmptyNote_WhenNoNoteCreated()
+        {
+            // Setup, no existing note for this user at this park.
+            PrivateNote note = new()
+            {
+                id = 8,
+                note = "",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = TestData.Parks[1].id,
+                park = TestData.Parks[1],
+                userId = TestData.Users[1].id,
+                user = TestData.Users[1]
+            };
+
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetParkNote(TestData.Parks[1].id, TestData.Users[1].id))
+                .Returns(note);
+
+            // Action.
+            var result = _controller.GetParkNote(TestData.Parks[1].id);
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<PrivateNoteResponse>(okResult.Value);
+            Assert.True(Response.Equal(note, resp));
+        }
+
+        [Fact]
+        public void GetParkNote_ReturnsException_WhenInvalidParkAndUser()
+        {
+            // Action, no user setup.
+            Assert.Throws<ArgumentNullException>(() => _controller.GetParkNote(TestData.Parks[0].id));
+
+            // Setup, invalid park.
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetParkNote(-1, TestData.Users[1].id))
+                .Throws(new NotFoundException("Park not found with given Id."));
+
+            // Action.
+            var e = Assert.Throws<NotFoundException>(() => _controller.GetParkNote(-1));
+
+            // Assert.
+            Assert.Equal(404, e.StatusCode);
+        }
+
+        [Fact]
+        public void GetNotes_ReturnsList_WhenValidNotesCreated()
+        {
+            List<PrivateNote> notes =
+            [
+                new()
+                {
+                    id = 12,
+                    note = "This is a general note!",
+                    createdAt = DateTime.UtcNow,
+                    updatedAt = DateTime.UtcNow,
+                    parkId = 0,
+                    park = null,
+                    userId = TestData.Users[2].id,
+                    user = TestData.Users[2]
+                }
+            ];
+            notes.Add(TestData.PrivateNotes[1]);
+            notes.Add(TestData.PrivateNotes[2]);
+
+            SetupUser(TestData.Users[2].id, TestData.Users[2].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetNotes(TestData.Users[2].id))
+                .Returns(notes);
+
+            // Action.
+            var result = _controller.GetNotes();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<List<PrivateNoteResponse>>(okResult.Value);
+
+            Assert.Equal(3, resp.Count);
+            Assert.True(Response.Equal(notes[0], resp[0]));
+            Assert.True(Response.Equal(notes[1], resp[1]));
+            Assert.True(Response.Equal(notes[2], resp[2]));
+        }
+
+        [Fact]
+        public void GetNotes_ReturnsException_WhenInvalidUser()
+        {
+            // Action, no user setup.
+            Assert.Throws<ArgumentNullException>(() => _controller.GetNotes());
+        }
+
+        [Fact]
+        public void GetNotes_ReturnsEmptyList_WhenNoUserNotes()
+        {
+            // Setup.
+            List<PrivateNote> notes = [];
+            SetupUser(TestData.Users[0].id, TestData.Users[0].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetNotes(TestData.Users[0].id))
+                .Returns(notes);
+
+            // Action.
+            var result = _controller.GetNotes();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<List<PrivateNoteResponse>>(okResult.Value);
+
+            // Assert.
+            Assert.Empty(resp);
+        }
+
         private void SetupUser(int userId, string role)
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
