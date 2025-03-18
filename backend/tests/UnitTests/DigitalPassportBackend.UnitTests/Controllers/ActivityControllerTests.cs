@@ -178,6 +178,70 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             Assert.Equal(412, e.StatusCode);
         }
 
+        [Fact]
+        public void CreateUpdateNote_Returns200Ok_WhenValidUserAndPark()
+        {
+            // Setup.
+            var req = new PrivateNoteRequest("sample note", DateTime.UtcNow);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            SetupPrivateNoteSuccess(req, TestData.Users[1], TestData.Parks[0]);
+
+            // Action.
+            var result = _controller.CreateUpdateNote(TestData.Parks[0].id, req);
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<PrivateNoteResponse>(okResult.Value);
+            Assert.True(Response.Equal(TestData.Parks[0], req, resp));
+        }
+
+        [Fact]
+        public void CreateUpdateNote_ReturnsNullException_WhenInvalidUser()
+        {
+            // Setup, no user.
+            var req = new PrivateNoteRequest("sample note", DateTime.UtcNow);
+
+            // Action.
+            var e = Assert.Throws<ArgumentNullException>(() => _controller.CreateUpdateNote(TestData.Parks[0].id, req));
+        }
+
+        [Fact]
+        public void CreateUpdateNote_Returns404NotFound_WhenInvalidPark()
+        {
+            // Setup.
+            var req = new PrivateNoteRequest("sample note", DateTime.UtcNow);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.CreateUpdatePrivateNote(
+                -1,
+                TestData.Users[1].id,
+                req.note,
+                req.updatedAt
+            )).Throws(new NotFoundException("Park not found with given Id."));
+
+            // Action.
+            var e = Assert.Throws<NotFoundException>(() => _controller.CreateUpdateNote(-1, req));
+
+            // Assert.
+            Assert.Equal(404, e.StatusCode);
+        }
+
+        [Fact]
+        public void CreateUpdateNote_Returns200Ok_WhenValid_ForGeneralNote()
+        {
+            // Setup.
+            var req = new PrivateNoteRequest("sample general note", DateTime.UtcNow);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            SetupPrivateNoteSuccess(req, TestData.Users[1], null);
+
+            // Action.
+            var result = _controller.CreateUpdateNote(0, req);
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<PrivateNoteResponse>(okResult.Value);
+            Assert.True(Response.Equal(null, req, resp));
+        }
+
         private void SetupUser(int userId, string role)
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
@@ -190,6 +254,30 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             {
                 HttpContext = new DefaultHttpContext { User = user }
             };
+        }
+
+        private void SetupPrivateNoteSuccess(PrivateNoteRequest req, User user, Park? park)
+        {
+            // Result
+            var note = new PrivateNote()
+            {
+                id = 10,
+                note = req.note,
+                createdAt = req.updatedAt,
+                updatedAt = req.updatedAt,
+                parkId = park != null ? park.id : 0,
+                park = park,
+                userId = user.id,
+                user = user
+            };
+
+            // Mock service
+            _mockActivityService.Setup(s => s.CreateUpdatePrivateNote(
+                park != null ? park.id : 0,
+                user.id,
+                req.note,
+                req.updatedAt
+            )).Returns(note);
         }
 
         private void SetupCollectStampSuccess(CollectStampRequest req, User user, Park park)
