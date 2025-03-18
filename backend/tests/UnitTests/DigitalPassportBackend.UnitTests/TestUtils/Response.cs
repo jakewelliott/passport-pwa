@@ -14,6 +14,23 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class Response
 {
+
+    public static bool Equal(Park? park, PrivateNoteRequest expected, PrivateNoteResponse actual)
+    {
+        if (park == null)
+        {
+            return actual.parkAbbreviation == "generalNotes"
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+        else
+        {
+            return park.parkAbbreviation == actual.parkAbbreviation
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+    }
+
     public static bool Equal(Park park, LocationResponse resp)
     {
         return park.id == resp.id
@@ -71,10 +88,13 @@ public static class Response
 
     public static bool Equal(Point? coord, object obj)
     {
-        try {
-            return coord?.X == (double) obj.GetType().GetProperty("longitude")?.GetValue(obj, null)!
-                && coord?.Y == (double) obj.GetType().GetProperty("latitude")?.GetValue(obj, null)!;
-        } catch {
+        try
+        {
+            return coord?.X == (double)obj.GetType().GetProperty("longitude")?.GetValue(obj, null)!
+                && coord?.Y == (double)obj.GetType().GetProperty("latitude")?.GetValue(obj, null)!;
+        }
+        catch
+        {
             return false;
         }
     }
