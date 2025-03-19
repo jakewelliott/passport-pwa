@@ -1,5 +1,6 @@
 import ListRow from '@/components/list-row';
 import { useParks } from '@/hooks/queries/useParks';
+import { dbg } from '@/lib/debug';
 import { Link } from 'react-router-dom';
 
 const LoadingPlaceholder = () => {
@@ -7,7 +8,8 @@ const LoadingPlaceholder = () => {
   return <div data-testid='loading-placeholder'>Loading...</div>;
 };
 
-export default function Locations() {
+export default function LocationsScreen() {
+  dbg('RENDER', 'Locations');
   const { data: parks, isLoading, isError, error } = useParks();
 
   if (isLoading) return <LoadingPlaceholder />;

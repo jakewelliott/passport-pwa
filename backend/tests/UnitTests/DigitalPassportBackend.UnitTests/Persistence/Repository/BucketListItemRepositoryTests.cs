@@ -129,6 +129,50 @@ public class BucketListItemRepositoryTests
         Assert.Contains(NewItem, _db.BucketListItems);
     }
 
+    [Fact]
+    public void GetAll_ReturnsList_SeveralItemsInList()
+    {
+        // Act
+        var list = _repo.GetAll();
+
+        // Assert
+        Assert.NotNull(list);
+        Assert.NotEmpty(list);
+        Assert.Equal(TestData.BucketList.Count(), list.Count);
+        var count = 0;
+        foreach (var item in list)
+        {
+            Assert.Equal(TestData.BucketList[count].id, item.id);
+            Assert.Equal(TestData.BucketList[count].task, item.task);
+            Assert.Equal(TestData.BucketList[count].createdAt, item.createdAt);
+            Assert.Equal(TestData.BucketList[count].updatedAt, item.updatedAt);
+            Assert.Equal(TestData.BucketList[count].parkId, item.parkId);
+            Assert.Equal(TestData.BucketList[count].park, item.park);
+            count++;
+        }
+    }
+
+    [Fact]
+    public void GetAll_ReturnsEmptyList_NoItemsInList()
+    {
+        // Arrange
+        var fullList = _repo.GetAll();
+        fullList.ForEach(item => _repo.Delete(item.id));
+
+        // Act
+        var list = _repo.GetAll();
+
+        // Assert
+        Assert.NotNull(list);
+        Assert.Empty(list);
+
+        // Restore
+        foreach (var item in fullList)
+        {
+            _repo.Create(item);
+        }
+    }
+
     private static readonly BucketListItem NewItem = new()
     {
         id = 5,

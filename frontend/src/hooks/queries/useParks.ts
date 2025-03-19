@@ -1,5 +1,5 @@
-import { API_ACTIVITY_URL, API_PARKGEO_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
-import { ParkGeoData, type Park, type ParkActivity } from '@/lib/mock/types';
+import { API_PARKGEO_URL, API_PARKS_URL, fetchGet } from '@/lib/fetch';
+import type { Park, ParkGeoData } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
 // ADAM:
@@ -13,6 +13,13 @@ import { useQuery } from '@tanstack/react-query';
 // - isError: a boolean that indicates if the query has an error
 // - error: the error returned from the query
 
+export const useParks = () => {
+  return useQuery<Park[]>({
+    queryKey: ['parks'],
+    queryFn: async () => await fetchGet(API_PARKS_URL),
+  });
+};
+
 export const usePark = (abbreviation: string) => {
   return useQuery<Park>({
     queryKey: ['park', abbreviation],
@@ -20,18 +27,9 @@ export const usePark = (abbreviation: string) => {
   });
 };
 
-export const useParkActivity = (parkId: number) => {
-  return useQuery<ParkActivity>({
-    queryKey: ['parkActivity', parkId],
-    queryFn: async () => await fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
-  });
-};
-
-export const useParks = () => {
-  return useQuery<Park[]>({
-    queryKey: ['parks'],
-    queryFn: async () => await fetchGet(API_PARKS_URL),
-  });
+export const useParkById = (id: number) => {
+  const hook = useParks();
+  return { ...hook, data: hook.data?.find((park) => park.id === id) };
 };
 
 export const useParksGeo = () => {

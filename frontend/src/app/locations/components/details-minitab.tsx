@@ -1,4 +1,4 @@
-import type { Park } from '@/lib/mock/types';
+import type { Park } from '@/types';
 import React from 'react';
 
 export const DetailsMiniTab = ({ park }: { park: Park }) => {

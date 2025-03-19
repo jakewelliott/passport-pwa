@@ -3,14 +3,18 @@ import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
-import type { CollectedStamp, Park } from '@/lib/mock/types';
-import { useEffect, useMemo, useState } from 'react';
+import type { CollectedStamp, Park } from '@/types';
+import { useMemo, useState } from 'react';
 
 const isVisited = (code: string, stamps: CollectedStamp[]) =>
   stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
 const sortByName = (a: Park, b: Park) => a.parkName.localeCompare(b.parkName);
 
-const StampView = ({ abbreviation, handleClick, greyed }: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
+const StampView = ({
+  abbreviation,
+  handleClick,
+  greyed,
+}: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
   return (
     <button
       onClick={handleClick}
@@ -29,17 +33,13 @@ const StampView = ({ abbreviation, handleClick, greyed }: { abbreviation: string
 };
 
 // TODO: make this use a query instead of directly accessing dummy data
-export default function Stamps() {
-  dbg('RENDER', 'Stamps');
+export default function StampsScreen() {
+  dbg('RENDER', 'StampsScreen');
+
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
   const { data: parks, isLoading: parksLoading } = useParks();
-  const { data: stamps, isLoading: stampsLoading, refetch } = useStamps();
+  const { data: stamps, isLoading: stampsLoading } = useStamps();
   const { isLoading: userLoading } = useUser();
-
-  useEffect(() => {
-    refetch();
-  }, [refetch]);
 
   // TODO: toggle sort a/z, date last visited, date first achieved
   const sortedParks: Park[] = useMemo(() => {

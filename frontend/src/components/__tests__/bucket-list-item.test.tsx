@@ -1,0 +1,43 @@
+// import { BucketListItemView } from '@/components/bucket-list-item';
+// import { render, screen } from '@testing-library/react';
+// import { describe, expect, it } from 'vitest';
+
+// describe('BucketListItem', () => {
+// 	it('renders with correct text content', () => {
+// 		render(<BucketListItemView item={} handler={() => {}} />);
+
+// 		expect(screen.getByText('Participate')).toBeInTheDocument();
+// 		expect(screen.getByText('Raleigh')).toBeInTheDocument();
+// 		expect(screen.getByText('1/1/2025')).toBeInTheDocument();
+// 	});
+
+// 	it('renders unchecked icon when bucketList status is false', () => {
+// 		render(<BucketListItemView item={} handler={() => {}} />);
+
+// 		expect(screen.getByTestId('unchecked-icon')).toBeInTheDocument();
+// 		expect(screen.queryByTestId('checked-icon')).not.toBeInTheDocument();
+// 	});
+
+// 	it('has correct styling', () => {
+// 		render(<BucketListItemView item={} handler={() => {}} />);
+
+// 		const container = screen.getByText('Participate').closest('div');
+// 		expect(container?.parentElement).toHaveClass('my-2.5', 'flex', 'items-start');
+
+// 		const locationText = screen.getByText('Raleigh');
+// 		expect(locationText).toHaveClass('p-mini', 'text-main_green');
+
+// 		const dateText = screen.getByText('1/1/2025');
+// 		expect(dateText).toHaveClass('p-mini');
+// 	});
+
+// 	it('renders content in correct layout', () => {
+// 		render(<BucketListItemView item={} handler={() => {}} />);
+
+// 		const contentContainer = screen.getByText('Participate').closest('div');
+// 		expect(contentContainer).toHaveClass('flex', 'w-full', 'flex-col', 'justify-center');
+
+// 		const detailsContainer = screen.getByText('Raleigh').closest('div');
+// 		expect(detailsContainer).toHaveClass('flex', 'flex-wrap', 'items-center', 'justify-between', 'gap-2');
+// 	});
+// });

@@ -1,0 +1,115 @@
+{
+"trails": [
+	{
+		"id" : 1,
+		"trail_name" : "Dan River State Trail",
+		"length" : "90 miles",
+		"description" : "northern Piedmont Triad",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 2,
+		"trail_name" : "Deep River Sate Trail",
+		"length" : "125 miles",
+		"description" : "Piedmont",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 3,
+		"trail_name" : "East Coast Greenway State Trail",
+		"length" : "795 miles",
+		"description" : "V-shaped: one arm through Raleigh, Durham and the Triangle and other arm through Albemarle and Pamlico Sounds, both meeting at Wilmington",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 4,
+		"trail_name" : "Equine State Trail",
+		"length" : "350 miles",
+		"description" : "southern Piedmont",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 5,
+		"trail_name" : "Fonta Flora State Trail",
+		"length" : "100 miles",
+		"description" : "Asheville and the Foothills \/ Lake James",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 6,
+		"trail_name" : "French Broad River State Trail",
+		"length" : "117 miles",
+		"description" : "western border",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 7,
+		"trail_name" : "Haw River State Trail",
+		"length" : "80 miles",
+		"description" : "Piedmont Triad \/ west of the Triangle",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 8,
+		"trail_name" : "Hickory Nut Gorge State Trail",
+		"length" : "50 miles",
+		"description" : "southwest of Asheville",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 9,
+		"trail_name" : "Mountains-to-Sea State Trail",
+		"length" : "1,400-miles",
+		"description" : "from Great Smoky Mountains National Park to the Outer Banks",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 10,
+		"trail_name" : "Northern Peaks State Trail",
+		"length" : "40 miles",
+		"description" : "High Country",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 11,
+		"trail_name" : "Overmountain Victory State Trail",
+		"length" : "225 miles",
+		"description" : "west",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 12,
+		"trail_name" : "Roanoke River State Trail",
+		"length" : "132 miles",
+		"description" : "Albemarle Sound",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 13,
+		"trail_name" : "Wilderness Gateway State Trail",
+		"length" : "170 miles",
+		"description" : "southwest of Asheville \/ the Foothills",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	},
+	{
+		"id" : 14,
+		"trail_name" : "Yadkin River State Trail",
+		"length" : "162 miles",
+		"description" : "Piedmont",
+		"created_at" : "2025-01-01T05:00:00.000Z",
+		"updated_at" : "2025-01-01T05:00:00.000Z"
+	}
+]}

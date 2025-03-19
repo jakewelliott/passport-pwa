@@ -1,0 +1,11 @@
+{
+	"scripts": {
+		"frontend": "cd frontend && npm run dev",
+		"backend": "dotnet run --project backend/src/DigitalPassportBackend dev",
+		"docker": "docker compose up --build",
+		"docker:clear": "docker system prune"
+	},
+  "devDependencies": {
+    "@biomejs/biome": "1.9.4"
+  }
+}

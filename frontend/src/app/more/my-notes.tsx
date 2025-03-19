@@ -1,63 +1,68 @@
-import { useParks } from '@/hooks/queries/useParks';
-import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
+import { LoadingPlaceholder } from '@/components/loading-placeholder';
+import { useGetAllNotes } from '@/hooks/queries/useNotes';
 import { a11yOnClick } from '@/lib/a11y';
-import { useNavigate } from 'react-router-dom';
+import dateHelper from '@/lib/date-helper';
+import type { ParkNote } from '@/types';
+import { type NavigateFunction, useNavigate } from 'react-router-dom';
 import ListRow from '../../components/list-row';
 
+const isGeneralNote = (note: ParkNote) => {
+	return note.parkAbbreviation === 'generalNotes';
+};
+
+
+const NoteRow = ({ note, navigate }: { note: ParkNote; navigate: NavigateFunction }) => {
+	const navigateTo = isGeneralNote(note)
+		? '/more/my-notes/general-notes'
+		: `/locations/${note.parkAbbreviation}?tab=notes`;
+
+	const title = isGeneralNote(note) ? 'General Notes' : note.parkAbbreviation;
+
+	return (
+		<div key={note.parkAbbreviation} {...a11yOnClick(() => navigate(navigateTo))} className='cursor-pointer'>
+			<ListRow>
+				<div className='flex flex-col gap-1'>
+					<h3>{title}</h3>
+					<p className='mb-2 text-gray-500 text-sm'>
+						Last updated: {note.updatedAt ? dateHelper.toStringLong(new Date(note.updatedAt)) : 'Not Available'}
+					</p>
+					<p
+						className='overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words'
+						style={{ hyphens: 'auto' }}
+					>
+						{note.note}
+					</p>
+				</div>
+			</ListRow>
+		</div>
+	);
+};
+
 export const MyNotes = () => {
-  const navigate = useNavigate();
-  const { getNote, getKeys } = useParkNotesStore();
-  const { data: parks } = useParks();
+	const navigate = useNavigate();
+	const { data: remoteNotes, isLoading } = useGetAllNotes();
 
-  const generalNotes = getNote('generalNotes') || '';
-  const allNotes = getKeys();
-  const parksWithNotes = parks?.filter((park) => allNotes.includes(park.abbreviation)) || [];
+	const generalNote = remoteNotes?.find((note) => isGeneralNote(note));
+	const restOfNotes = remoteNotes?.filter((note) => !isGeneralNote(note)) || [];
+	const allNotes = [generalNote, ...restOfNotes];
 
-  return (
-    <div className='container mx-auto px-4 py-4'>
-      <div className='space-y-4'>
-        <div {...a11yOnClick(() => navigate('/more/my-notes/general-notes'))} className='cursor-pointer'>
-          <ListRow>
-            <div className='flex flex-col gap-1'>
-              <h3>General Notes</h3>
-              <p className='mb-2 text-gray-500 text-sm'>Last updated: Not available</p>
-              <p
-                className='overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words'
-                style={{ hyphens: 'auto' }}
-              >
-                {generalNotes || 'No general notes yet'}
-              </p>
-            </div>
-          </ListRow>
-        </div>
+	// TODO: restore general note functionality
+	// we are going to use parkID of 0 for this
 
-        {/* Park Notes section */}
-        {parksWithNotes.length === 0 ? (
-          <p className='text-gray-600'>No park notes found.</p>
-        ) : (
-          parksWithNotes.map((park) => (
-            <div
-              key={park.abbreviation}
-              {...a11yOnClick(() => navigate(`/locations/${park.abbreviation}?tab=notes`))}
-              className='cursor-pointer'
-            >
-              <ListRow>
-                <div className='flex flex-col gap-1'>
-                  <h3>{park.parkName}</h3>
-                  <p>{park.addresses[0]?.city}</p>
-                  <p className='mb-2 text-gray-500 text-sm'>Last updated: Not available</p>
-                  <p
-                    className='overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words'
-                    style={{ hyphens: 'auto' }}
-                  >
-                    {getNote(park.abbreviation)}
-                  </p>
-                </div>
-              </ListRow>
-            </div>
-          ))
-        )}
-      </div>
-    </div>
-  );
+	if (isLoading) return <LoadingPlaceholder what='notes' />;
+
+	console.log('ALL NOTES');
+	console.log(allNotes);
+
+	return (
+		<div className='container mx-auto px-4 py-4'>
+			<div className='space-y-4'>
+				{allNotes?.length === 0 ? (
+					<p className='text-gray-600'>No park notes found.</p>
+				) : (
+					allNotes?.map((note) => note && <NoteRow key={note.parkAbbreviation} note={note} navigate={navigate} />)
+				)}
+			</div>
+		</div>
+	);
 };

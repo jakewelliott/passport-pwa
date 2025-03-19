@@ -1,8 +1,6 @@
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
-using DigitalPassportBackend.Security;
-using DigitalPassportBackend.Secutiry;
 
 using Microsoft.OpenApi.Extensions;
 
@@ -11,6 +9,7 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Services;
 
 public class ActivityService(
+    IBucketListItemRepository bucketListItemRepository,
     ICompletedBucketListItemRepository completedBucketListItemRepository,
     ICollectedStampRepository collectedStampRepository,
     IPrivateNoteRepository privateNoteRepository,
@@ -18,6 +17,7 @@ public class ActivityService(
     ILocationsRepository locationsRepository,
     IUserRepository userRepository) : IActivityService
 {
+    private readonly IBucketListItemRepository _bucketListItemRepository = bucketListItemRepository;
     private readonly ICompletedBucketListItemRepository _completedBucketListItemRepository = completedBucketListItemRepository;
     private readonly ICollectedStampRepository _collectedStampRepository = collectedStampRepository;
     private readonly IPrivateNoteRepository _privateNoteRepository = privateNoteRepository;
@@ -27,8 +27,8 @@ public class ActivityService(
 
     public CollectedStamp CollectStamp(
         string park_abbreviation,
-        double longitude,
         double latitude,
+        double longitude,
         double inaccuracyRadius,
         string method,
         DateTime? dateTime,
@@ -51,7 +51,7 @@ public class ActivityService(
         }
 
         // collect the stamp
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(longitude, latitude));
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
         if (method == StampCollectionMethod.location.GetDisplayName())
         {
             var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
@@ -72,7 +72,8 @@ public class ActivityService(
         }
     }
 
-    public List<CollectedStamp> GetCollectedStamps(int userId) {
+    public List<CollectedStamp> GetCollectedStamps(int userId)
+    {
         var stamps = _collectedStampRepository.GetByUser(userId);
         foreach (var stamp in stamps)
         {
@@ -81,32 +82,38 @@ public class ActivityService(
         return _collectedStampRepository.GetByUser(userId);
     }
 
-
-    public ParkActivity GetParkActivity(int locationId, int userId)
+    public PrivateNote CreateUpdatePrivateNote(int parkId, int userId, string note, DateTime updatedAt)
     {
-        // Verify that the location and user exists.
-        _locationsRepository.GetById(locationId);
-        _userRepository.GetById(userId);
-
-        var bucketListItems = _completedBucketListItemRepository.GetByParkAndUser(locationId, userId);
-        var stampCollectedAt = _collectedStampRepository.GetByParkAndUser(locationId, userId);
+        // Check if there is already a note in the database.
+        var locationId = parkId == 0 ? 0 : _locationsRepository.GetById(parkId).id;
         var privateNote = _privateNoteRepository.GetByParkAndUser(locationId, userId);
-        var lastVisited = _parkVisitRepository.GetByParkAndUser(locationId, userId).FirstOrDefault();
-
-        return new ParkActivity
+        if (privateNote != null)
         {
-            CompletedBucketListItems = bucketListItems.Select(item => new BucketListItemOverview
+            // Update it
+            privateNote.note = note;
+            privateNote.updatedAt = updatedAt;
+            return _privateNoteRepository.Update(privateNote);
+        }
+        else
+        {
+            // Create it
+            return _privateNoteRepository.Create(new()
             {
-                Id = item.bucketListItemId,
-            }).ToList(),
-            StampCollectedAt = stampCollectedAt?.updatedAt,
-            PrivateNote = privateNote == null ? null : new PrivateNoteOverview
-            {
-                Id = privateNote.id,
-                Note = privateNote.note
-            },
-            LastVisited = lastVisited?.createdAt
-        };
+                note = note,
+                user = _userRepository.GetById(userId),
+                userId = userId,
+                park = locationId == 0 ? null : _locationsRepository.GetById(locationId),
+                parkId = locationId == 0 ? null : locationId,
+                createdAt = updatedAt,
+                updatedAt = updatedAt
+            });
+        }
+    }
+
+    public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
+    {
+        return [.. _completedBucketListItemRepository.GetByUser(userId)
+            .Where(i => !i.deleted)];
     }
 
     private static CollectedStamp CreateStamp(
@@ -117,12 +124,117 @@ public class ActivityService(
         DateTime? dateTime)
     {
         return new CollectedStamp()
-            {
-                location = location,
-                method = method,
-                user = user,
-                park = park,
-                createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
-            };
+        {
+            location = location,
+            method = method,
+            user = user,
+            park = park,
+            createdAt = dateTime == null ? DateTime.UtcNow : dateTime.Value,
+        };
     }
+
+    public List<BucketListItem> GetBucketListItems()
+    {
+        return _bucketListItemRepository.GetAll();
+    }
+
+    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double latitude, double longitude)
+    {
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
+
+        var item = _bucketListItemRepository.GetById(itemId);
+
+        var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
+        if (completion != null)
+        {
+            completion.deleted = !completion.deleted;
+            return _completedBucketListItemRepository.Update(completion);
+        }
+        else
+        {
+            // make sure the bucket list item is valid
+            var bucketListItem = _bucketListItemRepository.GetById(itemId);
+
+            return _completedBucketListItemRepository.Create(new()
+            {
+                bucketListItemId = itemId,
+                userId = userId,
+                deleted = false,
+                location = userLocation,
+                parkId = bucketListItem.parkId
+            });
+        }
+    }
+
+    public ParkVisit VisitPark(int userId, string parkAbbr, double latitude, double longitude, double inaccuracyRadius)
+    {
+        var park = _locationsRepository.GetByAbbreviation(parkAbbr);
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
+        var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
+
+        Console.WriteLine($"User Location: {userLocation}, Location with Inaccuracy: {locationWithInaccuracy}");
+
+        // TODO: @V
+        // we can't visit a park manually, rn its just automatically done
+        // so throwing an error for the user to read will prolly confuse them
+        // we should throw an error but not show it on the frontend
+        // what error code should we throw? 409?
+
+        // TODO: test this
+        if (_parkVisitRepository.HasVisitedParkToday(userId, park.id))
+        {
+            throw new ServiceException(StatusCodes.Status409Conflict, "You have already visited this park today.");
+        }
+
+        // TODO: I couldn't get this to work, I tried plotting it on the map and it was correct
+        // I tried different points, digits, and inaccuracies
+
+        // if (park.boundaries!.Intersects(locationWithInaccuracy) == false) {
+        // 		throw new ServiceException(StatusCodes.Status409Conflict, "Client thinks we are in the park but backend disagrees.");
+        // }
+
+        return _parkVisitRepository.Create(new()
+        {
+            location = new(latitude, longitude),
+            createdAt = DateTime.Now,
+            updatedAt = DateTime.Now,
+            parkId = park.id,
+            park = park,
+            userId = userId,
+            user = _userRepository.GetById(userId)
+        });
+    }
+
+    public List<ParkVisit> GetParkVisits(int userId)
+    {
+        return _parkVisitRepository.GetAllByUser(userId);
+    }
+
+    public PrivateNote GetParkNote(int parkId, int userId)
+    {
+        var note = _privateNoteRepository.GetByParkAndUser(parkId, userId);
+        if (note == null)
+        {
+            note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.Now);
+        }
+        note.parkId = parkId;
+        return note;
+    }
+
+    public List<PrivateNote> GetNotes(int userId)
+    {
+        return _privateNoteRepository.GetByUser(userId).Select(x =>
+        {
+            if (x.parkId != null)
+            {
+                x.park = _locationsRepository.GetById(x.parkId.Value);
+            }
+            else
+            {
+                x.parkId = 0;
+            }
+            return x;
+        }).ToList();
+    }
+
 }

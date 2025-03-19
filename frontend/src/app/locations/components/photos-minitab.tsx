@@ -1,6 +1,6 @@
 import { ImageModal } from '@/components/image-modal';
 import { a11yOnClick } from '@/lib/a11y';
-import type { Park } from '@/lib/mock/types';
+import type { Park } from '@/types';
 import { useState } from 'react';
 
 const NoPhotos = () => {

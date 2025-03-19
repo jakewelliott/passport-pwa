@@ -1,3 +1,4 @@
+import { dbg } from '@/lib/debug';
 import { useEffect, useState } from 'react';
 import { useLocation as usePathLocation } from 'react-router-dom';
 
@@ -31,6 +32,7 @@ export function usePageTitle() {
   const showBackButton = topLevelCheck(location.pathname);
 
   useEffect(() => {
+    dbg('EFFECT', 'usePageTitle', 'setting title');
     const title = getTitle(location.pathname);
     document.title = title;
     setPageTitle(title);
