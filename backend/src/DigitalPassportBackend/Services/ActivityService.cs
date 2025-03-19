@@ -103,7 +103,7 @@ public class ActivityService(
                 user = _userRepository.GetById(userId),
                 userId = userId,
                 park = locationId == 0 ? null : _locationsRepository.GetById(locationId),
-                parkId = locationId,
+                parkId = locationId == 0 ? null : locationId,
                 createdAt = updatedAt,
                 updatedAt = updatedAt
             });
@@ -228,7 +228,9 @@ public class ActivityService(
             if (x.parkId != null)
             {
                 x.park = _locationsRepository.GetById(x.parkId.Value);
-            } else {
+            }
+            else
+            {
                 x.parkId = 0;
             }
             return x;

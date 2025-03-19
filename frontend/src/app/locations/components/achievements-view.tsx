@@ -31,7 +31,9 @@ const AchievementsView = ({ park }: AchievementsViewProps) => {
 	return (
 		<div className='flex flex-col gap-3' data-testid='achievements-view'>
 			<StampView stamp={stamp} />
+			<div className='-m-6'>
 			<BucketList parkId={park.id} />
+			</div>
 		</div>
 	);
 };
