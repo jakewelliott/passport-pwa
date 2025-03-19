@@ -113,7 +113,7 @@ public class ActivityService(
     public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
     {
         return [.. _completedBucketListItemRepository.GetByUser(userId)
-            .Where(i => i.deleted == false)];
+            .Where(i => !i.deleted)];
     }
 
     private static CollectedStamp CreateStamp(
