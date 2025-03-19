@@ -8,6 +8,9 @@ using DigitalPassportBackend.UnitTests.TestUtils;
 
 using Microsoft.EntityFrameworkCore;
 
+using NetTopologySuite.Algorithm;
+using NetTopologySuite.Index.HPRtree;
+
 namespace DigitalPassportBackend.UnitTests.Persistence.Repository;
 public class CompletedBucketListItemRepositoryTests
 {
@@ -163,6 +166,99 @@ public class CompletedBucketListItemRepositoryTests
         Assert.Empty(result0);
         Assert.Empty(result1);
         Assert.Empty(result2);
+    }
+
+    [Fact]
+    public void GetByUser_ReturnsItems_DataExists()
+    {
+        // Arrange
+        var userId = TestData.CompletedBucketListItems[0].userId;
+
+        // Act
+        var result = _repo.GetByUser(userId);
+
+        // Assert
+        Assert.NotEmpty(result);
+        Assert.Equal(TestData.CompletedBucketListItems.FindAll(x => x.userId == userId).ToList().Count, result.Count);
+        var counter = 0;
+        foreach (var item in result)
+        {
+            var testDataItem = TestData.CompletedBucketListItems.Find(x => x.id == item.id);
+            Assert.NotNull(testDataItem);
+            Assert.Equal(userId, item.userId);
+            Assert.Equal(testDataItem.id, item.id);
+            Assert.Equal(testDataItem.location, item.location);
+            Assert.Equal(testDataItem.created_at, item.created_at);
+            Assert.Equal(testDataItem.updated_at, item.updated_at);
+            Assert.Equal(testDataItem.park, item.park);
+            Assert.Equal(testDataItem.bucketListItemId, item.bucketListItemId);
+            Assert.Equal(testDataItem.bucketListItem, item.bucketListItem);
+            Assert.Equal(testDataItem.user, item.user);
+            counter++;
+        }
+    }
+
+    [Fact]
+    public void GetByUser_ReturnsEmpty_InvalidIDsDataNonexistent()
+    {
+        // Arrange
+        var invalidUserId = -1;
+
+        // Act
+        var result1 = _repo.GetByUser(invalidUserId);
+        var result2 = _repo.GetByUser(invalidUserId);
+
+        // Assert
+        Assert.Empty(result1);
+        Assert.Empty(result2);
+    }
+
+    [Fact]
+    public void GetByItemAndUser_ReturnsItems_DataExists()
+    {
+        // Arrange
+        var itemId = TestData.CompletedBucketListItems[0].bucketListItemId;
+        // itemId = 128
+        var userId = TestData.CompletedBucketListItems[0].userId;
+
+        // Act
+        var result = _repo.GetByItemAndUser(itemId, userId);
+
+        // Assert
+        Assert.NotNull(result);
+
+        var counter = 0;
+        Assert.Equal(itemId, result.bucketListItemId);
+        Assert.Equal(userId, result.userId);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].id, result.id);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].location, result.location);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].created_at, result.created_at);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].updated_at, result.updated_at);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].park, result.park);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItemId, result.bucketListItemId);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItem, result.bucketListItem);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].user, result.user);
+    }
+
+    [Fact]
+    public void GetByItemAndUser_ReturnsEmpty_InvalidIDsDataNonexistent()
+    {
+        // Arrange
+        var invalidItemId = -1;
+        var invalidUserId = -1;
+
+        var realId = TestData.CompletedBucketListItems[0].bucketListItemId;
+        var userId = TestData.CompletedBucketListItems[0].userId;
+
+        // Act
+        var result0 = _repo.GetByItemAndUser(invalidItemId, userId);
+        var result1 = _repo.GetByItemAndUser(realId, invalidUserId);
+        var result2 = _repo.GetByItemAndUser(invalidItemId, invalidUserId);
+
+        // Assert
+        Assert.Null(result0);
+        Assert.Null(result1);
+        Assert.Null(result2);
     }
 
     private static readonly CompletedBucketListItem NewItem = new()
