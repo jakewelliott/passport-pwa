@@ -373,7 +373,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         }
 
         [Fact]
-        public void GetNotes_ReturnsException_WhenInvalidUser()
+        public void GetNotes_ReturnsNullException_WhenInvalidUser()
         {
             // Action, no user setup.
             Assert.Throws<ArgumentNullException>(() => _controller.GetNotes());
@@ -399,6 +399,128 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             Assert.Empty(resp);
         }
 
+        [Fact]
+        public void ToggleBucketListItemCompletion_Returns200Ok_WhenValidUserAndItem()
+        {
+            // Setup.
+            var req = new ToggleBucketListItemCompletionRequest(-78.6736, 35.7717);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            SetupToggleBLICompletionSuccess(req, TestData.CompletedBucketListItems[3]);
+
+            // Action.
+            var result = _controller.ToggleBucketListItemCompletion(TestData.BucketList[1].id, req);
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<CompletedBucketListItemResponse>(okResult.Value);
+            Assert.True(Response.Equal(TestData.CompletedBucketListItems[3], resp));
+        }
+
+        [Fact]
+        public void ToggleBucketListItemCompletion_ReturnsNullException_WhenInvalidUser()
+        {
+            // Setup, no user.
+            var req = new ToggleBucketListItemCompletionRequest(-78.6736, 35.7717);
+            SetupToggleBLICompletionSuccess(req, TestData.CompletedBucketListItems[3]);
+
+            // Action.
+            Assert.Throws<ArgumentNullException>(() =>
+                _controller.ToggleBucketListItemCompletion(TestData.BucketList[1].id, req));
+        }
+
+        [Fact]
+        public void ToggleBucketListItemCompletion_Returns404NotFound_WhenInvalidBucketListItem()
+        {
+            // Setup.
+            var req = new ToggleBucketListItemCompletionRequest(-78.6736, 35.7717);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.ToggleBucketListItemCompletion(
+                -1,
+                TestData.Users[1].id,
+                req.longitude,
+                req.latitude
+            )).Throws(new NotFoundException("Bucket list item not found with given Id."));
+
+            // Action.
+            var e = Assert.Throws<NotFoundException>(() => _controller.ToggleBucketListItemCompletion(-1, req));
+
+            // Assert.
+            Assert.Equal(404, e.StatusCode);
+        }
+
+        [Fact]
+        public void GetBucketListItems_ReturnsList_WhenBucketListItemsExist()
+        {
+            // Setup.
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetBucketListItems()).Returns(TestData.BucketList);
+
+            // Action.
+            var result = _controller.GetBucketListItems();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsAssignableFrom<IEnumerable<BucketListItemResponse>>(okResult.Value);
+            var respList = resp.ToList();
+
+            int counter = 0;
+            foreach (var item in respList)
+            {
+                Assert.True(Response.Equal(TestData.BucketList[counter], item));
+                counter++;
+            }
+        }
+
+        [Fact]
+        public void GetCompletedBucketListItems_ReturnsList_WhenValidUserHasItems()
+        {
+            // Setup.
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetCompletedBucketListItems(TestData.Users[1].id))
+                .Returns([TestData.CompletedBucketListItems[1]]);
+
+            // Action.
+            var result = _controller.GetCompletedBucketListItems();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsAssignableFrom<IEnumerable<CompletedBucketListItemResponse>>(okResult.Value);
+            var respList = resp.ToList();
+
+            Assert.Single(respList);
+            Assert.True(Response.Equal(TestData.CompletedBucketListItems[1], respList[0]));
+        }
+
+        [Fact]
+        public void GetCompletedBucketListItems_ReturnsEmptyList_WhenValidUserHasNoItems()
+        {
+            // Setup.
+            SetupUser(TestData.Users[0].id, TestData.Users[0].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetCompletedBucketListItems(TestData.Users[0].id))
+                .Returns([]);
+
+            // Action.
+            var result = _controller.GetCompletedBucketListItems();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsAssignableFrom<IEnumerable<CompletedBucketListItemResponse>>(okResult.Value);
+            var respList = resp.ToList();
+
+            Assert.Empty(respList);
+        }
+
+        [Fact]
+        public void GetCompletedBucketListItems_ReturnsNullException_WhenInvalidUser()
+        {
+            // Setup, no user.
+            _mockActivityService.Setup(s => s.GetCompletedBucketListItems(TestData.Users[0].id))
+                .Returns([]);
+
+            // Action.
+            Assert.Throws<ArgumentNullException>(() => _controller.GetCompletedBucketListItems());
+        }
+
         private void SetupUser(int userId, string role)
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
@@ -411,6 +533,17 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             {
                 HttpContext = new DefaultHttpContext { User = user }
             };
+        }
+
+        private void SetupToggleBLICompletionSuccess(ToggleBucketListItemCompletionRequest req, CompletedBucketListItem item)
+        {
+            // Mock service
+            _mockActivityService.Setup(s => s.ToggleBucketListItemCompletion(
+                item.bucketListItemId,
+                item.userId,
+                req.longitude,
+                req.latitude
+            )).Returns(item);
         }
 
         private void SetupPrivateNoteSuccess(PrivateNoteRequest req, User user, Park? park)
