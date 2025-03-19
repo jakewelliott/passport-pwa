@@ -137,7 +137,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 // Action.
                 var result = _activities.CollectStamp(
                     TestData.Parks[0].parkAbbreviation,
-                    stamp.location.X, stamp.location.Y, 0.005,
+                    stamp.location.X, stamp.location.Y, 500,
                     stamp.method.GetDisplayName(),
                     stamp.createdAt,
                     stamp.user.id);

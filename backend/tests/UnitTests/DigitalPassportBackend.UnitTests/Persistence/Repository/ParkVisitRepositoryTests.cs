@@ -89,6 +89,30 @@ public class ParkVisitRepositoryTests
     }
 
     [Fact]
+    public void Create_ReturnsNewParkVisit_IfParkVisitDNE()
+    {
+        // Action.
+        ParkVisit newVisit = new ParkVisit()
+        {
+            id = 20,
+            location = new(-77.91170363932008, 34.049634772933764),
+            createdAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
+            updatedAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
+            parkId = TestData.Parks[0].id,
+            park = TestData.Parks[0],
+            userId = TestData.Users[1].id,
+            user = TestData.Users[1]
+        };
+
+        var item = _repo.Create(newVisit);
+
+        // Assert.
+        Assert.Equal(5, _db.ParkVisits.Count());
+        Assert.Equal(newVisit, item);
+        Assert.Contains(newVisit, _db.ParkVisits);
+    }
+
+    [Fact]
     public void GetByParkAndUser_ReturnsItems_VisitExists()
     {
         // Arrange
@@ -133,7 +157,7 @@ public class ParkVisitRepositoryTests
         Assert.Empty(result);
     }
 
-        [Fact]
+    [Fact]
     public void GetByParkAndUser_ReturnsEmpty_InvalidIDsVisitNonexistent()
     {
         // Arrange
@@ -152,6 +176,114 @@ public class ParkVisitRepositoryTests
         Assert.Empty(result0);
         Assert.Empty(result1);
         Assert.Empty(result2);
+    }
+
+    [Fact]
+    public void GetAllByUser_ReturnsItems_VisitExists()
+    {
+        // Arrange
+        var locationId = TestData.ParkVisits[2].parkId;
+        var userId = TestData.ParkVisits[2].userId;
+
+        var locationId2 = TestData.ParkVisits[0].parkId;
+        var userId2 = TestData.ParkVisits[0].userId;
+
+        // Act
+        var result = _repo.GetAllByUser(userId);
+        var result2 = _repo.GetAllByUser(userId2);
+
+        // Assert
+        Assert.Single(result);
+        Assert.Equal(2, result2.Count);
+
+        Assert.Equal(locationId, result[0].parkId);
+        Assert.Equal(userId, result[0].userId);
+        Assert.Equal(TestData.ParkVisits[2], result[0]);
+
+        Assert.Equal(locationId2, result2[0].parkId);
+        Assert.Equal(userId2, result2[0].userId);
+        Assert.Equal(locationId2, result2[1].parkId);
+        Assert.Equal(userId2, result2[1].userId);
+
+        Assert.Equal(TestData.ParkVisits[0], result2[1]);
+        Assert.Equal(TestData.ParkVisits[1], result2[0]);
+    }
+
+    [Fact]
+    public void GetAllByUser_ReturnsEmpty_VisitNonexistent()
+    {
+        // Arrange
+        var userId = TestData.Users[0].id;
+
+        // Act
+        var result = _repo.GetAllByUser(userId);
+
+        // Assert
+        Assert.Empty(result);
+    }
+
+    [Fact]
+    public void HasVisitedParkToday_ReturnsTrue_VisitedToday()
+    {
+        // Arrange
+        var locationId = TestData.ParkVisits[2].parkId;
+        var userId = TestData.ParkVisits[2].userId;
+
+        // Act
+        var result = _repo.HasVisitedParkToday(userId, locationId);
+
+        // Assert
+        Assert.True(result);
+    }
+
+    [Fact]
+    public void HasVisitedParkToday_ReturnsFalse_VisitedAnotherParkToday()
+    {
+        // Arrange
+        var locationId = TestData.ParkVisits[3].parkId;
+        var userId = TestData.ParkVisits[0].userId;
+
+        // Act
+        var result = _repo.HasVisitedParkToday(userId, locationId);
+
+        // Assert
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void HasVisitedParkToday_ReturnsFalse_NotVisitedParkTodayButDidYesterday()
+    {
+        // Arrange
+        var yesterdayVisit = _repo.GetById(TestData.ParkVisits[3].id);
+        var originalTime = yesterdayVisit.createdAt;
+        yesterdayVisit.createdAt = DateTime.UtcNow - new TimeSpan(1, 0, 0, 0);
+        _repo.Update(yesterdayVisit);
+        var locationId = yesterdayVisit.parkId;
+        var userId = yesterdayVisit.userId;
+
+        // Act
+        var result = _repo.HasVisitedParkToday(userId, locationId);
+
+        // Assert
+        Assert.False(result);
+
+        // Reset
+        yesterdayVisit.createdAt = originalTime;
+        _repo.Update(yesterdayVisit);
+    }
+
+    [Fact]
+    public void HasVisitedParkToday_ReturnsFalse_NeverVsitedPark()
+    {
+        // Arrange
+        var locationId = TestData.ParkVisits[0].parkId;
+        var userId = TestData.ParkVisits[3].userId;
+
+        // Act
+        var result = _repo.HasVisitedParkToday(userId, locationId);
+
+        // Assert
+        Assert.False(result);
     }
 
 }
