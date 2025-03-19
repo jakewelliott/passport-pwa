@@ -155,7 +155,7 @@ public class ActivityService(
 
             // make sure the park is valid
             var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
-            if (park == null)
+            if (item.parkId.HasValue && park == null)
             {
                 throw new ServiceException(StatusCodes.Status404NotFound, $"Park {item.parkId} not found.");
             }
@@ -167,20 +167,12 @@ public class ActivityService(
                 throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
             }
 
-
-            // we will let users check off items even if they are not in the park
-            // TODO @V: should we check if the user has ever visited the park?
-
-            // if (!park.boundaries!.Intersects(locationWithInaccuracy)) {
-            // 	throw new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park.");
-            // }
-
             // TODO: @V are all bucket list items associated with a park? if not, then we need to handle that case here
             // for now I'm just going to throw an error if we fail a null check
-            if (bucketListItem.parkId.HasValue == false)
-            {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
-            }
+            // if (bucketListItem.parkId.HasValue == false)
+            // {
+            //     throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
+            // }
 
             return _completedBucketListItemRepository.Create(new()
             {
@@ -188,7 +180,7 @@ public class ActivityService(
                 userId = userId,
                 deleted = false,
                 location = (Point)userLocation,
-                parkId = bucketListItem.parkId.Value
+                parkId = bucketListItem.parkId.HasValue ? bucketListItem.parkId.Value : null
             });
         }
     }
@@ -255,7 +247,9 @@ public class ActivityService(
             if (x.parkId != null)
             {
                 x.park = _locationsRepository.GetById(x.parkId.Value);
-            } else {
+            }
+            else
+            {
                 x.parkId = 0;
             }
             return x;
