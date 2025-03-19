@@ -77,16 +77,9 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Setup create/update mocks.
             _mockCompletedBucketList.Setup(s => s.Create(It.IsAny<CompletedBucketListItem>()))
-                .Returns<CompletedBucketListItem>(i => {
-                    i.created_at = DateTime.UtcNow;
-                    i.updated_at = DateTime.UtcNow;
-                    return i;
-                });
+                .Returns<CompletedBucketListItem>(i => i);
             _mockCompletedBucketList.Setup(s => s.Update(It.IsAny<CompletedBucketListItem>()))
-                .Returns<CompletedBucketListItem>(i => {
-                    i.updated_at = DateTime.UtcNow;
-                    return i;
-                });
+                .Returns<CompletedBucketListItem>(i => i);
 
             // Setup location mocks.
             foreach (var park in TestData.Parks)
@@ -423,6 +416,9 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Assert.
             Assert.False(result.deleted);
+
+            // Reset.
+            TestData.CompletedBucketListItems[3].deleted = true;
         }
 
         [Fact]
@@ -434,7 +430,6 @@ namespace DigitalPassportBackend.UnitTests.Services
                     5,
                     TestData.Users[1].id,
                     0, 0));
-
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
@@ -448,21 +443,13 @@ namespace DigitalPassportBackend.UnitTests.Services
                 TestData.ParkVisits[1]
             ];
 
-            // List of all completed bucket list items.
-            List<CompletedBucketListItem> cbli = [
-                TestData.CompletedBucketListItems[1],
-                TestData.CompletedBucketListItems[3]
-            ];
-
             // setup mocked functions
             SetupActivity(0, 1,
-                [cbli[0]],
+                [TestData.CompletedBucketListItems[1]],
                 null,
                 TestData.PrivateNotes[0],
                 [.. visited.OrderByDescending(v => v.createdAt)]);
-            SetupActivity(1, 1, [cbli[1]], null, null, []);
-            _mockCompletedBucketList.Setup(s => s.GetByUser(TestData.Users[1].id))
-                .Returns(cbli);
+            SetupActivity(1, 1, [TestData.CompletedBucketListItems[3]], null, null, []);
         }
 
         // Setup User 0, Park 0 - no data
@@ -483,6 +470,9 @@ namespace DigitalPassportBackend.UnitTests.Services
 
         // Helper for mocking CollectedStampRepository.GetByUser(userId)
         private readonly Dictionary<int, List<CollectedStamp>> _stampDict = [];
+        
+        // Helper for mocking CompletedBucketListItemRepository.GetByUser(userId)
+        private readonly Dictionary<int, List<CompletedBucketListItem>> _cbliDict = [];
 
         // Helper for setting up activities.
         private void SetupActivity(int parkId, int userId,
@@ -493,12 +483,28 @@ namespace DigitalPassportBackend.UnitTests.Services
         {
             if (!_stampDict.ContainsKey(TestData.Users[userId].id))
             {
-                _stampDict.Add(TestData.Users[userId].id, new());
+                _stampDict.Add(TestData.Users[userId].id, []);
             }
             if (collectedStamp is not null)
             {
                 _stampDict[TestData.Users[userId].id].Add(collectedStamp);
             }
+
+            if (!_cbliDict.ContainsKey(TestData.Users[userId].id))
+            {
+                _cbliDict.Add(TestData.Users[userId].id, []);
+            }
+            foreach (var item in completedBucketListItems)
+            {
+                _cbliDict[TestData.Users[userId].id].Add(item);
+
+                _mockCompletedBucketList.Setup(s => s.GetByItemAndUser(item.bucketListItemId, item.userId))
+                    .Returns(item);
+                _mockBucketList.Setup(s => s.GetById(item.bucketListItemId))
+                    .Returns(item.bucketListItem!);
+            }
+            _mockCompletedBucketList.Setup(s => s.GetByUser(TestData.Users[userId].id))
+                .Returns(_cbliDict[TestData.Users[userId].id]);
 
             _mockUsers.Setup(s => s.GetById(TestData.Users[userId].id))
                 .Returns(TestData.Users[userId]);
@@ -512,14 +518,6 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns(privateNote);
             _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(parkVisits);
-
-            foreach (var i in completedBucketListItems)
-            {
-                _mockCompletedBucketList.Setup(s => s.GetByItemAndUser(i.bucketListItemId, i.userId))
-                    .Returns(i);
-                _mockBucketList.Setup(s => s.GetById(i.bucketListItemId))
-                    .Returns(i.bucketListItem!);
-            }
         }
     }
 }
