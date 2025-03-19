@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 
+using DigitalPassportBackend.Controllers;
+
 using DigitalPassportBackend.Domain;
 
 using Microsoft.OpenApi.Extensions;
@@ -14,6 +16,21 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class Response
 {
+    public static bool Equal(BucketListItem expected, ActivityController.BucketListItemResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.task == actual.task
+            && expected.createdAt == actual.createdAt
+            && expected.parkId == actual.parkId
+            && expected.park?.parkName == actual.parkName;
+    }
+
+    public static bool Equal(CompletedBucketListItem expected, CompletedBucketListItemResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.bucketListItemId == actual.bucketListItemId
+            && expected.updated_at == actual.updatedAt;
+    }
 
     public static bool Equal(Park? park, PrivateNoteRequest expected, PrivateNoteResponse actual)
     {
