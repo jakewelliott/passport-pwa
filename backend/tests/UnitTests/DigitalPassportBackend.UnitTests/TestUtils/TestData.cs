@@ -407,6 +407,20 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 bucketListItem = BucketList[1],
                 userId = Users[3].id,
                 user = Users[3]
+            },
+            new()
+            {
+                id = 92,
+                location = new(35.7717, -78.6736),
+                created_at = DateTime.UtcNow,
+                updated_at = DateTime.UtcNow,
+                deleted = true,
+                parkId = Parks[1].id,
+                park = Parks[1],
+                bucketListItemId = BucketList[1].id,
+                bucketListItem = BucketList[1],
+                userId = Users[1].id,
+                user = Users[1]
             }
         ];
 
