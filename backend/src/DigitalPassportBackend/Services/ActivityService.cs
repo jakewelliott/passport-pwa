@@ -113,7 +113,7 @@ public class ActivityService(
     public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
     {
         return [.. _completedBucketListItemRepository.GetByUser(userId)
-            .Where(i => i.deleted == false)];
+            .Where(i => !i.deleted)];
     }
 
     private static CollectedStamp CreateStamp(
@@ -152,35 +152,16 @@ public class ActivityService(
         }
         else
         {
-
-            // make sure the park is valid
-            var park = item.parkId.HasValue ? _locationsRepository.GetById(item.parkId.Value) : null;
-            if (item.parkId.HasValue && park == null)
-            {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Park {item.parkId} not found.");
-            }
-
             // make sure the bucket list item is valid
             var bucketListItem = _bucketListItemRepository.GetById(itemId);
-            if (bucketListItem == null)
-            {
-                throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
-            }
-
-            // TODO: @V are all bucket list items associated with a park? if not, then we need to handle that case here
-            // for now I'm just going to throw an error if we fail a null check
-            // if (bucketListItem.parkId.HasValue == false)
-            // {
-            //     throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} is not associated with a park.");
-            // }
 
             return _completedBucketListItemRepository.Create(new()
             {
                 bucketListItemId = itemId,
                 userId = userId,
                 deleted = false,
-                location = (Point)userLocation,
-                parkId = bucketListItem.parkId.HasValue ? bucketListItem.parkId.Value : null
+                location = userLocation,
+                parkId = bucketListItem.parkId
             });
         }
     }

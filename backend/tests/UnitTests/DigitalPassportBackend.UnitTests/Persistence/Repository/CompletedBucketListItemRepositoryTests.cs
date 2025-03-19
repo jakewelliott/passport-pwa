@@ -1,3 +1,5 @@
+using System.Net.NetworkInformation;
+
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
@@ -54,7 +56,7 @@ public class CompletedBucketListItemRepositoryTests
 
         // Assert.
         Assert.Equal(TestData.CompletedBucketListItems[0], item);
-        Assert.Equal(2, _db.CompletedBucketListItems.Count());
+        Assert.Equal(3, _db.CompletedBucketListItems.Count());
         Assert.DoesNotContain(TestData.CompletedBucketListItems[0], _db.CompletedBucketListItems);
     }
 
@@ -76,7 +78,7 @@ public class CompletedBucketListItemRepositoryTests
         var oldItem = _repo.Update(newItem);
 
         // Assert.
-        Assert.Equal(3, _db.CompletedBucketListItems.Count());
+        Assert.Equal(4, _db.CompletedBucketListItems.Count());
         Assert.Equal(TestData.CompletedBucketListItems[1], oldItem);
         Assert.Contains(newItem, _db.CompletedBucketListItems);
     }
@@ -92,7 +94,7 @@ public class CompletedBucketListItemRepositoryTests
     [Fact]
     public void Count_ReturnsNumberOfItems()
     {
-        Assert.Equal(3, _repo.Count());
+        Assert.Equal(4, _repo.Count());
     }
 
     [Fact]
@@ -102,7 +104,7 @@ public class CompletedBucketListItemRepositoryTests
         var item = _repo.Create(NewItem);
 
         // Assert.
-        Assert.Equal(4, _db.CompletedBucketListItems.Count());
+        Assert.Equal(5, _db.CompletedBucketListItems.Count());
         Assert.Equal(NewItem, item);
         Assert.Contains(NewItem, _db.CompletedBucketListItems);
     }
@@ -114,14 +116,17 @@ public class CompletedBucketListItemRepositoryTests
         var locationId = TestData.CompletedBucketListItems[0].parkId;
         var userId = TestData.CompletedBucketListItems[0].userId;
 
+        int realId = locationId.GetValueOrDefault();
+
         // Act
-        var result = _repo.GetByParkAndUser(locationId, userId);
+        var result = _repo.GetByParkAndUser(realId, userId);
 
         // Assert
         Assert.NotEmpty(result);
 
         var counter = 0;
-        foreach (var item in result) {
+        foreach (var item in result)
+        {
             Assert.Equal(locationId, item.parkId);
             Assert.Equal(userId, item.userId);
             Assert.Equal(TestData.CompletedBucketListItems[counter].id, item.id);
@@ -146,9 +151,12 @@ public class CompletedBucketListItemRepositoryTests
         var locationId = TestData.CompletedBucketListItems[0].parkId;
         var userId = TestData.CompletedBucketListItems[0].userId;
 
+        int realId = locationId.GetValueOrDefault();
+
+
         // Act
         var result0 = _repo.GetByParkAndUser(invalidLocationId, userId);
-        var result1 = _repo.GetByParkAndUser(locationId, invalidUserId);
+        var result1 = _repo.GetByParkAndUser(realId, invalidUserId);
         var result2 = _repo.GetByParkAndUser(invalidLocationId, invalidUserId);
 
         // Assert
