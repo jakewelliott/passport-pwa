@@ -24,12 +24,12 @@ public class CompletedBucketListItem
     [Column("park")]
     public int? parkId { get; set; }
     public Park? park { get; set; }
-    
+
     [ForeignKey("bucket_list_item")]
     [Column("bucket_list_item")]
     public int bucketListItemId { get; set; }
     public BucketListItem? bucketListItem { get; set; }
-    
+
     [ForeignKey("user")]
     [Column("user")]
     public int userId { get; set; }
