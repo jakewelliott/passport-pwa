@@ -1,8 +1,8 @@
+import { useUser } from '@/hooks/queries/useUser';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import HeaderMenuButton from './header-menu-button';
-import { useUser } from '@/hooks/queries/useUser';
+import { ManualStampButton } from './header-menu-button';
 
 export const BackButton = ({ hidden }: { hidden: boolean }) => {
   const navigate = useNavigate();
@@ -32,8 +32,8 @@ const Header = () => {
           </div>
         )}
         <h4 className='text-system_white'>{pageTitle}</h4>
-        <div className='absolute right-4 w-[70px]' data-testid='balance-placeholder'>
-          <HeaderMenuButton />
+        <div className='absolute right-4 w-[70px] bg-red-500' data-testid='balance-placeholder'>
+          {pageTitle === 'Park Details' && <ManualStampButton />}
         </div>
       </header>
     </div>

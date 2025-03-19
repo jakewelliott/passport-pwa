@@ -1,4 +1,4 @@
-import type { Trail } from '@/lib/mock/types';
+import type { Trail } from '@/types';
 
 const ICON_SVG = [
   'Biking-Red',

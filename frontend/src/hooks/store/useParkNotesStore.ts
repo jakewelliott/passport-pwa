@@ -2,13 +2,19 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 type ParkNoteKey = string | 'generalNotes';
-const EMPTY_NOTES = { generalNotes: '' };
+type NoteData = {
+  content: string;
+  updatedAt: number | undefined;
+};
+const EMPTY_NOTES: Record<ParkNoteKey, NoteData> = { generalNotes: {content: '', updatedAt: undefined} };
 
 interface NotesStore {
-  notes: Record<ParkNoteKey, string>;
-  setNote: (key: ParkNoteKey, value: string) => void;
+  notes: Record<ParkNoteKey, NoteData>;
+  setNote: (key: ParkNoteKey, value: string, updatedAt: number) => void;
   getKeys: () => ParkNoteKey[];
-  getNote: (key: ParkNoteKey) => string | undefined;
+  getNoteContent: (key: ParkNoteKey) => string | undefined;
+  getNote: (key: ParkNoteKey) => NoteData | undefined;
+  getUpdatedAt: (key: ParkNoteKey) => number | undefined;
   removeNote: (key: ParkNoteKey) => void;
   clearNotes: () => void;
 }
@@ -18,12 +24,29 @@ export const useParkNotesStore = create<NotesStore>()(
     (set, get) => ({
       notes: EMPTY_NOTES,
 
-      setNote: (key, value) => {
-        set((state) => ({ notes: { ...state.notes, [key]: value } }));
+      setNote: (key, value, updatedAt) => {
+        set((state) => ({ 
+          notes: { 
+            ...state.notes, 
+            [key]: {
+              content: value,
+              updatedAt: updatedAt,
+            } } 
+        }));
       },
 
       getNote: (key) => {
         return get().notes[key];
+      },
+
+      getNoteContent: (key) => {
+        const note = get().notes[key];
+        return note ? note.content : undefined;
+      },
+
+      getUpdatedAt: (key) => {
+          const note = get().notes[key];
+          return note ? note.updatedAt : undefined;
       },
 
       getKeys: () => {

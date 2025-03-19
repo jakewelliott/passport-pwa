@@ -1,6 +1,6 @@
 import { dbg } from '@/lib/debug';
 import { API_USER_URL, fetchGet } from '@/lib/fetch';
-import type { UserProfile } from '@/lib/mock/types';
+import type { UserProfile } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -36,7 +36,7 @@ export const useUser = () => {
         dbg('QUERY', 'useUser');
         const userData = await fetchGet(API_USER_URL);
         setUser(userData); // Update Zustand store
-        dbg('QUERY', 'useUser', userData);
+        // dbg('QUERY', 'useUser', userData);
         return userData;
       } catch (error) {
         dbg('ERROR', 'useUser', error);
@@ -46,6 +46,6 @@ export const useUser = () => {
     staleTime: Infinity, // Prevent refetching unless explicitly invalidated
   });
 
-  dbg('QUERY', 'useUser', query.data?.username || 'no user');
+  dbg('HOOK', 'useUser', query.data?.username ?? 'no user');
   return { ...query, isLoggedIn, isAdmin };
 };

@@ -1,4 +1,4 @@
-import type { Address } from '@/lib/mock/types';
+import type { Address } from '@/types';
 import { FiNavigation } from 'react-icons/fi';
 
 interface AddressViewProps {

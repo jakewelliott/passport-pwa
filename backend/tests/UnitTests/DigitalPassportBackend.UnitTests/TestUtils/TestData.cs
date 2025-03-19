@@ -254,6 +254,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new()
             {
                 id = 2,
+                location = new(-77.91170363932008, 34.049634772933764),
                 createdAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
                 updatedAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
                 parkId = Parks[0].id,
@@ -264,6 +265,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new() 
             {
                 id = 8,
+                location = new(-77.91337795281648, 34.048151829889015),
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
@@ -274,6 +276,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new()
             {
                 id = 10,
+                location = new(-77.91898744059975, 34.049526734928435),
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
@@ -284,6 +287,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new()
             {
                 id = 13,
+                location = new(-78.67421773821357, 35.772011241494404),
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow,
                 parkId = Parks[1].id,
@@ -327,6 +331,17 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 park = Parks[0],
                 userId = Users[2].id,
                 user = Users[2]
+            },
+            new()
+            {
+                id = 69,
+                note = "NC Parks are awesome",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = null,
+                park = null,
+                userId = Users[2].id,
+                user = Users[2]
             }
         ];
 
@@ -368,6 +383,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 location = new(34.0496, -77.9196),
                 created_at = DateTime.UtcNow,
                 updated_at = DateTime.UtcNow,
+                deleted = false,
                 parkId = Parks[0].id,
                 park = Parks[0],
                 bucketListItemId = BucketList[2].id,
@@ -381,6 +397,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 location = new(34.0481, -77.9132),
                 created_at = DateTime.UtcNow,
                 updated_at = DateTime.UtcNow,
+                deleted = false,
                 parkId = Parks[0].id,
                 park = Parks[0],
                 bucketListItemId = BucketList[0].id,
@@ -394,12 +411,27 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 location = new(35.7717, -78.6736),
                 created_at = DateTime.UtcNow,
                 updated_at = DateTime.UtcNow,
+                deleted = false,
                 parkId = Parks[1].id,
                 park = Parks[1],
                 bucketListItemId = BucketList[1].id,
                 bucketListItem = BucketList[1],
                 userId = Users[3].id,
                 user = Users[3]
+            },
+            new()
+            {
+                id = 92,
+                location = new(35.7717, -78.6736),
+                created_at = DateTime.UtcNow,
+                updated_at = DateTime.UtcNow,
+                deleted = true,
+                parkId = Parks[1].id,
+                park = Parks[1],
+                bucketListItemId = BucketList[1].id,
+                bucketListItem = BucketList[1],
+                userId = Users[1].id,
+                user = Users[1]
             }
         ];
 

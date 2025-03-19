@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 
+using DigitalPassportBackend.Controllers;
+
 using DigitalPassportBackend.Domain;
 
 using Microsoft.OpenApi.Extensions;
@@ -14,6 +16,61 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class Response
 {
+    public static bool Equal(ParkVisit expected, ParkVisitResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.createdAt == actual.createdAt
+            && expected.park.parkAbbreviation == actual.parkAbbreviation;
+    }
+
+    public static bool Equal(BucketListItem expected, ActivityController.BucketListItemResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.task == actual.task
+            && expected.createdAt == actual.createdAt
+            && expected.parkId == actual.parkId
+            && expected.park?.parkName == actual.parkName;
+    }
+
+    public static bool Equal(CompletedBucketListItem expected, CompletedBucketListItemResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.bucketListItemId == actual.bucketListItemId
+            && expected.updated_at == actual.updatedAt;
+    }
+
+    public static bool Equal(Park? park, PrivateNoteRequest expected, PrivateNoteResponse actual)
+    {
+        if (park == null)
+        {
+            return actual.parkAbbreviation == "generalNotes"
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+        else
+        {
+            return park.parkAbbreviation == actual.parkAbbreviation
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+    }
+
+    public static bool Equal(PrivateNote expected, PrivateNoteResponse actual)
+    {
+        if (expected.park == null)
+        {
+            return actual.parkAbbreviation == "generalNotes"
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+        else
+        {
+            return expected.park.parkAbbreviation == actual.parkAbbreviation
+                && expected.note == actual.note
+                && expected.updatedAt == actual.updatedAt;
+        }
+    }
+
     public static bool Equal(Park park, LocationResponse resp)
     {
         return park.id == resp.id
@@ -52,7 +109,7 @@ public static class Response
             && FieldEqual(icons, i => i.icon.GetDisplayName().Replace("_", "-"), resp, r => r.iconName);
     }
 
-    public static bool Equal(IEnumerable<BucketListItem> bucketList, BucketListItemResponse[] resp)
+    public static bool Equal(IEnumerable<BucketListItem> bucketList, DigitalPassportBackend.Controllers.LocationsController.BucketListItemResponse[] resp)
     {
         bucketList = [.. bucketList.OrderBy(i => i.task)];
         resp = [.. resp.OrderBy(i => i.task)];
@@ -71,10 +128,13 @@ public static class Response
 
     public static bool Equal(Point? coord, object obj)
     {
-        try {
-            return coord?.X == (double) obj.GetType().GetProperty("longitude")?.GetValue(obj, null)!
-                && coord?.Y == (double) obj.GetType().GetProperty("latitude")?.GetValue(obj, null)!;
-        } catch {
+        try
+        {
+            return coord?.X == (double)obj.GetType().GetProperty("longitude")?.GetValue(obj, null)!
+                && coord?.Y == (double)obj.GetType().GetProperty("latitude")?.GetValue(obj, null)!;
+        }
+        catch
+        {
             return false;
         }
     }

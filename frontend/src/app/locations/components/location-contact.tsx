@@ -1,17 +1,15 @@
-import type { Park, ParkActivity } from '@/lib/mock/types';
+import type { Park } from '@/types';
 import { useState } from 'react';
 import { FaRegEnvelope } from 'react-icons/fa';
 import { FiNavigation, FiPhone } from 'react-icons/fi';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 import AchievementsView from './achievements-view';
 import { AddressView } from './address-view';
-
 interface LocationContactProps {
   park: Park;
-  parkActivity?: ParkActivity;
 }
 
-export const LocationContact = ({ park, parkActivity }: LocationContactProps) => {
+export const LocationContact = ({ park }: LocationContactProps) => {
   const [showAllAddresses, setShowAllAddresses] = useState(false);
 
   const toggleAddresses = () => {
@@ -63,7 +61,7 @@ export const LocationContact = ({ park, parkActivity }: LocationContactProps) =>
           <p>{park.email}</p>
         </div>
       )}
-      {parkActivity && <AchievementsView parkActivity={parkActivity} park={park} />}
+      <AchievementsView park={park} />
     </div>
   );
 };

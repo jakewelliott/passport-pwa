@@ -1,24 +1,34 @@
-import { API_ACTIVITY_URL, fetchGet, fetchPut } from '@/lib/fetch';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
-interface Note {
-  id: number;
-  note: string;
-}
+import { dbg } from '@/lib/debug';
+import { API_NOTES_URL, fetchGet, fetchPost } from '@/lib/fetch';
+import type { ParkNote } from '@/types';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 export const useNote = (parkId: number) => {
-  return useQuery<Note>({
-    queryKey: ['note', parkId],
-    queryFn: () => fetchGet(`${API_ACTIVITY_URL}/${parkId}`),
+  dbg('HOOK', 'useNote', parkId);
+
+  return useQuery<ParkNote>({
+    queryKey: ['notes', parkId],
+    queryFn: () => fetchGet(`${API_NOTES_URL}/${parkId}`),
+  });
+};
+
+export const useGetAllNotes = () => {
+  dbg('HOOK', 'useGetAllNotes');
+
+  return useQuery<ParkNote[]>({
+    queryKey: ['notes'],
+    queryFn: async () => await fetchGet(API_NOTES_URL),
   });
 };
 
 export const useUpdateNote = () => {
-  const queryClient = useQueryClient();
+  const { refetch } = useGetAllNotes();
   return useMutation({
-    mutationFn: ({ parkId, note }: { parkId: number; note: string }) => fetchPut(`${API_ACTIVITY_URL}/${parkId}`, note),
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(['note', variables.parkId], data);
+    mutationFn: ({ parkId, note }: { parkId: number; note: string }) =>
+      fetchPost(`${API_NOTES_URL}/${parkId}`, { note: note, updatedAt: new Date() }),
+    onSuccess: () => {
+      dbg('HOOK', 'useUpdateNote', 'refetching all notes...');
+      refetch();
     },
   });
 };

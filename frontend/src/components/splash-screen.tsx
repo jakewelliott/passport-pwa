@@ -1,3 +1,4 @@
+import { dbg } from '@/lib/debug';
 import { useEffect } from 'react';
 
 import { useState } from 'react';
@@ -34,7 +35,9 @@ export const SplashScreenWrapper = (props: React.PropsWithChildren) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    dbg('EFFECT', 'SplashScreenWrapper', 'waiting...');
     const timer = setTimeout(() => {
+      dbg('EFFECT', 'SplashScreenWrapper', 'done waiting');
       setLoading(false);
     }, 500);
 

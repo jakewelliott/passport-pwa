@@ -7,31 +7,26 @@ import { PhotoGalleryMiniTab } from '@/app/locations/components/photos-minitab';
 import { useParams } from 'react-router-dom';
 
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
-import { usePark, useParkActivity } from '@/hooks/queries/useParks';
-import { useUser } from '@/hooks/queries/useUser';
-import { useEffect } from 'react';
+import { usePark } from '@/hooks/queries/useParks';
+import { dbg } from '@/lib/debug';
 
 export default function DetailTabs() {
-  const { abbreviation } = useParams();
-  const parkAbbreviation = abbreviation as Uppercase<string>;
-  const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
-  const { data: user, isLoading: isUserLoading } = useUser();
-  const { data: parkActivity, isLoading: isActivityLoading, refetch: refetchParkActivity } = (!isUserLoading && user?.role != 'admin') ? useParkActivity(park?.id ?? 0) : {data: null, isLoading: false, refetch: () => {}};
+	dbg('RENDER', 'Location DetailTabs');
+	const { abbreviation } = useParams();
+	const parkAbbreviation = abbreviation as Uppercase<string>;
+	const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
 
-  useEffect(() => {
-    refetchParkActivity();
-  }, [refetchParkActivity]);
+	if (isParkLoading || !park) return <LoadingPlaceholder what='park' />;
 
-  if (isParkLoading || isActivityLoading || !park ) return <LoadingPlaceholder />;
-  return (
-    <>
-      <LocationContact park={park} parkActivity={parkActivity ?? undefined} />
-      <LocationActionBar park={park} />
-      <LocationMiniTabBar>
-        <DetailsMiniTab park={park} />
-        <PhotoGalleryMiniTab photos={park.photos} />
-        <NotesMiniTab abbreviation={park.abbreviation} parkId={park.id} />
-      </LocationMiniTabBar>
-    </>
-  );
+	return (
+		<>
+			<LocationContact park={park} />
+			<LocationActionBar park={park} />
+			<LocationMiniTabBar>
+				<DetailsMiniTab park={park} />
+				<PhotoGalleryMiniTab photos={park.photos} />
+				<NotesMiniTab parkId={park.id} />
+			</LocationMiniTabBar>
+		</>
+	);
 }

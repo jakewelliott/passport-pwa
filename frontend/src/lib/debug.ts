@@ -83,3 +83,5 @@ export const sjason = (p: unknown): string => {
   }
   return JSON.stringify(p, null, 2);
 };
+
+dbg('ENV', 'DEBUG', DEBUG.toString());

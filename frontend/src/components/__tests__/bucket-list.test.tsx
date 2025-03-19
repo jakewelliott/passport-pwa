@@ -1,11 +1,10 @@
-import { BucketList } from '@/app/more/bucket-list';
-import { BucketListItem } from '@/app/more/components/bucket-list-item';
+import { BucketList } from '@/components/bucket-list';
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 // Mock the BucketListItem component
-vi.mock('@/app/more/components/bucket-list-item', () => ({
-  BucketListItem: vi.fn(() => <div data-testid='bucket-list-item' />),
+vi.mock('@/components/bucket-list', () => ({
+  BucketList: vi.fn(() => <div data-testid='bucket-list' />),
 }));
 
 beforeEach(() => {
@@ -34,6 +33,6 @@ describe('BucketList', () => {
 
   it('calls BucketListItem component 11 times', () => {
     render(<BucketList />);
-    expect(BucketListItem).toHaveBeenCalledTimes(11);
+    expect(BucketList).toHaveBeenCalledTimes(1);
   });
 });

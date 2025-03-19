@@ -1,8 +1,10 @@
-import { dbg } from '@/lib/debug';
+import { DEBUG, dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
+const API_PORT = DEBUG ? process.env.API_DEV_PORT : process.env.NGINX_PORT;
+const PROTOCOL = DEBUG ? 'http' : 'https';
 
-const API_PORT = process.env.NGINX_PORT;
-export const API_URL = `https://localhost:${API_PORT}/api`;
+export const API_URL = `${PROTOCOL}://localhost:${API_PORT}/api`;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
@@ -11,17 +13,25 @@ export const API_AUTH_REGISTER_URL = `${API_AUTH_URL}/register/`;
 
 // user data
 export const API_USER_URL = `${API_URL}/user`;
+export const API_VISIT_HISTORY_URL = `${API_URL}/activity/visit`;
+
+// stamps
 export const API_STAMPS_URL = `${API_URL}/activity/stamps`;
-export const API_COLLECTED_STAMPS_URL = `${API_URL}/activity/stamps/collected`;
-export const API_ACTIVITY_URL = `${API_URL}/activity/park`;
+export const API_COLLECTED_STAMPS_URL = `${API_STAMPS_URL}/collected`;
+
+// bucket list
+export const API_BUCKET_LIST_URL = `${API_URL}/activity/bucketlist`;
+export const API_COMPLETED_BUCKET_LIST_ITEMS_URL = `${API_BUCKET_LIST_URL}/completed`;
 
 // public data
 export const API_PARKS_URL = `${API_URL}/locations`;
 export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
 
+// notes
+export const API_NOTES_URL = `${API_URL}/activity/notes`;
+
 const getAuthHeaders = (): Record<string, string> => {
   const token = Cookies.get('token');
-  console.log('token', token);
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
@@ -41,7 +51,7 @@ export const fetchPost = async (url: string, body: any) => {
 
   if (!response.ok) await fetchError(response);
 
-  dbg('FETCH', 'POST RESPONSE', { response });
+  // dbg('FETCH', 'POST RESPONSE', { response });
   return response;
 };
 
@@ -84,7 +94,7 @@ export const fetchPut = async (url: string, body: any) => {
 
   if (!response.ok) await fetchError(response);
 
-  dbg('FETCH', 'PUT RESPONSE', { response });
+  // dbg('FETCH', 'PUT RESPONSE', { response });
   return response;
 };
 
@@ -98,5 +108,16 @@ const fetchError = async (response: Response) => {
   } catch (error) {
     message = response.statusText;
   }
+
+  // TODO: standardize error handling with backend
+  // some errors we want to hide from the user
+  // some we want to show as a toast
+
+  if (response.status === 409) {
+    dbg('ERROR', '409 Silent', { message });
+    return;
+  }
+
+  toast.error(message);
   throw new Error(message);
 };

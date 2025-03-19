@@ -1,31 +1,43 @@
 import { dbg } from '@/lib/debug';
-import type { Geopoint } from '@/lib/mock/types';
+import type { Geopoint } from '@/types';
 import { useEffect, useState } from 'react';
 
 interface LocationState {
-  geopoint: {
-    latitude: number;
-    longitude: number;
-    accuracy: number;
-  } | null;
+  geopoint: Geopoint | null;
   error: string | null;
   isLoading: boolean;
 }
 
-export const useLocation = (spoof?: Geopoint) => {
+// To spoof location, set SPOOF_LOCATION to a Geopoint object
+// To use real location, set SPOOF_LOCATION to null
+
+const SPOOF_LOCATION: Geopoint = {
+  latitude: 35.87,
+  longitude: -78.76,
+  inaccuracyRadius: 0.001,
+};
+
+// const SPOOF_LOCATION = null;
+
+export const useLocation = () => {
+  dbg('HOOK', 'useLocation');
+
   const [location, setLocation] = useState<LocationState>({
-    geopoint: spoof ?? null,
+    geopoint: SPOOF_LOCATION,
     error: null,
-    isLoading: !spoof,
+    isLoading: true,
   });
 
   useEffect(() => {
-    if (spoof) {
-      dbg('HOOK', 'useLocation', 'spoofing location');
+    dbg('EFFECT', 'useLocation', 'updating...');
+
+    if (SPOOF_LOCATION !== null) {
+      dbg('EFFECT', 'useLocation', 'spoofing location');
       return;
     }
 
     if (!navigator.geolocation) {
+      dbg('EFFECT', 'useLocation', 'geolocation not supported');
       setLocation((prev) => ({
         ...prev,
         error: 'Geolocation is not supported by your browser',
@@ -40,21 +52,23 @@ export const useLocation = (spoof?: Geopoint) => {
           geopoint: {
             latitude: position.coords.latitude,
             longitude: position.coords.longitude,
-            accuracy: position.coords.accuracy / 87000,
+            inaccuracyRadius: position.coords.accuracy / 87000,
           },
           error: null,
           isLoading: false,
         });
+        dbg('EFFECT', 'useLocation', 'location updated');
       },
       (error) => {
-        setLocation((prev) => ({
-          ...prev,
+        setLocation({
+          geopoint: null,
           error: error.message,
           isLoading: false,
-        }));
+        });
+        dbg('ERROR', 'useLocation', error);
       },
     );
-  }, [spoof]);
+  }, []);
 
   return location;
 };

@@ -1,5 +1,5 @@
 import { TrailIcons } from '@/components/trail-icons';
-import type { Trail } from '@/lib/mock/types';
+import type { Trail } from '@/types';
 
 export const TrailDetailView = ({ trail }: { trail: Trail }) => {
   return (
