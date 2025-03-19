@@ -48,13 +48,13 @@ describe('NotesMiniTab', () => {
 	});
 
 	it('renders the notes textarea with initial value', () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		const textarea = screen.getByRole('textbox');
 		expect(textarea).toHaveValue(mockInitialNote);
 	});
 
 	it('updates note on textarea change', async () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		const textarea = screen.getByRole('textbox');
 		const newNote = 'Updated test note';
 
@@ -67,7 +67,7 @@ describe('NotesMiniTab', () => {
 	});
 
 	it('shows success toast when note is saved', async () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		const saveButton = screen.getByTestId('save-button');
 
 		fireEvent.click(saveButton);
@@ -90,7 +90,7 @@ describe('NotesMiniTab', () => {
 	});
 
 	it('shows error toast when note save fails', async () => {
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		const saveButton = screen.getByTestId('save-button');
 
 		fireEvent.click(saveButton);
@@ -112,7 +112,7 @@ describe('NotesMiniTab', () => {
 			isLoading: true,
 		});
 
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		expect(screen.getByText('Loading...')).toBeInTheDocument();
 	});
 
@@ -130,7 +130,7 @@ describe('NotesMiniTab', () => {
 			isLoading: false,
 		});
 
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 
 		expect(mockSetNote).toHaveBeenCalledWith(mockAbbreviation, remoteNote);
 	});
@@ -148,7 +148,7 @@ describe('NotesMiniTab', () => {
 			isLoading: false,
 		});
 
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 
 		expect(mockSetNote).not.toHaveBeenCalled();
 	});
@@ -164,7 +164,7 @@ describe('NotesMiniTab', () => {
 			setNote: mockSetNote,
 		});
 
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		expect(mockSetNote).not.toHaveBeenCalled();
 	});
 
@@ -174,7 +174,7 @@ describe('NotesMiniTab', () => {
 			setNote: mockSetNote,
 		});
 
-		renderWithClient(<NotesMiniTab abbreviation={mockAbbreviation} parkId={mockParkId} />);
+		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		const saveButton = screen.getByTestId('save-button');
 
 		fireEvent.click(saveButton);
