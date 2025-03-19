@@ -521,6 +521,135 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             Assert.Throws<ArgumentNullException>(() => _controller.GetCompletedBucketListItems());
         }
 
+        [Fact]
+        public void VisitPark_Returns200Ok_WhenValidUserAndCoords()
+        {
+            // Setup.
+            var req = new VisitParkRequest(-78.6736, 35.7717, 0.005);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            ParkVisit visit = SetupVisitParkSuccess(req, TestData.Users[1], TestData.Parks[1]);
+
+            // Action.
+            var result = _controller.VisitPark(TestData.Parks[1].parkAbbreviation, req);
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<ParkVisitResponse>(okResult.Value);
+            Assert.True(Response.Equal(visit, resp));
+        }
+
+        [Fact]
+        public void VisitPark_Returns405MethodNotOk_WhenInvalidCoords()
+        {
+            // Setup.
+            var req = new VisitParkRequest(-77.89974829741625, 34.04930958335885, 0.005);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.VisitPark(
+                TestData.Users[1].id,
+                TestData.Parks[1].parkAbbreviation,
+                req.longitude,
+                req.latitude,
+                req.inaccuracyRadius
+            )).Throws(new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park."));
+
+            // Action.
+            var e = Assert.Throws<ServiceException>(() => _controller.VisitPark(TestData.Parks[1].parkAbbreviation, req));
+
+            // Assert.
+            Assert.Equal(405, e.StatusCode);
+        }
+
+        [Fact]
+        public void VisitPark_ReturnsNullException_WhenInvalidUser()
+        {
+            // Setup, no user.
+            var req = new VisitParkRequest(-78.6736, 35.7717, 0.005);
+            ParkVisit visit = SetupVisitParkSuccess(req, TestData.Users[1], TestData.Parks[1]);
+
+            // Action.
+            Assert.Throws<ArgumentNullException>(() => _controller.VisitPark(TestData.Parks[1].parkAbbreviation, req));
+        }
+
+        [Fact]
+        public void VisitPark_Returns404NotFound_WhenInvalidPark()
+        {
+            // Setup.
+            var req = new VisitParkRequest(-78.6736, 35.7717, 0.005);
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.VisitPark(
+                TestData.Users[1].id,
+                "INVALID",
+                req.longitude,
+                req.latitude,
+                req.inaccuracyRadius
+            )).Throws(new NotFoundException("Park not found with given abbreviation."));
+
+            // Action.
+            var e = Assert.Throws<NotFoundException>(() => _controller.VisitPark("INVALID", req));
+
+            // Assert.
+            Assert.Equal(404, e.StatusCode);
+        }
+
+        [Fact]
+        public void GetParkVisits_ReturnsData_WhenValidUserHasVisits()
+        {
+            List<ParkVisit> visits = new List<ParkVisit>();
+            visits.Add(TestData.ParkVisits[0]);
+            visits.Add(TestData.ParkVisits[1]);
+
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetParkVisits(TestData.Users[1].id))
+                .Returns(visits);
+
+            // Action.
+            var result = _controller.GetVisitedParks();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsAssignableFrom<IEnumerable<dynamic>>(okResult.Value);
+
+            int counter = 0;
+            foreach (var item in resp)
+            {
+                var id = item.GetType().GetProperty("id")?.GetValue(item);
+                var createdAt = item.GetType().GetProperty("createdAt")?.GetValue(item);
+                var parkId = item.GetType().GetProperty("parkId")?.GetValue(item);
+
+                Assert.Equal(visits[counter].id, id);
+                Assert.Equal(visits[counter].createdAt, createdAt);
+                Assert.Equal(visits[counter].parkId, parkId);
+                counter++;
+            }
+        }
+
+        [Fact]
+        public void GetParkVisits_ReturnsEmpty_WhenValidUserHasNoVisits()
+        {
+            SetupUser(TestData.Users[0].id, TestData.Users[0].role.GetDisplayName());
+            _mockActivityService.Setup(s => s.GetParkVisits(TestData.Users[0].id))
+                .Returns(new List<ParkVisit>());
+
+            // Action.
+            var result = _controller.GetVisitedParks();
+
+            // Assert.
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsAssignableFrom<IEnumerable<dynamic>>(okResult.Value);
+            Assert.Empty(resp);
+        }
+
+        [Fact]
+        public void GetParkVisits_ReturnsNullException_WhenInvalidUser()
+        {
+            // Setup, no user.
+            _mockActivityService.Setup(s => s.GetParkVisits(TestData.Users[0].id))
+                .Returns(new List<ParkVisit>());
+
+            // Action.
+            Assert.Throws<ArgumentNullException>(() => _controller.GetVisitedParks());
+        }
+
         private void SetupUser(int userId, string role)
         {
             var user = new ClaimsPrincipal(new ClaimsIdentity(new Claim[]
@@ -544,6 +673,33 @@ namespace DigitalPassportBackend.UnitTests.Controllers
                 req.longitude,
                 req.latitude
             )).Returns(item);
+        }
+
+        private ParkVisit SetupVisitParkSuccess(VisitParkRequest req, User user, Park park)
+        {
+            // Result
+            var visit = new ParkVisit()
+            {
+                id = 6,
+                location = new(req.latitude, req.longitude),
+                createdAt = DateTime.Now,
+                updatedAt = DateTime.Now,
+                parkId = park.id,
+                park = park,
+                userId = user.id,
+                user = user
+            };
+
+            // Mock service
+            _mockActivityService.Setup(s => s.VisitPark(
+                user.id,
+                park.parkAbbreviation,
+                req.longitude,
+                req.latitude,
+                req.inaccuracyRadius
+            )).Returns(visit);
+
+            return visit;
         }
 
         private void SetupPrivateNoteSuccess(PrivateNoteRequest req, User user, Park? park)
