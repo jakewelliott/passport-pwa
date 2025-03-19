@@ -432,6 +432,18 @@ namespace DigitalPassportBackend.UnitTests.Services
                     0, 0));
         }
 
+        [Fact]
+        public void GetParkVisits_ReturnsPopulatedList_WhenVisitsExist()
+        {
+            // Action.
+            var result = _activities.GetParkVisits(TestData.Users[1].id);
+
+            // Assert.
+            Assert.Equal(2, result.Count);
+            Assert.Contains(TestData.ParkVisits[0], result);
+            Assert.Contains(TestData.ParkVisits[1], result);
+        }
+
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
         // User 1, Park 1 - deleted bucket list item, no stamps, no private notes, no visits
         private void SetupActivity0()
@@ -471,6 +483,9 @@ namespace DigitalPassportBackend.UnitTests.Services
         // Helper for mocking CollectedStampRepository.GetByUser(userId)
         private readonly Dictionary<int, List<CollectedStamp>> _stampDict = [];
         
+        // Helper for mocking ParkVisitRepository.GetAllByUser(userId)
+        private readonly Dictionary<int, List<ParkVisit>> _visitDict = [];
+
         // Helper for mocking CompletedBucketListItemRepository.GetByUser(userId)
         private readonly Dictionary<int, List<CompletedBucketListItem>> _cbliDict = [];
 
@@ -488,6 +503,15 @@ namespace DigitalPassportBackend.UnitTests.Services
             if (collectedStamp is not null)
             {
                 _stampDict[TestData.Users[userId].id].Add(collectedStamp);
+            }
+
+            if (!_visitDict.ContainsKey(TestData.Users[userId].id))
+            {
+                _visitDict.Add(TestData.Users[userId].id, parkVisits);
+            }
+            else
+            {
+                _visitDict[TestData.Users[userId].id].AddRange(parkVisits);
             }
 
             if (!_cbliDict.ContainsKey(TestData.Users[userId].id))
@@ -518,6 +542,8 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns(privateNote);
             _mockParkVisits.Setup(s => s.GetByParkAndUser(TestData.Parks[parkId].id, TestData.Users[userId].id))
                 .Returns(parkVisits);
+            _mockParkVisits.Setup(s => s.GetAllByUser(TestData.Users[userId].id))
+                .Returns(_visitDict[TestData.Users[userId].id]);
         }
     }
 }
