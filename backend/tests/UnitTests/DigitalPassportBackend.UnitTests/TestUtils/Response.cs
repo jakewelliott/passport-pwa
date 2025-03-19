@@ -16,6 +16,13 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class Response
 {
+    public static bool Equal(ParkVisit expected, ParkVisitResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.createdAt == actual.createdAt
+            && expected.park.parkAbbreviation == actual.parkAbbreviation;
+    }
+
     public static bool Equal(BucketListItem expected, ActivityController.BucketListItemResponse actual)
     {
         return expected.id == actual.id
