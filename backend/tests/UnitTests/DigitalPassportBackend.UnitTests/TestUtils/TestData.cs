@@ -331,6 +331,17 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 park = Parks[0],
                 userId = Users[2].id,
                 user = Users[2]
+            },
+            new()
+            {
+                id = 69,
+                note = "NC Parks are awesome",
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
+                parkId = null,
+                park = null,
+                userId = Users[2].id,
+                user = Users[2]
             }
         ];
 
