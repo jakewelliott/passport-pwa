@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { useNavigate } from 'react-router-dom';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Mock } from 'vitest';
+import { renderWithClient } from '@/lib/test-wrapper';
 // Mock dependencies
 vi.mock('react-router-dom', () => ({
   useNavigate: vi.fn(),
@@ -23,7 +24,7 @@ describe('EditGeneralNotes', () => {
 
   it('renders correctly with initial state', () => {
     localStorage.setItem('generalNotes', 'Initial notes');
-    render(<EditGeneralNotes />);
+    renderWithClient(<EditGeneralNotes />);
 
     const textarea = screen.getByPlaceholderText('Add some general notes!');
     expect(textarea).toBeInTheDocument();
@@ -34,7 +35,7 @@ describe('EditGeneralNotes', () => {
   });
 
   it('updates textarea value on user input', () => {
-    render(<EditGeneralNotes />);
+    renderWithClient(<EditGeneralNotes />);
 
     const textarea = screen.getByPlaceholderText('Add some general notes!');
     fireEvent.change(textarea, { target: { value: 'New note content' } });
@@ -43,7 +44,7 @@ describe('EditGeneralNotes', () => {
   });
 
   it('saves notes to localStorage and navigates on save', () => {
-    render(<EditGeneralNotes />);
+    renderWithClient(<EditGeneralNotes />);
 
     const textarea = screen.getByPlaceholderText('Add some general notes!');
     fireEvent.change(textarea, { target: { value: 'Saved note content' } });
@@ -62,7 +63,7 @@ describe('EditGeneralNotes', () => {
     });
     vi.spyOn(console, 'error').mockImplementation(() => {});
 
-    render(<EditGeneralNotes />);
+    renderWithClient(<EditGeneralNotes />);
 
     const textarea = screen.getByPlaceholderText('Add some general notes!');
     fireEvent.change(textarea, { target: { value: 'Note that will fail' } });
