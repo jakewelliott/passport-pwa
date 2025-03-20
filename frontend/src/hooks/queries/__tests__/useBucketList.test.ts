@@ -13,4 +13,8 @@ describe('Bucket List Queries', () => {
     const testUserItems = completedBucketListItems.filter((item) => item.userId === mockUserProfile.id);
     await testQueryHook(useCompletedBucketListItems, testUserItems);
   });
+
+  // TODO: test mutation
+
+  // TODO: test combined hook
 });
