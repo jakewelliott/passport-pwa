@@ -52,7 +52,7 @@ export const LocationContact = ({ park }: LocationContactProps) => {
       {park.phone && (
         <div className='top-0 flex'>
           <FiPhone size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-          <p>{park.phone}</p>
+          <p>{String(park.phone).replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</p>
         </div>
       )}
       {park.email && (
