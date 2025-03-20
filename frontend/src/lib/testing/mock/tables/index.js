@@ -67,21 +67,32 @@ const camel = Object.entries({
   trail_icons,
   trails_,
   users_,
-}).map(([key, value]) => {
-  return {
-    [snakeStringToCamelCase(key)]: camelify(value, {
-      // sometimes the backend keys don't match the frontend keys, even after camelifying
-      // so we need to map them here
-      park: 'parkId',
-      user: 'userId',
-      park_abbreviation: 'abbreviation',
-      length: 'distance',
-    }),
-  };
-});
+}).reduce((acc, [key, value]) => {
+  // Now we map over each array and camelify each item
+  acc[snakeStringToCamelCase(key)] = Array.isArray(value)
+    ? value.map((item) =>
+        camelify(item, {
+          // sometimes the backend keys don't match the frontend keys, even after camelifying
+          // so we need to map them here
+          park: 'parkId',
+          user: 'userId',
+          park_abbreviation: 'abbreviation',
+          length: 'distance',
+        }),
+      )
+    : camelify(value, {
+        park: 'parkId',
+        user: 'userId',
+        park_abbreviation: 'abbreviation',
+        length: 'distance',
+      });
+  return acc;
+}, {});
+
+console.log(camel);
 
 // for parks, we need to include the coordinates, addresses, icons, and photos
-const parks = camel.parks.map((park) => ({
+export const parks = camel.parks.map((park) => ({
   ...park,
   coordinates: parseGeopoint(park.coordinates),
   addresses: camel.parkAddresses.filter((address) => address.park === park.id),
@@ -90,19 +101,17 @@ const parks = camel.parks.map((park) => ({
 }));
 
 // for trails, we need to get an array of the icon names
-const trails = camel.trails.map((trail) => ({
+export const trails = camel.trails.map((trail) => ({
   ...trail,
   trailIcons: camel.trailIcons.filter((icon) => icon.trail === trail.id).map((icon) => icon.icon),
 }));
 
 // for the rest of the tables, we just need to camelify the keys
 // im using camelCase in these names to make it clear that the data is in camelCase
-const bucketListItems = camel.bucketListItems;
-const collectedStamps = camel.collectedStamps;
-const completedBucketListItems = camel.completedBucketListItems;
-const parkVisits = camel.parkVisits;
-const parkNotes = camel.privateNotes;
-const users = camel.users;
 
-// and finally, export our data
-export { bucketListItems, collectedStamps, completedBucketListItems, parkNotes, parks, parkVisits, trails, users };
+export const bucketListItems = camel.bucketListItems;
+export const collectedStamps = camel.collectedStamps;
+export const completedBucketListItems = camel.completedBucketListItems;
+export const parkVisits = camel.parkVisits;
+export const parkNotes = camel.privateNotes;
+export const users = camel.users;
