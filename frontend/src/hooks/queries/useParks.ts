@@ -27,11 +27,6 @@ export const usePark = (abbreviation: string) => {
   });
 };
 
-export const useParkById = (id: number) => {
-  const hook = useParks();
-  return { ...hook, data: hook.data?.find((park) => park.id === id) };
-};
-
 export const useParksGeo = () => {
   return useQuery<ParkGeoData[]>({
     queryKey: ['parkGeo'],

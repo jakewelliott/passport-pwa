@@ -89,8 +89,6 @@ const camel = Object.entries({
   return acc;
 }, {});
 
-console.log(camel);
-
 // for parks, we need to include the coordinates, addresses, icons, and photos
 export const parks = camel.parks.map((park) => ({
   ...park,

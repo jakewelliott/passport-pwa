@@ -1,14 +1,11 @@
 import { PhotoGalleryMiniTab } from '@/app/locations/components/photos-minitab';
-import type { Park } from '@/types';
+import { mockPark } from '@/lib/testing/mock';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('PhotoGalleryMiniTab', () => {
-	const mockPhotos: Park['photos'] = [
-		{ photoPath: '/test1.jpg', alt: 'Test Caption 1' },
-		{ photoPath: '/test2.jpg', alt: 'Test Caption 2' },
-		{ photoPath: '/test3.jpg', alt: 'Park photo 3' },
-	];
+
+	const mockPhotos = mockPark.photos;
 
 	beforeEach(() => {
 		// Mock ResizeObserver
