@@ -22,7 +22,6 @@ interface UserContent {
 
 interface ParkContent extends UserContent {
   parkId: number;
-  parkAbbreviation: string;
 }
 
 export interface Park {
@@ -82,7 +81,6 @@ export interface CollectedStamp extends ParkVisit {
 
 export interface ParkNote extends ParkContent {
   note: string;
-  parkAbbreviation: string;
   updatedAt: Date;
 }
 

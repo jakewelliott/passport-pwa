@@ -7,11 +7,13 @@ import type {
 import { http, HttpResponse } from 'msw';
 import { setupServer } from 'msw/node';
 import {
+  GetAllNotes,
   GetAllParks,
   GetBucketListItems,
   GetCollectedStamps,
   GetCompletedBucketListItems,
   GetPark,
+  GetParkNote,
   GetUser,
   GetVisitedParks,
   Login,
@@ -68,8 +70,17 @@ const activityHandlers = [
     return HttpResponse.json(PostCollectStamp(abbreviationHelper(params), body));
   }),
 
-  http.post('*/api/activity/notes/:parkAbbreviation', async ({ params, request }) => {
-    const p = abbreviationHelper(params);
+  http.get('*/api/activity/notes/:parkId', ({ params }) => {
+    const p = Number(params.parkId);
+    return HttpResponse.json(GetParkNote(p));
+  }),
+
+  http.get('*/api/activity/notes', () => {
+    return HttpResponse.json(GetAllNotes());
+  }),
+
+  http.post('*/api/activity/notes/:parkId', async ({ params, request }) => {
+    const p = Number(params.parkId);
     const body = (await request.json()) as ParkNoteRequest;
     return HttpResponse.json(PostCreateUpdateNote(p, body));
   }),
