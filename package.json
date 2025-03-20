@@ -5,7 +5,7 @@
 		"docker": "docker compose up --build",
 		"docker:clear": "docker system prune"
 	},
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4"
-  }
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4"
+	}
 }

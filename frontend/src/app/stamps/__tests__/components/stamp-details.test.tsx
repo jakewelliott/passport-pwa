@@ -1,8 +1,8 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
 import dateHelper from '@/lib/date-helper';
-import { collectedStamps, mockPark } from '@/lib/mock';
-import { renderWithClient } from '@/lib/test-wrapper';
+import { collectedStamps, mockPark } from '@/lib/testing/mock/tables';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import type { Mock } from 'vitest';
 import { beforeEach, describe, expect, it, vi } from 'vitest';

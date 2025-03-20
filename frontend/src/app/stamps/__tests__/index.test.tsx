@@ -1,8 +1,8 @@
 import { usePark, useParks } from '@/hooks/queries/useParks';
 import { useStamp, useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
-import { collectedStamps, mockPark } from '@/lib/mock';
-import { renderWithClient } from '@/lib/test-wrapper';
+import { collectedStamps, mockPark } from '@/lib/testing/mock/tables';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { fireEvent, screen } from '@testing-library/react';
 import { toast } from 'react-toastify';
 import type { Mock } from 'vitest';

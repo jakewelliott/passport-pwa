@@ -143,7 +143,11 @@ public class ActivityService(
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
 
         var item = _bucketListItemRepository.GetById(itemId);
+				if (item == null) {
+          throw new ServiceException(StatusCodes.Status404NotFound, $"Bucket list item {itemId} not found.");
+        }
 
+				// see if the user has already completed the item
         var completion = _completedBucketListItemRepository.GetByItemAndUser(itemId, userId);
         if (completion != null)
         {

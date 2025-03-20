@@ -1,6 +1,6 @@
 import { useParks } from '@/hooks/queries/useParks';
-import { parks } from '@/lib/mock';
-import { renderWithClient } from '@/lib/test-wrapper';
+import { parks } from '@/lib/testing/mock/tables';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
 import Locations from '../index';
