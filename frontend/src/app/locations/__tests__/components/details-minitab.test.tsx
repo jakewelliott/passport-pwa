@@ -1,5 +1,5 @@
 import { DetailsMiniTab } from '@/app/locations/components/details-minitab';
-import { mockPark } from '@/lib/mock';
+import { mockPark } from '@/lib/testing/mock/tables';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 

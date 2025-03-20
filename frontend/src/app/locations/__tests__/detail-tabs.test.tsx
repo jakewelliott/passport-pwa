@@ -1,7 +1,7 @@
 import { usePark } from '@/hooks/queries/useParks';
 import { useUser } from '@/hooks/queries/useUser';
-import { mockPark } from '@/lib/mock';
-import { renderWithClient } from '@/lib/test-wrapper';
+import { mockPark } from '@/lib/testing/mock/tables';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen, waitFor } from '@testing-library/react';
 import { Route, Routes } from 'react-router-dom';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
