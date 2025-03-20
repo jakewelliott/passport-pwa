@@ -1,18 +1,10 @@
-import { users } from './tables';
-
-// our backend controllers use JWTs to identify who is making the request
-// so we will export the testUser in the tables file for testing
-export const testUser = {
-  id: users[1].id,
-  username: users[1].username,
-  role: users[1].role,
-  token: 'figurethisshitoutlater',
-};
+import { mockUserProfile } from './components';
 
 // here's some generic "SQL queries" that our controllers will use
+// we use mockUserProfile as our test user
 
 export const selectByUser = <T extends { userId: number }>(table: T[]) => {
-  return table.filter((item) => item.userId === testUser.id);
+  return table.filter((item) => item.userId === mockUserProfile.id);
 };
 
 export const selectById = <T extends { id: number }>(table: T[], id: number) => {
@@ -24,7 +16,7 @@ export const selectById = <T extends { id: number }>(table: T[], id: number) => 
 export const postUserContent = <T>(req: T) => {
   return {
     id: Math.floor(Math.random() * 1000000),
-    userId: testUser.id,
+    userId: mockUserProfile.id,
     createdAt: new Date(),
     updatedAt: new Date(),
     deleted: false,

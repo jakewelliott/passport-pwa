@@ -47,7 +47,7 @@ export default defineConfig(({ command, mode }) => {
       coverage: {
         provider: 'v8',
         reporter: ['text', 'json', 'html'],
-        exclude: ['node_modules/', 'src/lib/testing/vitest-setup.ts'],
+        exclude: ['node_modules/'],
       },
       include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     },

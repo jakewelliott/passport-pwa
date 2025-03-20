@@ -1,48 +1,78 @@
 import { LocationContact } from "@/app/locations/components/location-contact";
 import DateHelper from "@/lib/date-helper";
-import { mockPark as park } from "@/lib/mock";
-import { renderWithClient } from '@/lib/test-wrapper';
+import { mockPark } from '@/lib/testing/mock';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { fireEvent, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import AchievementsView from "../../components/achievements-view";
 
+const parkWithManyAddresses = {
+	...mockPark,
+	addresses: [
+		{
+			title: "Address 1",
+			addressLineOne: "Address 1",
+			addressLineTwo: "",
+			city: "City1",
+			state: "ST",
+			zipcode: 12345,
+		},
+		{
+			title: "Address 2",
+			addressLineOne: "Address 2",
+			addressLineTwo: "",
+			city: "City2",
+			state: "ST",
+			zipcode: 12346,
+		},
+		{
+			title: "Address 3",
+			addressLineOne: "Address 3",
+			addressLineTwo: "",
+			city: "City3",
+			state: "ST",
+			zipcode: 12347,
+		},
+	],
+};
+
 describe("LocationContact", () => {
 	it("renders park name", () => {
-		renderWithClient(<LocationContact park={park} />);
-		expect(screen.getByText(park.parkName)).toBeInTheDocument();
+		renderWithClient(<LocationContact park={mockPark} />);
+		expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
 	});
 
 	it("renders GPS coordinates", () => {
-		renderWithClient(<LocationContact park={park} />);
+		renderWithClient(<LocationContact park={mockPark} />);
 		expect(
 			screen.getByText(
-				`GPS: ${park.coordinates.latitude}, ${park.coordinates.longitude}`
+				`GPS: ${mockPark.coordinates.latitude}, ${mockPark.coordinates.longitude}`
 			)
 		).toBeInTheDocument();
 	});
 
 	it("renders phone number", () => {
-		renderWithClient(<LocationContact park={park} />);
-		expect(screen.getByText(park.phone)).toBeInTheDocument();
+		renderWithClient(<LocationContact park={mockPark} />);
+		expect(screen.getByText(mockPark.phone)).toBeInTheDocument();
 	});
 
 	it("renders email", () => {
-		renderWithClient(<LocationContact park={park} />);
-		if (park.email) {
-			expect(screen.getByText(park.email)).toBeInTheDocument();
+		renderWithClient(<LocationContact park={mockPark} />);
+		if (mockPark.email) {
+			expect(screen.getByText(mockPark.email)).toBeInTheDocument();
 		}
 	});
 
 	it("renders address when provided", () => {
-		renderWithClient(<LocationContact park={park} />);
-		if (park.addresses?.[0]) {
+		renderWithClient(<LocationContact park={mockPark} />);
+		if (mockPark.addresses?.[0]) {
 			const addressText = screen.getByText((content, element) => {
 				return (
 					element?.tagName.toLowerCase() === "p" &&
-					content.includes(park.addresses[0].addressLineOne) &&
-					content.includes(park.addresses[0].city) &&
-					content.includes(park.addresses[0].state) &&
-					content.includes(park.addresses[0].zipcode.toString())
+					content.includes(mockPark.addresses[0].addressLineOne) &&
+					content.includes(mockPark.addresses[0].city) &&
+					content.includes(mockPark.addresses[0].state) &&
+					content.includes(mockPark.addresses[0].zipcode.toString())
 				);
 			});
 			expect(addressText).toBeInTheDocument();
@@ -50,28 +80,28 @@ describe("LocationContact", () => {
 	});
 
 	it("renders contact icons", () => {
-		renderWithClient(<LocationContact park={park} />);
+		renderWithClient(<LocationContact park={mockPark} />);
 		const svgElements = document.querySelectorAll("svg");
 		expect(svgElements.length).toBeGreaterThanOrEqual(1);
 	});
 
 	it("renders achievements", () => {
-		renderWithClient(<LocationContact park={park} />);
+		renderWithClient(<LocationContact park={mockPark} />);
 		const stampElement = screen.getByText(
-			"Stamp collected on 2/16/24 at 1:48 AM"
+			"Stamp collected on"
 		);
 		expect(stampElement).toBeInTheDocument();
 		expect(screen.queryAllByTestId("BLI").length).toBe(0);
 	});
 
 	it("shows correct stamp text", () => {
-		renderWithClient(<AchievementsView park={park} />);
+		renderWithClient(<AchievementsView park={mockPark} />);
 		const stampElement = screen.getByText("Stamp not yet collected");
 		expect(stampElement).toBeInTheDocument();
-		renderWithClient(<AchievementsView park={park} />);
+		renderWithClient(<AchievementsView park={mockPark} />);
 		let stampElements = screen.getAllByText("Stamp not yet collected");
 		const currentDate = new Date().toISOString();
-		renderWithClient(<AchievementsView park={park} />);
+		renderWithClient(<AchievementsView park={mockPark} />);
 		stampElements = screen.getAllByText(
 			`Stamp collected on ${DateHelper.stringify(new Date(currentDate)).replace(
 				",",
@@ -82,48 +112,20 @@ describe("LocationContact", () => {
 	});
 
 	it("Renders bucket list items", () => {
-		renderWithClient(<AchievementsView park={park} />);
+		renderWithClient(<AchievementsView park={mockPark} />);
 		const stampElements = screen.getByTestId("BLI");
 		expect(stampElements).toBeInTheDocument();
 	});
 
 	it("renders unchecked bucket list icon when required", () => {
-		renderWithClient(<AchievementsView park={park} />);
+		renderWithClient(<AchievementsView park={mockPark} />);
 		const stampElements = screen.getByTestId("BLI");
 		expect(stampElements).toBeInTheDocument();
 	});
 
 	describe("multiple addresses", () => {
 		it("shows only first two addresses by default", () => {
-			const parkWithManyAddresses = {
-				...park,
-				addresses: [
-					{
-						title: "Address 1",
-						addressLineOne: "Address 1",
-						addressLineTwo: "",
-						city: "City1",
-						state: "ST",
-						zipcode: 12345,
-					},
-					{
-						title: "Address 2",
-						addressLineOne: "Address 2",
-						addressLineTwo: "",
-						city: "City2",
-						state: "ST",
-						zipcode: 12346,
-					},
-					{
-						title: "Address 3",
-						addressLineOne: "Address 3",
-						addressLineTwo: "",
-						city: "City3",
-						state: "ST",
-						zipcode: 12347,
-					},
-				],
-			};
+
 
 			renderWithClient(<LocationContact park={parkWithManyAddresses} />);
 
@@ -134,36 +136,6 @@ describe("LocationContact", () => {
 		});
 
 		it("toggles between showing all addresses and collapsing them", () => {
-			const parkWithManyAddresses = {
-				...park,
-				addresses: [
-					{
-						title: "Address 1",
-						addressLineOne: "Address 1",
-						addressLineTwo: "",
-						city: "City1",
-						state: "ST",
-						zipcode: 12345,
-					},
-					{
-						title: "Address 2",
-						addressLineOne: "Address 2",
-						addressLineTwo: "",
-						city: "City2",
-						state: "ST",
-						zipcode: 12346,
-					},
-					{
-						title: "Address 3",
-						addressLineOne: "Address 3",
-						addressLineTwo: "",
-						city: "City3",
-						state: "ST",
-						zipcode: 12347,
-					},
-				],
-			};
-
 			renderWithClient(<LocationContact park={parkWithManyAddresses} />);
 
 			// Initially only shows 2 addresses

@@ -1,8 +1,7 @@
-import type { UserProfile } from '@/types';
-import { testUser } from './utils';
+import { mockUserProfile } from './components';
 
-export const GetUser = (): UserProfile => testUser;
+export const GetUser = () => mockUserProfile;
 
-export const Register = (): UserProfile => testUser;
+export const Register = () => mockUserProfile;
 
-export const Login = (): UserProfile => testUser;
+export const Login = () => mockUserProfile;

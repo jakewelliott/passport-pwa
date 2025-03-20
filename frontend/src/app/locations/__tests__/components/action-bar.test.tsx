@@ -1,5 +1,5 @@
 import { LocationActionBar } from '@/app/locations/components/action-bar';
-import { mockPark } from '@/lib/testing/mock/tables';
+import { mockPark } from '@/lib/testing/mock';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 

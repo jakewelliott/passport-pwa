@@ -4,7 +4,8 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useLocation } from '../useLocation';
 
 /** Gets all bucket list items for all parks */
-const useBucketListItems = () => {
+// NOTE: only exported for testing, do not use in components!!
+export const useBucketListItems = () => {
   return useQuery<BucketListItem[]>({
     queryKey: ['bucketListItems'],
     queryFn: () => fetchGet(API_BUCKET_LIST_URL),
@@ -12,7 +13,8 @@ const useBucketListItems = () => {
 };
 
 /** Gets all completed bucket list items for a user */
-const useCompletedBucketListItems = () => {
+// NOTE: only exported for testing, do not use in components!!
+export const useCompletedBucketListItems = () => {
   return useQuery<BucketListCompletion[]>({
     queryKey: ['completedBucketListItems'],
     queryFn: () => fetchGet(API_COMPLETED_BUCKET_LIST_ITEMS_URL),
