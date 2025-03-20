@@ -1,6 +1,6 @@
+import react from '@vitejs/plugin-react';
 import fs from 'node:fs';
 import path from 'node:path';
-import react from '@vitejs/plugin-react';
 import { defineConfig, loadEnv } from 'vite';
 
 // https://vitejs.dev/config/
@@ -43,11 +43,11 @@ export default defineConfig(({ command, mode }) => {
     test: {
       globals: true,
       environment: 'jsdom',
-      setupFiles: ['./src/lib/vitest-setup.ts'],
+      setupFiles: ['./src/lib/testing/vitest-setup.ts'],
       coverage: {
         provider: 'v8',
         reporter: ['text', 'json', 'html'],
-        exclude: ['node_modules/', 'src/lib/vitest-setup.ts'],
+        exclude: ['node_modules/', 'src/lib/testing/vitest-setup.ts'],
       },
       include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
     },
