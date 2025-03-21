@@ -7,7 +7,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("parks")]
-public class Park
+public class Park : IEntity
 {
     public int id { get; init; }
     [Column("park_abbreviation")]

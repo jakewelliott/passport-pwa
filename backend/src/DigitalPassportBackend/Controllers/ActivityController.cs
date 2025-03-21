@@ -135,7 +135,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
             return new CompletedBucketListItemResponse(
                 item.id,
                 item.bucketListItemId,
-                item.updated_at
+                item.updatedAt
             );
         }
     }

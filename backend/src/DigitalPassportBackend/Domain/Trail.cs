@@ -5,7 +5,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("trails")]
-public class Trail
+public class Trail : IEntity
 {
     public int id { get; init; }
     [Column("trail_name")]

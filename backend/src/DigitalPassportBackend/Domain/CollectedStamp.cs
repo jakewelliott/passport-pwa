@@ -7,7 +7,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("collected_stamps")]
-public class CollectedStamp
+public class CollectedStamp : IEntity
 {
     public int id { get; init; }
     public required StampCollectionMethod method { get; set; }
