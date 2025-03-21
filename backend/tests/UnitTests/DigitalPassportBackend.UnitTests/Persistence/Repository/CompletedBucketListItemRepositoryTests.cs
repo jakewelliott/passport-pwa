@@ -134,8 +134,8 @@ public class CompletedBucketListItemRepositoryTests
             Assert.Equal(userId, item.userId);
             Assert.Equal(TestData.CompletedBucketListItems[counter].id, item.id);
             Assert.Equal(TestData.CompletedBucketListItems[counter].location, item.location);
-            Assert.Equal(TestData.CompletedBucketListItems[counter].created_at, item.created_at);
-            Assert.Equal(TestData.CompletedBucketListItems[counter].updated_at, item.updated_at);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].createdAt, item.createdAt);
+            Assert.Equal(TestData.CompletedBucketListItems[counter].updatedAt, item.updatedAt);
             Assert.Equal(TestData.CompletedBucketListItems[counter].park, item.park);
             Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItemId, item.bucketListItemId);
             Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItem, item.bucketListItem);
@@ -188,8 +188,8 @@ public class CompletedBucketListItemRepositoryTests
             Assert.Equal(userId, item.userId);
             Assert.Equal(testDataItem.id, item.id);
             Assert.Equal(testDataItem.location, item.location);
-            Assert.Equal(testDataItem.created_at, item.created_at);
-            Assert.Equal(testDataItem.updated_at, item.updated_at);
+            Assert.Equal(testDataItem.createdAt, item.createdAt);
+            Assert.Equal(testDataItem.updatedAt, item.updatedAt);
             Assert.Equal(testDataItem.park, item.park);
             Assert.Equal(testDataItem.bucketListItemId, item.bucketListItemId);
             Assert.Equal(testDataItem.bucketListItem, item.bucketListItem);
@@ -232,8 +232,8 @@ public class CompletedBucketListItemRepositoryTests
         Assert.Equal(userId, result.userId);
         Assert.Equal(TestData.CompletedBucketListItems[counter].id, result.id);
         Assert.Equal(TestData.CompletedBucketListItems[counter].location, result.location);
-        Assert.Equal(TestData.CompletedBucketListItems[counter].created_at, result.created_at);
-        Assert.Equal(TestData.CompletedBucketListItems[counter].updated_at, result.updated_at);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].createdAt, result.createdAt);
+        Assert.Equal(TestData.CompletedBucketListItems[counter].updatedAt, result.updatedAt);
         Assert.Equal(TestData.CompletedBucketListItems[counter].park, result.park);
         Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItemId, result.bucketListItemId);
         Assert.Equal(TestData.CompletedBucketListItems[counter].bucketListItem, result.bucketListItem);
