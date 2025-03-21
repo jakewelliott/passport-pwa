@@ -226,11 +226,18 @@ public class ParkVisitRepositoryTests
     public void HasVisitedParkToday_ReturnsTrue_VisitedToday()
     {
         // Arrange
-        var locationId = TestData.ParkVisits[2].parkId;
-        var userId = TestData.ParkVisits[2].userId;
+        _db.Add(new ParkVisit()
+        {
+            id = 14,
+            location = new(-78.67421773821357, 35.772011241494404),
+            parkId = TestData.Parks[1].id,
+            park = TestData.Parks[1],
+            userId = TestData.Users[2].id,
+            user = TestData.Users[2]
+        });
 
         // Act
-        var result = _repo.HasVisitedParkToday(userId, locationId);
+        var result = _repo.HasVisitedParkToday(TestData.Users[2].id, TestData.Parks[1].id);
 
         // Assert
         Assert.True(result);
@@ -256,8 +263,7 @@ public class ParkVisitRepositoryTests
         // Arrange
         var yesterdayVisit = _repo.GetById(TestData.ParkVisits[3].id);
         var originalTime = yesterdayVisit.createdAt;
-        yesterdayVisit.createdAt = DateTime.UtcNow - new TimeSpan(1, 0, 0, 0);
-        _repo.Update(yesterdayVisit);
+        _db.ParkVisits.Where(e => e.id == yesterdayVisit.id).First().createdAt = DateTime.UtcNow - new TimeSpan(1, 0, 0, 0);
         var locationId = yesterdayVisit.parkId;
         var userId = yesterdayVisit.userId;
 
