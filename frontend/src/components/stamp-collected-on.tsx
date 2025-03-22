@@ -1,5 +1,6 @@
 import DateHelper from '@/lib/date-helper';
 import type { CollectedStamp } from '@/types';
+
 export const StampCollectedOn = ({ stamp }: { stamp?: CollectedStamp | null }) => {
 	const d = new Date(stamp?.createdAt ?? '');
 	const dateString =

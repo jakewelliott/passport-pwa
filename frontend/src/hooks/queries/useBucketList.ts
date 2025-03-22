@@ -34,12 +34,20 @@ const useToggleCompletion = () => {
 
 /** Call with parkId as undefined to get all bucket list items and completed items */
 export const useBucketList = (parkId?: number) => {
-  const { data: allItems, isLoading: isLoadingAllItems } = useBucketListItems();
-  const { data: allCompletedItems, isLoading: isLoadingCompletedItems } = useCompletedBucketListItems();
-  const { mutate: toggleCompletion, isPending: isMarkingAsComplete } = useToggleCompletion();
+  const { data: allItems, isLoading: isLoadingAllItems, refetch: refetchAllItems } = useBucketListItems();
+  const {
+    data: allCompletedItems,
+    isLoading: isLoadingCompletedItems,
+    refetch: refetchCompletedItems,
+  } = useCompletedBucketListItems();
+  const { mutate: toggleCompletion } = useToggleCompletion();
 
-  const isLoading =
-    isLoadingAllItems || isLoadingCompletedItems || isMarkingAsComplete || !allItems || !allCompletedItems;
+  const isLoading = isLoadingAllItems || isLoadingCompletedItems || !allItems || !allCompletedItems;
+
+  const refetch = () => {
+    refetchAllItems();
+    refetchCompletedItems();
+  };
 
   // filtering logic (useMemo?)
   const parkItems = allItems?.filter((item: BucketListItem) => item.parkId === parkId) ?? [];
@@ -48,9 +56,10 @@ export const useBucketList = (parkId?: number) => {
     allCompletedItems?.filter((item: any) => parkItemsIds.includes(item.bucketListItemId)) ?? [];
 
   return {
-    items: parkId === undefined ? allItems : parkItems,
+    data: parkId === undefined ? allItems : parkItems,
     completed: parkId === undefined ? allCompletedItems : parkCompletedItems,
     toggleCompletion,
     isLoading,
+    refetch,
   };
 };
