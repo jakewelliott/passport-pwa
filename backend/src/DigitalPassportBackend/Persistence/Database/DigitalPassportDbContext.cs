@@ -18,6 +18,18 @@ public class DigitalPassportDbContext : DbContext
         _configuration = configuration;
     }
 
+    public override int SaveChanges()
+    {
+        // Update updatedAt.
+        var modified = ChangeTracker
+            .Entries<IEntity>()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+        foreach (var e in modified)
+        {
+            e.Property(e => e.updatedAt).CurrentValue = DateTime.UtcNow;
+        }
+        return base.SaveChanges();
+    }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

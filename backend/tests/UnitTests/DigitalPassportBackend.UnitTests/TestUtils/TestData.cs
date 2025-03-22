@@ -168,8 +168,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 4,
                 icon = ParkIconNames.Fishing_Red,
-                created_at = DateTime.UtcNow,
-                updated_at = DateTime.UtcNow,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
                 park = Parks[0]
             },
@@ -177,8 +177,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 9,
                 icon = ParkIconNames.Swimming_Red,
-                created_at = DateTime.UtcNow,
-                updated_at = DateTime.UtcNow,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
                 park = Parks[0]
             }
@@ -381,8 +381,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 9,
                 location = new(34.0496, -77.9196),
-                created_at = DateTime.UtcNow,
-                updated_at = DateTime.UtcNow,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 deleted = false,
                 parkId = Parks[0].id,
                 park = Parks[0],
@@ -395,8 +395,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 24,
                 location = new(34.0481, -77.9132),
-                created_at = DateTime.UtcNow,
-                updated_at = DateTime.UtcNow,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 deleted = false,
                 parkId = Parks[0].id,
                 park = Parks[0],
@@ -409,8 +409,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 84,
                 location = new(35.7717, -78.6736),
-                created_at = DateTime.UtcNow,
-                updated_at = DateTime.UtcNow,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 deleted = false,
                 parkId = Parks[1].id,
                 park = Parks[1],
@@ -423,8 +423,8 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 92,
                 location = new(35.7717, -78.6736),
-                created_at = DateTime.UtcNow,
-                updated_at = DateTime.UtcNow,
+                createdAt = DateTime.UtcNow,
+                updatedAt = DateTime.UtcNow,
                 deleted = true,
                 parkId = Parks[1].id,
                 park = Parks[1],

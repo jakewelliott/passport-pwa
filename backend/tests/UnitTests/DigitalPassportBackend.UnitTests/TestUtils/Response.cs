@@ -36,7 +36,7 @@ public static class Response
     {
         return expected.id == actual.id
             && expected.bucketListItemId == actual.bucketListItemId
-            && expected.updated_at == actual.updatedAt;
+            && expected.updatedAt == actual.updatedAt;
     }
 
     public static bool Equal(Park? park, PrivateNoteRequest expected, PrivateNoteResponse actual)

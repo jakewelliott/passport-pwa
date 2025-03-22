@@ -256,7 +256,6 @@ public class ParkVisitRepositoryTests
         // Arrange
         var yesterdayVisit = _repo.GetById(TestData.ParkVisits[3].id);
         var originalTime = yesterdayVisit.createdAt;
-        yesterdayVisit.createdAt = DateTime.UtcNow - new TimeSpan(1, 0, 0, 0);
         _repo.Update(yesterdayVisit);
         var locationId = yesterdayVisit.parkId;
         var userId = yesterdayVisit.userId;

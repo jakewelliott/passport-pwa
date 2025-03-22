@@ -5,7 +5,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("park_photos")]
-public class ParkPhoto
+public class ParkPhoto : IEntity
 {
     public int id { get; init; }
     public required string photo { get; set; }

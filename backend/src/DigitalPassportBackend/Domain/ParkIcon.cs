@@ -5,14 +5,14 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("park_icons")]
-public class ParkIcon
+public class ParkIcon : IEntity
 {
     public int id { get; init; }
     public required ParkIconNames icon { get; set; }
     [Column("created_at")]
-    public DateTime created_at { get; set; } = DateTime.UtcNow;
+    public DateTime createdAt { get; set; } = DateTime.UtcNow;
     [Column("updated_at")]
-    public DateTime updated_at { get; set; } = DateTime.UtcNow;
+    public DateTime updatedAt { get; set; } = DateTime.UtcNow;
 
     // References
     [ForeignKey("park")]
