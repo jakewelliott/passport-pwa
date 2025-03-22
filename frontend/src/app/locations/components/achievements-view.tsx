@@ -24,6 +24,7 @@ const StampView = ({ stamp }: { stamp?: CollectedStamp | null }) => {
 const AchievementsView = ({ park }: AchievementsViewProps) => {
 	const { data: stamp, isLoading } = useStamp(park.abbreviation);
 
+	// TODO: this is ugly
 	if (isLoading) return <LoadingPlaceholder what='your achievements' />;
 
 	dbg('MISC', 'stamp', stamp);
@@ -32,7 +33,7 @@ const AchievementsView = ({ park }: AchievementsViewProps) => {
 		<div className='flex flex-col gap-3' data-testid='achievements-view'>
 			<StampView stamp={stamp} />
 			<div className='-m-6'>
-			<BucketList parkId={park.id} />
+				<BucketList parkId={park.id} />
 			</div>
 		</div>
 	);
