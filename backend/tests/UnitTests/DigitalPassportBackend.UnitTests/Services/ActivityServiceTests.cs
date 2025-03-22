@@ -82,6 +82,8 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns<CompletedBucketListItem>(i => i);
             _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>()))
                 .Returns<PrivateNote>(i => i);
+            _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>()))
+                .Returns<PrivateNote>(i => i);
 
             // Setup location mocks.
             foreach (var park in TestData.Parks)
