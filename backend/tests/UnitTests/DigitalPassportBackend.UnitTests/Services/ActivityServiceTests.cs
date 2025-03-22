@@ -72,6 +72,8 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns([]);
             _mockPrivateNotes.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns((PrivateNote)null!);
+            _mockPrivateNotes.Setup(s => s.GetByUser(It.IsAny<int>()))
+                .Returns([]);
             _mockParkVisits.Setup(s => s.GetByParkAndUser(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns([]);
 
@@ -476,6 +478,40 @@ namespace DigitalPassportBackend.UnitTests.Services
             Assert.Equal("", result.note);
             Assert.Equal(TestData.Users[1], result.user);
             Assert.Equal(TestData.Parks[1], result.park);
+        }
+
+        [Fact]
+        public void GetNotes_ReturnsPopulatedList_WhenUserValid_AndHasNotes()
+        {
+            // Setup.
+            _mockPrivateNotes.Setup(s => s.GetByUser(TestData.Users[2].id))
+                .Returns([.. TestData.PrivateNotes.Where(n => n.userId == TestData.Users[2].id)]);
+
+            // Action.
+            var result = _activities.GetNotes(TestData.Users[2].id);
+
+            // Assert.
+            Assert.Equal(3, result.Count);
+        }
+
+        [Fact]
+        public void GetNotes_ReturnsEmptyList_WhenUserInvalid()
+        {
+            // Action.
+            var result = _activities.GetNotes(5);
+
+            // Assert.
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void GetNotes_ReturnsEmptyList_WhenUserValid_AndNotesDNE()
+        {
+            // Action.
+            var result = _activities.GetNotes(TestData.Users[0].id);
+
+            // Assert.
+            Assert.Empty(result);
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
