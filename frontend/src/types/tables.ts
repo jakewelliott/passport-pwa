@@ -66,6 +66,7 @@ export interface CollectedStamp {
   dateTime: Date;
   parkId: number;
   parkAbbreviation: string;
+  createdAt: Date;
 }
 
 export interface ParkNote {
