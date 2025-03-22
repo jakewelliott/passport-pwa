@@ -5,7 +5,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("park_addresses")]
-public class ParkAddress
+public class ParkAddress : IEntity
 {
     public int id { get; init; }
     // public required int park { get; set; }
@@ -18,9 +18,9 @@ public class ParkAddress
     public required State state { get; set; }
     public required int zipcode { get; set; }
     [Column("created_at")]
-    public DateTime created_at { get; set; } = DateTime.UtcNow;
+    public DateTime createdAt { get; set; } = DateTime.UtcNow;
     [Column("updated_at")]
-    public DateTime updated_at { get; set; } = DateTime.UtcNow;
+    public DateTime updatedAt { get; set; } = DateTime.UtcNow;
 
     // References
     [ForeignKey("park")]

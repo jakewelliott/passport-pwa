@@ -8,7 +8,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("park_visits")]
-public class ParkVisit
+public class ParkVisit : IEntity
 {
     public int id { get; init; }
     public Point location { get; set; }
