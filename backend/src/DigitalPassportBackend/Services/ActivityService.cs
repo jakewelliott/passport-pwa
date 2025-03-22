@@ -174,26 +174,9 @@ public class ActivityService(
 
         Console.WriteLine($"User Location: {userLocation}, Location with Inaccuracy: {locationWithInaccuracy}");
 
-        // TODO: @V
-        // we can't visit a park manually, rn its just automatically done
-        // so throwing an error for the user to read will prolly confuse them
-        // we should throw an error but not show it on the frontend
-        // what error code should we throw? 409?
-
-        // TODO: test this
-        if (_parkVisitRepository.HasVisitedParkToday(userId, park.id))
-        {
-            throw new ServiceException(StatusCodes.Status409Conflict, "You have already visited this park today.");
-        }
-
-        // TODO: I couldn't get this to work, I tried plotting it on the map and it was correct
-        // I tried different points, digits, and inaccuracies
-
-        // if (park.boundaries!.Intersects(locationWithInaccuracy) == false) {
-        // 		throw new ServiceException(StatusCodes.Status409Conflict, "Client thinks we are in the park but backend disagrees.");
-        // }
-
-        return _parkVisitRepository.Create(new()
+        // Check if the user has visited the park today already and return either that or a new visit object.
+        return _parkVisitRepository.HasVisitedParkToday(userId, park.id)
+            ?? _parkVisitRepository.Create(new()
         {
             location = new(latitude, longitude),
             createdAt = DateTime.Now,

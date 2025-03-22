@@ -223,7 +223,7 @@ public class ParkVisitRepositoryTests
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsTrue_VisitedToday()
+    public void HasVisitedParkToday_ReturnsVisit_VisitedToday()
     {
         // Arrange
         var locationId = TestData.ParkVisits[2].parkId;
@@ -233,11 +233,11 @@ public class ParkVisitRepositoryTests
         var result = _repo.HasVisitedParkToday(userId, locationId);
 
         // Assert
-        Assert.True(result);
+        Assert.Equal(TestData.ParkVisits[2], result);
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsFalse_VisitedAnotherParkToday()
+    public void HasVisitedParkToday_ReturnsNull_VisitedAnotherParkToday()
     {
         // Arrange
         var locationId = TestData.ParkVisits[3].parkId;
@@ -247,11 +247,11 @@ public class ParkVisitRepositoryTests
         var result = _repo.HasVisitedParkToday(userId, locationId);
 
         // Assert
-        Assert.False(result);
+        Assert.Null(result);
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsFalse_NotVisitedParkTodayButDidYesterday()
+    public void HasVisitedParkToday_ReturnsNull_NotVisitedParkTodayButDidYesterday()
     {
         // Arrange
         var yesterdayVisit = _repo.GetById(TestData.ParkVisits[3].id);
@@ -265,7 +265,7 @@ public class ParkVisitRepositoryTests
         var result = _repo.HasVisitedParkToday(userId, locationId);
 
         // Assert
-        Assert.False(result);
+        Assert.Null(result);
 
         // Reset
         yesterdayVisit.createdAt = originalTime;
@@ -273,7 +273,7 @@ public class ParkVisitRepositoryTests
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsFalse_NeverVsitedPark()
+    public void HasVisitedParkToday_ReturnsNull_NeverVistedPark()
     {
         // Arrange
         var locationId = TestData.ParkVisits[0].parkId;
@@ -283,7 +283,7 @@ public class ParkVisitRepositoryTests
         var result = _repo.HasVisitedParkToday(userId, locationId);
 
         // Assert
-        Assert.False(result);
+        Assert.Null(result);
     }
 
 }
