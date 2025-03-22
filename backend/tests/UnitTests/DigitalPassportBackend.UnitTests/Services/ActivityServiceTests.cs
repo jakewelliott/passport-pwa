@@ -80,6 +80,8 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns<CompletedBucketListItem>(i => i);
             _mockCompletedBucketList.Setup(s => s.Update(It.IsAny<CompletedBucketListItem>()))
                 .Returns<CompletedBucketListItem>(i => i);
+            _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>()))
+                .Returns<PrivateNote>(i => i);
 
             // Setup location mocks.
             foreach (var park in TestData.Parks)
@@ -442,6 +444,44 @@ namespace DigitalPassportBackend.UnitTests.Services
             Assert.Equal(2, result.Count);
             Assert.Contains(TestData.ParkVisits[0], result);
             Assert.Contains(TestData.ParkVisits[1], result);
+        }
+
+        [Fact]
+        public void GetParkNote_ReturnsNote_WhenNoteExists()
+        {
+            // Setup.
+            _mockUsers.Setup(s => s.GetById(TestData.PrivateNotes[2].userId))
+                .Returns(TestData.PrivateNotes[2].user);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.PrivateNotes[2].parkId, TestData.PrivateNotes[2].userId))
+                .Returns(TestData.PrivateNotes[2]);
+
+            // Action.
+            var result = _activities.GetParkNote(TestData.PrivateNotes[2].parkId!.Value, TestData.PrivateNotes[2].userId);
+
+            // Assert.
+            Assert.Equal(TestData.PrivateNotes[2].note, result.note);
+            Assert.Equal(TestData.PrivateNotes[2].user, result.user);
+            Assert.Equal(TestData.PrivateNotes[2].park, result.park);
+        }
+
+        [Fact]
+        public void GetParkNote_ReturnsEmptyNote_WhenNoteDNE()
+        {
+            // Action.
+            var result = _activities.GetParkNote(TestData.Parks[1].id, TestData.Users[1].id);
+
+            // Assert.
+            var expected = new PrivateNote()
+            {
+                note = "",
+                user = TestData.Users[1],
+                userId = TestData.Users[1].id,
+                park = TestData.Parks[1],
+                parkId = TestData.Parks[1].id
+            };
+            Assert.Equal("", result.note);
+            Assert.Equal(TestData.Users[1], result.user);
+            Assert.Equal(TestData.Parks[1], result.park);
         }
 
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
