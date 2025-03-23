@@ -1,20 +1,24 @@
+import { useParks } from '@/hooks/queries/useParks';
 import { useStampMutation } from '@/hooks/queries/useStamps';
-import { useLocation } from '@/hooks/useLocation';
-import { useParkCheck } from '@/hooks/useParkCheck';
+import { useLocation as useLocationHook } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
+import type { CollectStampRequest } from '@/types/api';
 import { useEffect, useRef, useState } from 'react';
 import { FaEllipsisV } from 'react-icons/fa';
-import { useLocation as currentRoute } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const ManualStampButton = () => {
   dbg('RENDER', 'ManualStampButton');
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const location = currentRoute();
   const { mutate } = useStampMutation();
-  const { geopoint } = useLocation();
-  const { park } = useParkCheck();
+  const { geopoint } = useLocationHook();
+
+  // get the park from the pathname
+  const { pathname } = useLocation();
+  const { data: parks } = useParks();
+  const park = parks?.find((p) => p.abbreviation === pathname.split('/').pop());
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -26,18 +30,24 @@ export const ManualStampButton = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // if we can't find the park, return null
+  if (!park) return null;
+
   const handlePress = () => {
     if (!geopoint) {
       toast.error('Unable to see your current location.');
       return;
     }
 
-    mutate({
+    const update: CollectStampRequest = {
       geopoint,
       method: 'manual',
-      timestamp: new Date(),
-      parkId: park.id,
-    });
+      dateTime: new Date(),
+      parkId: park?.id,
+      parkAbbreviation: park?.abbreviation,
+    };
+
+    mutate(update);
 
     setIsOpen(false);
   };
