@@ -1,6 +1,6 @@
 import { TrailDetailView } from '@/app/more/components/trail-details';
 import { TrailMap } from '@/app/more/components/trail-map';
-import { trails } from '@/lib/mock';
+import { trails } from '@/lib/testing/mock/tables';
 import type { Trail } from '@/types';
 
 export const Trails = () => {

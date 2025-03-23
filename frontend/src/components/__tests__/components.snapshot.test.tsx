@@ -1,4 +1,4 @@
-import { trails } from '@/lib/mock';
+import { trails } from '@/lib/testing/mock/tables';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';

@@ -79,10 +79,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     [HttpPost("bucketlist/{itemId}")]
     [Authorize(Roles = "visitor")]
-    public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
+    public IActionResult ToggleBucketListItemCompletion(int itemId)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.longitude, req.latitude);
+        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId);
         return Ok(CompletedBucketListItemResponse.FromDomain(result));
     }
 
@@ -124,9 +124,8 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record ToggleBucketListItemCompletionRequest(double longitude, double latitude)
-    {
-    }
+    public record ToggleBucketListItemCompletionRequest(DateTime dateTime)
+    {}
 
     public record CompletedBucketListItemResponse(int id, int bucketListItemId, DateTime updatedAt)
     {

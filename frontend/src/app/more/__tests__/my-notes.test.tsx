@@ -1,5 +1,5 @@
 import { MyNotes } from '@/app/more/my-notes';
-import { renderWithClient } from '@/lib/test-wrapper';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
@@ -27,8 +27,8 @@ describe('MyNotes Component - User Stories', () => {
 	};
 
 	beforeEach(() => {
-		// mockUseParks.mockReturnValue({ data: mockParks });
-		// mockUseParkNotesStore.mockReturnValue(mockNotes);
+		mockUseParks.mockReturnValue({ data: mockParks });
+		mockUseParkNotesStore.mockReturnValue(mockNotes);
 	});
 
 	// User Story: As a user, I want to see my general notes
