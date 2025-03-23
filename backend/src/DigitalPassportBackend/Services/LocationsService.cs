@@ -125,14 +125,8 @@ public class LocationsService : ILocationsService
 
     public Park GetById(int id)
     {
-        var park = _locationsRepository.GetById(id);
-        if (park == null)
-        {
-            throw new ServiceException(StatusCodes.Status404NotFound, $"Park with ID {id} not found");
-        }
-        return park;
+        return _locationsRepository.GetById(id);
     }
-
 }
 
 class ParkGeometry(string ParkAbbreviation)

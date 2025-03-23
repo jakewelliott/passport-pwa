@@ -20,7 +20,7 @@ public static class Response
     {
         return expected.id == actual.id
             && expected.createdAt == actual.createdAt
-            && expected.park.parkAbbreviation == actual.parkAbbreviation;
+            && expected.park?.parkAbbreviation == actual.parkAbbreviation;
     }
 
     public static bool Equal(BucketListItem expected, ActivityController.BucketListItemResponse actual)

@@ -113,7 +113,7 @@ public class TrailRepositoryTests
     {
         id = 100,
         trailName = "trail name 100",
-        length = "trail length 100",
+        distance = "trail length 100",
         description = "trail description 100",
     };
 }

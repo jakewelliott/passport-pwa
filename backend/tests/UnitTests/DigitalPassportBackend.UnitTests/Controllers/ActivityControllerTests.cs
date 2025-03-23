@@ -75,14 +75,14 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         {
             // Setup.
             var req = new CollectStampRequest(
-                -77.90944281388691, 34.04919197876853, 0.005,
+                new(-77.90944281388691, 34.04919197876853, 0.005),
                 StampCollectionMethod.location.GetDisplayName(),
                 DateTime.UtcNow);
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             SetupCollectStampSuccess(req, TestData.Users[1], TestData.Parks[0]);
 
             // Action.
-            var result = _controller.CollectStamp(TestData.Parks[0].parkAbbreviation, req);
+            var result = _controller.CollectStamp(TestData.Parks[0].id, req);
 
             // Assert.
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -91,36 +91,18 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         }
 
         [Fact]
-        public void CollectStamp_Returns404NotFound_WhenParkAbbrNull()
+        public void CollectStamp_Returns404NotFound_WhenParkIdInvalid()
         {
             // Setup.
             var req = new CollectStampRequest(
-                -77.90944281388691, 34.04919197876853, 0.005,
+                new(-77.90944281388691, 34.04919197876853, 0.005),
                 StampCollectionMethod.location.GetDisplayName(),
                 DateTime.UtcNow);
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
-            SetupCollectStampNotFound(req, null, TestData.Users[1].id);
+            SetupCollectStampNotFound(req, 5, TestData.Users[1].id);
 
             // Action.
-            var e = Assert.Throws<NotFoundException>(() => _controller.CollectStamp(null!, req));
-
-            // Assert.
-            Assert.Equal(404, e.StatusCode);
-        }
-
-        [Fact]
-        public void CollectStamp_Returns404NotFound_WhenParkAbbrInvalid()
-        {
-            // Setup.
-            var req = new CollectStampRequest(
-                -77.90944281388691, 34.04919197876853, 0.005,
-                StampCollectionMethod.location.GetDisplayName(),
-                DateTime.UtcNow);
-            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
-            SetupCollectStampNotFound(req, "INVALID", TestData.Users[1].id);
-
-            // Action.
-            var e = Assert.Throws<NotFoundException>(() => _controller.CollectStamp("INVALID", req));
+            var e = Assert.Throws<NotFoundException>(() => _controller.CollectStamp(5, req));
 
             // Assert.
             Assert.Equal(404, e.StatusCode);
@@ -131,48 +113,44 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         {
             // Setup.
             var req = new CollectStampRequest(
-                -78.67343795255313, 35.77267838903396, 0.005,
+                new(-78.67343795255313, 35.77267838903396, 0.005),
                 StampCollectionMethod.location.GetDisplayName(),
                 DateTime.UtcNow);
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.CollectStamp(
-                    TestData.Parks[0].parkAbbreviation,
-                    req.latitude,
-                    req.longitude,
-                    req.inaccuracyRadius,
+                    TestData.Parks[0].id,
+                    TestData.Users[1].id,
+                    req.geopoint,
                     req.method,
-                    req.dateTime,
-                    TestData.Users[1].id))
+                    req.dateTime))
                 .Throws(new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park."));
 
             // Action.
-            var e = Assert.Throws<ServiceException>(() => _controller.CollectStamp(TestData.Parks[0].parkAbbreviation, req));
+            var e = Assert.Throws<ServiceException>(() => _controller.CollectStamp(TestData.Parks[0].id, req));
 
             // Assert.
             Assert.Equal(405, e.StatusCode);
         }
 
         [Fact]
-        public void CollectStamp_Returns_WhenInvalidMethod()
+        public void CollectStamp_ThrowsServiceException_WhenInvalidMethod()
         {
             // Setup.
             var req = new CollectStampRequest(
-                -77.90944281388691, 34.04919197876853, 0.005,
+                new(-77.90944281388691, 34.04919197876853, 0.005),
                 "invalid",
                 DateTime.UtcNow);
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.CollectStamp(
-                    TestData.Parks[0].parkAbbreviation,
-                    req.latitude,
-                    req.longitude,
-                    req.inaccuracyRadius,
+                    TestData.Parks[0].id,
+                    TestData.Users[1].id,
+                    req.geopoint,
                     req.method,
-                    req.dateTime,
-                    TestData.Users[1].id))
+                    req.dateTime))
                 .Throws(new ServiceException(StatusCodes.Status412PreconditionFailed, "Stamp collection method is not valid."));
 
             // Action.
-            var e = Assert.Throws<ServiceException>(() => _controller.CollectStamp(TestData.Parks[0].parkAbbreviation, req));
+            var e = Assert.Throws<ServiceException>(() => _controller.CollectStamp(TestData.Parks[0].id, req));
 
             // Assert.
             Assert.Equal(412, e.StatusCode);
@@ -403,7 +381,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void ToggleBucketListItemCompletion_Returns200Ok_WhenValidUserAndItem()
         {
             // Setup.
-            var req = new ToggleBucketListItemCompletionRequest(-78.6736, 35.7717);
+            var req = new ToggleBucketListItemCompletionRequest(new(-78.6736, 35.7717, 0));
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             SetupToggleBLICompletionSuccess(req, TestData.CompletedBucketListItems[3]);
 
@@ -420,7 +398,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void ToggleBucketListItemCompletion_ReturnsNullException_WhenInvalidUser()
         {
             // Setup, no user.
-            var req = new ToggleBucketListItemCompletionRequest(-78.6736, 35.7717);
+            var req = new ToggleBucketListItemCompletionRequest(new(-78.6736, 35.7717, 0));
             SetupToggleBLICompletionSuccess(req, TestData.CompletedBucketListItems[3]);
 
             // Action.
@@ -432,13 +410,12 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void ToggleBucketListItemCompletion_Returns404NotFound_WhenInvalidBucketListItem()
         {
             // Setup.
-            var req = new ToggleBucketListItemCompletionRequest(-78.6736, 35.7717);
+            var req = new ToggleBucketListItemCompletionRequest(new(-78.6736, 35.7717, 0));
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.ToggleBucketListItemCompletion(
                 -1,
                 TestData.Users[1].id,
-                req.longitude,
-                req.latitude
+                req.geopoint
             )).Throws(new NotFoundException("Bucket list item not found with given Id."));
 
             // Action.
@@ -525,12 +502,12 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void VisitPark_Returns200Ok_WhenValidUserAndCoords()
         {
             // Setup.
-            var req = new VisitParkRequest(-78.6736, 35.7717, 0.005);
+            var req = new VisitParkRequest(new(-78.6736, 35.7717, 0.005));
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             ParkVisit visit = SetupVisitParkSuccess(req, TestData.Users[1], TestData.Parks[1]);
 
             // Action.
-            var result = _controller.VisitPark(TestData.Parks[1].parkAbbreviation, req);
+            var result = _controller.VisitPark(TestData.Parks[1].id, req);
 
             // Assert.
             var okResult = Assert.IsType<OkObjectResult>(result);
@@ -542,18 +519,16 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void VisitPark_Returns405MethodNotOk_WhenInvalidCoords()
         {
             // Setup.
-            var req = new VisitParkRequest(-77.89974829741625, 34.04930958335885, 0.005);
+            var req = new VisitParkRequest(new(-77.89974829741625, 34.04930958335885, 0.005));
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.VisitPark(
                 TestData.Users[1].id,
-                TestData.Parks[1].parkAbbreviation,
-                req.longitude,
-                req.latitude,
-                req.inaccuracyRadius
+                TestData.Parks[1].id,
+                req.geopoint
             )).Throws(new ServiceException(StatusCodes.Status405MethodNotAllowed, "Your location doesn't appear to be at the specified park."));
 
             // Action.
-            var e = Assert.Throws<ServiceException>(() => _controller.VisitPark(TestData.Parks[1].parkAbbreviation, req));
+            var e = Assert.Throws<ServiceException>(() => _controller.VisitPark(TestData.Parks[1].id, req));
 
             // Assert.
             Assert.Equal(405, e.StatusCode);
@@ -563,29 +538,27 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void VisitPark_ReturnsNullException_WhenInvalidUser()
         {
             // Setup, no user.
-            var req = new VisitParkRequest(-78.6736, 35.7717, 0.005);
+            var req = new VisitParkRequest(new(-78.6736, 35.7717, 0.005));
             ParkVisit visit = SetupVisitParkSuccess(req, TestData.Users[1], TestData.Parks[1]);
 
             // Action.
-            Assert.Throws<ArgumentNullException>(() => _controller.VisitPark(TestData.Parks[1].parkAbbreviation, req));
+            Assert.Throws<ArgumentNullException>(() => _controller.VisitPark(TestData.Parks[1].id, req));
         }
 
         [Fact]
-        public void VisitPark_Returns404NotFound_WhenInvalidPark()
+        public void VisitPark_Returns404NotFound_WhenInvalidParkId()
         {
             // Setup.
-            var req = new VisitParkRequest(-78.6736, 35.7717, 0.005);
+            var req = new VisitParkRequest(new(-78.6736, 35.7717, 0.005));
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.VisitPark(
                 TestData.Users[1].id,
-                "INVALID",
-                req.longitude,
-                req.latitude,
-                req.inaccuracyRadius
+                5,
+                req.geopoint
             )).Throws(new NotFoundException("Park not found with given abbreviation."));
 
             // Action.
-            var e = Assert.Throws<NotFoundException>(() => _controller.VisitPark("INVALID", req));
+            var e = Assert.Throws<NotFoundException>(() => _controller.VisitPark(5, req));
 
             // Assert.
             Assert.Equal(404, e.StatusCode);
@@ -670,8 +643,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             _mockActivityService.Setup(s => s.ToggleBucketListItemCompletion(
                 item.bucketListItemId,
                 item.userId,
-                req.longitude,
-                req.latitude
+                req.geopoint
             )).Returns(item);
         }
 
@@ -681,7 +653,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             var visit = new ParkVisit()
             {
                 id = 6,
-                location = new(req.latitude, req.longitude),
+                location = new(req.geopoint.latitude, req.geopoint.longitude),
                 createdAt = DateTime.Now,
                 updatedAt = DateTime.Now,
                 parkId = park.id,
@@ -693,10 +665,8 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             // Mock service
             _mockActivityService.Setup(s => s.VisitPark(
                 user.id,
-                park.parkAbbreviation,
-                req.longitude,
-                req.latitude,
-                req.inaccuracyRadius
+                park.id,
+                req.geopoint
             )).Returns(visit);
 
             return visit;
@@ -733,7 +703,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             {
                 id = 5,
                 method = Enum.Parse<StampCollectionMethod>(req.method),
-                location = new(req.latitude, req.longitude),
+                location = new(req.geopoint.latitude, req.geopoint.longitude),
                 createdAt = req.dateTime ?? DateTime.UtcNow,
                 updatedAt = req.dateTime ?? DateTime.UtcNow,
                 userId = user.id,
@@ -743,27 +713,23 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             };
 
             _mockActivityService.Setup(s => s.CollectStamp(
-                    park.parkAbbreviation,
-                    req.latitude,
-                    req.longitude,
-                    req.inaccuracyRadius,
+                    park.id,
+                    user.id,
+                    req.geopoint,
                     req.method,
-                    req.dateTime,
-                    user.id))
+                    req.dateTime))
                 .Returns(stamp);
         }
 
-        private void SetupCollectStampNotFound(CollectStampRequest req, string? abbr, int userId)
+        private void SetupCollectStampNotFound(CollectStampRequest req, int parkId, int userId)
         {
             _mockActivityService.Setup(s => s.CollectStamp(
-                    abbr!,
-                    req.latitude,
-                    req.longitude,
-                    req.inaccuracyRadius,
+                    parkId,
+                    userId,
+                    req.geopoint,
                     req.method,
-                    req.dateTime,
-                    userId))
-                .Throws(new NotFoundException($"Park not found with abbreviation {abbr}"));
+                    req.dateTime))
+                .Throws(new NotFoundException($"Park not found with ID {parkId}"));
         }
     }
 }

@@ -80,28 +80,28 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             {
                 id = 1,
                 trailName = "trail name",
-                length = "trail length",
+                distance = "trail length",
                 description = "trail description",
             },
             new()
             {
                 id = 2,
                 trailName = "trail name 2",
-                length = "trail length 2",
+                distance = "trail length 2",
                 description = "trail description 2",
             },
             new()
             {
                 id = 3,
                 trailName = "trail name 3",
-                length = "trail length 3",
+                distance = "trail length 3",
                 description = "trail description 3",
             },
             new()
             {
                 id = 4,
                 trailName = "trail name 4",
-                length = "trail length 4",
+                distance = "trail length 4",
                 description = "trail description 4",
             },
         ];

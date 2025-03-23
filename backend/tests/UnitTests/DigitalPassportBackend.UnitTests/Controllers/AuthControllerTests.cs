@@ -1,4 +1,3 @@
-using System;
 using System.Security.Claims;
 using DigitalPassportBackend.Controllers;
 using DigitalPassportBackend.Domain;
@@ -7,7 +6,6 @@ using DigitalPassportBackend.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Xunit;
 
 namespace DigitalPassportBackend.UnitTests.Controllers
 {
