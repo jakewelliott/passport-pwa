@@ -4,6 +4,7 @@ import { a11yOnClick } from '@/lib/a11y';
 import { dbg, dbgif } from '@/lib/debug';
 // components/NotesMiniTab.tsx
 import { useEffect, useState } from 'react';
+import { useLocation, useNavigate, useBlocker } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const NotesMiniTab = ({
@@ -14,7 +15,10 @@ export const NotesMiniTab = ({
 
 	const { data: remoteNote, refetch, isLoading } = useNote(parkId);
 	const { mutate } = useUpdateNote();
+	const navigate = useNavigate();
+  	const location = useLocation();
 
+	const [ hasUnsavedChanges, setHasUnsavedChanges ] = useState(false);
 	const [noteState, setNoteState] = useState('');
 
 	useEffect(() => {
@@ -33,8 +37,41 @@ export const NotesMiniTab = ({
 
 	}, [remoteNote, isLoading]);
 
+	useEffect(() => {
+		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+		  if (hasUnsavedChanges) {
+			e.preventDefault();
+			e.returnValue = '';
+		  }
+		};
+	
+		window.addEventListener('beforeunload', handleBeforeUnload);
+	
+		return () => {
+		  window.removeEventListener('beforeunload', handleBeforeUnload);
+		};
+	  }, [hasUnsavedChanges]);
+
+	  const blocker = useBlocker(
+		({ currentLocation, nextLocation }) =>
+		  hasUnsavedChanges &&
+		  currentLocation.pathname !== nextLocation.pathname
+	  );
+	  
+	  useEffect(() => {
+		if (blocker.state === "blocked") {
+		  const proceed = window.confirm("You have unsaved changes. Are you sure you want to leave?");
+		  if (proceed) {
+			blocker.proceed();
+		  } else {
+			blocker.reset();
+		  }
+		}
+	  }, [blocker]);
+
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setNoteState(e.target.value);
+		setHasUnsavedChanges(true);
 	};
 
 	const handleClick = () => {
@@ -44,6 +81,7 @@ export const NotesMiniTab = ({
 				onSuccess: () => {
 					refetch();
 					toast.success('Notes saved!');
+					setHasUnsavedChanges(false);
 				},
 				onError: () => {
 					toast.error('Failed to save notes');
