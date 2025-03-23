@@ -21,10 +21,8 @@ export const useParks = () => {
 };
 
 export const usePark = (abbreviation: string) => {
-  return useQuery<Park>({
-    queryKey: ['park', abbreviation],
-    queryFn: async () => await fetchGet(`${API_PARKS_URL}/${abbreviation}`),
-  });
+  const hook = useParks();
+  return { ...hook, data: hook.data?.find((park) => park.abbreviation === abbreviation) };
 };
 
 export const useParkById = (id: number) => {

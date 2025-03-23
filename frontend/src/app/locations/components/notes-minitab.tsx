@@ -16,9 +16,9 @@ export const NotesMiniTab = ({
 	const { data: remoteNote, refetch, isLoading } = useNote(parkId);
 	const { mutate } = useUpdateNote();
 	const navigate = useNavigate();
-  	const location = useLocation();
+	const location = useLocation();
 
-	const [ hasUnsavedChanges, setHasUnsavedChanges ] = useState(false);
+	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 	const [noteState, setNoteState] = useState('');
 
 	useEffect(() => {
@@ -39,35 +39,35 @@ export const NotesMiniTab = ({
 
 	useEffect(() => {
 		const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-		  if (hasUnsavedChanges) {
-			e.preventDefault();
-			e.returnValue = '';
-		  }
+			if (hasUnsavedChanges) {
+				e.preventDefault();
+				e.returnValue = '';
+			}
 		};
-	
-		window.addEventListener('beforeunload', handleBeforeUnload);
-	
-		return () => {
-		  window.removeEventListener('beforeunload', handleBeforeUnload);
-		};
-	  }, [hasUnsavedChanges]);
 
-	  const blocker = useBlocker(
+		window.addEventListener('beforeunload', handleBeforeUnload);
+
+		return () => {
+			window.removeEventListener('beforeunload', handleBeforeUnload);
+		};
+	}, [hasUnsavedChanges]);
+
+	const blocker = useBlocker(
 		({ currentLocation, nextLocation }) =>
-		  hasUnsavedChanges &&
-		  currentLocation.pathname !== nextLocation.pathname
-	  );
-	  
-	  useEffect(() => {
+			hasUnsavedChanges &&
+			currentLocation.pathname !== nextLocation.pathname
+	);
+
+	useEffect(() => {
 		if (blocker.state === "blocked") {
-		  const proceed = window.confirm("You have unsaved changes. Are you sure you want to leave?");
-		  if (proceed) {
-			blocker.proceed();
-		  } else {
-			blocker.reset();
-		  }
+			const proceed = window.confirm("You have unsaved changes. Are you sure you want to leave?");
+			if (proceed) {
+				blocker.proceed();
+			} else {
+				blocker.reset();
+			}
 		}
-	  }, [blocker]);
+	}, [blocker]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 		setNoteState(e.target.value);

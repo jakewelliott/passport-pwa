@@ -73,7 +73,7 @@ export const fetchGet = async (url: string) => {
   if (!response.ok) await fetchError(response);
 
   const data = await response.json();
-  dbg('FETCH', 'GET DATA', { data });
+  // dbg('FETCH', 'GET DATA', { data });
 
   return data;
 };
