@@ -562,7 +562,110 @@ namespace DigitalPassportBackend.UnitTests.Services
             // Assert.
             Assert.Empty(result);
         }
+        
+        [Fact]
+        public void VisitPark_ThrowsServiceException_WhenAlreadyVisitedToday()
+        {
+            var userId = TestData.Users[0].id;
+            var park = TestData.Parks[0];
 
+            _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation)).Returns(park);
+            _mockParkVisits.Setup(s => s.HasVisitedParkToday(userId, park.id)).Returns(true);
+
+            var ex = Assert.Throws<ServiceException>(() => _activities.VisitPark(userId, park.parkAbbreviation, 0, 0, 1));
+            Assert.Equal(StatusCodes.Status409Conflict, ex.StatusCode);
+            Assert.Equal("You have already visited this park today.", ex.ErrorMessage);
+        }
+
+        [Fact]
+        public void VisitPark_ReturnsVisit_WhenLocationIsValid()
+        {
+            var userId = TestData.Users[0].id;
+            var park = TestData.Parks[0];
+            var location = new NetTopologySuite.Geometries.Point(0, 0);
+
+            _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation)).Returns(park);
+            _mockUsers.Setup(s => s.GetById(userId)).Returns(TestData.Users[0]);
+            _mockParkVisits.Setup(s => s.HasVisitedParkToday(userId, park.id)).Returns(false);
+            _mockParkVisits.Setup(s => s.Create(It.IsAny<ParkVisit>())).Returns((ParkVisit p) => p);
+
+            var result = _activities.VisitPark(userId, park.parkAbbreviation, 0, 0, 1);
+
+            Assert.Equal(park.id, result.parkId);
+            Assert.Equal(userId, result.userId);
+        }
+
+        [Fact]
+        public void GetParkNote_ReturnsExistingNote_WhenNoteExists()
+        {
+            var note = TestData.PrivateNotes[0];
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(note.parkId, note.userId)).Returns(note);
+            _mockLocations.Setup(s => s.GetById((int)note.parkId!)).Returns(note.park!);
+
+            var result = _activities.GetParkNote((int)note.parkId!, note.userId);
+
+            Assert.Equal(note.note, result.note);
+        }
+
+        [Fact]
+        public void GetParkNote_CreatesNote_WhenNoteDoesNotExist()
+        {
+            var user = TestData.Users[3];
+            var park = TestData.Parks[0];
+
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(park.id, user.id)).Returns((PrivateNote?)null);
+            _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>())).Returns<PrivateNote>(n => n);
+            _mockUsers.Setup(s => s.GetById(user.id)).Returns(user);
+            _mockLocations.Setup(s => s.GetById(park.id)).Returns(park);
+
+            var result = _activities.GetParkNote(park.id, user.id);
+
+            Assert.NotNull(result);
+            Assert.Equal(park.id, result.parkId);
+        }
+
+        [Fact]
+        public void GetNotes_ReturnsNotesWithParkObjectsOrDefaultParkId()
+        {
+            var user = TestData.Users[0];
+            var userId = user.id;
+
+            var noteWithPark = new PrivateNote
+            {
+                id = 1,
+                userId = userId,
+                parkId = TestData.Parks[0].id,
+                note = "Note with park",
+                user = user 
+            };
+
+            var noteWithoutPark = new PrivateNote
+            {
+                id = 2,
+                userId = userId,
+                parkId = null,
+                note = "Note without park",
+                user = user 
+            };
+
+            var notes = new List<PrivateNote> { noteWithPark, noteWithoutPark };
+
+            _mockPrivateNotes.Setup(r => r.GetByUser(userId)).Returns(notes);
+            _mockLocations.Setup(r => r.GetById(TestData.Parks[0].id)).Returns(TestData.Parks[0]);
+
+        
+            var result = _activities.GetNotes(userId);
+
+            Assert.Equal(2, result.Count);
+
+            var resultNoteWithPark = result.First(n => n.id == noteWithPark.id);
+            Assert.NotNull(resultNoteWithPark.park);
+            Assert.Equal(TestData.Parks[0].id, resultNoteWithPark.park!.id);
+
+            var resultNoteWithoutPark = result.First(n => n.id == noteWithoutPark.id);
+            Assert.Equal(0, resultNoteWithoutPark.parkId);
+        }
+        
         // Setup User 1, Park 0 - Bucket list, no stamps, private notes, last visit
         // User 1, Park 1 - deleted bucket list item, no stamps, no private notes, no visits
         private void SetupActivity0()
