@@ -226,15 +226,18 @@ public class ActivityService(
         return _privateNoteRepository.GetByUser(userId)
             .Select(x =>
             {
-                if (x.parkId != null)
+                var note = new PrivateNote
                 {
-                    x.park = _locationsRepository.GetById(x.parkId.Value);
-                }
-                else
-                {
-                    x.parkId = 0;
-                }
-                return x;
+                    id = x.id,
+                    note = x.note,
+                    createdAt = x.createdAt,
+                    updatedAt = x.updatedAt,
+                    userId = x.userId,
+                    user = x.user,
+                    parkId = x.parkId == null ? 0 : x.parkId,
+                    park = x.parkId != null ? _locationsRepository.GetById(x.parkId.Value) : null
+                };
+                return note;
             })
             .ToList();
     }
