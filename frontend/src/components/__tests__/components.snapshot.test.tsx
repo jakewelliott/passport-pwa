@@ -9,7 +9,7 @@ import ListRow from '../list-row';
 import { LoadingPlaceholder } from '../loading-placeholder';
 import { PassportHeader } from '../passport-header';
 import RoundedButton from '../rounded-button';
-import { SplashScreen } from '../splash-screen';
+import { SplashScreenView } from '../splash-screen-view';
 import TabBar from '../tab-bar';
 import { TrailIcons } from '../trail-icons';
 
@@ -67,7 +67,7 @@ describe('Component Snapshots', () => {
 	});
 
 	it('SplashScreen renders correctly', () => {
-		const { container } = render(<SplashScreen />);
+		const { container } = render(<SplashScreenView />);
 		expect(container).toMatchSnapshot();
 	});
 

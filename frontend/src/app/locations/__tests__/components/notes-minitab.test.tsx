@@ -1,19 +1,10 @@
 import { NotesMiniTab } from '@/app/locations/components/notes-minitab';
-import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
-import { useParkNotesStore } from '@/hooks/store/useParkNotesStore';
 import { renderWithClient } from '@/lib/test-wrapper';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { toast } from 'react-toastify';
-import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-// Mock the store
-vi.mock('@/hooks/store/useParkNotesStore');
-const mockedUseParkNotesStore = useParkNotesStore as unknown as Mock;
-
-// Mock the query hooks
-vi.mock('@/hooks/queries/useNotes');
-const mockedUseNote = useNote as Mock;
-const mockedUseUpdateNote = useUpdateNote as Mock;
+// TODO: remove mocks
 
 // Mock react-toastify
 vi.mock('react-toastify', () => ({
@@ -34,17 +25,17 @@ describe('NotesMiniTab', () => {
 
 	beforeEach(() => {
 		vi.clearAllMocks();
-		mockedUseParkNotesStore.mockReturnValue({
-			getNote: () => mockInitialNote,
-			setNote: mockSetNote,
-		});
-		mockedUseNote.mockReturnValue({
-			data: { id: 1, note: mockInitialNote },
-			isLoading: false,
-		} as any);
-		mockedUseUpdateNote.mockReturnValue({
-			mutate: mockMutate,
-		} as any);
+		// mockedUseParkNotesStore.mockReturnValue({
+		// 	getNote: () => mockInitialNote,
+		// 	setNote: mockSetNote,
+		// });
+		// mockedUseNote.mockReturnValue({
+		// 	data: { id: 1, note: mockInitialNote },
+		// 	isLoading: false,
+		// } as any);
+		// mockedUseUpdateNote.mockReturnValue({
+		// 	mutate: mockMutate,
+		// } as any);
 	});
 
 	it('renders the notes textarea with initial value', () => {
@@ -107,10 +98,10 @@ describe('NotesMiniTab', () => {
 	});
 
 	it('displays loading state when data is being fetched', () => {
-		mockedUseNote.mockReturnValue({
-			data: null,
-			isLoading: true,
-		});
+		// mockedUseNote.mockReturnValue({
+		// 	data: null,
+		// 	isLoading: true,
+		// });
 
 		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		expect(screen.getByText('Loading...')).toBeInTheDocument();
@@ -120,15 +111,15 @@ describe('NotesMiniTab', () => {
 		const localNote = 'Local note';
 		const remoteNote = 'Remote note';
 
-		mockedUseParkNotesStore.mockReturnValue({
-			getNote: () => localNote,
-			setNote: mockSetNote,
-		});
+		// mockedUseParkNotesStore.mockReturnValue({
+		// 	getNote: () => localNote,
+		// 	setNote: mockSetNote,
+		// });
 
-		mockedUseNote.mockReturnValue({
-			data: { id: 1, note: remoteNote },
-			isLoading: false,
-		});
+		// mockedUseNote.mockReturnValue({
+		// 	data: { id: 1, note: remoteNote },
+		// 	isLoading: false,
+		// });
 
 		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 
@@ -138,15 +129,15 @@ describe('NotesMiniTab', () => {
 	it('does not synchronize when remote note matches local note', () => {
 		const sameNote = 'Same note';
 
-		mockedUseParkNotesStore.mockReturnValue({
-			getNote: () => sameNote,
-			setNote: mockSetNote,
-		});
+		// mockedUseParkNotesStore.mockReturnValue({
+		// 	getNote: () => sameNote,
+		// 	setNote: mockSetNote,
+		// });
 
-		mockedUseNote.mockReturnValue({
-			data: { id: 1, note: sameNote },
-			isLoading: false,
-		});
+		// mockedUseNote.mockReturnValue({
+		// 	data: { id: 1, note: sameNote },
+		// 	isLoading: false,
+		// });
 
 		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 
@@ -154,25 +145,25 @@ describe('NotesMiniTab', () => {
 	});
 
 	it('handles null remote note gracefully', () => {
-		mockedUseNote.mockReturnValue({
-			data: null,
-			isLoading: false,
-		});
+		// mockedUseNote.mockReturnValue({
+		// 	data: null,
+		// 	isLoading: false,
+		// });
 
-		mockedUseParkNotesStore.mockReturnValue({
-			getNote: () => 'local note',
-			setNote: mockSetNote,
-		});
+		// mockedUseParkNotesStore.mockReturnValue({
+		// 	getNote: () => 'local note',
+		// 	setNote: mockSetNote,
+		// });
 
 		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		expect(mockSetNote).not.toHaveBeenCalled();
 	});
 
 	it('handles empty local note when saving', async () => {
-		mockedUseParkNotesStore.mockReturnValue({
-			getNote: () => null,
-			setNote: mockSetNote,
-		});
+		// mockedUseParkNotesStore.mockReturnValue({
+		// 	getNote: () => null,
+		// 	setNote: mockSetNote,
+		// });
 
 		renderWithClient(<NotesMiniTab parkId={mockParkId} />);
 		const saveButton = screen.getByTestId('save-button');

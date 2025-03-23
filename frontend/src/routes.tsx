@@ -1,6 +1,6 @@
 import { AdminPage } from '@/app/admin';
 import CollectStamp from '@/app/stamps/collect-stamp';
-import { SplashScreen } from '@/components/splash-screen';
+import { SplashScreenView } from '@/components/splash-screen-view';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
@@ -24,7 +24,7 @@ import { BucketList } from './components/bucket-list';
 const RoleBasedRedirect = () => {
 	const { data: user, isLoading } = useUser();
 	const location = useLocation();
-	if (isLoading) return <SplashScreen loadingMsg='your account' />;
+	if (isLoading) return <SplashScreenView />;
 	if (!user)
 		return <Navigate to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`} replace />;
 	dbg('RENDER', 'RoleBasedRedirect', user.role);
@@ -36,7 +36,7 @@ const AdminRoutes = () => {
 	dbg('RENDER', 'AdminRoutes');
 	const locaiton = useLocation();
 	const { data: user, isLoading } = useUser();
-	if (isLoading) return <SplashScreen loadingMsg='checking permissions' />;
+	if (isLoading) return <SplashScreenView />;
 	if (!isLoading && user?.role !== 'admin') {
 		toast.error(`You are not authorized to access this page ${locaiton.pathname}`);
 		return <Navigate to='/locations' replace />;
@@ -91,8 +91,6 @@ export const AppRoutes = () => {
 
 	const { data: user, isLoading } = useUser();
 	const isLoggedIn = user && !isLoading;
-
-	if (isLoading) return <SplashScreen loadingMsg='your role' />;
 
 	return (
 		<Routes>
