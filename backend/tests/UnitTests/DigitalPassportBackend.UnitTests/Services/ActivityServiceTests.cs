@@ -82,6 +82,8 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns<CompletedBucketListItem>(i => i);
             _mockCompletedBucketList.Setup(s => s.Update(It.IsAny<CompletedBucketListItem>()))
                 .Returns<CompletedBucketListItem>(i => i);
+            _mockParkVisits.Setup(s => s.Create(It.IsAny<ParkVisit>()))
+                .Returns<ParkVisit>(i => i);
             _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>()))
                 .Returns<PrivateNote>(i => i);
 
@@ -436,6 +438,53 @@ namespace DigitalPassportBackend.UnitTests.Services
                     0, 0));
         }
 
+                [Fact]
+        public void VisitPark_ReturnsLatestVisit_WhenVisitedToday()
+        {
+            // Setup.
+            _mockUsers.Setup(s => s.GetById(TestData.Users[1].id))
+                .Returns(TestData.Users[1]);
+            _mockParkVisits.Setup(s => s.GetParkVisitToday(TestData.Users[1].id, TestData.Parks[0].id))
+                .Returns(TestData.ParkVisits[1]);
+
+            // Action.
+            var result = _activities.VisitPark(
+                TestData.Users[1].id,
+                TestData.Parks[0].parkAbbreviation,
+                -77.90287736056217, 34.04499810618092, 0.005);
+
+            // Assert.
+            Assert.Equal(TestData.ParkVisits[1].location, result.location);
+            Assert.Equal(TestData.ParkVisits[1].createdAt, result.createdAt);
+            Assert.Equal(TestData.ParkVisits[1].parkId, result.parkId);
+            Assert.Equal(TestData.ParkVisits[1].park, result.park);
+            Assert.Equal(TestData.ParkVisits[1].userId, result.userId);
+            Assert.Equal(TestData.ParkVisits[1].user, result.user);
+        }
+
+        [Fact]
+        public void VisitPark_ReturnsNewVisit_WhenNotVisitedYet()
+        {
+            // Setup.
+            _mockUsers.Setup(s => s.GetById(TestData.Users[2].id))
+                .Returns(TestData.Users[2]);
+            _mockLocations.Setup(s => s.GetByAbbreviation(TestData.Parks[1].parkAbbreviation))
+                .Returns(TestData.Parks[1]);
+
+            // Action.
+            var result = _activities.VisitPark(
+                TestData.Users[2].id,
+                TestData.Parks[1].parkAbbreviation,
+                -78.67383729223224, 35.77198798999297, 0.005);
+
+            // Assert.
+            Assert.Equal(new(-78.67383729223224, 35.77198798999297), result.location);
+            Assert.Equal(TestData.Parks[1].id, result.parkId);
+            Assert.Equal(TestData.Parks[1], result.park);
+            Assert.Equal(TestData.Users[2].id, result.userId);
+            Assert.Equal(TestData.Users[2], result.user);
+        }
+
         [Fact]
         public void GetParkVisits_ReturnsPopulatedList_WhenVisitsExist()
         {
@@ -510,38 +559,6 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Assert.
             Assert.Empty(result);
-        }
-        
-        [Fact]
-        public void VisitPark_ThrowsServiceException_WhenAlreadyVisitedToday()
-        {
-            var userId = TestData.Users[0].id;
-            var park = TestData.Parks[0];
-
-            _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation)).Returns(park);
-            _mockParkVisits.Setup(s => s.HasVisitedParkToday(userId, park.id)).Returns(true);
-
-            var ex = Assert.Throws<ServiceException>(() => _activities.VisitPark(userId, park.parkAbbreviation, 0, 0, 1));
-            Assert.Equal(StatusCodes.Status409Conflict, ex.StatusCode);
-            Assert.Equal("You have already visited this park today.", ex.ErrorMessage);
-        }
-
-        [Fact]
-        public void VisitPark_ReturnsVisit_WhenLocationIsValid()
-        {
-            var userId = TestData.Users[0].id;
-            var park = TestData.Parks[0];
-            var location = new NetTopologySuite.Geometries.Point(0, 0);
-
-            _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation)).Returns(park);
-            _mockUsers.Setup(s => s.GetById(userId)).Returns(TestData.Users[0]);
-            _mockParkVisits.Setup(s => s.HasVisitedParkToday(userId, park.id)).Returns(false);
-            _mockParkVisits.Setup(s => s.Create(It.IsAny<ParkVisit>())).Returns((ParkVisit p) => p);
-
-            var result = _activities.VisitPark(userId, park.parkAbbreviation, 0, 0, 1);
-
-            Assert.Equal(park.id, result.parkId);
-            Assert.Equal(userId, result.userId);
         }
 
         [Fact]
