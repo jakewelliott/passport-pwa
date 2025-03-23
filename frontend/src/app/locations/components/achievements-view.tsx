@@ -19,7 +19,7 @@ const AchievementsView = ({ park, stamp }: { park: Park; stamp?: CollectedStamp 
   dbg('MISC', 'stamp', stamp);
 
   return (
-    <div className='flex flex-col gap-3' data-testid='achievements-view'>
+    <div className='flex flex-col gap-3 px-4' data-testid='achievements-view'>
       <StampView stamp={stamp} />
       <div className='-m-6'>
         <BucketList parkId={park.id} />
