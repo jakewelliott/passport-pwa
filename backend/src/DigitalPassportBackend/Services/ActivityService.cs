@@ -215,7 +215,7 @@ public class ActivityService(
         var note = _privateNoteRepository.GetByParkAndUser(parkId, userId);
         if (note == null)
         {
-            note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.Now);
+            note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.UtcNow);
         }
         note.parkId = parkId;
         return note;
@@ -223,18 +223,23 @@ public class ActivityService(
 
     public List<PrivateNote> GetNotes(int userId)
     {
-        return _privateNoteRepository.GetByUser(userId).Select(x =>
-        {
-            if (x.parkId != null)
+        return _privateNoteRepository.GetByUser(userId)
+            .Select(x =>
             {
-                x.park = _locationsRepository.GetById(x.parkId.Value);
-            }
-            else
-            {
-                x.parkId = 0;
-            }
-            return x;
-        }).ToList();
+                var note = new PrivateNote
+                {
+                    id = x.id,
+                    note = x.note,
+                    createdAt = x.createdAt,
+                    updatedAt = x.updatedAt,
+                    userId = x.userId,
+                    user = x.user,
+                    parkId = x.parkId == null ? 0 : x.parkId,
+                    park = x.parkId != null ? _locationsRepository.GetById(x.parkId.Value) : null
+                };
+                return note;
+            })
+            .ToList();
     }
 
 }
