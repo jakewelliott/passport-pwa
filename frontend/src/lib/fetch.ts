@@ -112,15 +112,5 @@ const fetchError = async (response: Response) => {
     message = response.statusText;
   }
 
-  // TODO: standardize error handling with backend
-  // some errors we want to hide from the user
-  // some we want to show as a toast
-
-  if (response.status === 409) {
-    dbg('ERROR', '409 Silent', { message });
-    return;
-  }
-
-  toast.error(message);
   throw new Error(message);
 };
