@@ -14,5 +14,5 @@ public interface ILocationsService
     List<ParkIcon> GetIconsByLocationId(int id);
     List<ParkPhoto> GetParkPhotosByLocationId(int id);
     string UploadGeoJson(IFormFile file);
-
+    Park GetById(int id);
 }

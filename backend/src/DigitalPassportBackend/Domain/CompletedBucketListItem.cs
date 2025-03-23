@@ -7,7 +7,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("completed_bucket_list_items")]
-public class CompletedBucketListItem
+public class CompletedBucketListItem : IEntity
 {
     public int id { get; init; }
     public required Point location { get; set; }

@@ -123,6 +123,16 @@ public class LocationsService : ILocationsService
         return returnString;
     }
 
+    public Park GetById(int id)
+    {
+        var park = _locationsRepository.GetById(id);
+        if (park == null)
+        {
+            throw new ServiceException(StatusCodes.Status404NotFound, $"Park with ID {id} not found");
+        }
+        return park;
+    }
+
 }
 
 class ParkGeometry(string ParkAbbreviation)

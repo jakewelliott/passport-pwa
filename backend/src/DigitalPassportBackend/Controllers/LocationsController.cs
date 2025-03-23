@@ -17,8 +17,20 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     [HttpGet("{locationAbbrev}")]
     public IActionResult Get(string locationAbbrev)
     {
-        // invoking the use case
-        var location = _locationsService.GetByAbbreviation(locationAbbrev);
+        // Check if the input is a number
+        Park location;
+        if (int.TryParse(locationAbbrev, out int locationId))
+        {
+            // If it's a number, use GetById
+            location = _locationsService.GetById(locationId);
+        }
+        else
+        {
+            // Otherwise use GetByAbbreviation
+            location = _locationsService.GetByAbbreviation(locationAbbrev);
+        }
+        
+        // Rest of the method remains the same
         var addresses = _locationsService.GetAddressesByLocationId(location.id);
         var icons = _locationsService.GetIconsByLocationId(location.id);
         var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);

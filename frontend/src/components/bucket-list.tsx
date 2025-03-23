@@ -11,10 +11,10 @@ interface BucketListProps {
 
 /** Leave parkId blank to show all bucket list items. */
 export const BucketList = ({ parkId, showAddress: showParkName = false }: BucketListProps) => {
-	const { items, completed, toggleCompletion, isLoading } = useBucketList(parkId);
+	const { data: items, completed, toggleCompletion, isLoading } = useBucketList(parkId);
 	const { data: parks } = useParks();
 
-	if (isLoading || !items) return <LoadingPlaceholder what='Your bucket list' />;
+	if (isLoading || !items) return <div className='m-6 flex flex-col'><LoadingPlaceholder /></div>;
 
 	const parkNameHelper = (item: BucketListItem) => {
 		const park = parks?.find((park) => park.id === item.parkId);

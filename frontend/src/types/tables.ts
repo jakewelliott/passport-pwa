@@ -77,7 +77,10 @@ export interface CollectedStamp extends ParkVisit {
   // even if the stamp is collected manually, you have to be at a park to collect it
   // or should it? what happens if we are offline and CollectedStamp is created before ParkVisit?
   method: string;
-  timestamp: Date; // this is a field because if we are offline we want to save the date time
+  dateTime: Date;
+  parkId: number;
+  parkAbbreviation: string;
+  createdAt: Date;
 }
 
 export interface ParkNote extends ParkContent {

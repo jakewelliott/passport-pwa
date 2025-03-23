@@ -176,28 +176,8 @@ public class ActivityService(
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.latitude, geopoint.longitude));
         var locationWithInaccuracy = userLocation.Buffer(geopoint.inaccuracyRadius);
 
-        Console.WriteLine($"User Location: {userLocation}, Location with Inaccuracy: {locationWithInaccuracy}");
-
-        // TODO: @V
-        // we can't visit a park manually, rn its just automatically done
-        // so throwing an error for the user to read will prolly confuse them
-        // we should throw an error but not show it on the frontend
-        // what error code should we throw? 409?
-
-        // TODO: test this
-        if (_parkVisitRepository.HasVisitedParkToday(userId, park.id))
-        {
-            throw new ServiceException(StatusCodes.Status409Conflict, "You have already visited this park today.");
-        }
-
-        // TODO: I couldn't get this to work, I tried plotting it on the map and it was correct
-        // I tried different points, digits, and inaccuracies
-
-        // if (park.boundaries!.Intersects(locationWithInaccuracy) == false) {
-        // 		throw new ServiceException(StatusCodes.Status409Conflict, "Client thinks we are in the park but backend disagrees.");
-        // }
-
-        return _parkVisitRepository.Create(new()
+        return _parkVisitRepository.GetParkVisitToday(userId, park.id)
+            ?? _parkVisitRepository.Create(new()
         {
             location = userLocation,
             createdAt = DateTime.Now,
@@ -219,7 +199,7 @@ public class ActivityService(
         var note = _privateNoteRepository.GetByParkAndUser(parkId, userId);
         if (note == null)
         {
-            note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.Now);
+            note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.UtcNow);
         }
         note.parkId = parkId;
         return note;
@@ -227,18 +207,23 @@ public class ActivityService(
 
     public List<PrivateNote> GetNotes(int userId)
     {
-        return _privateNoteRepository.GetByUser(userId).Select(x =>
-        {
-            if (x.parkId != null)
+        return _privateNoteRepository.GetByUser(userId)
+            .Select(x =>
             {
-                x.park = _locationsRepository.GetById(x.parkId.Value);
-            }
-            else
-            {
-                x.parkId = 0;
-            }
-            return x;
-        }).ToList();
+                var note = new PrivateNote
+                {
+                    id = x.id,
+                    note = x.note,
+                    createdAt = x.createdAt,
+                    updatedAt = x.updatedAt,
+                    userId = x.userId,
+                    user = x.user,
+                    parkId = x.parkId == null ? 0 : x.parkId,
+                    park = x.parkId != null ? _locationsRepository.GetById(x.parkId.Value) : null
+                };
+                return note;
+            })
+            .ToList();
     }
 
 }

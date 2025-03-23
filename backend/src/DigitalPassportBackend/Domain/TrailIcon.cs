@@ -6,7 +6,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("trail_icons")]
-public class TrailIcon
+public class TrailIcon : IEntity
 {
     public int id { get; init; }
     public required TrailIconName icon { get; set; }

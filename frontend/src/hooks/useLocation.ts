@@ -11,13 +11,13 @@ interface LocationState {
 // To spoof location, set SPOOF_LOCATION to a Geopoint object
 // To use real location, set SPOOF_LOCATION to null
 
-const SPOOF_LOCATION: Geopoint = {
-  latitude: 35.87,
-  longitude: -78.76,
-  inaccuracyRadius: 0.001,
-};
+// const SPOOF_LOCATION: Geopoint = {
+//   latitude: 35.87,
+//   longitude: -78.76,
+//   inaccuracyRadius: 0.001,
+// };
 
-// const SPOOF_LOCATION = null;
+const SPOOF_LOCATION = null;
 
 export const useLocation = () => {
   dbg('HOOK', 'useLocation');

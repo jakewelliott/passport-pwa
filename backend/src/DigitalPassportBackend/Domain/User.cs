@@ -5,7 +5,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("users")]
-public class User
+public class User : IEntity
 {
     public int id { get; init; }
     public required string username { get; set; }

@@ -5,7 +5,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("bucket_list_items")]
-public class BucketListItem
+public class BucketListItem : IEntity
 {
     public int id { get; init; }
     public required string task { get; set; }

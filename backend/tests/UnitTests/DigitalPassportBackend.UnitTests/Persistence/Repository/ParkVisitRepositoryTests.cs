@@ -223,49 +223,49 @@ public class ParkVisitRepositoryTests
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsTrue_VisitedToday()
+    public void GetParkVisitToday_ReturnsParkVisit_VisitedToday()
     {
         // Arrange
         var locationId = TestData.ParkVisits[2].parkId;
         var userId = TestData.ParkVisits[2].userId;
 
         // Act
-        var result = _repo.HasVisitedParkToday(userId, locationId);
+        var result = _repo.GetParkVisitToday(userId, locationId);
 
         // Assert
-        Assert.True(result);
+        Assert.Equal(TestData.ParkVisits[2], result);
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsFalse_VisitedAnotherParkToday()
+    public void GetParkVisitToday_ReturnsNull_VisitedAnotherParkToday()
     {
         // Arrange
         var locationId = TestData.ParkVisits[3].parkId;
         var userId = TestData.ParkVisits[0].userId;
 
         // Act
-        var result = _repo.HasVisitedParkToday(userId, locationId);
+        var result = _repo.GetParkVisitToday(userId, locationId);
 
         // Assert
-        Assert.False(result);
+        Assert.Null(result);
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsFalse_NotVisitedParkTodayButDidYesterday()
+    public void GetParkVisitToday_ReturnsNull_NotVisitedParkTodayButDidYesterday()
     {
         // Arrange
         var yesterdayVisit = _repo.GetById(TestData.ParkVisits[3].id);
         var originalTime = yesterdayVisit.createdAt;
-        yesterdayVisit.createdAt = DateTime.UtcNow - new TimeSpan(1, 0, 0, 0);
+        yesterdayVisit.createdAt = originalTime - new TimeSpan(1, 0, 0, 0);
         _repo.Update(yesterdayVisit);
         var locationId = yesterdayVisit.parkId;
         var userId = yesterdayVisit.userId;
 
         // Act
-        var result = _repo.HasVisitedParkToday(userId, locationId);
+        var result = _repo.GetParkVisitToday(userId, locationId);
 
         // Assert
-        Assert.False(result);
+        Assert.Null(result);
 
         // Reset
         yesterdayVisit.createdAt = originalTime;
@@ -273,17 +273,17 @@ public class ParkVisitRepositoryTests
     }
 
     [Fact]
-    public void HasVisitedParkToday_ReturnsFalse_NeverVsitedPark()
+    public void GetParkVisitToday_ReturnsNull_NeverVsitedPark()
     {
         // Arrange
         var locationId = TestData.ParkVisits[0].parkId;
         var userId = TestData.ParkVisits[3].userId;
 
         // Act
-        var result = _repo.HasVisitedParkToday(userId, locationId);
+        var result = _repo.GetParkVisitToday(userId, locationId);
 
         // Assert
-        Assert.False(result);
+        Assert.Null(result);
     }
 
 }

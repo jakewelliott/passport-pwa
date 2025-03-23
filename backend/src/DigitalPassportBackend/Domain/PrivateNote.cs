@@ -5,7 +5,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("private_notes")]
-public class PrivateNote
+public class PrivateNote : IEntity
 {
     public int id { get; init; }
     [Column(TypeName = "longtext")]
