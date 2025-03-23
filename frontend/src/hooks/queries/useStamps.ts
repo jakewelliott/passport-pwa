@@ -4,6 +4,7 @@ import type { CollectStampRequest, CollectedStamp } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 import { useUser } from './useUser';
+
 /**
  * Gets all of the local user's stamps, empty array if user is not loaded
  * @returns The stamps for the user

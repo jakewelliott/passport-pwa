@@ -36,6 +36,7 @@ export const createQueryHookWrapper = () => {
 export const renderWithClient = (ui: React.ReactElement, options: RenderOptions = {}) => {
 	const testQueryClient = createTestQueryClient();
 
+
 	const { rerender, ...result } = render(
 		<QueryClientProvider client={testQueryClient}>
 			{options.routerProps?.initialEntries ? (

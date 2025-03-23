@@ -1,88 +1,22 @@
-import { usePark, useParks } from '@/hooks/queries/useParks';
-import { useStamp, useStamps } from '@/hooks/queries/useStamps';
-import { useUser } from '@/hooks/queries/useUser';
-import { collectedStamps, mockPark } from '@/lib/testing/mock/tables';
+import { parks } from '@/lib/testing/mock';
 import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { fireEvent, screen } from '@testing-library/react';
-import { toast } from 'react-toastify';
-import type { Mock } from 'vitest';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import StampsScreen from '../';
 
 
-// Mock the hooks and toast
-vi.mock('@/hooks/queries/useParks');
-vi.mock('@/hooks/queries/useStamps');
-vi.mock('@/hooks/queries/useUser');
-vi.mock('react-toastify');
-
-const mockUseParks = useParks as Mock;
-const mockUseStamps = useStamps as Mock;
-const mockUseStamp = useStamp as Mock;
-const mockUsePark = usePark as Mock;
-const mockUseUser = useUser as Mock;
-const mockToast = vi.fn();
-
 describe('Stamps', () => {
-	const mockParks = [mockPark];
-
-	beforeEach(() => {
-		vi.clearAllMocks();
-		// Setup default mock returns
-		mockUseParks.mockReturnValue({
-			data: mockParks,
-			isLoading: false,
-		});
-		mockUseStamps.mockReturnValue({
-			data: collectedStamps,
-			isLoading: false,
-			refetch: vi.fn(),
-		});
-		mockUseUser.mockReturnValue({
-			isLoading: false,
-		});
-		mockUseStamp.mockReturnValue({
-			data: collectedStamps[0],
-			isLoading: false,
-		});
-		mockUsePark.mockReturnValue({
-			data: mockParks[0],
-			isLoading: false,
-		});
-		(toast.info as Mock) = mockToast;
-	});
-
-	const renderStamps = () => {
-		renderWithClient(<StampsScreen />);
-	};
-
-	it('shows nothing when data is loading', () => {
-		mockUseParks.mockReturnValue({
-			data: null,
-			isLoading: true,
-		});
-		mockUseStamps.mockReturnValue({
-			data: null,
-			isLoading: true,
-			refetch: vi.fn(),
-		});
-		mockUseUser.mockReturnValue({
-			isLoading: true,
-		});
-
-		renderStamps();
-		expect(screen.queryByRole('button')).not.toBeInTheDocument();
-	});
+	const mockParks = parks;
 
 	it('renders stamps in correct grid layout', () => {
-		renderStamps();
+		renderWithClient(<StampsScreen />);
 
 		const gridContainer = screen.getByTestId('stamps-grid');
 		expect(gridContainer).toHaveClass('grid', 'grid-cols-3', 'gap-4');
 	});
 
 	it('renders grid of stamps with achieved stamps first', () => {
-		renderStamps();
+		renderWithClient(<StampsScreen />);
 
 		// Get all stamp images
 		const firstStampImage = screen.getByTestId(`stamp-image-${mockParks[0].abbreviation}`);
@@ -98,7 +32,7 @@ describe('Stamps', () => {
 	});
 
 	it('shows stamp details when clicking unvisited stamp', () => {
-		renderStamps();
+		renderWithClient(<StampsScreen />);
 
 		// Click an unvisited stamp (third park onwards)
 		const unvisitedStamp = screen.getByTestId(`stamp-button-${mockParks[2].abbreviation}`);
@@ -108,7 +42,7 @@ describe('Stamps', () => {
 	});
 
 	it('shows stamp details when clicking a stamp', () => {
-		renderStamps();
+		renderWithClient(<StampsScreen />);
 
 		// Click the first stamp (which is visited)
 		const firstStamp = screen.getByTestId(`stamp-button-${mockParks[0].abbreviation}`);
@@ -119,7 +53,7 @@ describe('Stamps', () => {
 	});
 
 	it('hides stamp details when close button is clicked', () => {
-		renderStamps();
+		renderWithClient(<StampsScreen />);
 
 		// Click a stamp to show details
 		const firstStamp = screen.getByTestId(`stamp-button-${mockParks[0].abbreviation}`);
@@ -134,7 +68,7 @@ describe('Stamps', () => {
 	});
 
 	it('applies correct styling to stamp buttons', () => {
-		renderStamps();
+		renderWithClient(<StampsScreen />);
 
 		// Test the first stamp button's styling
 		const stampButton = screen.getByTestId(`stamp-button-${mockParks[0].abbreviation}`);

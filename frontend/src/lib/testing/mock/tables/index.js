@@ -93,9 +93,9 @@ const camel = Object.entries({
 export const parks = camel.parks.map((park) => ({
   ...park,
   coordinates: parseGeopoint(park.coordinates),
-  addresses: camel.parkAddresses.filter((address) => address.park === park.id),
-  icons: camel.parkIcons.filter((icon) => icon.park === park.id),
-  photos: camel.parkPhotos.filter((photo) => photo.park === park.id),
+  addresses: camel.parkAddresses.filter((address) => address.parkId === park.id),
+  icons: camel.parkIcons.filter((icon) => icon.parkId === park.id),
+  photos: camel.parkPhotos.filter((photo) => photo.parkId === park.id),
 }));
 
 // for trails, we need to get an array of the icon names

@@ -63,8 +63,8 @@ export const NotesMiniTab = ({
 				onChange={handleChange}
 				placeholder='Add some personal notes about this park!'
 			/>
-			<div className='flex justify-center p-3' {...a11yOnClick(handleClick)} data-testid='save-button'>
-				<RoundedButton title={'Save'} />
+			<div className='flex justify-center p-3' {...a11yOnClick(handleClick)}>
+				<RoundedButton title={'Save'} data-testid='save-button' />
 			</div>
 		</div>
 	);

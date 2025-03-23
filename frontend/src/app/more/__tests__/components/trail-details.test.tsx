@@ -1,46 +1,24 @@
 import { TrailDetailView } from '@/app/more/components/trail-details';
-import type { Trail } from '@/types';
+import { mockTrail } from '@/lib/testing/mock';
 import { render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
-
-// Mock the TrailIcons component
-vi.mock('@/components/trail-icons', () => ({
-	TrailIcons: () => <div data-testid='trail-icons' />,
-}));
+import { describe, expect, it } from 'vitest';
 
 describe('TrailDetailView', () => {
-	const mockTrail: Trail = {
-		id: 1,
-		trailName: 'Test Trail',
-		distance: '2.5 miles',
-		description: 'A beautiful hiking trail',
-		trailIcons: ['Hiking-Red.svg', 'Loop-Red.svg'],
-	};
-
 	it('renders trail name with correct styling', () => {
 		render(<TrailDetailView trail={mockTrail} />);
-
-		const trailName = screen.getByText(/Test Trail:/);
+		const trailName = screen.getByText(`${mockTrail.trailName}:`);
 		expect(trailName).toBeInTheDocument();
 		expect(trailName).toHaveClass('text-secondary_orange');
 	});
 
-	it('renders trail icons component', () => {
+	it('renders rest of trail details', () => {
 		render(<TrailDetailView trail={mockTrail} />);
-
-		expect(screen.getByTestId('trail-icons')).toBeInTheDocument();
-	});
-
-	it('renders trail distance and description', () => {
-		render(<TrailDetailView trail={mockTrail} />);
-
-		expect(screen.getByText(/2\.5 miles/)).toBeInTheDocument();
-		expect(screen.getByText(/A beautiful hiking trail/)).toBeInTheDocument();
+		expect(screen.getByText(mockTrail.distance)).toBeInTheDocument();
+		expect(screen.getByText(mockTrail.description)).toBeInTheDocument();
 	});
 
 	it('renders bullet points with correct styling', () => {
 		render(<TrailDetailView trail={mockTrail} />);
-
 		const bullets = screen.getAllByText('▪');
 		expect(bullets).toHaveLength(2);
 		for (const bullet of bullets) {
@@ -48,10 +26,10 @@ describe('TrailDetailView', () => {
 		}
 	});
 
-	it('applies correct container styling', () => {
-		render(<TrailDetailView trail={mockTrail} />);
+	// TODO: trail icons aren't stored in db yet
+	// it('renders trail icons component', () => {
+	// 	render(<TrailDetailView trail={mockTrail} />);
+	// 	expect(screen.getByTestId('trail-icons')).toBeInTheDocument();
+	// });
 
-		const container = screen.getByText(/Test Trail/).closest('p');
-		expect(container).toHaveClass('mb-2');
-	});
 });

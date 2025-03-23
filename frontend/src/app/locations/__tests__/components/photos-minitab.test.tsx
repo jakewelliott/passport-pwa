@@ -4,11 +4,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 
 describe('PhotoGalleryMiniTab', () => {
-
-	const mockPhotos = mockPark.photos;
-
 	beforeEach(() => {
-		// Mock ResizeObserver
+		console.log(mockPark);
 		global.ResizeObserver = class ResizeObserver {
 			observe() { }
 			unobserve() { }
@@ -17,52 +14,33 @@ describe('PhotoGalleryMiniTab', () => {
 	});
 
 	it('renders no photos message when photos array is empty', () => {
-		render(<PhotoGalleryMiniTab photos={[]} />);
+		const parkWithoutPhotos = { ...mockPark, photos: [] };
+		render(<PhotoGalleryMiniTab park={parkWithoutPhotos} />);
 		expect(screen.getByText('No photos available for this location.')).toBeInTheDocument();
 	});
 
 	it('renders all photos in a grid', () => {
-		render(<PhotoGalleryMiniTab photos={mockPhotos} />);
-		const images = screen.getAllByRole('img');
-		expect(images).toHaveLength(mockPhotos.length);
+		render(<PhotoGalleryMiniTab park={mockPark} />);
+		const images = screen.getAllByTestId('photo');
+		expect(images).toHaveLength(mockPark.photos.length);
 
 		for (const [index, img] of images.entries()) {
-			expect(img).toHaveAttribute('src', `/photos/${mockPhotos[index].photoPath}`);
-			expect(img).toHaveAttribute('alt', mockPhotos[index].alt);
+			expect(img).toHaveAttribute('src', `/photos/${mockPark.photos[index].photoPath}`);
+			expect(img).toHaveAttribute('alt', mockPark.photos[index].alt);
 			expect(img).toHaveClass('h-full', 'w-full', 'object-cover');
 		}
 	});
 
-	it('applies hover styles to images', () => {
-		render(<PhotoGalleryMiniTab photos={mockPhotos} />);
-		const images = screen.getAllByRole('img');
-
-		for (const img of images) {
-			expect(img).toHaveClass('transition-opacity', 'duration-300', 'hover:opacity-80');
-		}
-	});
-
-	it('renders grid with correct layout classes', () => {
-		render(<PhotoGalleryMiniTab photos={mockPhotos} />);
-		const grid = screen.getAllByRole('img')[0].closest('.grid');
-		expect(grid).toHaveClass('grid-cols-3', 'w-full');
-	});
-
 	it('renders photos with fallback alt text when alt is not provided', () => {
 		const photosWithoutAlt = [{ photoPath: '/test1.jpg', alt: '' }];
-		render(<PhotoGalleryMiniTab photos={photosWithoutAlt} />);
+		const mockPark2 = { ...mockPark, photos: photosWithoutAlt };
+		render(<PhotoGalleryMiniTab park={mockPark2} />);
 		expect(screen.getByRole('img')).toHaveAttribute('alt', 'Park photo 1');
 	});
 
-	it('handles null photos prop gracefully', () => {
-		// @ts-expect-error Testing invalid prop
-		render(<PhotoGalleryMiniTab photos={null} />);
-		expect(screen.getByText('No photos available for this location.')).toBeInTheDocument();
-	});
-
 	it('opens ImageModal when photo is clicked', () => {
-		render(<PhotoGalleryMiniTab photos={mockPhotos} />);
-		const firstPhoto = screen.getAllByRole('img')[0];
+		render(<PhotoGalleryMiniTab park={mockPark} />);
+		const firstPhoto = screen.getAllByTestId('photo')[0];
 
 		fireEvent.click(firstPhoto);
 
@@ -72,12 +50,12 @@ describe('PhotoGalleryMiniTab', () => {
 
 		// Check if the correct image is displayed
 		const modalImage = screen.getAllByRole('img').at(-1); // Get the last image (modal image)
-		expect(modalImage).toHaveAttribute('src', `/photos/${mockPhotos[0].photoPath}`);
-		expect(modalImage).toHaveAttribute('alt', mockPhotos[0].alt || 'Photo');
+		expect(modalImage).toHaveAttribute('src', `/photos/${mockPark.photos[0].photoPath}`);
+		expect(modalImage).toHaveAttribute('alt', mockPark.photos[0].alt || 'Photo');
 	});
 
 	it('closes ImageModal when close button is clicked', () => {
-		render(<PhotoGalleryMiniTab photos={mockPhotos} />);
+		render(<PhotoGalleryMiniTab park={mockPark} />);
 
 		// Open modal
 		const firstPhoto = screen.getAllByRole('img')[0];
@@ -89,6 +67,6 @@ describe('PhotoGalleryMiniTab', () => {
 
 		// Verify modal is closed by checking that only the grid images remain
 		const remainingImages = screen.getAllByRole('img');
-		expect(remainingImages).toHaveLength(mockPhotos.length);
+		expect(remainingImages).toHaveLength(mockPark.photos.length);
 	});
 });

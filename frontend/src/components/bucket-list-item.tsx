@@ -22,15 +22,16 @@ interface BucketListItemViewProps {
 	address?: string;
 }
 
+const CheckedIcon = () => (<FaRegCheckSquare size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} data-testid='checked-icon' />)
+const UncheckedIcon = () => (<FaRegSquare size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} data-testid='unchecked-icon' />)
+
 export const BucketListItemView = ({ item, completion, handler, address }: BucketListItemViewProps) => {
-
 	const completed = completion !== undefined;
-
-	const Icon = completed ? FaRegCheckSquare : FaRegSquare;
+	const Icon = completed ? CheckedIcon : UncheckedIcon;
 
 	return (
 		<div key={item.id} className='my-2.5 flex items-start' {...a11yOnClick(handler)}>
-			<Icon size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
+			<Icon />
 			<div className='flex w-full flex-col justify-center'>
 				<p>{item.task}</p>
 				<div className='flex flex-wrap items-center gap-2'>

@@ -1,14 +1,8 @@
 import { BucketList } from '@/components/bucket-list';
-import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import { StampCollectedOn } from '@/components/stamp-collected-on';
-import { useStamp } from '@/hooks/queries/useStamps';
 import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park } from '@/types';
 import { FaStamp } from 'react-icons/fa';
-
-interface AchievementsViewProps {
-	park: Park;
-}
 
 const StampView = ({ stamp }: { stamp?: CollectedStamp | null }) => {
 	return (
@@ -21,18 +15,14 @@ const StampView = ({ stamp }: { stamp?: CollectedStamp | null }) => {
 	);
 };
 
-const AchievementsView = ({ park }: AchievementsViewProps) => {
-	const { data: stamp, isLoading } = useStamp(park.abbreviation);
-
-	if (isLoading) return <LoadingPlaceholder what='your achievements' />;
-
+const AchievementsView = ({ park, stamp }: { park: Park; stamp?: CollectedStamp | null }) => {
 	dbg('MISC', 'stamp', stamp);
 
 	return (
 		<div className='flex flex-col gap-3' data-testid='achievements-view'>
 			<StampView stamp={stamp} />
 			<div className='-m-6'>
-			<BucketList parkId={park.id} />
+				<BucketList parkId={park.id} />
 			</div>
 		</div>
 	);

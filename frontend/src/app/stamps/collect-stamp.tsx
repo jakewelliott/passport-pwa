@@ -4,7 +4,6 @@ import { useLocation } from '@/hooks/useLocation';
 import { useParkCheck } from '@/hooks/useParkCheck';
 import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
-import type { CollectStampRequest } from '@/types';
 import { useEffect, useState } from 'react';
 
 export default function CollectStamp() {
@@ -51,7 +50,7 @@ export default function CollectStamp() {
 	const handleCollectStamp = () => {
 		if (hidden) return; // keep ts happy
 
-		const collected: CollectStampRequest = {
+		const collected = {
 			latitude: geopoint?.latitude ?? 0,
 			longitude: geopoint?.longitude ?? 0,
 			inaccuracyRadius: geopoint?.inaccuracyRadius ?? 0,

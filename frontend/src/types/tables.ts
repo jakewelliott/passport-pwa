@@ -1,4 +1,4 @@
-import type { Address, Geopoint, TrailIcon } from './misc';
+import type { Address, Geopoint, IconEmun } from './misc';
 
 //
 // Types for tables in the database
@@ -24,6 +24,14 @@ interface ParkContent extends UserContent {
   parkId: number;
 }
 
+export interface ParkIcon {
+  id: number;
+  icon: IconEmun;
+  createdAt: Date;
+  updatedAt: Date;
+  parkId: number;
+}
+
 export interface Park {
   id: number;
   parkName: string;
@@ -36,7 +44,7 @@ export interface Park {
   trails: string;
   website: string;
   addresses: Address[];
-  icons: { iconName: string }[];
+  icons: ParkIcon[];
   // bucketListItems: { id: number; task: string }[];
   photos: { photoPath: string; alt: string }[];
   abbreviation: string;
@@ -45,7 +53,7 @@ export interface Park {
 export interface Trail {
   id: number;
   trailName: string;
-  trailIcons: TrailIcon[];
+  trailIcons: ParkIcon[];
   distance: string;
   description: string;
 }
@@ -74,7 +82,6 @@ export interface CollectedStamp extends ParkVisit {
   // since we can always associate the stamp with the visit
   // even if the stamp is collected manually, you have to be at a park to collect it
   // or should it? what happens if we are offline and CollectedStamp is created before ParkVisit?
-
   method: string;
   timestamp: Date; // this is a field because if we are offline we want to save the date time
 }
