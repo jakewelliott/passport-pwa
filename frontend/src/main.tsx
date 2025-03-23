@@ -18,11 +18,6 @@ ReactDOM.createRoot(rootElement).render(
 			<App />
 		</QueryClientProvider>
 	</React.StrictMode>,
-	<React.StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<App />
-		</QueryClientProvider>
-	</React.StrictMode>,
 );
 
 registerServiceWorker();

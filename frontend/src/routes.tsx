@@ -1,7 +1,6 @@
 import App from "@/App";
 import { AdminPage } from "@/app/admin";
 import CollectStamp from "@/app/stamps/collect-stamp";
-import { SplashScreen } from "@/components/splash-screen";
 import { useUser } from "@/hooks/queries/useUser";
 import { dbg } from "@/lib/debug";
 import { Navigate, Outlet, createBrowserRouter } from "react-router-dom";
@@ -23,7 +22,7 @@ import { BucketList } from "./components/bucket-list";
 
 const RoleBasedRedirect = () => {
 	const { data: user, isLoading } = useUser();
-	if (isLoading) return <SplashScreen loadingMsg="your account" />;
+	if (isLoading) return null;
 	if (!user) return <Navigate to="/login" replace />;
 	dbg("RENDER", "RoleBasedRedirect", user.role);
 	return user.role === "admin" ? (
@@ -36,7 +35,7 @@ const RoleBasedRedirect = () => {
 const AdminRoutes = () => {
 	dbg("RENDER", "AdminRoutes");
 	const { data: user, isLoading } = useUser();
-	if (isLoading) return <SplashScreen loadingMsg="checking permissions" />;
+	if (isLoading) return null;
 	if (!isLoading && user?.role !== "admin") {
 		return <Navigate to="/locations" replace />;
 	}
