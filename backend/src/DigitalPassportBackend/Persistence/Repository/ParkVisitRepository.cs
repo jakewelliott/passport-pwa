@@ -58,10 +58,10 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
             .ToList();
     }
 
-    public ParkVisit? HasVisitedParkToday(int userId, int parkId)
+    public bool HasVisitedParkToday(int userId, int parkId)
     {
         return _digitalPassportDbContext.ParkVisits
             .Where(v => v.userId == userId && v.parkId == parkId && v.createdAt.Date == DateTime.Today)
-            .FirstOrDefault();
+            .Any();
     }
 }
