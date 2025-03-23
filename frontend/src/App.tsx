@@ -4,11 +4,13 @@ import TabBar from '@/components/tab-bar';
 import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSplashScreen } from './hooks/useSplashScreen';
-import { dbg } from './lib/debug';
+import { useSplashScreen } from '@/hooks/useSplashScreen';
+import { dbg } from '@/lib/debug';
+import { useUser } from '@/hooks/queries/useUser';
 
 const App = () => {
 	dbg('RENDER', 'App.tsx');
+	const { data: user } = useUser();
 
 	const { SplashScreen, splashFinished } = useSplashScreen();
 	return (
@@ -17,7 +19,7 @@ const App = () => {
 				<Header />
 				<Layout>
 					<main>
-						{splashFinished ? <Outlet /> : <SplashScreen />}
+						{!user ? <Outlet /> : splashFinished ? <Outlet /> : <SplashScreen />}
 					</main>
 				</Layout>
 				<TabBar />
