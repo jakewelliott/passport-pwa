@@ -36,14 +36,12 @@ export const ManualStampButton = () => {
 		}
 
 		mutate({
-			location: {
-				latitude: geopoint.latitude,
-				longitude: geopoint.longitude,
-				inaccuracyRadius: geopoint.inaccuracyRadius,
-			},
+			geopoint,
 			method: 'manual',
 			timestamp: new Date(),
+			parkId: park.id,
 		});
+
 		setIsOpen(false);
 	};
 

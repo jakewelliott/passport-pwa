@@ -5,7 +5,6 @@ export const LoggedInAs = () => {
 	const { data: user } = useUser();
 	const navigate = useNavigate();
 
-
 	const message = user?.username ? `You are currently logged in as '${user.username}'` : 'You are not logged in';
 
 	return (

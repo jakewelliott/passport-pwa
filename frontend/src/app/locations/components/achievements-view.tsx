@@ -4,7 +4,7 @@ import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park } from '@/types';
 import { FaStamp } from 'react-icons/fa';
 
-const StampView = ({ stamp }: { stamp?: CollectedStamp | null }) => {
+const StampView = ({ stamp }: { stamp?: CollectedStamp }) => {
 	return (
 		<div className='my-2.5 flex items-start'>
 			<FaStamp size={'24px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '3px' }} />
@@ -15,7 +15,7 @@ const StampView = ({ stamp }: { stamp?: CollectedStamp | null }) => {
 	);
 };
 
-const AchievementsView = ({ park, stamp }: { park: Park; stamp?: CollectedStamp | null }) => {
+const AchievementsView = ({ park, stamp }: { park: Park; stamp?: CollectedStamp }) => {
 	dbg('MISC', 'stamp', stamp);
 
 	return (

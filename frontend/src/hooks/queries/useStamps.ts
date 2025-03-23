@@ -24,11 +24,16 @@ export const useStamps = () => {
  * @param code The code of the park to get the stamp for
  * @returns The stamp for the user
  */
-export const useStamp = (abbreviation: string | undefined) => {
+export const useStamp = (parkId: number | undefined) => {
   // re-use our query hooks whenever possible
-  const { data, isLoading } = useStamps();
-  if (abbreviation === undefined) return { data: undefined, isLoading };
-  return { data: data?.find((stamp) => stamp.parkAbbreviation === abbreviation) || undefined, isLoading };
+  dbg('HOOK', 'useStamp', parkId);
+  const { data, ...hook } = useStamps();
+
+  if (parkId === undefined) return { ...hook, data: undefined };
+  const stamp = data?.find((stamp) => stamp.parkId === parkId);
+  console.log('stamp', stamp);
+
+  return { ...hook, data: stamp };
 };
 
 export const useStampMutation = () => {
@@ -37,7 +42,7 @@ export const useStampMutation = () => {
   return useMutation<string, Error, CollectStampRequest>({
     mutationFn: async (stamp: CollectStampRequest) => {
       dbg('MUTATE', 'Collecting stamp', { stamp });
-      const response = await fetchPost(`${API_STAMPS_URL}/${stamp.parkAbbreviation}`, stamp);
+      const response = await fetchPost(`${API_STAMPS_URL}/${stamp.parkId}`, stamp);
       return await response.text();
     },
     onSuccess: () => {

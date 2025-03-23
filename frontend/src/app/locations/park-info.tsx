@@ -16,21 +16,21 @@ import { AddressView } from './components/address-view';
 const MiniTabs = ({ park }: { park: Park }) => (
 	<LocationMiniTabBar>
 		<DetailsMiniTab park={park} />
-		<PhotoGalleryMiniTab photos={park.photos} />
+		<PhotoGalleryMiniTab park={park} />
 		<NotesMiniTab parkId={park.id} />
 	</LocationMiniTabBar>
 );
 
-export default function DetailTabs() {
+export default function ParkInfoScreen() {
 	dbg('RENDER', 'Location DetailTabs');
 	const { abbreviation } = useParams();
 	const parkAbbreviation = abbreviation as Uppercase<string>;
 
 	const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
-	const { data: stamp, isLoading: isStampLoading } = useStamp(parkAbbreviation);
+	const { data: stamp, isLoading: isStampLoading } = useStamp(park?.id);
 
 	if (isParkLoading || !park) return <LoadingPlaceholder what='park' />;
-	if (isStampLoading || !stamp) return <LoadingPlaceholder what='stamp' />;
+	if (isStampLoading) return <LoadingPlaceholder what='stamp' />;
 
 	return (
 		<>

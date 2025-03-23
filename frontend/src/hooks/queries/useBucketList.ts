@@ -29,7 +29,7 @@ const useToggleCompletion = () => {
   const { geopoint } = useLocation();
 
   return useMutation({
-    mutationFn: (itemId: number) => fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, geopoint),
+    mutationFn: (itemId: number) => fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, { geopoint: geopoint }),
     onSuccess: () => refetch(),
   });
 };
@@ -38,10 +38,9 @@ const useToggleCompletion = () => {
 export const useBucketList = (parkId?: number) => {
   const { data: allItems, isLoading: isLoadingAllItems } = useBucketListItems();
   const { data: allCompletedItems, isLoading: isLoadingCompletedItems } = useCompletedBucketListItems();
-  const { mutate: toggleCompletion, isPending: isMarkingAsComplete } = useToggleCompletion();
+  const { mutate: toggleCompletion } = useToggleCompletion();
 
-  const isLoading =
-    isLoadingAllItems || isLoadingCompletedItems || isMarkingAsComplete || !allItems || !allCompletedItems;
+  const isLoading = isLoadingAllItems || isLoadingCompletedItems || !allItems || !allCompletedItems;
 
   // filtering logic (useMemo?)
   const parkItems = allItems?.filter((item: BucketListItem) => item.parkId === parkId) ?? [];

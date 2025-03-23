@@ -16,12 +16,7 @@ const useVisitsHistory = () =>
 const useVisitMutation = () => {
   const { geopoint } = useLocation();
   return useMutation({
-    mutationFn: (parkAbbreviation: string) =>
-      fetchPost(`${API_VISIT_HISTORY_URL}/${parkAbbreviation}`, {
-        longitude: geopoint?.longitude,
-        latitude: geopoint?.latitude,
-        inaccuracyRadius: geopoint?.inaccuracyRadius,
-      }),
+    mutationFn: (parkId: number) => fetchPost(`${API_VISIT_HISTORY_URL}/${parkId}`, { geopoint: geopoint }),
     onError: (error) => {
       dbg('ERROR', 'useVisitMutation', error);
     },
@@ -34,8 +29,8 @@ export const useVisitPark = () => {
   const mutation = useVisitMutation();
   const { data: parks } = useParks();
 
-  const mutate = (parkAbbreviation: string) => {
-    dbg('MUTATE', 'useVisitPark', `visiting park ${parkAbbreviation}`);
+  const mutate = (parkId: number) => {
+    dbg('MUTATE', 'useVisitPark', `visiting park ${parkId}`);
 
     // make sure we have the data to check
     if (query.isLoading || query.data === undefined || parks === undefined) {
@@ -43,10 +38,10 @@ export const useVisitPark = () => {
       return;
     }
 
-    const park = parks.find((park) => park.abbreviation === parkAbbreviation);
+    const park = parks.find((park) => park.id === parkId);
 
     if (!park) {
-      dbg('ERROR', 'useVisitPark', `park ${parkAbbreviation} not found`);
+      dbg('ERROR', 'useVisitPark', `park ${parkId} not found`);
       return;
     }
 
@@ -57,7 +52,7 @@ export const useVisitPark = () => {
       return;
     }
 
-    mutation.mutate(parkAbbreviation, {
+    mutation.mutate(parkId, {
       onSuccess: () => {
         query.refetch();
       },

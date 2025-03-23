@@ -37,7 +37,7 @@ const parkCheck = (
   point: GeoJSON.Feature<GeoJSON.Point>,
   accuracy: number,
   parksGeo: ParkGeoData[],
-): string | undefined => {
+): number | undefined => {
   for (const parkGeo of parksGeo) {
     try {
       const boundaries = wkt.parse(parkGeo.boundaries || '');
@@ -46,20 +46,20 @@ const parkCheck = (
           if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
             // If point is within polygon, find and return matching park
             if (booleanPointInPolygon(point, geometry)) {
-              return parkGeo.abbreviation;
+              return parkGeo.id;
             }
             // Create buffered point using accuracy radius
             const bufferedPoint = buffer(point, accuracy, { units: 'degrees' }) as GeoJSON.Feature<GeoJSON.Polygon>;
 
             // Check if either the point is in the polygon or the buffer intersects it
             if (booleanPointInPolygon(point, geometry) || booleanIntersects(bufferedPoint, geometry)) {
-              return parkGeo.abbreviation;
+              return parkGeo.id;
             }
           }
         }
       }
     } catch (error) {
-      console.error(`Failed to parse boundaries for park ${parkGeo.abbreviation}:`, error);
+      console.error(`Failed to parse boundaries for park ${parkGeo.id}:`, error);
     }
   }
   dbg('ERROR', 'parkCheck', 'no park found');
@@ -86,13 +86,13 @@ export const useParkCheck = (): ParkCheckResult => {
     }
 
     const point = castGeopoint(geopoint);
-    const abbreviation = parkCheck(point, geopoint.inaccuracyRadius, parksGeo);
+    const currentParkId = parkCheck(point, geopoint.inaccuracyRadius, parksGeo);
 
-    dbgif(!abbreviation, 'ERROR', 'useParkCheck', 'park not found');
+    dbgif(!currentParkId, 'ERROR', 'useParkCheck', 'park not found');
 
-    if (abbreviation) {
-      markParkAsVisited(abbreviation);
-      const park = parks.find((park) => park.abbreviation === abbreviation);
+    if (currentParkId) {
+      markParkAsVisited(currentParkId);
+      const park = parks.find((park) => park.id === currentParkId);
       setCurrentPark(park);
     }
   }, [geopoint]);
@@ -100,7 +100,7 @@ export const useParkCheck = (): ParkCheckResult => {
   dbgif(parksLoading, 'HOOK', 'useParkCheck', 'parks loading');
   dbgif(geopointLoading, 'HOOK', 'useParkCheck', 'geopoint loading');
   dbgif(parksGeoLoading, 'HOOK', 'useParkCheck', 'parks geo data loading');
-  dbgif(!!currentPark, 'HOOK', 'useParkCheck', currentPark?.abbreviation);
+  dbgif(!!currentPark, 'HOOK', 'useParkCheck', currentPark?.parkName);
 
   return {
     park: currentPark,

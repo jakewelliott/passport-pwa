@@ -18,7 +18,7 @@ describe('DetailsMiniTab', () => {
 
 		for (let index = 0; index < icons.length; index++) {
 			const iconElement = icons[index];
-			expect(iconElement).toHaveAttribute('alt', mockPark.icons[index].icon);
+			expect(iconElement).toHaveAttribute('alt', mockPark.icons[index].iconName);
 			expect(iconElement).toHaveAttribute('width', '55');
 			expect(iconElement).toHaveAttribute('height', '55');
 		}

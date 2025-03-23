@@ -1,24 +1,21 @@
 import { StampCollectedOn } from '@/components/stamp-collected-on';
-import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
-import type { CollectedStamp } from '@/types';
+import type { CollectedStamp, Park } from '@/types';
 import { FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 interface StampsDetailProps {
-	abbreviation: string;
+	park: Park;
 	handleClose: () => void;
 }
 
 const CollectedManually = ({ stamp }: { stamp?: CollectedStamp }) =>
 	!stamp ? null : stamp.method !== 'manual' ? null : <p className='warning'>Stamp collected manually</p>;
 
-export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailProps) => {
-	const { data: stamp } = useStamp(code);
-	const { data: park, isLoading: parkLoading } = usePark(code);
+export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
+	const { data: stamp } = useStamp(park.id);
 	const location = park?.addresses[0] ? `${park?.addresses[0].city}, NC` : 'NC';
 
-	if (parkLoading || !park) return null;
 
 	const closeHandlers = {
 		onClick: handleClose,
@@ -55,7 +52,7 @@ export const StampDetails = ({ abbreviation: code, handleClose }: StampsDetailPr
 					</header>
 					<div className='space-y-3'>
 						<div className='flex justify-center'>
-							<img src={`/stamps/${code}.svg`} alt={`${code} stamp`} className='h-32 w-32' />
+							<img src={`/stamps/${park.abbreviation}.svg`} alt={`${park.abbreviation} stamp`} className='h-32 w-32' />
 						</div>
 						<div className='space-y-2'>
 							<p className='text-supporting_inactiveblue'>{location}</p>

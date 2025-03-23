@@ -95,7 +95,7 @@ export enum BlazeIcons {
 //   YSTBlaze = 'YST-Blaze',
 // }
 
-export type IconEmun = RedIcons | BlueIcons | GreenIcons | BlackIcons | BlazeIcons;
+export type IconEnum = RedIcons | BlueIcons | GreenIcons | BlackIcons | BlazeIcons;
 
 // denotes when an API call takes no body
 const emptySymbol = Symbol('EmptyObject type');

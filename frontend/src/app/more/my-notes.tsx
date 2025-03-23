@@ -51,16 +51,13 @@ export const MyNotes = () => {
 
 	if (isLoading) return <LoadingPlaceholder what='notes' />;
 
-	console.log('ALL NOTES');
-	console.log(allNotes);
-
 	return (
 		<div className='container mx-auto px-4 py-4'>
 			<div className='space-y-4'>
 				{allNotes?.length === 0 ? (
 					<p className='text-gray-600'>No park notes found.</p>
 				) : (
-					allNotes?.map((note) => note && <NoteRow key={note.parkAbbreviation} note={note} navigate={navigate} />)
+					allNotes?.map((note) => note && <NoteRow key={note.parkId} note={note} navigate={navigate} />)
 				)}
 			</div>
 		</div>

@@ -1,39 +1,36 @@
-import type { Address, Geopoint, IconEmun } from './misc';
+import type { Address, Geopoint, IconEnum } from './misc';
+
+interface DatabaseEntry {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  deleted: boolean;
+}
 
 //
 // Types for tables in the database
 //
 
-export interface UserProfile {
-  id: number;
+export interface UserProfile extends DatabaseEntry {
   username: string;
   role: string;
   token?: string;
 }
 
 // anything a user can POST, the database auto fills these fields
-interface UserContent {
-  id: number;
+interface UserContent extends DatabaseEntry {
   userId: number;
-  createdAt: Date;
-  updatedAt: Date;
-  deleted: boolean; // TODO: should this be a nullable date instead?
 }
 
 interface ParkContent extends UserContent {
   parkId: number;
 }
 
-export interface ParkIcon {
-  id: number;
-  icon: IconEmun;
-  createdAt: Date;
-  updatedAt: Date;
-  parkId: number;
+export interface ParkIcon extends DatabaseEntry {
+  iconName: IconEnum;
 }
 
-export interface Park {
-  id: number;
+export interface Park extends DatabaseEntry {
   parkName: string;
   coordinates: Geopoint;
   phone: number;
@@ -50,31 +47,28 @@ export interface Park {
   abbreviation: string;
 }
 
-export interface Trail {
-  id: number;
+export interface Trail extends DatabaseEntry {
   trailName: string;
   trailIcons: ParkIcon[];
   distance: string;
   description: string;
 }
 
-export interface ParkGeoData {
+export interface ParkGeoData extends DatabaseEntry {
   // TODO: I'm not sure how this is store
   // or if it's for trails too, but we should probably
   // be more clear
-  id: number;
   coordinates: Geopoint;
   boundaries: string;
 }
 
-export interface BucketListItem {
-  id: number;
+export interface BucketListItem extends DatabaseEntry {
   parkId: number | null;
   task: string;
 }
 
 export interface ParkVisit extends ParkContent {
-  location: Geopoint;
+  geopoint: Geopoint;
 }
 
 export interface CollectedStamp extends ParkVisit {
@@ -92,6 +86,7 @@ export interface ParkNote extends ParkContent {
 }
 
 export interface BucketListCompletion extends UserContent {
+  geopoint: Geopoint;
   bucketListItemId: number;
   timestamp: Date; // this is a field because if we are offline we want to save the date time
 }

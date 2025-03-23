@@ -5,6 +5,8 @@ using DigitalPassportBackend.Persistence.Repository;
 using Microsoft.OpenApi.Extensions;
 
 using NetTopologySuite.Geometries;
+using static DigitalPassportBackend.Controllers.ActivityController;
+
 
 namespace DigitalPassportBackend.Services;
 
@@ -26,13 +28,11 @@ public class ActivityService(
     private readonly IUserRepository _userRepository = userRepository;
 
     public CollectedStamp CollectStamp(
-        string park_abbreviation,
-        double latitude,
-        double longitude,
-        double inaccuracyRadius,
+        int parkId,
+        int userId,
+        Geopoint geopoint,
         string method,
-        DateTime? dateTime,
-        int userId)
+        DateTime? dateTime)
     {
         // validation checks
         // valid user
@@ -43,7 +43,7 @@ public class ActivityService(
         {
             throw new ServiceException(StatusCodes.Status412PreconditionFailed, "Stamp collection method is not valid.");
         }
-        var park = _locationsRepository.GetByAbbreviation(park_abbreviation);
+        var park = _locationsRepository.GetById(parkId);
         // not already collected
         if (_collectedStampRepository.GetByParkAndUser(park.id, userId) != null)
         {
@@ -51,10 +51,10 @@ public class ActivityService(
         }
 
         // collect the stamp
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.latitude, geopoint.longitude));
         if (method == StampCollectionMethod.location.GetDisplayName())
         {
-            var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
+            var locationWithInaccuracy = userLocation.Buffer(geopoint.inaccuracyRadius);
             if (park.boundaries!.Intersects(locationWithInaccuracy))
             {
                 var collectedStamp = CreateStamp(userLocation, methodEnum, _userRepository.GetById(userId), park, dateTime);
@@ -138,9 +138,9 @@ public class ActivityService(
         return _bucketListItemRepository.GetAll();
     }
 
-    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, double latitude, double longitude)
+    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, Geopoint geopoint)
     {
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.latitude, geopoint.longitude));
 
         var item = _bucketListItemRepository.GetById(itemId);
 				if (item == null) {
@@ -170,11 +170,11 @@ public class ActivityService(
         }
     }
 
-    public ParkVisit VisitPark(int userId, string parkAbbr, double latitude, double longitude, double inaccuracyRadius)
+    public ParkVisit VisitPark(int userId, int parkId, Geopoint geopoint)
     {
-        var park = _locationsRepository.GetByAbbreviation(parkAbbr);
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(latitude, longitude));
-        var locationWithInaccuracy = userLocation.Buffer(inaccuracyRadius);
+        var park = _locationsRepository.GetById(parkId);
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.latitude, geopoint.longitude));
+        var locationWithInaccuracy = userLocation.Buffer(geopoint.inaccuracyRadius);
 
         Console.WriteLine($"User Location: {userLocation}, Location with Inaccuracy: {locationWithInaccuracy}");
 
@@ -199,7 +199,7 @@ public class ActivityService(
 
         return _parkVisitRepository.Create(new()
         {
-            location = new(latitude, longitude),
+            location = userLocation,
             createdAt = DateTime.Now,
             updatedAt = DateTime.Now,
             parkId = park.id,

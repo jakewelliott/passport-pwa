@@ -22,19 +22,22 @@ const renderTrails = (trails: string) => {
 };
 
 const IconView = ({ icon }: { icon: ParkIcon }) => {
-	return <img src={`/icons/park/${icon.icon}.svg`} width={55} height={55} alt={`${icon.icon}`} />;
+	return <img src={`/icons/park/${icon.iconName}.svg`} width={55} height={55} alt={`${icon.iconName}`} />;
 };
 
-const ParkIcons = ({ park }: { park: Park }) => (
-	<div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
-		<div className='inline-flex gap-6 px-6'>
-			{park.icons?.map((icon) => (
-				<IconView key={icon.icon} icon={icon} />
-			))}
-			<div className='w-px flex-shrink-0' />
+const ParkIcons = ({ park }: { park: Park }) => {
+	console.log('park', park);
+	return (
+		<div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
+			<div className='inline-flex gap-6 px-6'>
+				{park.icons.map((parkIcon) => (
+					<IconView key={parkIcon.iconName} icon={parkIcon} />
+				))}
+				<div className='w-px flex-shrink-0' />
+			</div>
 		</div>
-	</div>
-);
+	);
+};
 
 export const DetailsMiniTab = ({ park }: { park: Park }) => {
 	return (

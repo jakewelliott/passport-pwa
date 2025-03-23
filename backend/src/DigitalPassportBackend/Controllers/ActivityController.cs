@@ -25,14 +25,14 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(_activityService.GetCollectedStamps(userId).Select(CollectedStampResponse.FromDomain).ToList());
     }
 
-    [HttpPost("stamps/{parkAbbreviation}")]
+    [HttpPost("stamps/{parkId}")]
     [Authorize(Roles = "visitor")]
     public IActionResult CollectStamp(
-        string parkAbbreviation,
+        int parkId,
         [FromBody] CollectStampRequest request)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkAbbreviation, request.latitude, request.longitude, request.inaccuracyRadius, request.method, request.dateTime, userId)));
+        return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkId, userId, request.geopoint, request.method, request.dateTime)));
     }
 
     [HttpPost("notes/{parkId}")]
@@ -79,10 +79,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     [HttpPost("bucketlist/{itemId}")]
     [Authorize(Roles = "visitor")]
-    public IActionResult ToggleBucketListItemCompletion(int itemId)
+    public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId);
+        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.geopoint);
         return Ok(CompletedBucketListItemResponse.FromDomain(result));
     }
 
@@ -100,15 +100,19 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(result);
     }
 
-    [HttpPost("visit/{parkAbbreviation}")]
+    [HttpPost("visit/{parkId}")]
     [Authorize(Roles = "visitor")]
-    public IActionResult VisitPark(string parkAbbreviation, [FromBody] VisitParkRequest req)
+    public IActionResult VisitPark(int parkId, [FromBody] VisitParkRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(ParkVisitResponse.FromDomain(_activityService.VisitPark(userId, parkAbbreviation, req.longitude, req.latitude, req.inaccuracyRadius)));
+        return Ok(ParkVisitResponse.FromDomain(_activityService.VisitPark(userId, parkId, req.geopoint)));
     }
 
-    public record VisitParkRequest(double longitude, double latitude, double inaccuracyRadius)
+		public record Geopoint(double latitude, double longitude, double inaccuracyRadius)
+		{}
+
+
+    public record VisitParkRequest(Geopoint geopoint)
     {
     }
 
@@ -124,7 +128,8 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record ToggleBucketListItemCompletionRequest(DateTime dateTime)
+    
+    public record ToggleBucketListItemCompletionRequest(Geopoint geopoint)
     {}
 
     public record CompletedBucketListItemResponse(int id, int bucketListItemId, DateTime updatedAt)
@@ -165,9 +170,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     public record CollectStampRequest(
-                double latitude,
-        double longitude,
-        double inaccuracyRadius,
+        Geopoint geopoint,
         string method,
         DateTime? dateTime)
     {

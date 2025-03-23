@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import LoginPage from './app/auth/login';
 import { LogoutScreen } from './app/auth/logout';
 import Locations from './app/locations';
-import LocationDetail from './app/locations/detail-tabs';
+import LocationDetail from './app/locations/park-info';
 import More from './app/more';
 import { AppInfo } from './app/more/app-info';
 import { EditGeneralNotes } from './app/more/general-notes';

@@ -4,6 +4,7 @@ import { useLocation } from '@/hooks/useLocation';
 import { useParkCheck } from '@/hooks/useParkCheck';
 import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
+import type { CollectStampRequest } from '@/types/api';
 import { useEffect, useState } from 'react';
 
 export default function CollectStamp() {
@@ -16,7 +17,7 @@ export default function CollectStamp() {
 
 	const hidden = !visible || !park || isLoading || !geopoint;
 
-	const { data: stamp, isLoading: stampLoading } = useStamp(park?.abbreviation);
+	const { data: stamp, isLoading: stampLoading } = useStamp(park?.id);
 
 	useEffect(() => {
 		if (park !== undefined && stampLoading === false && stamp === null) setVisible(true);
@@ -50,13 +51,11 @@ export default function CollectStamp() {
 	const handleCollectStamp = () => {
 		if (hidden) return; // keep ts happy
 
-		const collected = {
-			latitude: geopoint?.latitude ?? 0,
-			longitude: geopoint?.longitude ?? 0,
-			inaccuracyRadius: geopoint?.inaccuracyRadius ?? 0,
+		const collected: CollectStampRequest = {
+			parkId: park.id,
+			geopoint,
 			method: 'location',
-			dateTime: new Date(),
-			parkAbbreviation: park.abbreviation,
+			timestamp: new Date(),
 		};
 
 		// mark the stamp as collected

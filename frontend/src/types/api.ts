@@ -100,7 +100,7 @@ export type ToggleBucketListItemCompletionRequest = PostRequest<BP<BucketListCom
 export type ToggleBucketListItemCompletionResponse = PostResponse<BucketListCompletion>;
 
 // creates a record of a stamp collection
-export type CollectStampRequest = PostRequest<PP<CollectedStamp>>;
+export type CollectStampRequest = PostRequest<CollectedStamp>;
 export type CollectStampResponse = PostResponse<CollectedStamp>;
 
 // creates a note for a park
