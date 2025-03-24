@@ -1,6 +1,5 @@
 import { DEBUG, dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
-import { toast } from 'react-toastify';
 
 const MOCK_PORT = 6969;
 

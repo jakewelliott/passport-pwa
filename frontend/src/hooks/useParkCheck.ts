@@ -3,7 +3,7 @@ import { useVisitPark } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg, dbgif } from '@/lib/debug';
 import type { Geopoint, Park, ParkGeoData } from '@/types';
-import { booleanIntersects, booleanPointInPolygon, buffer } from '@turf/turf';
+import { buffer, booleanIntersects, booleanPointInPolygon } from '@turf/turf';
 import { useEffect, useState } from 'react';
 import wkt from 'wellknown';
 

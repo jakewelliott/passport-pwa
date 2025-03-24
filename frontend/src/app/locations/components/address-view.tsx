@@ -46,16 +46,13 @@ export const AddressView = ({ park }: { park: Park }) => {
         <>
           {addressesToShow.map((address) => (
             <div className='top-0 flex' key={park.parkName}>
-            <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-            <ParkAddress address={address} />
+              <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+              <ParkAddress address={address} />
             </div>
           ))}
-          {park.addresses.length > 2 && (
-            <Button />
-          )}
+          {park.addresses.length > 2 && <Button />}
         </>
       )}
     </div>
-    
   );
 };

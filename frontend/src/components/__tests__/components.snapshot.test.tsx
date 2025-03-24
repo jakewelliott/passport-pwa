@@ -17,9 +17,9 @@ const mockTrail = trails[0];
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
-	observe: vi.fn(),
-	unobserve: vi.fn(),
-	disconnect: vi.fn(),
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
 }));
 
 // // Mock the useUser hook
@@ -45,74 +45,72 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 // }))
 
 describe('Component Snapshots', () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
 
-	const queryClient = new QueryClient({
-		defaultOptions: {
-			queries: {
-				retry: false,
-			},
-		},
-	});
+  it('TabBar renders correctly', () => {
+    const { container } = render(
+      <BrowserRouter>
+        <TabBar />
+      </BrowserRouter>,
+    );
+    expect(container).toMatchSnapshot();
+  });
 
-	it('TabBar renders correctly', () => {
-		const { container } = render(
-			<BrowserRouter>
-				<TabBar />
-			</BrowserRouter>,
-		);
-		expect(container).toMatchSnapshot();
-	});
+  it('RoundedButton renders correctly', () => {
+    const { container } = render(<RoundedButton title='Test Button' color='secondary_darkteal' />);
+    expect(container).toMatchSnapshot();
+  });
 
-	it('RoundedButton renders correctly', () => {
-		const { container } = render(<RoundedButton title='Test Button' color='secondary_darkteal' />);
-		expect(container).toMatchSnapshot();
-	});
+  it('LoadingPlaceholder renders correctly', () => {
+    const { container } = render(<LoadingPlaceholder what='test' />);
+    expect(container).toMatchSnapshot();
+  });
 
-	it('LoadingPlaceholder renders correctly', () => {
-		const { container } = render(<LoadingPlaceholder what='test' />);
-		expect(container).toMatchSnapshot();
-	});
+  it('SplashScreen renders correctly', () => {
+    const { container } = render(<SplashScreenView />);
+    expect(container).toMatchSnapshot();
+  });
 
-	it('SplashScreen renders correctly', () => {
-		const { container } = render(<SplashScreenView />);
-		expect(container).toMatchSnapshot();
-	});
+  it('ImageModal renders correctly', () => {
+    const { container } = render(
+      <ImageModal photo={{ photoPath: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />,
+    );
+    expect(container).toMatchSnapshot();
+  });
 
-	it('ImageModal renders correctly', () => {
-		const { container } = render(
-			<ImageModal photo={{ photoPath: 'test.jpg', alt: 'Test Image' }} onClose={() => { }} />,
-		);
-		expect(container).toMatchSnapshot();
-	});
+  it('Header renders correctly', () => {
+    const { container } = render(
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      </QueryClientProvider>,
+    );
+    expect(container).toMatchSnapshot();
+  });
 
-	it('Header renders correctly', () => {
-		const { container } = render(
-			<QueryClientProvider client={queryClient}>
-				<BrowserRouter>
-					<Header />
-				</BrowserRouter>
-			</QueryClientProvider>,
-		);
-		expect(container).toMatchSnapshot();
-	});
+  it('TrailIcons renders correctly', () => {
+    const { container } = render(<TrailIcons trail={mockTrail} size='md' showText={true} />);
+    expect(container).toMatchSnapshot();
+  });
 
-	it('TrailIcons renders correctly', () => {
-		const { container } = render(<TrailIcons trail={mockTrail} size='md' showText={true} />);
-		expect(container).toMatchSnapshot();
-	});
+  it('ListRow renders correctly', () => {
+    const { container } = render(
+      <ListRow>
+        <div>Test List Row</div>
+      </ListRow>,
+    );
+    expect(container).toMatchSnapshot();
+  });
 
-	it('ListRow renders correctly', () => {
-		const { container } = render(
-			<ListRow>
-				<div>Test List Row</div>
-			</ListRow>,
-		);
-		expect(container).toMatchSnapshot();
-	});
-
-	it('PassportHeader renders correctly', () => {
-		const { container } = render(<PassportHeader />);
-		expect(container).toMatchSnapshot();
-	});
+  it('PassportHeader renders correctly', () => {
+    const { container } = render(<PassportHeader />);
+    expect(container).toMatchSnapshot();
+  });
 });
-

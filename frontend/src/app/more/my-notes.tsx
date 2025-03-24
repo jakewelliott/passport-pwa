@@ -26,7 +26,7 @@ const NoteRow = ({
 
   const title = isGeneralNote(note)
     ? 'General Notes'
-    : parks?.find((x) => x.abbreviation == note.parkAbbreviation)?.parkName;
+    : parks?.find((x) => x.abbreviation === note.parkAbbreviation)?.parkName;
 
   return (
     <div key={note.parkAbbreviation} {...a11yOnClick(() => navigate(navigateTo))} className='cursor-pointer'>
