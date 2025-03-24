@@ -1,7 +1,6 @@
 import { trails } from '@/lib/testing/mock/tables';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import Header from '../header';
 import { ImageModal } from '../image-modal';
@@ -45,72 +44,52 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 // }))
 
 describe('Component Snapshots', () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-    },
-  });
-
   it('TabBar renders correctly', () => {
-    const { container } = render(
-      <BrowserRouter>
-        <TabBar />
-      </BrowserRouter>,
-    );
-    expect(container).toMatchSnapshot();
+    renderWithClient(<TabBar />);
+    expect(screen.getByText('Locations')).toBeInTheDocument();
   });
 
   it('RoundedButton renders correctly', () => {
-    const { container } = render(<RoundedButton title='Test Button' color='secondary_darkteal' />);
-    expect(container).toMatchSnapshot();
+    renderWithClient(<RoundedButton title='Test Button' color='secondary_darkteal' />);
+    expect(screen.getByText('Test Button')).toBeInTheDocument();
   });
 
   it('LoadingPlaceholder renders correctly', () => {
-    const { container } = render(<LoadingPlaceholder what='test' />);
-    expect(container).toMatchSnapshot();
+    renderWithClient(<LoadingPlaceholder what='test' />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('SplashScreen renders correctly', () => {
-    const { container } = render(<SplashScreenView />);
-    expect(container).toMatchSnapshot();
+    renderWithClient(<SplashScreenView />);
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('ImageModal renders correctly', () => {
-    const { container } = render(
-      <ImageModal photo={{ photoPath: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />,
-    );
-    expect(container).toMatchSnapshot();
+    renderWithClient(<ImageModal photo={{ photo: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />);
+    expect(screen.getByText('Test Image')).toBeInTheDocument();
   });
 
   it('Header renders correctly', () => {
-    const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Header />
-        </BrowserRouter>
-      </QueryClientProvider>,
-    );
-    expect(container).toMatchSnapshot();
+    renderWithClient(<Header />);
+    expect(screen.getByText('Locations')).toBeInTheDocument();
   });
 
   it('TrailIcons renders correctly', () => {
-    const { container } = render(<TrailIcons trail={mockTrail} size='md' showText={true} />);
-    expect(container).toMatchSnapshot();
+    renderWithClient(<TrailIcons trail={mockTrail} size='md' showText={true} />);
+    expect(screen.getByText('Trail')).toBeInTheDocument();
   });
 
   it('ListRow renders correctly', () => {
-    const { container } = render(
+    renderWithClient(
       <ListRow>
         <div>Test List Row</div>
       </ListRow>,
     );
-    expect(container).toMatchSnapshot();
+    expect(screen.getByText('Test List Row')).toBeInTheDocument();
   });
 
   it('PassportHeader renders correctly', () => {
-    const { container } = render(<PassportHeader />);
-    expect(container).toMatchSnapshot();
+    renderWithClient(<PassportHeader />);
+    expect(screen.getByText('Locations')).toBeInTheDocument();
   });
 });

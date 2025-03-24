@@ -1,6 +1,6 @@
+import { GenericIcon } from '@/components/generic-icon';
 import type { Address, Park } from '@/types';
 import { useState } from 'react';
-import { FiNavigation } from 'react-icons/fi';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 
 const ParkAddress = ({ address }: { address: Address }) => {
@@ -41,18 +41,15 @@ export const AddressView = ({ park }: { park: Park }) => {
   );
 
   return (
-    <div className='m-4 flex flex-col gap-3' data-testid='location-address'>
+    <>
       {park.addresses && park.addresses.length > 0 && (
         <>
           {addressesToShow.map((address) => (
-            <div className='top-0 flex' key={park.parkName}>
-              <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
-              <ParkAddress address={address} />
-            </div>
+            <GenericIcon key={park.parkName} name='location' text={address.title} />
           ))}
           {park.addresses.length > 2 && <Button />}
         </>
       )}
-    </div>
+    </>
   );
 };

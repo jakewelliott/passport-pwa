@@ -51,17 +51,16 @@ const sizeMap = {
   },
 } as const;
 
-export const TrailIcon = ({
-  iconName,
-  size = 'md',
-  showText = false,
-}: {
+interface TrailIconProps {
   iconName: IconName;
   size?: IconSize;
   showText?: boolean;
-}) => {
+  key?: string;
+}
+
+export const TrailIcon = ({ iconName, size = 'md', showText = false, key }: TrailIconProps) => {
   return (
-    <div className='flex flex-col items-center gap-1'>
+    <div className='flex flex-col items-center gap-1' key={key}>
       <div style={{ height: sizeMap[size].icon, width: sizeMap[size].icon }} className='aspect-square'>
         <img src={`/icons/park/${iconName}.svg`} alt={iconName} />
       </div>
@@ -70,17 +69,14 @@ export const TrailIcon = ({
   );
 };
 
-export const TrailIcons = ({
-  trail,
-  className = '',
-  size = 'md',
-  showText = true,
-}: {
+interface TrailIconsProps {
   trail: Trail;
   className?: string;
   size?: IconSize;
   showText?: boolean;
-}) => {
+}
+
+export const TrailIcons = ({ trail, className = '', size = 'md', showText = true }: TrailIconsProps) => {
   if (!trail.trailIcons?.length) return null;
 
   return (

@@ -2,6 +2,7 @@ import { useBucketList } from '@/hooks/queries/useBucketList';
 import { useParks } from '@/hooks/queries/useParks';
 import type { BucketListCompletion, BucketListItem } from '@/types';
 import { BucketListItemView } from './bucket-list-item';
+import { GenericIcon } from './generic-icon';
 import { LoadingPlaceholder } from './loading-placeholder';
 
 interface BucketListProps {
@@ -30,7 +31,8 @@ export const BucketList = ({ parkId, showAddress: showParkName = false }: Bucket
     completed?.find((completed: BucketListCompletion) => completed.bucketListItemId === item.id);
 
   return (
-    <div className='mx-6 mb-6 flex flex-col'>
+    <div className='flex flex-col gap-2'>
+      <GenericIcon name='ballot' text='Park Bucket List:' />
       {items.map((item: BucketListItem) => (
         <BucketListItemView
           key={item.id}

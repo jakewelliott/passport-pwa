@@ -1,27 +1,32 @@
+import { GenericIcon } from '@/components/generic-icon';
 import type { Park } from '@/types';
-import { FaRegEnvelope } from 'react-icons/fa';
-import { FiNavigation, FiPhone } from 'react-icons/fi';
 
 export const ContactView = ({ park }: { park: Park }) => {
   return (
-    <div className='mx-4 flex flex-col gap-3' data-testid='location-contact'>
+    <>
       {/* Coordinates */}
-      <div className='top-0 flex'>
-        <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+      <GenericIcon
+        name='location'
+        text={`GPS: ${park.coordinates.latitude.toFixed(4)}, ${park.coordinates.longitude.toFixed(4)}`}
+      />
+      {/* <div className='flex flex-row gap-2'>
+        <FiNavigation strokeWidth={3} />
         <p>
           GPS: {park.coordinates.latitude.toFixed(4)}, {park.coordinates.longitude.toFixed(4)}
         </p>
-      </div>
+      </div> */}
       {/* Phone */}
-      <div className='top-0 flex'>
-        <FiPhone size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+      <GenericIcon name='phone' text={String(park.phone).replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')} />
+      {/* <div className='flex flex-row gap-2'>
+        <FiPhone strokeWidth={3} />
         <p>{String(park.phone).replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</p>
-      </div>
+      </div> */}
       {/* Email */}
-      <div className='top-0 flex'>
-        <FaRegEnvelope size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
+      <GenericIcon name='email' text={park.email} />
+      {/* <div className='flex flex-row gap-2'>
+        <FaRegEnvelope strokeWidth={3} />
         <p>{park.email}</p>
-      </div>
-    </div>
+      </div> */}
+    </>
   );
 };
