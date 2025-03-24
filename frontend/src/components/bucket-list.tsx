@@ -24,7 +24,7 @@ export const BucketList = ({ parkId, showAddress: showParkName = false }: Bucket
 	const completedHelper = (item: BucketListItem) => completed?.find((completed: BucketListCompletion) => completed.bucketListItemId === item.id);
 
 	return (
-		<div className='m-6 flex flex-col'>
+		<div className='mx-6 mb-6 flex flex-col'>
 			{items.map((item: BucketListItem) => (
 				<BucketListItemView
 					key={item.id}
