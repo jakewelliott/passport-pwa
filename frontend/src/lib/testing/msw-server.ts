@@ -47,6 +47,10 @@ const authHandlers = [
     const body = await request.json();
     return HttpResponse.json(Login());
   }),
+
+  http.get('*/api/user', () => {
+    return HttpResponse.json(GetUser());
+  }),
 ];
 
 const locationsHandlers = [
