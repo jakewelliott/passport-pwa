@@ -17,6 +17,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     private readonly IActivityService _activityService = activityService;
 
+    //
+    // STAMPS
+    //
+
     [HttpGet("stamps/collected")]
     [Authorize(Roles = "visitor")]
     public IActionResult GetCollectedStamps()
@@ -34,6 +38,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkId, userId, request.geopoint, request.method, request.dateTime)));
     }
+
+    //
+    // PRIVATE NOTES
+    //
 
     [HttpPost("notes/{parkId}")]
     [Authorize(Roles = "visitor,admin")]
@@ -59,7 +67,9 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(_activityService.GetNotes(userId).Select(PrivateNoteResponse.FromDomain).ToList());
     }
 
-    // ADAM: added these for frontend type safety
+    // 
+    // BUCKET LIST
+		//
 
     [HttpGet("bucketlist")]
     public IActionResult GetBucketListItems()
@@ -85,6 +95,10 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.geopoint);
         return Ok(CompletedBucketListItemResponse.FromDomain(result));
     }
+
+    //
+    // PARK VISITS
+    //
 
     [HttpGet("visit")]
     [Authorize(Roles = "visitor")]
@@ -144,7 +158,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         }
     }
 
-    public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation)
+    public record CollectStampResponse(int id, DateTime createdAt, string method, string parkAbbreviation, int parkId)
     {
         public static CollectStampResponse FromDomain(CollectedStamp stamp)
         {
@@ -152,19 +166,21 @@ public class ActivityController(IActivityService activityService) : ControllerBa
                 stamp.id,
                 stamp.createdAt,
                 stamp.method.GetDisplayName(),
-                stamp.park.parkAbbreviation
+                stamp.park.parkAbbreviation,
+								stamp.park.id
             );
         }
     }
 
-    public record CollectedStampResponse(DateTime createdAt, string method, string parkAbbreviation)
+    public record CollectedStampResponse(DateTime createdAt, string method, string parkAbbreviation, int parkId)
     {
         public static CollectedStampResponse FromDomain(CollectedStamp stamp)
         {
             return new CollectedStampResponse(
                 stamp.createdAt,
                 stamp.method.GetDisplayName(),
-                stamp.park.parkAbbreviation
+                stamp.park.parkAbbreviation,
+								stamp.park.id
             );
         }
     }

@@ -3,7 +3,7 @@ import { dbg } from '@/lib/debug';
 import type { CollectedStamp } from '@/types';
 
 // ADAM: this is used in 2 places, so I'm moving it to a separate component
-export const StampCollectedOn = ({ stamp }: { stamp?: CollectedStamp | null }) => {
+export const StampCollectedOn = ({ stamp }: { stamp?: CollectedStamp }) => {
   dbg('RENDER', 'StampCollectedOn', stamp);
   const d = new Date(stamp?.createdAt ?? '');
   const dateString =
