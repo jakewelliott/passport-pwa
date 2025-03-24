@@ -62,13 +62,8 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     [HttpGet("trails")]
     public IActionResult GetAllTrails()
     {
-        return Ok(_locationsService.GetAllTrails());
-    }
-
-    [HttpGet("trails/{trailId}")]
-    public IActionResult GetTrailById(int trailId)
-    {
-        return Ok(_locationsService.GetTrailById(trailId));
+        return Ok(_locationsService.GetAllTrails()
+            .Select(t => TrailResponse.FromDomain(t, _locationsService.GetTrailIcons(t.id))));
     }
 
     [HttpPost("uploadGeoJson")]
@@ -147,8 +142,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         AddressResponse[] addresses,
         IconResponse[] icons,
         BucketListItemResponse[] bucketListItems,
-        PhotosResponse[] photos
-    )
+        PhotosResponse[] photos)
     {
         public static LocationResponse FromDomain(
             Park location,
@@ -209,8 +203,23 @@ public class LocationsController(ILocationsService locationsService) : Controlle
 
     };
 
-
-
+    public record TrailResponse(
+        int id,
+        string trailName,
+        string? length,
+        string description,
+        List<TrailIconName> icons)
+    {
+        public static TrailResponse FromDomain(Trail trail, List<TrailIcon> icons)
+        {
+            return new(
+                trail.id,
+                trail.trailName,
+                trail.length,
+                trail.description,
+                [.. icons.Select(i => i.icon)]);
+        }
+    }
 
     public record LocationGeoDataResponse(
         int id,
@@ -238,6 +247,5 @@ public class LocationsController(ILocationsService locationsService) : Controlle
                 location.boundaries?.ToString()
             );
         }
-
     };
 }
