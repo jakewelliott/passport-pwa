@@ -56,6 +56,51 @@ export enum BlackIcons {
   PicnicShelter = 'PicnicShelter',
 }
 
+export enum BlankIcons {
+  FourWDBeach = '4WDBeach',
+  Accessible = 'Accessible',
+  Amphiteater = 'Amphiteater',
+  BackpackCamping = 'BackpackCamping',
+  Bathhouse = 'Bathhouse',
+  Biking = 'Biking',
+  BoatRamp = 'BoatRamp',
+  Boating = 'Boating',
+  CamperCabin = 'CamperCabin',
+  Camping = 'Camping',
+  DumpStation = 'DumpStation',
+  ElectricHookup = 'ElectricHookup',
+  ElectricWaterHookups = 'ElectricWaterHookups',
+  EquestrianCamping = 'EquestrianCamping',
+  Firewood = 'Firewood',
+  Fishing = 'Fishing',
+  GroupCamp = 'GroupCamp',
+  Hiking = 'Hiking',
+  HorseTrailerParking = 'HorseTrailerParking',
+  HorsebackRiding = 'HorsebackRiding',
+  Hospital = 'Hospital',
+  IE_Exhibits = 'IE_Exhibits',
+  Information = 'Information',
+  Marina = 'Marina',
+  PaddleInCamping = 'PaddleInCamping',
+  Paddling = 'Paddling',
+  ParkGate = 'ParkGate',
+  Picnic = 'Picnic',
+  PicnicShelter = 'PicnicShelter',
+  PointofInterest = 'PointofInterest',
+  PrimitiveCabin = 'PrimitiveCabin',
+  Restroom = 'Restroom',
+  RockClimbing = 'RockClimbing',
+  SewerHookup = 'SewerHookup',
+  Swimming = 'Swimming',
+  TRACKTrail = 'TRACKTrail',
+  TentTrailerCamping = 'TentTrailerCamping',
+  VacationCabin = 'VacationCabin',
+  ViewingSymbol = 'ViewingSymbol',
+  VisitorCenter = 'VisitorCenter',
+  WaterHookup = 'WaterHookup',
+  WaterSpigot = 'WaterSpigot'
+}
+
 export enum BlazeIcons {
   FBSTBlaze = 'FBST-Blaze',
   FFSTBlaze = 'FFST-Blaze',
@@ -64,38 +109,9 @@ export enum BlazeIcons {
   YSTBlaze = 'YST-Blaze',
 }
 
-// export enum ParkIcon {
-//   Biking = 'Biking',
-//   BoatRamp = 'BoatRamp',
-//   BoatRental = 'BoatRental',
-//   CamperCabins = 'CamperCabins',
-//   Camping = 'Camping',
-//   CanoeinCamping = 'CanoeinCamping',
-//   EquestrianCamping = 'EquestrianCamping',
-//   Exhibits = 'Exhibits',
-//   FBSTBlaze = 'FBST-Blaze',
-//   FFSTBlaze = 'FFST-Blaze',
-//   Fishing = 'Fishing',
-//   GroupCabins = 'GroupCabins',
-//   GroupCamp = 'GroupCamp',
-//   HGSTBlaze = 'HGST-Blaze',
-//   Hiking = 'Hiking',
-//   HorsebackRiding = 'HorsebackRiding',
-//   MSTBlaze = 'MST-Blaze',
-//   Paddling = 'Paddling',
-//   PicnicShelter = 'PicnicShelter',
-//   Picnicking = 'Picnicking',
-//   Playground = 'Playground',
-//   PrimitiveCabin = 'PrimitiveCabin',
-//   RockClimbing = 'RockClimbing',
-//   RVCamping = 'RVCamping',
-//   Swimming = 'Swimming',
-//   VacationCabin = 'VacationCabin',
-//   VisitorCenter = 'VisitorCenter',
-//   YSTBlaze = 'YST-Blaze',
-// }
+export type ParkIconEnum = RedIcons | BlueIcons | GreenIcons | BlackIcons | BlazeIcons;
 
-export type IconEnum = RedIcons | BlueIcons | GreenIcons | BlackIcons | BlazeIcons;
+export type TrailIconEnum = BlankIcons;
 
 // denotes when an API call takes no body
 const emptySymbol = Symbol('EmptyObject type');
