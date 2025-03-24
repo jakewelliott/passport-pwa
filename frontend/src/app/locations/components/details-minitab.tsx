@@ -15,7 +15,7 @@ const renderTrails = (trails: string) => {
   return (
     <div className='flex flex-col gap-1 py-2'>
       {trailLines.map((line) => (
-        <div key={line}>{line}</div>
+        <div className={line.charAt(0) !== '■' ? 'pl-5' : ''} key={line}>{line}</div>
       ))}
     </div>
   );

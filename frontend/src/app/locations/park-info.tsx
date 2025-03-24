@@ -36,7 +36,7 @@ export default function ParkInfoScreen() {
   return (
     <>
       {/* Park Name */}
-      <h2 className='mx-4 mt-4' style={{ width: '100%' }}>
+      <h2 className='mx-4 mt-4'>
         {park.parkName}
       </h2>
       <AddressView park={park} />
