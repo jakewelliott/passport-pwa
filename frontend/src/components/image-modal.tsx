@@ -12,31 +12,33 @@ interface ImageModalProps {
 
 export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
   return (
-    <dialog
-      aria-modal='true'
-      className='fixed inset-0 flex items-center justify-center bg-system_black'
-      style={{ zIndex: 9999 }}
-    >
-      <span
-        className='absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system_white'
-        style={{ textShadow: '0 0 4px #444444' }}
-        {...a11yOnClick(onClose)}
+    <div className="fixed inset-0 flex items-center justify-center" style={{ zIndex: 9999 }}>
+      <div className='absolute inset-0 bg-system_black bg-opacity-70 backdrop-blur-md backdrop-filter' />
+      <dialog
+        aria-modal='true'
+        className='relative flex h-full w-full items-center justify-center bg-system_black bg-opacity-0'
       >
-        &times;
-      </span>
-      <TransformWrapper>
-        <TransformComponent>
-          <img src={photo.photoPath} alt={photo.alt || 'Photo'} className='max-h-screen max-w-full object-contain' />
-        </TransformComponent>
-      </TransformWrapper>
-      {photo.alt && (
-        <div
-          data-testid='caption-container'
-          className='absolute right-0 bottom-4 left-0 bg-system_black bg-opacity-50 p-2 text-center text-system_white'
+        <span
+          className='absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system_white'
+          style={{ textShadow: '0 0 4px #444444' }}
+          {...a11yOnClick(onClose)}
         >
-          {photo.alt}
-        </div>
-      )}
-    </dialog>
+          &times;
+        </span>
+        <TransformWrapper>
+          <TransformComponent>
+            <img src={photo.photoPath} alt={photo.alt || 'Photo'} className='max-h-screen max-w-full object-contain' />
+          </TransformComponent>
+        </TransformWrapper>
+        {photo.alt && (
+          <div
+            data-testid='caption-container'
+            className='absolute right-0 bottom-4 left-0 bg-system_black bg-opacity-50 p-2 text-center text-system_white'
+          >
+            {photo.alt}
+          </div>
+        )}
+      </dialog>
+    </div>
   );
-};
+}
