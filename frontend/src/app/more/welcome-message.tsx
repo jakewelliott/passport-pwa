@@ -3,7 +3,9 @@ import type React from 'react';
 const WelcomeMessage: React.FC = () => {
   return (
     <div className='mx-auto max-w-3xl space-y-6 p-6'>
-      <h1 className='break-words text-center text-main_green'>WELCOME!</h1>
+      <h1 className='overflow-hidden whitespace-nowrap text-center text-[64px] text-main_green'>
+        <span className='inline-block w-full text-[length:min(64px,_calc(100vw_/_7))]'>WELCOME!</span>
+      </h1>
 
       <div className='space-y-4'>
         <p>
