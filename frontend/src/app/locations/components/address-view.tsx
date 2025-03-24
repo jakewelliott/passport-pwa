@@ -33,7 +33,7 @@ export const AddressView = ({ park }: { park: Park }) => {
   );
 
   return (
-    <div className='top-0 flex p-4' key={park.parkName}>
+    <div className='top-0 flex flex-col p-4' key={park.parkName}>
       <FiNavigation size={'17px'} strokeWidth={3} style={{ paddingRight: '5px', paddingTop: '5px' }} />
       <ParkAddress address={park.addresses[0]} />
       {showAll && <OtherAddresses />}
