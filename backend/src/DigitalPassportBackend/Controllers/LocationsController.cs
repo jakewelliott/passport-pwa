@@ -59,6 +59,18 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(parks);
     }
 
+    [HttpGet("trails")]
+    public IActionResult GetAllTrails()
+    {
+        return Ok(_locationsService.GetAllTrails());
+    }
+
+    [HttpGet("trails/{trailId}")]
+    public IActionResult GetTrailById(int trailId)
+    {
+        return Ok(_locationsService.GetTrailById(trailId));
+    }
+
     [HttpPost("uploadGeoJson")]
     [Authorize(Roles = "admin")]
     public IActionResult UploadGeoJson(IFormFile file)

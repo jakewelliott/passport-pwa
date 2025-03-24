@@ -18,19 +18,22 @@ public class LocationsService : ILocationsService
     private readonly IBucketListItemRepository _bucketListItemRepository;
     private readonly IParkIconRepository _parkIconRepository;
     private readonly IParkPhotoRepository _parkPhotoRepository;
+    private readonly ITrailRepository _trailRepository;
 
     public LocationsService(
         ILocationsRepository locationsRepository,
         IParkAddressRepository addressRepository,
         IBucketListItemRepository bucketListItemRepository,
         IParkIconRepository parkIconRepository,
-        IParkPhotoRepository parkPhotoRepository)
+        IParkPhotoRepository parkPhotoRepository,
+        ITrailRepository trailRepository)
     {
         _locationsRepository = locationsRepository;
         _addressRepository = addressRepository;
         _bucketListItemRepository = bucketListItemRepository;
         _parkIconRepository = parkIconRepository;
         _parkPhotoRepository = parkPhotoRepository;
+        _trailRepository = trailRepository;
     }
 
     public List<ParkAddress> GetAddressesByLocationId(int id)
@@ -61,6 +64,16 @@ public class LocationsService : ILocationsService
     public List<ParkPhoto> GetParkPhotosByLocationId(int id)
     {
         return _parkPhotoRepository.GetByLocationId(id);
+    }
+
+    public List<Trail> GetAllTrails()
+    {
+        return _trailRepository.GetAll();
+    }
+
+    public Trail GetTrailById(int trailId)
+    {
+        return _trailRepository.GetById(trailId);
     }
 
     public string UploadGeoJson(IFormFile file)

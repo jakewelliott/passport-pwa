@@ -44,4 +44,9 @@ public class TrailRepository(DigitalPassportDbContext digitalPassportDbContext) 
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public List<Trail> GetAll()
+    {
+        return [.. _digitalPassportDbContext.Trails];
+    }
 }
