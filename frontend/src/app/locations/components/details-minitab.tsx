@@ -15,7 +15,9 @@ const renderTrails = (trails: string) => {
   return (
     <div className='flex flex-col gap-1 py-2'>
       {trailLines.map((line) => (
-        <div className={line.charAt(0) !== '■' ? 'pl-5' : ''} key={line}>{line}</div>
+        <div className={line.charAt(0) !== '■' ? 'pl-5' : ''} key={line}>
+          {line}
+        </div>
       ))}
     </div>
   );
@@ -26,7 +28,6 @@ const IconView = ({ icon }: { icon: ParkIcon }) => {
 };
 
 const ParkIcons = ({ park }: { park: Park }) => {
-  console.log('park', park);
   return (
     <div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
       <div className='inline-flex gap-6 px-6'>

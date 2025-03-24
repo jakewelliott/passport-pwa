@@ -30,6 +30,12 @@ export interface ParkIcon extends DatabaseEntry {
   iconName: IconEnum;
 }
 
+export interface ParkPhoto extends DatabaseEntry {
+  photo: string;
+  alt: string;
+  parkId: number;
+}
+
 export interface Park extends DatabaseEntry {
   parkName: string;
   coordinates: Geopoint;
@@ -42,8 +48,7 @@ export interface Park extends DatabaseEntry {
   website: string;
   addresses: Address[];
   icons: ParkIcon[];
-  // bucketListItems: { id: number; task: string }[];
-  photos: { photoPath: string; alt: string }[];
+  photos: ParkPhoto[];
   abbreviation: string;
 }
 

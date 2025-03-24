@@ -31,7 +31,6 @@ export const useStamp = (parkId: number | undefined) => {
 
   if (parkId === undefined) return { ...hook, data: undefined };
   const stamp = data?.find((stamp) => stamp.parkId === parkId);
-  console.log('stamp', stamp);
 
   return { ...hook, data: stamp };
 };
