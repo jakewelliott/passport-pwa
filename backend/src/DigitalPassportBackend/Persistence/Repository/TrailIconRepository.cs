@@ -44,4 +44,10 @@ public class TrailIconRepository(DigitalPassportDbContext digitalPassportDbConte
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public List<TrailIcon> GetByTrailId(int trailId)
+    {
+        return [.. _digitalPassportDbContext.TrailIcons
+            .Where(i => i.trailId == trailId)];
+    }
 }
