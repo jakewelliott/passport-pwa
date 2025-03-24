@@ -19,6 +19,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
     >
       <span
         className='absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system_white'
+        style={{ textShadow: '0 0 4px #444444' }}
         {...a11yOnClick(onClose)}
       >
         &times;
