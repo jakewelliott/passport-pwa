@@ -52,8 +52,8 @@ export interface TrailIcon extends DatabaseEntry {
 
 export interface Trail extends DatabaseEntry {
   trailName: string;
-  trailIcons: TrailIcon[];
-  distance: string;
+  icons: TrailIcon[];
+  length: string;
   description: string;
 }
 
