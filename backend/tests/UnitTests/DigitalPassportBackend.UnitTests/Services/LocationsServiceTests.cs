@@ -5,7 +5,6 @@ using DigitalPassportBackend.UnitTests.TestUtils;
 using DigitalPassportBackend.Domain;
 
 using Moq;
-using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 
 namespace DigitalPassportBackend.UnitTests.Services;
@@ -16,6 +15,7 @@ public class LocationsServiceTests
     private readonly Mock<IParkAddressRepository> _mockParkAddresses;
     private readonly Mock<IParkIconRepository> _mockParkIcons;
     private readonly Mock<IParkPhotoRepository> _mockParkPhotos;
+    private readonly Mock<ITrailRepository> _mockTrails;
 
     private readonly ILocationsService _locations;
 
@@ -27,6 +27,7 @@ public class LocationsServiceTests
         _mockParkAddresses = new();
         _mockParkIcons = new();
         _mockParkPhotos = new();
+        _mockTrails = new();
 
         // Add location data to mocked repositories.
         SetupInvalidLocation();
@@ -44,7 +45,8 @@ public class LocationsServiceTests
             _mockParkAddresses.Object,
             _mockBucketList.Object,
             _mockParkIcons.Object,
-            _mockParkPhotos.Object);
+            _mockParkPhotos.Object,
+            _mockTrails.Object);
     }
 
     [Fact]
