@@ -25,11 +25,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
       </span>
       <TransformWrapper>
         <TransformComponent>
-          <img
-            src={`/photos/${photo.photoPath}`}
-            alt={photo.alt || 'Photo'}
-            className='max-h-screen max-w-full object-contain'
-          />
+          <img src={photo.photoPath} alt={photo.alt || 'Photo'} className='max-h-screen max-w-full object-contain' />
         </TransformComponent>
       </TransformWrapper>
       {photo.alt && (

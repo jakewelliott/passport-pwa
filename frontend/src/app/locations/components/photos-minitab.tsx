@@ -34,7 +34,7 @@ export const PhotoGalleryMiniTab = ({ park }: { park: Park }) => {
 					</div>
 				))}
 			</div>
-			{selectedPhoto && <ImageModal photo={selectedPhoto} onClose={handleClose} />}
+			{selectedPhoto && <ImageModal photo={{ ...selectedPhoto, photoPath: `/photos/${selectedPhoto.photoPath}` }} onClose={handleClose} />}
 		</>
 	);
 };
