@@ -69,7 +69,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpGet("bucketlist/completed")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult GetCompletedBucketListItems()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
