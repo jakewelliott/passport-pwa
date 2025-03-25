@@ -4,19 +4,6 @@ import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 describe('MyNotes Component - User Stories', () => {
-  const mockParks = [
-    {
-      parkName: 'Test Park 1',
-      abbreviation: 'TP1',
-      addresses: [{ city: 'Test City 1' }],
-    },
-    {
-      parkName: 'Test Park 2',
-      abbreviation: 'TP2',
-      addresses: [{ city: 'Test City 2' }],
-    },
-  ];
-
   const mockNotes = {
     generalNotes: 'Some general notes',
     TP1: 'Notes for Test Park 1',
@@ -77,16 +64,16 @@ describe('MyNotes Component - User Stories', () => {
 
   // Test when there are multiple parks with notes
   it('should display multiple parks with notes', () => {
-    const multipleParks = [
-      ...mockParks,
-      { parkName: 'Test Park 3', abbreviation: 'TP3', addresses: [{ city: 'Test City 3' }] },
-    ];
-    const multipleNotes = {
-      ...mockNotes,
-      TP2: 'Notes for Test Park 2',
-      TP3: 'Notes for Test Park 3',
-      getKeys: () => ['generalNotes', 'TP1', 'TP2', 'TP3'],
-    };
+    // const multipleParks = [
+    //   ...mockParks,
+    //   { parkName: 'Test Park 3', abbreviation: 'TP3', addresses: [{ city: 'Test City 3' }] },
+    // ];
+    // const multipleNotes = {
+    //   ...mockNotes,
+    //   TP2: 'Notes for Test Park 2',
+    //   TP3: 'Notes for Test Park 3',
+    //   getKeys: () => ['generalNotes', 'TP1', 'TP2', 'TP3'],
+    // };
     renderWithClient(<MyNotes />);
     expect(screen.getByText('Test Park 1')).toBeInTheDocument();
     expect(screen.getByText('Test Park 2')).toBeInTheDocument();
@@ -95,7 +82,7 @@ describe('MyNotes Component - User Stories', () => {
 
   // Test when a park has no city in its address
   it('should handle parks with no city in address', () => {
-    const parkWithNoCity = [{ parkName: 'No City Park', abbreviation: 'NCP', addresses: [{}] }];
+    // const parkWithNoCity = [{ parkName: 'No City Park', abbreviation: 'NCP', addresses: [{}] }];
     renderWithClient(<MyNotes />);
     expect(screen.getByText('No City Park')).toBeInTheDocument();
     expect(screen.queryByText('Test City')).not.toBeInTheDocument();
@@ -103,7 +90,7 @@ describe('MyNotes Component - User Stories', () => {
 
   // Test when a park has no addresses
   it('should handle parks with no addresses', () => {
-    const parkWithNoAddress = [{ parkName: 'No Address Park', abbreviation: 'NAP', addresses: [] }];
+    // const parkWithNoAddress = [{ parkName: 'No Address Park', abbreviation: 'NAP', addresses: [] }];
     renderWithClient(<MyNotes />);
     expect(screen.getByText('No Address Park')).toBeInTheDocument();
   });

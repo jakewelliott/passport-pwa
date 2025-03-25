@@ -38,7 +38,7 @@ describe('TrailIcon', () => {
 	});
 
 	it('handles empty trailIcons array', () => {
-		const { container } = render(<TrailIcons trail={{ ...mockTrail, trailIcons: [] }} />);
+		const { container } = render(<TrailIcons trail={{ ...mockTrail, icons: [] }} />);
 		expect(container.firstChild).toBeNull();
 	});
 

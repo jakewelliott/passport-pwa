@@ -8,7 +8,7 @@ import { type NavigateFunction, useNavigate } from 'react-router-dom';
 import ListRow from '../../components/list-row';
 
 const isGeneralNote = (note: ParkNote) => {
-  return note.parkAbbreviation === 'generalNotes';
+  return note.parkId === 0;
 };
 
 const NoteRow = ({
@@ -18,18 +18,18 @@ const NoteRow = ({
   note: ParkNote;
   navigate: NavigateFunction;
 }) => {
+  const {data: parks} = useParks();
   const navigateTo = isGeneralNote(note)
     ? '/more/my-notes/general-notes'
-    : `/locations/${note.parkAbbreviation}?tab=notes`;
+    : `/locations/${parks?.find(x => x.id === note.parkId)?.abbreviation}?tab=notes`;
 
-  const { data: parks } = useParks();
 
   const title = isGeneralNote(note)
     ? 'General Notes'
-    : parks?.find((x) => x.abbreviation == note.parkAbbreviation)?.parkName;
+    : parks?.find((x) => x.id === note.parkId)?.parkName;
 
   return (
-    <div key={note.parkAbbreviation} {...a11yOnClick(() => navigate(navigateTo))} className='cursor-pointer'>
+    <div key={note.parkId} {...a11yOnClick(() => navigate(navigateTo))} className='cursor-pointer'>
       <ListRow>
         <div className='flex flex-col gap-1'>
           <h3>{title}</h3>

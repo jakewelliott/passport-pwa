@@ -18,7 +18,6 @@ const ParkAddress = ({ address }: { address: Address }) => {
 
 export const AddressView = ({ park }: { park: Park }) => {
   const [showAll, setShowAll] = useState(false);
-  const showButton = park.addresses && park.addresses.length > 1;
 
   const toggle = () => {
     setShowAll(!showAll);
