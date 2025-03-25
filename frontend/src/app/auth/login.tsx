@@ -94,7 +94,7 @@ export default function LoginPage() {
     >
       {!navigator.onLine && (
         <div className="m-auto flex max-w-80 flex-col items-center rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8">
-          <p className="text-center pl">
+          <p className='pl text-center'>
             It appears as though your device is offline. In order to log in to
             the application, you must be online.
           </p>
