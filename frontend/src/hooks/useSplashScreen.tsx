@@ -100,6 +100,12 @@ const APP_LOADERS: Loader[] = [
         refetch: true,
     },
     {
+        hook: useTrails,
+        validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
+        what: 'trails',
+        refetch: true,
+    },
+    {
         hook: useGetAllNotes,
         validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
         what: 'notes',

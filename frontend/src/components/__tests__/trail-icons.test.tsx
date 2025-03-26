@@ -1,33 +1,31 @@
-import { trails } from '@/lib/testing/mock/tables';
+import { mockTrail } from '@/lib/testing/mock';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { TrailIcon, TrailIcons } from '../trail-icons';
 
-const mockTrail = { ...trails[0], trailIcons: ['Hiking-Red', 'Biking-Red', 'Swimming-Red'] };
-
 describe('TrailIcon', () => {
     it('renders with default props', () => {
-        render(<TrailIcon iconName='Hiking-Red' />);
+        render(<TrailIcon iconName={mockTrail.trailIcons[0]} />);
         const img = screen.getByAltText('Hiking');
         expect(img).toBeInTheDocument();
         expect(img.parentElement).toHaveStyle({ height: '48px', width: '48px' });
     });
 
     it('renders with custom size', () => {
-        render(<TrailIcon iconName='Biking-Red' size='lg' />);
+        render(<TrailIcon iconName={mockTrail.trailIcons[0]} size='lg' />);
         const img = screen.getByAltText('Biking');
         expect(img.parentElement).toHaveStyle({ height: '64px', width: '64px' });
     });
 
     it('shows text when showText is true', () => {
-        render(<TrailIcon iconName='Swimming-Red' showText />);
+        render(<TrailIcon iconName={mockTrail.trailIcons[1]} showText />);
         expect(screen.getByText('Swimming')).toBeInTheDocument();
     });
 
     it('uses correct image source', () => {
-        render(<TrailIcon iconName='Camping-Green' />);
+        render(<TrailIcon iconName={mockTrail.trailIcons[2]} />);
         const img = screen.getByAltText('Camping');
-        expect(img).toHaveAttribute('src', '/icons/park/Camping-Green.svg');
+        expect(img).toHaveAttribute('src', '/icons/park/Camping.svg');
     });
 
     it('renders multiple icons', () => {

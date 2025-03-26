@@ -1,12 +1,10 @@
+import { mockPark } from '@/lib/testing/mock';
 import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
 import CollectStamp from '../collect-stamp';
 
 describe('CollectStamp', () => {
-    beforeEach(() => {
-        renderWithClient(<CollectStamp />);
-    });
     beforeEach(() => {
         renderWithClient(<CollectStamp />);
     });

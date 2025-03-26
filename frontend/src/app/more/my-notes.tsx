@@ -8,7 +8,7 @@ import { type NavigateFunction, useNavigate } from 'react-router-dom';
 import ListRow from '../../components/list-row';
 
 const isGeneralNote = (note: ParkNote) => {
-    return note.parkAbbreviation === 'generalNotes';
+    return note.parkId === 0;
 };
 
 const NoteRow = ({
@@ -22,11 +22,9 @@ const NoteRow = ({
     console.log(parks);
     const navigateTo = isGeneralNote(note)
         ? '/more/my-notes/general-notes'
-        : `/locations/${parks?.find((x) => x.abbreviation === note.parkAbbreviation)?.abbreviation}?tab=notes`;
+        : `/locations/${parks?.find((x) => x.id === note.parkId)?.abbreviation}?tab=notes`;
 
-    const title = isGeneralNote(note)
-        ? 'General Notes'
-        : parks?.find((x) => x.abbreviation === note.parkAbbreviation)?.parkName;
+    const title = isGeneralNote(note) ? 'General Notes' : parks?.find((x) => x.id === note.parkId)?.parkName;
 
     return (
         <div key={note.parkId} {...a11yOnClick(() => navigate(navigateTo))} className={`cursor-pointer ${note.parkId}`}>

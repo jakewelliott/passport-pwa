@@ -4,7 +4,7 @@ import { a11yOnClick } from '@/lib/a11y';
 import { dbg, dbgif } from '@/lib/debug';
 // components/NotesMiniTab.tsx
 import { useEffect, useState } from 'react';
-import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
+import { useBlocker } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const NotesMiniTab = ({
@@ -14,8 +14,6 @@ export const NotesMiniTab = ({
 }) => {
     const { data: remoteNote, refetch, isLoading } = useNote(parkId);
     const { mutate } = useUpdateNote();
-    const navigate = useNavigate();
-    const location = useLocation();
 
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [noteState, setNoteState] = useState('');

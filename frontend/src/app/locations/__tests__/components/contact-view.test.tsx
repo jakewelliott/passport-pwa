@@ -4,35 +4,35 @@ import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-const parkWithManyAddresses = {
-    ...mockPark,
-    addresses: [
-        {
-            title: 'Address 1',
-            addressLineOne: 'Address 1',
-            addressLineTwo: '',
-            city: 'City1',
-            state: 'ST',
-            zipcode: 12345,
-        },
-        {
-            title: 'Address 2',
-            addressLineOne: 'Address 2',
-            addressLineTwo: '',
-            city: 'City2',
-            state: 'ST',
-            zipcode: 12346,
-        },
-        {
-            title: 'Address 3',
-            addressLineOne: 'Address 3',
-            addressLineTwo: '',
-            city: 'City3',
-            state: 'ST',
-            zipcode: 12347,
-        },
-    ],
-};
+// const parkWithManyAddresses = {
+//     ...mockPark,
+//     addresses: [
+//         {
+//             title: 'Address 1',
+//             addressLineOne: 'Address 1',
+//             addressLineTwo: '',
+//             city: 'City1',
+//             state: 'ST',
+//             zipcode: 12345,
+//         },
+//         {
+//             title: 'Address 2',
+//             addressLineOne: 'Address 2',
+//             addressLineTwo: '',
+//             city: 'City2',
+//             state: 'ST',
+//             zipcode: 12346,
+//         },
+//         {
+//             title: 'Address 3',
+//             addressLineOne: 'Address 3',
+//             addressLineTwo: '',
+//             city: 'City3',
+//             state: 'ST',
+//             zipcode: 12347,
+//         },
+//     ],
+// };
 
 describe('ContactView', () => {
     it('renders park name', () => {

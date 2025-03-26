@@ -10,8 +10,6 @@ import { Link } from 'react-router-dom';
 interface StampsDetailProps {
     park: Park;
     handleClose: () => void;
-    park: Park;
-    handleClose: () => void;
 }
 
 const CollectedManually = ({ stamp }: { stamp?: CollectedStamp }) =>

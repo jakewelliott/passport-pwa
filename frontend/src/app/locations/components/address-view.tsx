@@ -1,24 +1,10 @@
 import { GenericIcon } from '@/components/generic-icon';
-import type { Address, Park } from '@/types';
+import type { Park } from '@/types';
 import { useState } from 'react';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 
-const ParkAddress = ({ address }: { address: Address }) => {
-    return (
-        <div>
-            <p>{address.title}</p>
-            <p>{address.addressLineOne}</p>
-            {address.addressLineTwo && <p>{address.addressLineTwo}</p>}
-            <p>
-                {address.city}, {address.state} {address.zipcode}
-            </p>
-        </div>
-    );
-};
-
 export const AddressView = ({ park }: { park: Park }) => {
     const [showAll, setShowAll] = useState(false);
-    const showButton = park.addresses && park.addresses.length > 1;
 
     const toggle = () => {
         setShowAll(!showAll);

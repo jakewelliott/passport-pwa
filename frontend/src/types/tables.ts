@@ -30,10 +30,9 @@ export interface ParkIcon extends DatabaseEntry {
     iconName: ParkIconEnum;
 }
 
-export interface ParkPhoto extends DatabaseEntry {
-    photo: string;
+export interface ParkPhoto {
+    photoPath: string;
     alt: string;
-    parkId: number;
 }
 
 export interface Park extends DatabaseEntry {
@@ -49,13 +48,13 @@ export interface Park extends DatabaseEntry {
     addresses: Address[];
     icons: ParkIcon[];
     // bucketListItems: { id: number; task: string }[];
-    photos: { photoPath: string; alt: string }[];
+    photos: ParkPhoto[];
     abbreviation: string;
 }
 
 export interface Trail extends DatabaseEntry {
     trailName: string;
-    trailIcons: ParkIcon[];
+    trailIcons: TrailIconEnum[];
     distance: string;
     description: string;
 }

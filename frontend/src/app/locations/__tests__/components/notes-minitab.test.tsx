@@ -81,7 +81,7 @@ describe('NotesMiniTab', () => {
     });
 
     it('synchronizes local note with remote note when remote note differs', () => {
-        const remoteNote = 'Remote note';
+        // const remoteNote = 'Remote note';
 
         renderWithClient(<NotesMiniTab parkId={mockPark.id} />);
 

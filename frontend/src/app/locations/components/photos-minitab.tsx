@@ -20,22 +20,19 @@ export const PhotoGalleryMiniTab = ({ park }: { park: Park }) => {
     const handleClose = () => {
         setSelectedPhoto(null);
     };
-    const handleClose = () => {
-        setSelectedPhoto(null);
-    };
 
     return (
         <>
             <div className='z-0 grid w-full grid-cols-3'>
                 {park.photos.map((photo, index) => (
                     <div
-                        key={photo.photo}
+                        key={photo.photoPath}
                         className='aspect-square cursor-pointer'
                         {...a11yOnClick(() => handleOpen(photo))}
                     >
                         <img
                             data-testid={'photo'}
-                            src={`/photos/${photo.photo}`}
+                            src={`/photos/${photo.photoPath}`}
                             alt={photo.alt || `Park photo ${index + 1}`}
                             className='h-full w-full object-cover transition-opacity duration-300 hover:opacity-80'
                         />
@@ -44,7 +41,7 @@ export const PhotoGalleryMiniTab = ({ park }: { park: Park }) => {
             </div>
             {selectedPhoto && (
                 <ImageModal
-                    photo={{ ...selectedPhoto, photoPath: `/photos/${selectedPhoto.photo}` }}
+                    photo={{ ...selectedPhoto, photoPath: `/photos/${selectedPhoto.photoPath}` }}
                     onClose={handleClose}
                 />
             )}
