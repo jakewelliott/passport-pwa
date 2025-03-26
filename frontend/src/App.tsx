@@ -10,23 +10,23 @@ import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from './components/scroll-to-top';
 
 const App = () => {
-  dbg('RENDER', 'App.tsx');
-  const { data: user } = useUser();
+    dbg('RENDER', 'App.tsx');
+    const { data: user } = useUser();
 
-  const { SplashScreen, splashFinished } = useSplashScreen();
-  return (
-    <>
-      <ScrollToTop />
-      <div className='app'>
-        <Header />
-        <Layout>
-          <main>{!user ? <Outlet /> : splashFinished ? <Outlet /> : <SplashScreen />}</main>
-        </Layout>
-        <TabBar />
-      </div>
-      <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
-    </>
-  );
+    const { SplashScreen, splashFinished } = useSplashScreen();
+    return (
+        <>
+            <ScrollToTop />
+            <div className='app'>
+                <Header />
+                <Layout>
+                    <main>{!user ? <Outlet /> : splashFinished ? <Outlet /> : <SplashScreen />}</main>
+                </Layout>
+                <TabBar />
+            </div>
+            <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
+        </>
+    );
 };
 
 export default App;

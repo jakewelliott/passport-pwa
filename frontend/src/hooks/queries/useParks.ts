@@ -14,21 +14,21 @@ import { useQuery } from '@tanstack/react-query';
 // - error: the error returned from the query
 
 export const useParks = () => {
-  return useQuery<Park[]>({
-    queryKey: ['parks'],
-    queryFn: async () => await fetchGet(API_PARKS_URL),
-  });
+    return useQuery<Park[]>({
+        queryKey: ['parks'],
+        queryFn: async () => await fetchGet(API_PARKS_URL),
+    });
 };
 
 export const usePark = (parkAbbreviation: string) => {
-  const hook = useParks();
-  const park = hook.data?.find((park) => park.abbreviation === parkAbbreviation);
-  return { ...hook, data: park };
+    const hook = useParks();
+    const park = hook.data?.find((park) => park.abbreviation === parkAbbreviation);
+    return { ...hook, data: park };
 };
 
 export const useParksGeo = () => {
-  return useQuery<ParkGeoData[]>({
-    queryKey: ['parkGeo'],
-    queryFn: async () => await fetchGet(API_PARKGEO_URL),
-  });
+    return useQuery<ParkGeoData[]>({
+        queryKey: ['parkGeo'],
+        queryFn: async () => await fetchGet(API_PARKGEO_URL),
+    });
 };

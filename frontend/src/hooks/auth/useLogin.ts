@@ -13,35 +13,35 @@ import { toast } from 'react-toastify';
  * Sets the token in cookies, invalidates the user query, and adds the user to local storage
  */
 export const useLogin = () => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const redirect = searchParams.get('redirect');
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const redirect = searchParams.get('redirect');
 
-  return useMutation<string, Error, LoginCredentials>({
-    mutationFn: async ({ username, password }) => {
-      dbg('MUTATE', 'Logging in', { username, password });
-      const response = await fetchPost(API_AUTH_LOGIN_URL, {
-        username,
-        password,
-      });
-      return await response.text();
-    },
-    onSuccess: (data, { username }) => {
-      Cookies.set('token', data, { secure: true, sameSite: 'strict' });
-      const userDetails = decodeToken(data);
+    return useMutation<string, Error, LoginCredentials>({
+        mutationFn: async ({ username, password }) => {
+            dbg('MUTATE', 'Logging in', { username, password });
+            const response = await fetchPost(API_AUTH_LOGIN_URL, {
+                username,
+                password,
+            });
+            return await response.text();
+        },
+        onSuccess: (data, { username }) => {
+            Cookies.set('token', data, { secure: true, sameSite: 'strict' });
+            const userDetails = decodeToken(data);
 
-      queryClient.setQueryData(['user'], { ...userDetails, token: data });
-      localStorage.setItem('user', JSON.stringify(userDetails));
+            queryClient.setQueryData(['user'], { ...userDetails, token: data });
+            localStorage.setItem('user', JSON.stringify(userDetails));
 
-      setTimeout(() => {
-        toast.success(`Welcome back, ${username}`);
-      }, 1000);
+            setTimeout(() => {
+                toast.success(`Welcome back, ${username}`);
+            }, 1000);
 
-      navigate(redirect ?? '/');
-    },
-    onError: (error) => {
-      dbg('ERROR', 'useLogin', error);
-      toast.error(error.message);
-    },
-  });
+            navigate(redirect ?? '/');
+        },
+        onError: (error) => {
+            dbg('ERROR', 'useLogin', error);
+            toast.error(error.message);
+        },
+    });
 };

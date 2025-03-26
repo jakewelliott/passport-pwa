@@ -21,91 +21,91 @@ import Stamps from './app/stamps';
 import { BucketList } from './components/bucket-list';
 
 const RoleBasedRedirect = () => {
-  const { data: user, isLoading } = useUser();
-  if (isLoading) return null;
-  if (!user) return <Navigate to='/login' replace />;
-  dbg('RENDER', 'RoleBasedRedirect', user.role);
-  return user.role === 'admin' ? <Navigate to='/admin' replace /> : <Navigate to='/locations' replace />;
+    const { data: user, isLoading } = useUser();
+    if (isLoading) return null;
+    if (!user) return <Navigate to='/login' replace />;
+    dbg('RENDER', 'RoleBasedRedirect', user.role);
+    return user.role === 'admin' ? <Navigate to='/admin' replace /> : <Navigate to='/locations' replace />;
 };
 
 const AdminRoutes = () => {
-  dbg('RENDER', 'AdminRoutes');
-  const { data: user, isLoading } = useUser();
-  if (isLoading) return null;
-  if (!isLoading && user?.role !== 'admin') {
-    return <Navigate to='/locations' replace />;
-  }
-  return <AdminPage />;
+    dbg('RENDER', 'AdminRoutes');
+    const { data: user, isLoading } = useUser();
+    if (isLoading) return null;
+    if (!isLoading && user?.role !== 'admin') {
+        return <Navigate to='/locations' replace />;
+    }
+    return <AdminPage />;
 };
 
 const LoggedInRoutes = () => {
-  dbg('RENDER', 'LoggedInRoutes');
-  return (
-    <>
-      <Outlet />
-      <CollectStamp />
-    </>
-  );
+    dbg('RENDER', 'LoggedInRoutes');
+    return (
+        <>
+            <Outlet />
+            <CollectStamp />
+        </>
+    );
 };
 
 const ProtectedRoute = () => {
-  const { data: user } = useUser();
-  return user ? <Outlet /> : <Navigate to='/login' replace />;
+    const { data: user } = useUser();
+    return user ? <Outlet /> : <Navigate to='/login' replace />;
 };
 
 export const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <App />,
-    children: [
-      { index: true, element: <RoleBasedRedirect /> },
-      { path: 'login', element: <LoginPage /> },
-      { path: 'logout', element: <LogoutScreen /> },
-      {
-        path: 'admin',
-        element: <AdminRoutes />,
-      },
-      {
-        element: <ProtectedRoute />,
+    {
+        path: '/',
+        element: <App />,
         children: [
-          {
-            element: <LoggedInRoutes />,
-            children: [
-              {
-                path: 'locations',
+            { index: true, element: <RoleBasedRedirect /> },
+            { path: 'login', element: <LoginPage /> },
+            { path: 'logout', element: <LogoutScreen /> },
+            {
+                path: 'admin',
+                element: <AdminRoutes />,
+            },
+            {
+                element: <ProtectedRoute />,
                 children: [
-                  { index: true, element: <Locations /> },
-                  { path: ':abbreviation', element: <LocationDetail /> },
+                    {
+                        element: <LoggedInRoutes />,
+                        children: [
+                            {
+                                path: 'locations',
+                                children: [
+                                    { index: true, element: <Locations /> },
+                                    { path: ':abbreviation', element: <LocationDetail /> },
+                                ],
+                            },
+                            { path: 'stamps', element: <Stamps /> },
+                            {
+                                path: 'more',
+                                children: [
+                                    { index: true, element: <More /> },
+                                    { path: 'app-info', element: <AppInfo /> },
+                                    { path: 'icon-legend', element: <IconLegend /> },
+                                    { path: 'welcome-message', element: <WelcomeMessage /> },
+                                    { path: 'trails', element: <Trails /> },
+                                    { path: 'staying-safe', element: <StayingSafe /> },
+                                    { path: 'hiking-essentials', element: <HikingEssentials /> },
+                                    {
+                                        path: 'bucket-list',
+                                        element: <BucketList showAddress={true} />,
+                                    },
+                                    {
+                                        path: 'my-notes',
+                                        children: [
+                                            { index: true, element: <MyNotes /> },
+                                            { path: 'general-notes', element: <EditGeneralNotes /> },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
                 ],
-              },
-              { path: 'stamps', element: <Stamps /> },
-              {
-                path: 'more',
-                children: [
-                  { index: true, element: <More /> },
-                  { path: 'app-info', element: <AppInfo /> },
-                  { path: 'icon-legend', element: <IconLegend /> },
-                  { path: 'welcome-message', element: <WelcomeMessage /> },
-                  { path: 'trails', element: <Trails /> },
-                  { path: 'staying-safe', element: <StayingSafe /> },
-                  { path: 'hiking-essentials', element: <HikingEssentials /> },
-                  {
-                    path: 'bucket-list',
-                    element: <BucketList showAddress={true} />,
-                  },
-                  {
-                    path: 'my-notes',
-                    children: [
-                      { index: true, element: <MyNotes /> },
-                      { path: 'general-notes', element: <EditGeneralNotes /> },
-                    ],
-                  },
-                ],
-              },
-            ],
-          },
+            },
         ],
-      },
-    ],
-  },
+    },
 ]);

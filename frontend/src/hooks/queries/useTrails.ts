@@ -14,8 +14,8 @@ import { useQuery } from '@tanstack/react-query';
 // - error: the error returned from the query
 
 export const useTrails = () => {
-  return useQuery<Trail[]>({
-    queryKey: ['trails'],
-    queryFn: async () => await fetchGet(API_TRAILS_URL),
-  });
+    return useQuery<Trail[]>({
+        queryKey: ['trails'],
+        queryFn: async () => await fetchGet(API_TRAILS_URL),
+    });
 };

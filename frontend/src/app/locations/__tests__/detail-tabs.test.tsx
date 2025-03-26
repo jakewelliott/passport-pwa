@@ -5,24 +5,24 @@ import { describe, expect, it } from 'vitest';
 import ParkInfoScreen from '../park-info';
 
 describe('DetailTabs', () => {
-  const renderDetailTabs = () => {
-    renderWithClient(
-      <Routes>
-        <Route path='/locations/:abbreviation' element={<ParkInfoScreen />} />
-      </Routes>,
-      { routerProps: { initialEntries: ['/locations/CABE'] } },
-    );
-  };
+    const renderDetailTabs = () => {
+        renderWithClient(
+            <Routes>
+                <Route path='/locations/:abbreviation' element={<ParkInfoScreen />} />
+            </Routes>,
+            { routerProps: { initialEntries: ['/locations/CABE'] } },
+        );
+    };
 
-  it('fetches park activity for non-admin users', () => {
-    renderDetailTabs();
-    // Verify components are rendered with park activity data
-    expect(screen.getByTestId('location-contact')).toBeInTheDocument();
-  });
+    it('fetches park activity for non-admin users', () => {
+        renderDetailTabs();
+        // Verify components are rendered with park activity data
+        expect(screen.getByTestId('location-contact')).toBeInTheDocument();
+    });
 
-  it('does not fetch park activity for admin users', () => {
-    renderDetailTabs();
-    // Verify components are rendered without park activity data
-    expect(screen.getByTestId('location-contact')).toBeInTheDocument();
-  });
+    it('does not fetch park activity for admin users', () => {
+        renderDetailTabs();
+        // Verify components are rendered without park activity data
+        expect(screen.getByTestId('location-contact')).toBeInTheDocument();
+    });
 });

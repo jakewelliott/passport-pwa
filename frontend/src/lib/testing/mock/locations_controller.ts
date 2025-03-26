@@ -2,13 +2,13 @@ import type { Park } from '@/types';
 import { parks } from './tables/index';
 
 export const GetPark = (parkAbbreviation: string): Park => {
-  const park = parks.find((park: Park) => park.abbreviation === parkAbbreviation);
-  if (!park) throw new Error(`Park not found: ${parkAbbreviation}`);
-  return park;
+    const park = parks.find((park: Park) => park.abbreviation === parkAbbreviation);
+    if (!park) throw new Error(`Park not found: ${parkAbbreviation}`);
+    return park;
 };
 
 export const GetAllParks = (): Park[] => {
-  return parks;
+    return parks;
 };
 
 // TODO: add UploadGeoJson

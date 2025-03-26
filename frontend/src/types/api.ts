@@ -1,12 +1,12 @@
 import type { EmptyBody } from './misc';
 import type {
-  BucketListCompletion,
-  BucketListItem,
-  CollectedStamp,
-  Park,
-  ParkGeoData,
-  ParkNote,
-  ParkVisit,
+    BucketListCompletion,
+    BucketListItem,
+    CollectedStamp,
+    Park,
+    ParkGeoData,
+    ParkNote,
+    ParkVisit,
 } from './tables';
 
 // get requests will never specify a user id, created at, updated at, or deleted field
@@ -32,7 +32,7 @@ type BP<T> = Omit<T, 'bucketListItemId'>;
 |---------------*/
 
 export interface LoginResponse {
-  token: string;
+    token: string;
 }
 
 // TODO: finish

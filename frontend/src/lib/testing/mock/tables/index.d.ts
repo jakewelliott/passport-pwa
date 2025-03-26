@@ -1,12 +1,12 @@
 import type {
-  BucketListCompletion,
-  BucketListItem,
-  CollectedStamp,
-  Park,
-  ParkNote,
-  ParkVisit,
-  Trail,
-  UserProfile,
+    BucketListCompletion,
+    BucketListItem,
+    CollectedStamp,
+    Park,
+    ParkNote,
+    ParkVisit,
+    Trail,
+    UserProfile,
 } from '@/types';
 
 // this file is the types for the data in the json files
