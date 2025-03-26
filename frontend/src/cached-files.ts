@@ -218,6 +218,5 @@ export const cachedFiles = [
   '/fonts/NaturallyWonderful-bold.otf',
   '/fonts/Norican-Regular.ttf',
   '/fonts/NaturallyWonderful-heavy.otf',
-  '/sw.js',
   '/TrailsLogo.svg',
 ];
