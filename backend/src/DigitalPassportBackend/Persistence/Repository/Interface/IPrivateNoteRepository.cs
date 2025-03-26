@@ -4,6 +4,6 @@ namespace DigitalPassportBackend.Persistence.Repository;
 
 public interface IPrivateNoteRepository : IRepository<PrivateNote>
 {
-    PrivateNote? GetByParkAndUser(int? locationId, int userId);
+    PrivateNote? GetByParkAndUser(int userId, int locationId);
     List<PrivateNote> GetByUser(int userId);
 }

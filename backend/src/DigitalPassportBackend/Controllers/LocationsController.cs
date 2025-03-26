@@ -206,7 +206,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     public record TrailResponse(
         int id,
         string trailName,
-        string? length,
+        string? distance,
         string description,
         List<string> icons)
     {
@@ -215,7 +215,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
             return new(
                 trail.id,
                 trail.trailName,
-                trail.length,
+                distance: trail.length,
                 trail.description,
                 [.. icons.Select(i => i.icon.GetDisplayName())]);
         }
