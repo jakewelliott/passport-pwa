@@ -1,54 +1,43 @@
-import { cn } from '@/lib/cn-helper';
 import { dbg } from '@/lib/debug';
-import type { Trail, TrailIconEnum } from '@/types';
+import type { Trail } from '@/types';
 
-type IconSize = 'xs' | 'sm' | 'md' | 'lg';
+type IconSize = 'sm' | 'md' | 'lg' | 'xs';
 
-const sizeStyles = {
+export const sizeMap = {
     xs: {
-        icon: 'h-4 w-4',
+        icon: 16,
         text: 'text-xs',
     },
     sm: {
-        icon: 'h-8 w-8',
+        icon: 32,
         text: 'text-xs',
     },
     md: {
-        icon: 'h-12 w-12',
+        icon: 48,
         text: 'text-sm',
     },
     lg: {
-        icon: 'h-16 w-16',
+        icon: 64,
         text: 'text-base',
     },
 } as const;
 
-const parseText = (fname: string) => {
-    // Remove color suffixes and hyphens
-    const withoutColor = fname.replace(/-(Red|Blue|Green|Black|Blaze)/g, '');
-    // Add spaces before capital letters and remove remaining hyphens
-    return withoutColor
-        .replace(/([A-Z])/g, ' $1') // Add space before capitals
-        .replace(/-/g, ' ') // Remove any remaining hyphens
-        .trim(); // Remove leading/trailing spaces
-};
-
 export const TrailIcon = ({
     iconName,
-    size = 'xs',
+    size = 'md',
     showText = false,
 }: {
-    iconName: TrailIconEnum;
+    iconName: string;
     size?: IconSize;
     showText?: boolean;
 }) => {
-    dbg('RENDER', 'TrailIcon', iconName);
+    dbg('RENDER', `trail-icon - ${iconName}`);
     return (
         <div className='flex flex-col items-center gap-1'>
-            <div className={cn(sizeStyles[size].icon, 'aspect-square')}>
-                <img src={`/icons/misc/${iconName}.svg`} alt={parseText(iconName)} />
+            <div style={{ height: sizeMap[size].icon, width: sizeMap[size].icon }} className='aspect-square'>
+                <img src={`/icons/misc/${iconName}.svg`} alt={iconName} />
             </div>
-            {showText && <p className={cn(sizeStyles[size].text, 'text-center')}>{parseText(iconName)}</p>}
+            {showText && <div className={`${sizeMap[size].text} text-center`}>{iconName}</div>}
         </div>
     );
 };
@@ -56,21 +45,22 @@ export const TrailIcon = ({
 export const TrailIcons = ({
     trail,
     className = '',
-    size = 'xs',
-    showText = true,
+    size = 'md',
+    showText = false,
 }: {
     trail: Trail;
     className?: string;
     size?: IconSize;
     showText?: boolean;
 }) => {
-    dbg('RENDER', 'TrailIcons', trail);
-    if (!trail.icons?.length) return null;
+    const iconNames = trail.icons?.map((icon) => icon.toString()) || [];
+    dbg('RENDER', `TRAIL-ICONS - ${iconNames.length}`, iconNames);
+    if (!iconNames.length) return null;
 
     return (
-        <div className={`flex items-center gap-2 ${className}`}>
+        <div className={`inline-flex items-center gap-1 px-1 ${className}`}>
             {trail.icons.map((trailIcon) => (
-                <TrailIcon key={trailIcon} iconName={trailIcon} size={size} showText={false} />
+                <TrailIcon key={trailIcon} iconName={trailIcon} size={size} showText={showText} />
             ))}
         </div>
     );
