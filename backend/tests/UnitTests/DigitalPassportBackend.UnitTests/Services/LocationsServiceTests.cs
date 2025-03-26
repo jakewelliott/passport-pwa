@@ -16,7 +16,8 @@ public class LocationsServiceTests
     private readonly Mock<IParkIconRepository> _mockParkIcons;
     private readonly Mock<IParkPhotoRepository> _mockParkPhotos;
     private readonly Mock<ITrailRepository> _mockTrails;
-
+    private readonly Mock<ITrailIconRepository> _mockTrailIcons;
+    
     private readonly ILocationsService _locations;
 
     public LocationsServiceTests()
@@ -28,6 +29,7 @@ public class LocationsServiceTests
         _mockParkIcons = new();
         _mockParkPhotos = new();
         _mockTrails = new();
+        _mockTrailIcons = new();
 
         // Add location data to mocked repositories.
         SetupInvalidLocation();
@@ -46,7 +48,8 @@ public class LocationsServiceTests
             _mockBucketList.Object,
             _mockParkIcons.Object,
             _mockParkPhotos.Object,
-            _mockTrails.Object);
+            _mockTrails.Object,
+            _mockTrailIcons.Object);
     }
 
     [Fact]

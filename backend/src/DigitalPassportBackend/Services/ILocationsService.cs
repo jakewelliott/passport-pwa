@@ -16,5 +16,5 @@ public interface ILocationsService
     string UploadGeoJson(IFormFile file);
     Park GetById(int id);
     List<Trail> GetAllTrails();
-    Trail GetTrailById(int trailId);
+    List<TrailIcon> GetTrailIcons(int trailId);
 }

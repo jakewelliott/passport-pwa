@@ -27,7 +27,13 @@ describe('MyNotes Component - User Stories', () => {
     // User Story: As a user, I want to see my general notes
     it('should display general notes section', () => {
         renderWithClient(<MyNotes />);
+        // User Story: As a user, I want to see my general notes
+        it('should display general notes section', () => {
+            renderWithClient(<MyNotes />);
 
+            expect(screen.getByText('General Notes')).toBeInTheDocument();
+            expect(screen.getByText('Some general notes')).toBeInTheDocument();
+        });
         expect(screen.getByText('General Notes')).toBeInTheDocument();
         expect(screen.getByText('Some general notes')).toBeInTheDocument();
     });
@@ -35,7 +41,14 @@ describe('MyNotes Component - User Stories', () => {
     // User Story: As a user, I want to see which parks I have notes for
     it('should display parks with notes', () => {
         renderWithClient(<MyNotes />);
+        // User Story: As a user, I want to see which parks I have notes for
+        it('should display parks with notes', () => {
+            renderWithClient(<MyNotes />);
 
+            expect(screen.getByText('Test Park 1')).toBeInTheDocument();
+            expect(screen.getByText('Test City 1')).toBeInTheDocument();
+            expect(screen.getByText('Notes for Test Park 1')).toBeInTheDocument();
+        });
         expect(screen.getByText('Test Park 1')).toBeInTheDocument();
         expect(screen.getByText('Test City 1')).toBeInTheDocument();
         expect(screen.getByText('Notes for Test Park 1')).toBeInTheDocument();
@@ -44,21 +57,37 @@ describe('MyNotes Component - User Stories', () => {
     // User Story: As a user, I want to see a message when I have no park notes
     it('should display message when no park notes exist', () => {
         renderWithClient(<MyNotes />);
+        // User Story: As a user, I want to see a message when I have no park notes
+        it('should display message when no park notes exist', () => {
+            renderWithClient(<MyNotes />);
 
+            expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+        });
         expect(screen.getByText('No park notes found.')).toBeInTheDocument();
     });
 
     // User Story: As a user, I want to see a message when I have no general notes
     it('should display placeholder when no general notes exist', () => {
         renderWithClient(<MyNotes />);
+        // User Story: As a user, I want to see a message when I have no general notes
+        it('should display placeholder when no general notes exist', () => {
+            renderWithClient(<MyNotes />);
 
+            expect(screen.getByText('No general notes yet')).toBeInTheDocument();
+        });
         expect(screen.getByText('No general notes yet')).toBeInTheDocument();
     });
 
     // User Story: As a user, I want to see when my notes were last updated
     it('should display last updated information', () => {
         renderWithClient(<MyNotes />);
+        // User Story: As a user, I want to see when my notes were last updated
+        it('should display last updated information', () => {
+            renderWithClient(<MyNotes />);
 
+            const lastUpdatedTexts = screen.getAllByText('Last updated: Not available');
+            expect(lastUpdatedTexts.length).toBeGreaterThan(0);
+        });
         const lastUpdatedTexts = screen.getAllByText('Last updated: Not available');
         expect(lastUpdatedTexts.length).toBeGreaterThan(0);
     });
@@ -68,7 +97,17 @@ describe('MyNotes Component - User Stories', () => {
         renderWithClient(<MyNotes />);
         expect(screen.getByText('No park notes found.')).toBeInTheDocument();
     });
+    // Test when parks data is null or undefined
+    it('should handle null parks data', () => {
+        renderWithClient(<MyNotes />);
+        expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+    });
 
+    // Test when there are parks but no notes for any of them
+    it('should show no park notes when parks exist but have no notes', () => {
+        renderWithClient(<MyNotes />);
+        expect(screen.getByText('No park notes found.')).toBeInTheDocument();
+    });
     // Test when there are parks but no notes for any of them
     it('should show no park notes when parks exist but have no notes', () => {
         renderWithClient(<MyNotes />);

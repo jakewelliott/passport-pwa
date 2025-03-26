@@ -1,3 +1,4 @@
+import { dbg } from '@/lib/debug';
 import type { Trail } from '@/types';
 
 const ICON_SVG = [
@@ -51,32 +52,46 @@ const sizeMap = {
     },
 } as const;
 
-interface TrailIconProps {
+const parseText = (fname: string) => {
+    // Remove color suffixes and hyphens
+    const withoutColor = fname.replace(/-(Red|Blue|Green|Black|Blaze)/g, '');
+    // Add spaces before capital letters and remove remaining hyphens
+    return withoutColor
+        .replace(/([A-Z])/g, ' $1') // Add space before capitals
+        .replace(/-/g, ' ') // Remove any remaining hyphens
+        .trim(); // Remove leading/trailing spaces
+};
+
+export const TrailIcon = ({
+    iconName,
+    size = 'md',
+    showText = false,
+}: {
     iconName: IconName;
     size?: IconSize;
     showText?: boolean;
-    key?: string;
-}
-
-export const TrailIcon = ({ iconName, size = 'md', showText = false, key }: TrailIconProps) => {
+}) => {
     return (
-        <div className='flex flex-col items-center gap-1' key={key}>
+        <div className='flex flex-col items-center gap-1'>
             <div style={{ height: sizeMap[size].icon, width: sizeMap[size].icon }} className='aspect-square'>
-                <img src={`/icons/park/${iconName}.svg`} alt={iconName} />
+                <img src={`/icons/park/${iconName}.svg`} alt={parseText(iconName)} />
             </div>
-            {showText && <div className={`${sizeMap[size].text} text-center`}>{iconName}</div>}
+            {showText && <div className={`${sizeMap[size].text} text-center`}>{parseText(iconName)}</div>}
         </div>
     );
 };
 
-interface TrailIconsProps {
+export const TrailIcons = ({
+    trail,
+    className = '',
+    size = 'md',
+    showText = true,
+}: {
     trail: Trail;
     className?: string;
     size?: IconSize;
     showText?: boolean;
-}
-
-export const TrailIcons = ({ trail, className = '', size = 'md', showText = true }: TrailIconsProps) => {
+}) => {
     if (!trail.trailIcons?.length) return null;
 
     return (

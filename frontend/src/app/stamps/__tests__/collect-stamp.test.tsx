@@ -1,4 +1,3 @@
-import { mockPark } from '@/lib/testing/mock/tables';
 import { renderWithClient } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
@@ -8,7 +7,13 @@ describe('CollectStamp', () => {
     beforeEach(() => {
         renderWithClient(<CollectStamp />);
     });
+    beforeEach(() => {
+        renderWithClient(<CollectStamp />);
+    });
 
+    it('renders the congratulatory header', () => {
+        expect(screen.getByText('Woohoo!')).toBeInTheDocument();
+    });
     it('renders the congratulatory header', () => {
         expect(screen.getByText('Woohoo!')).toBeInTheDocument();
     });
@@ -20,6 +25,10 @@ describe('CollectStamp', () => {
         expect(message.textContent).toContain('You have not collected the badge at this location yet.');
     });
 
+    it('renders the collect button', () => {
+        const collectButton = screen.getByRole('button', { name: 'Collect!' });
+        expect(collectButton).toBeInTheDocument();
+    });
     it('renders the collect button', () => {
         const collectButton = screen.getByRole('button', { name: 'Collect!' });
         expect(collectButton).toBeInTheDocument();
@@ -37,7 +46,16 @@ describe('CollectStamp', () => {
         expect(closeButton).toBeInTheDocument();
         expect(closeButton).toHaveClass('cursor-pointer', 'font-bold', 'text-h1', 'text-supporting_darkgray');
     });
+    it('renders the close button', () => {
+        const closeButton = screen.getByText('×');
+        expect(closeButton).toBeInTheDocument();
+        expect(closeButton).toHaveClass('cursor-pointer', 'font-bold', 'text-h1', 'text-supporting_darkgray');
+    });
 
+    it('has the correct content container styling', () => {
+        const container = screen.getByText('Woohoo!!!').closest('.m-auto');
+        expect(container).toHaveClass('flex', 'max-w-3xl', 'flex-col', 'items-center', 'gap-8', 'text-center');
+    });
     it('has the correct content container styling', () => {
         const container = screen.getByText('Woohoo!!!').closest('.m-auto');
         expect(container).toHaveClass('flex', 'max-w-3xl', 'flex-col', 'items-center', 'gap-8', 'text-center');

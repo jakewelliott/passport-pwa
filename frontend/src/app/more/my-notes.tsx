@@ -18,18 +18,18 @@ const NoteRow = ({
     note: ParkNote;
     navigate: NavigateFunction;
 }) => {
+    const { data: parks } = useParks();
+    console.log(parks);
     const navigateTo = isGeneralNote(note)
         ? '/more/my-notes/general-notes'
-        : `/locations/${note.parkAbbreviation}?tab=notes`;
-
-    const { data: parks } = useParks();
+        : `/locations/${parks?.find((x) => x.abbreviation === note.parkAbbreviation)?.abbreviation}?tab=notes`;
 
     const title = isGeneralNote(note)
         ? 'General Notes'
         : parks?.find((x) => x.abbreviation === note.parkAbbreviation)?.parkName;
 
     return (
-        <div key={note.parkAbbreviation} {...a11yOnClick(() => navigate(navigateTo))} className='cursor-pointer'>
+        <div key={note.parkId} {...a11yOnClick(() => navigate(navigateTo))} className={`cursor-pointer ${note.parkId}`}>
             <ListRow>
                 <div className='flex flex-col gap-1'>
                     <h3>{title}</h3>

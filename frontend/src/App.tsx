@@ -1,12 +1,13 @@
 import Header from '@/components/header';
 import Layout from '@/components/layout';
 import TabBar from '@/components/tab-bar';
-import { Outlet } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useUser } from '@/hooks/queries/useUser';
 import { useSplashScreen } from '@/hooks/useSplashScreen';
 import { dbg } from '@/lib/debug';
+import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ScrollToTop from './components/scroll-to-top';
 
 const App = () => {
     dbg('RENDER', 'App.tsx');
@@ -15,6 +16,7 @@ const App = () => {
     const { SplashScreen, splashFinished } = useSplashScreen();
     return (
         <>
+            <ScrollToTop />
             <div className='app'>
                 <Header />
                 <Layout>

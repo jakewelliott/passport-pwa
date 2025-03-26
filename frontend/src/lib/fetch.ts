@@ -27,6 +27,7 @@ export const API_COMPLETED_BUCKET_LIST_ITEMS_URL = `${API_BUCKET_LIST_URL}/compl
 
 // public data
 export const API_PARKS_URL = `${API_URL}/locations`;
+export const API_TRAILS_URL = `${API_URL}/locations/trails`;
 export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
 
 // notes

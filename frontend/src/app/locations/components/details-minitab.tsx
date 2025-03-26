@@ -28,6 +28,7 @@ const IconView = ({ icon }: { icon: ParkIcon }) => {
 };
 
 const ParkIcons = ({ park }: { park: Park }) => {
+    console.log('park', park);
     return (
         <div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
             <div className='inline-flex gap-6 px-6'>

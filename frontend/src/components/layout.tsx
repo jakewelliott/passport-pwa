@@ -15,7 +15,7 @@ const Layout = ({ children }: LayoutProps) => {
 
     return (
         <div className='min-h-screen'>
-            <main className='h-dvh overflow-y-auto pt-12 pb-16'>{children}</main>
+            <main className='layout no-scrollbar h-dvh overflow-y-auto pt-12 pb-16'>{children}</main>
         </div>
     );
 };

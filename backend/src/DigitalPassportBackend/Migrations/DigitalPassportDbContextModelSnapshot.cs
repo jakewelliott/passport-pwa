@@ -528,19 +528,19 @@ namespace DigitalPassportBackend.Migrations
                         new
                         {
                             id = 1,
-                            createdAt = new DateTime(2025, 3, 24, 17, 49, 18, 94, DateTimeKind.Utc).AddTicks(4080),
-                            password = "10000.cjOS/lhchgz0zS0kPwUwsQ==.IZO0smr9XfBaSonwak27jxgAcpglvJ78xVhPI1UEtZI=",
+                            createdAt = new DateTime(2025, 3, 26, 18, 46, 53, 29, DateTimeKind.Utc).AddTicks(710),
+                            password = "10000.Djzl362OL0d24wpTrraO+A==.6LmG9N8CY7ZdZSU9gzMDbO4prHs4PVvFFUvZgLcThxA=",
                             role = "admin",
-                            updatedAt = new DateTime(2025, 3, 24, 17, 49, 18, 94, DateTimeKind.Utc).AddTicks(4080),
+                            updatedAt = new DateTime(2025, 3, 26, 18, 46, 53, 29, DateTimeKind.Utc).AddTicks(700),
                             username = "superAdmin"
                         },
                         new
                         {
                             id = 2,
-                            createdAt = new DateTime(2025, 3, 24, 17, 49, 18, 101, DateTimeKind.Utc).AddTicks(5140),
-                            password = "10000.weI/ssaBrA+rBt9eMDyiLg==.6qeJD0C+BiG6l6H2SL4Ez6wOEO3Apv/GDvfxH2eveU4=",
+                            createdAt = new DateTime(2025, 3, 26, 18, 46, 53, 35, DateTimeKind.Utc).AddTicks(8540),
+                            password = "10000.+pauWaD7luEjnPyAHFEl1Q==.IYy48oeQ2UBBbDEMnuadDLI1Bp/Xjsmcyn+KICtI1Fk=",
                             role = "visitor",
-                            updatedAt = new DateTime(2025, 3, 24, 17, 49, 18, 101, DateTimeKind.Utc).AddTicks(5140),
+                            updatedAt = new DateTime(2025, 3, 26, 18, 46, 53, 35, DateTimeKind.Utc).AddTicks(8540),
                             username = "testUser"
                         });
                 });

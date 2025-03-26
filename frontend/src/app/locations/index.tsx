@@ -23,6 +23,7 @@ const Row = ({ park }: { park: Park }) => {
         </ListRow>
     );
 };
+
 export default function LocationsScreen() {
     dbg('RENDER', 'Locations');
     const { data: parks, isLoading, isError, error } = useParks();

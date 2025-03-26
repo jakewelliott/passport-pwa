@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "./cache-files.sh && vite",
+    "build": "./cache-files.sh && tsc && vite build",
     "lint": "biome check src/",
     "check": "biome check src/",
     "fix": "biome check --write --unsafe src/",
-    "preview": "vite preview",
+    "preview": "./cache-files.sh && vite preview",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"

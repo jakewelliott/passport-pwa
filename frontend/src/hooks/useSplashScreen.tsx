@@ -7,6 +7,7 @@ import { type To, useNavigate } from 'react-router-dom';
 import { useBucketList } from './queries/useBucketList';
 import { useGetAllNotes } from './queries/useNotes';
 import { useParks } from './queries/useParks';
+import { useTrails } from './queries/useTrails';
 
 const DEFAULT_DELAY = 100;
 

@@ -1,15 +1,16 @@
 import { TrailDetailView } from '@/app/more/components/trail-details';
 import { TrailMap } from '@/app/more/components/trail-map';
-import { trails } from '@/lib/testing/mock/tables';
-import type { Trail } from '@/types';
+import { useTrails } from '@/hooks/queries/useTrails';
 
 export const Trails = () => {
     // TODO: make a hook for this
-    const trailDetails: Trail[] = trails;
+    const { data: trailDetails, isLoading } = useTrails();
+
+    if (isLoading) return <div>Loading</div>;
 
     return (
         <div className='m-6'>
-            {trailDetails.map((trail) => (
+            {trailDetails?.map((trail) => (
                 <TrailDetailView trail={trail} key={trail.id} />
             ))}
             <img src='/TrailsLogo.svg' alt='Trails Logo' />

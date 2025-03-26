@@ -19,6 +19,7 @@ public class LocationsService : ILocationsService
     private readonly IParkIconRepository _parkIconRepository;
     private readonly IParkPhotoRepository _parkPhotoRepository;
     private readonly ITrailRepository _trailRepository;
+    private readonly ITrailIconRepository _trailIconRepository;
 
     public LocationsService(
         ILocationsRepository locationsRepository,
@@ -26,7 +27,8 @@ public class LocationsService : ILocationsService
         IBucketListItemRepository bucketListItemRepository,
         IParkIconRepository parkIconRepository,
         IParkPhotoRepository parkPhotoRepository,
-        ITrailRepository trailRepository)
+        ITrailRepository trailRepository,
+        ITrailIconRepository trailIconRepository)
     {
         _locationsRepository = locationsRepository;
         _addressRepository = addressRepository;
@@ -34,6 +36,7 @@ public class LocationsService : ILocationsService
         _parkIconRepository = parkIconRepository;
         _parkPhotoRepository = parkPhotoRepository;
         _trailRepository = trailRepository;
+        _trailIconRepository = trailIconRepository;
     }
 
     public List<ParkAddress> GetAddressesByLocationId(int id)
@@ -71,9 +74,9 @@ public class LocationsService : ILocationsService
         return _trailRepository.GetAll();
     }
 
-    public Trail GetTrailById(int trailId)
+    public List<TrailIcon> GetTrailIcons(int trailId)
     {
-        return _trailRepository.GetById(trailId);
+        return _trailIconRepository.GetByTrailId(trailId);
     }
 
     public string UploadGeoJson(IFormFile file)
@@ -106,6 +109,7 @@ public class LocationsService : ILocationsService
         // add the data from GeoJson file to corresponding park in modifiable list
         foreach (var feature in processedFeatures)
         {
+            if (feature.Attributes.GetOptionalValue("SubUnit") != null && feature.Attributes.GetOptionalValue("SubUnit").ToString() == "Rendezvous Mountain") feature.Attributes["PKABBR"] = "REMO";
             var park = geometriesToAdd.Find(x => x.abb == feature.Attributes.GetOptionalValue("PKABBR").ToString());
             if (park != null)
             {

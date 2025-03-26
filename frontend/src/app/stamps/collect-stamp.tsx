@@ -55,7 +55,8 @@ export default function CollectStamp() {
             parkId: park.id,
             geopoint,
             method: 'location',
-            timestamp: new Date(),
+            dateTime: new Date(),
+            parkAbbreviation: park.abbreviation,
         };
 
         // mark the stamp as collected

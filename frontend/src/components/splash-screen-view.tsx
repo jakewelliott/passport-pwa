@@ -19,7 +19,7 @@ export const SplashScreenView = ({ children }: { children?: React.ReactNode }) =
             <p className='script' style={{ paddingTop: 30 }}>
                 Passport
             </p>
-            <div>{children}</div>
+            <div className='mt-20 rounded-xl bg-secondary_lightblue bg-opacity-70 p-3'>{children}</div>
         </div>
     </div>
 );
