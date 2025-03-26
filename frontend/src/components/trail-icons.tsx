@@ -35,7 +35,7 @@ export const TrailIcon = ({
   return (
     <div className='flex flex-col items-center gap-1'>
       <div style={{ height: sizeMap[size].icon, width: sizeMap[size].icon }} className='aspect-square'>
-        <img src={`/icons/misc/${iconName}.png`} alt={iconName} />
+        <img src={`/icons/misc/${iconName}.svg`} alt={iconName} />
       </div>
       {showText && <div className={`${sizeMap[size].text} text-center`}>{iconName}</div>}
     </div>
