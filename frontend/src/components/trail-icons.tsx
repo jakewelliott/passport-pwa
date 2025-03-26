@@ -1,18 +1,24 @@
+import { cn } from '@/lib/cn-helper';
+import { dbg } from '@/lib/debug';
 import type { Trail, TrailIconEnum } from '@/types';
 
-type IconSize = 'sm' | 'md' | 'lg';
+type IconSize = 'xs' | 'sm' | 'md' | 'lg';
 
-const sizeMap = {
+const sizeStyles = {
+    xs: {
+        icon: 'h-4 w-4',
+        text: 'text-xs',
+    },
     sm: {
-        icon: 32,
+        icon: 'h-8 w-8',
         text: 'text-xs',
     },
     md: {
-        icon: 48,
+        icon: 'h-12 w-12',
         text: 'text-sm',
     },
     lg: {
-        icon: 64,
+        icon: 'h-16 w-16',
         text: 'text-base',
     },
 } as const;
@@ -29,19 +35,20 @@ const parseText = (fname: string) => {
 
 export const TrailIcon = ({
     iconName,
-    size = 'md',
+    size = 'xs',
     showText = false,
 }: {
     iconName: TrailIconEnum;
     size?: IconSize;
     showText?: boolean;
 }) => {
+    dbg('RENDER', 'TrailIcon', iconName);
     return (
         <div className='flex flex-col items-center gap-1'>
-            <div style={{ height: sizeMap[size].icon, width: sizeMap[size].icon }} className='aspect-square'>
-                <img src={`/icons/park/${iconName}.svg`} alt={parseText(iconName)} />
+            <div className={cn(sizeStyles[size].icon, 'aspect-square')}>
+                <img src={`/icons/misc/${iconName}.svg`} alt={parseText(iconName)} />
             </div>
-            {showText && <div className={`${sizeMap[size].text} text-center`}>{parseText(iconName)}</div>}
+            {showText && <p className={cn(sizeStyles[size].text, 'text-center')}>{parseText(iconName)}</p>}
         </div>
     );
 };
@@ -49,7 +56,7 @@ export const TrailIcon = ({
 export const TrailIcons = ({
     trail,
     className = '',
-    size = 'md',
+    size = 'xs',
     showText = true,
 }: {
     trail: Trail;
@@ -57,12 +64,13 @@ export const TrailIcons = ({
     size?: IconSize;
     showText?: boolean;
 }) => {
-    if (!trail.trailIcons?.length) return null;
+    dbg('RENDER', 'TrailIcons', trail);
+    if (!trail.icons?.length) return null;
 
     return (
         <div className={`flex items-center gap-2 ${className}`}>
-            {trail.trailIcons.map((trailIcon) => (
-                <TrailIcon key={trailIcon} iconName={trailIcon} size={size} showText={showText} />
+            {trail.icons.map((trailIcon) => (
+                <TrailIcon key={trailIcon} iconName={trailIcon} size={size} showText={false} />
             ))}
         </div>
     );

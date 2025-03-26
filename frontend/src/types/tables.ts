@@ -54,7 +54,7 @@ export interface Park extends DatabaseEntry {
 
 export interface Trail extends DatabaseEntry {
     trailName: string;
-    trailIcons: TrailIconEnum[];
+    icons: TrailIconEnum[];
     distance: string;
     description: string;
 }
