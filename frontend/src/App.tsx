@@ -9,22 +9,22 @@ import { useSplashScreen } from '@/hooks/useSplashScreen';
 import { dbg } from '@/lib/debug';
 
 const App = () => {
-  dbg('RENDER', 'App.tsx');
-  const { data: user } = useUser();
+    dbg('RENDER', 'App.tsx');
+    const { data: user } = useUser();
 
-  const { SplashScreen, splashFinished } = useSplashScreen();
-  return (
-    <>
-      <div className='app'>
-        <Header />
-        <Layout>
-          <main>{!user ? <Outlet /> : splashFinished ? <Outlet /> : <SplashScreen />}</main>
-        </Layout>
-        <TabBar />
-      </div>
-      <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
-    </>
-  );
+    const { SplashScreen, splashFinished } = useSplashScreen();
+    return (
+        <>
+            <div className='app'>
+                <Header />
+                <Layout>
+                    <main>{!user ? <Outlet /> : splashFinished ? <Outlet /> : <SplashScreen />}</main>
+                </Layout>
+                <TabBar />
+            </div>
+            <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
+        </>
+    );
 };
 
 export default App;

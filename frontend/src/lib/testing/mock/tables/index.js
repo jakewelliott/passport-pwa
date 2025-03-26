@@ -17,91 +17,91 @@ import { users as users_ } from './users.json';
 // utility functions
 
 const parseGeopoint = (geopoint) => {
-  const [longitude, latitude] = geopoint.replace('POINT (', '').replace(')', '').split(' ').map(Number);
-  return { latitude, longitude, inaccuracyRadius: 0.0001 };
+    const [longitude, latitude] = geopoint.replace('POINT (', '').replace(')', '').split(' ').map(Number);
+    return { latitude, longitude, inaccuracyRadius: 0.0001 };
 };
 
 const snakeStringToCamelCase = (str) =>
-  str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase()).replace(/_+$/g, '');
+    str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase()).replace(/_+$/g, '');
 
 // this is where the magic happens
 
 function camelify(obj, specialCases = {}) {
-  const result = new Object();
+    const result = new Object();
 
-  for (const key in obj) {
-    // special key parsing cases go here
-    if (key in specialCases) {
-      result[specialCases[key]] = obj[key];
-      continue;
+    for (const key in obj) {
+        // special key parsing cases go here
+        if (key in specialCases) {
+            result[specialCases[key]] = obj[key];
+            continue;
+        }
+
+        // convert snake_case to camelCase
+        const camelKey = snakeStringToCamelCase(key);
+
+        // we need to turn string dates into Date objects
+        if (camelKey === 'createdAt' || camelKey === 'updatedAt') {
+            result[camelKey] = new Date(obj[key]);
+            continue;
+        }
+
+        // happy path: just copy the value over to the new key
+        result[camelKey] = obj[key];
     }
 
-    // convert snake_case to camelCase
-    const camelKey = snakeStringToCamelCase(key);
-
-    // we need to turn string dates into Date objects
-    if (camelKey === 'createdAt' || camelKey === 'updatedAt') {
-      result[camelKey] = new Date(obj[key]);
-      continue;
-    }
-
-    // happy path: just copy the value over to the new key
-    result[camelKey] = obj[key];
-  }
-
-  return result;
+    return result;
 }
 
 // process the raw data
 
 const camel = Object.entries({
-  parks_,
-  bucket_list_items,
-  collected_stamps,
-  completed_bucket_list_items,
-  park_addresses,
-  park_icons,
-  park_photos,
-  park_visits,
-  private_notes,
-  trail_icons,
-  trails_,
-  users_,
+    parks_,
+    bucket_list_items,
+    collected_stamps,
+    completed_bucket_list_items,
+    park_addresses,
+    park_icons,
+    park_photos,
+    park_visits,
+    private_notes,
+    trail_icons,
+    trails_,
+    users_,
 }).reduce((acc, [key, value]) => {
-  // Now we map over each array and camelify each item
-  acc[snakeStringToCamelCase(key)] = Array.isArray(value)
-    ? value.map((item) =>
-        camelify(item, {
-          // sometimes the backend keys don't match the frontend keys, even after camelifying
-          // so we need to map them here
-          park: 'parkId',
-          user: 'userId',
-          park_abbreviation: 'abbreviation',
-          length: 'distance',
-        }),
-      )
-    : camelify(value, {
-        park: 'parkId',
-        user: 'userId',
-        park_abbreviation: 'abbreviation',
-        length: 'distance',
-      });
-  return acc;
+    // Now we map over each array and camelify each item
+    acc[snakeStringToCamelCase(key)] = Array.isArray(value)
+        ? value.map((item) =>
+              camelify(item, {
+                  // sometimes the backend keys don't match the frontend keys, even after camelifying
+                  // so we need to map them here
+                  park: 'parkId',
+                  user: 'userId',
+                  park_abbreviation: 'abbreviation',
+                  length: 'distance',
+              }),
+          )
+        : camelify(value, {
+              park: 'parkId',
+              user: 'userId',
+              park_abbreviation: 'abbreviation',
+              length: 'distance',
+          });
+    return acc;
 }, {});
 
 // for parks, we need to include the coordinates, addresses, icons, and photos
 export const parks = camel.parks.map((park) => ({
-  ...park,
-  coordinates: parseGeopoint(park.coordinates),
-  addresses: camel.parkAddresses.filter((address) => address.parkId === park.id),
-  icons: camel.parkIcons.filter((icon) => icon.parkId === park.id),
-  photos: camel.parkPhotos.filter((photo) => photo.parkId === park.id),
+    ...park,
+    coordinates: parseGeopoint(park.coordinates),
+    addresses: camel.parkAddresses.filter((address) => address.parkId === park.id),
+    icons: camel.parkIcons.filter((icon) => icon.parkId === park.id),
+    photos: camel.parkPhotos.filter((photo) => photo.parkId === park.id),
 }));
 
 // for trails, we need to get an array of the icon names
 export const trails = camel.trails.map((trail) => ({
-  ...trail,
-  trailIcons: camel.trailIcons.filter((icon) => icon.trail === trail.id).map((icon) => icon.icon),
+    ...trail,
+    trailIcons: camel.trailIcons.filter((icon) => icon.trail === trail.id).map((icon) => icon.icon),
 }));
 
 // for the rest of the tables, we just need to camelify the keys

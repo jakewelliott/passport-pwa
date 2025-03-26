@@ -1,67 +1,67 @@
 // Misc utility types that aren't standalone records in a table
 
 export interface Geopoint {
-  latitude: number;
-  longitude: number;
-  inaccuracyRadius: number;
+    latitude: number;
+    longitude: number;
+    inaccuracyRadius: number;
 }
 
 export interface LoginCredentials {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
 }
 
 export interface Address {
-  title: string;
-  addressLineOne: string;
-  addressLineTwo: string;
-  city: string;
-  state: string;
-  zipcode: number;
+    title: string;
+    addressLineOne: string;
+    addressLineTwo: string;
+    city: string;
+    state: string;
+    zipcode: number;
 }
 
 export enum RedIcons {
-  Biking = 'Biking',
-  Fishing = 'Fishing',
-  Hiking = 'Hiking',
-  HorsebackRiding = 'HorsebackRiding',
-  Paddling = 'Paddling',
-  Picnicking = 'Picnicking',
-  RockClimbing = 'RockClimbing',
-  Swimming = 'Swimming',
+    Biking = 'Biking',
+    Fishing = 'Fishing',
+    Hiking = 'Hiking',
+    HorsebackRiding = 'HorsebackRiding',
+    Paddling = 'Paddling',
+    Picnicking = 'Picnicking',
+    RockClimbing = 'RockClimbing',
+    Swimming = 'Swimming',
 }
 
 export enum BlueIcons {
-  BoatRamp = 'BoatRamp',
-  BoatRental = 'BoatRental',
-  Exhibits = 'Exhibits',
-  Playground = 'Playground',
-  VisitorCenter = 'VisitorCenter',
+    BoatRamp = 'BoatRamp',
+    BoatRental = 'BoatRental',
+    Exhibits = 'Exhibits',
+    Playground = 'Playground',
+    VisitorCenter = 'VisitorCenter',
 }
 
 export enum GreenIcons {
-  CamperCabins = 'CamperCabins',
-  Camping = 'Camping',
-  CanoeinCamping = 'CanoeinCamping',
-  EquestrianCamping = 'EquestrianCamping',
-  GroupCabins = 'GroupCabins',
-  GroupCamp = 'GroupCamp',
-  PrimitiveCabin = 'PrimitiveCabin',
-  RVCamping = 'RVCamping',
-  VacationCabin = 'VacationCabin',
+    CamperCabins = 'CamperCabins',
+    Camping = 'Camping',
+    CanoeinCamping = 'CanoeinCamping',
+    EquestrianCamping = 'EquestrianCamping',
+    GroupCabins = 'GroupCabins',
+    GroupCamp = 'GroupCamp',
+    PrimitiveCabin = 'PrimitiveCabin',
+    RVCamping = 'RVCamping',
+    VacationCabin = 'VacationCabin',
 }
 
 export enum BlackIcons {
-  Camping = 'Camping',
-  PicnicShelter = 'PicnicShelter',
+    Camping = 'Camping',
+    PicnicShelter = 'PicnicShelter',
 }
 
 export enum BlazeIcons {
-  FBSTBlaze = 'FBST-Blaze',
-  FFSTBlaze = 'FFST-Blaze',
-  HGSTBlaze = 'HGST-Blaze',
-  MSTBlaze = 'MST-Blaze',
-  YSTBlaze = 'YST-Blaze',
+    FBSTBlaze = 'FBST-Blaze',
+    FFSTBlaze = 'FFST-Blaze',
+    HGSTBlaze = 'HGST-Blaze',
+    MSTBlaze = 'MST-Blaze',
+    YSTBlaze = 'YST-Blaze',
 }
 
 // export enum ParkIcon {

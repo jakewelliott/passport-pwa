@@ -12,36 +12,36 @@ import { toast } from 'react-toastify';
  * Sets the token in cookies, invalidates the user query, and adds the user to local storage
  */
 export const useRegister = () => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const redirect = searchParams.get('redirect');
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const redirect = searchParams.get('redirect');
 
-  return useMutation<string, Error, LoginCredentials>({
-    mutationFn: async ({ username, password }) => {
-      dbg('MUTATE', 'useRegister', { username, password });
-      const response = await fetchPost(API_AUTH_REGISTER_URL, {
-        username,
-        password,
-      });
-      return response.text();
-    },
-    onSuccess: (data, { username }) => {
-      Cookies.set('token', data, { secure: true, sameSite: 'strict' });
+    return useMutation<string, Error, LoginCredentials>({
+        mutationFn: async ({ username, password }) => {
+            dbg('MUTATE', 'useRegister', { username, password });
+            const response = await fetchPost(API_AUTH_REGISTER_URL, {
+                username,
+                password,
+            });
+            return response.text();
+        },
+        onSuccess: (data, { username }) => {
+            Cookies.set('token', data, { secure: true, sameSite: 'strict' });
 
-      const userDetails = decodeToken(data);
-      queryClient.setQueryData(['user'], { ...userDetails, token: data });
-      localStorage.setItem('user', JSON.stringify(userDetails));
+            const userDetails = decodeToken(data);
+            queryClient.setQueryData(['user'], { ...userDetails, token: data });
+            localStorage.setItem('user', JSON.stringify(userDetails));
 
-      setTimeout(() => {
-        toast.success(`Successfully registered as ${username}`);
-      }, 1000);
+            setTimeout(() => {
+                toast.success(`Successfully registered as ${username}`);
+            }, 1000);
 
-      navigate(redirect ?? '/');
-    },
-    onError: (error) => {
-      dbg('ERROR', 'useRegister', error);
-      // TODO: be more verbose here
-      toast.error(error.message);
-    },
-  });
+            navigate(redirect ?? '/');
+        },
+        onError: (error) => {
+            dbg('ERROR', 'useRegister', error);
+            // TODO: be more verbose here
+            toast.error(error.message);
+        },
+    });
 };

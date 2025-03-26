@@ -33,83 +33,83 @@ export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
 export const API_NOTES_URL = `${API_URL}/activity/notes`;
 
 const getAuthHeaders = (): Record<string, string> => {
-  const token = Cookies.get('token');
-  return token ? { Authorization: `Bearer ${token}` } : {};
+    const token = Cookies.get('token');
+    return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
 export const fetchPost = async (url: string, body: any) => {
-  dbg('FETCH', 'POST', { url, body });
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...getAuthHeaders(),
-  };
+    dbg('FETCH', 'POST', { url, body });
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+    };
 
-  const response = await fetch(url, {
-    method: 'POST',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(body),
-  });
+    const response = await fetch(url, {
+        method: 'POST',
+        headers,
+        credentials: 'include',
+        body: JSON.stringify(body),
+    });
 
-  if (!response.ok) await fetchError(response);
+    if (!response.ok) await fetchError(response);
 
-  // dbg('FETCH', 'POST RESPONSE', { response });
-  return response;
+    // dbg('FETCH', 'POST RESPONSE', { response });
+    return response;
 };
 
 // TODO: add generic type arg and zod validation, throw might be tricky here
 export const fetchGet = async (url: string) => {
-  dbg('FETCH', 'GET', { url });
-  const headers: Record<string, string> = {
-    ...getAuthHeaders(),
-  };
+    dbg('FETCH', 'GET', { url });
+    const headers: Record<string, string> = {
+        ...getAuthHeaders(),
+    };
 
-  const response = await fetch(url, {
-    method: 'GET',
-    headers,
-    credentials: 'include',
-  });
+    const response = await fetch(url, {
+        method: 'GET',
+        headers,
+        credentials: 'include',
+    });
 
-  dbg('FETCH', 'GET RESPONSE', { response });
+    dbg('FETCH', 'GET RESPONSE', { response });
 
-  if (!response.ok) await fetchError(response);
+    if (!response.ok) await fetchError(response);
 
-  const data = await response.json();
-  // dbg('FETCH', 'GET DATA', { data });
+    const data = await response.json();
+    // dbg('FETCH', 'GET DATA', { data });
 
-  return data;
+    return data;
 };
 
 export const fetchPut = async (url: string, body: any) => {
-  dbg('FETCH', 'PUT', { url, body });
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-    ...getAuthHeaders(),
-  };
+    dbg('FETCH', 'PUT', { url, body });
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+    };
 
-  const response = await fetch(url, {
-    method: 'PUT',
-    headers,
-    credentials: 'include',
-    body: JSON.stringify(body),
-  });
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers,
+        credentials: 'include',
+        body: JSON.stringify(body),
+    });
 
-  if (!response.ok) await fetchError(response);
+    if (!response.ok) await fetchError(response);
 
-  // dbg('FETCH', 'PUT RESPONSE', { response });
-  return response;
+    // dbg('FETCH', 'PUT RESPONSE', { response });
+    return response;
 };
 
 const fetchError = async (response: Response) => {
-  dbg('ERROR', 'FETCH', { response });
-  let message = '';
-  try {
-    const errorData = await response.json();
-    const errorMessage = errorData.detail || response.statusText;
-    message = errorMessage;
-  } catch (error) {
-    message = response.statusText;
-  }
+    dbg('ERROR', 'FETCH', { response });
+    let message = '';
+    try {
+        const errorData = await response.json();
+        const errorMessage = errorData.detail || response.statusText;
+        message = errorMessage;
+    } catch (error) {
+        message = response.statusText;
+    }
 
-  throw new Error(message);
+    throw new Error(message);
 };

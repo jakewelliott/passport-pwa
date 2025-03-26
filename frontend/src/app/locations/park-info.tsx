@@ -16,37 +16,37 @@ import type { Park } from '@/types';
 import { useParams } from 'react-router-dom';
 
 const MiniTabs = ({ park }: { park: Park }) => (
-  <LocationMiniTabBar>
-    <DetailsMiniTab park={park} />
-    <PhotoGalleryMiniTab park={park} />
-    <NotesMiniTab parkId={park.id} />
-  </LocationMiniTabBar>
+    <LocationMiniTabBar>
+        <DetailsMiniTab park={park} />
+        <PhotoGalleryMiniTab park={park} />
+        <NotesMiniTab parkId={park.id} />
+    </LocationMiniTabBar>
 );
 
 export default function ParkInfoScreen() {
-  dbg('RENDER', 'Location DetailTabs');
-  const { abbreviation } = useParams();
-  const parkAbbreviation = abbreviation as Uppercase<string>;
+    dbg('RENDER', 'Location DetailTabs');
+    const { abbreviation } = useParams();
+    const parkAbbreviation = abbreviation as Uppercase<string>;
 
-  const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
-  const { data: stamp, isLoading: isStampLoading } = useStamp(park?.id);
+    const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
+    const { data: stamp, isLoading: isStampLoading } = useStamp(park?.id);
 
-  if (isParkLoading || !park) return <LoadingPlaceholder what='park' />;
-  if (isStampLoading) return <LoadingPlaceholder what='stamp' />;
+    if (isParkLoading || !park) return <LoadingPlaceholder what='park' />;
+    if (isStampLoading) return <LoadingPlaceholder what='stamp' />;
 
-  return (
-    <div>
-      <div className='m-6 flex flex-col gap-3'>
+    return (
         <div>
-          <h2>{park.parkName}</h2>
+            <div className='m-6 flex flex-col gap-3'>
+                <div>
+                    <h2>{park.parkName}</h2>
+                </div>
+                <AddressView park={park} />
+                <ContactView park={park} />
+                <GenericIcon name='stamp' text={stampCollectedOn(stamp)} />
+                <BucketList parkId={park.id} />
+            </div>
+            <LocationActionBar park={park} />
+            <MiniTabs park={park} />
         </div>
-        <AddressView park={park} />
-        <ContactView park={park} />
-        <GenericIcon name='stamp' text={stampCollectedOn(stamp)} />
-        <BucketList parkId={park.id} />
-      </div>
-      <LocationActionBar park={park} />
-      <MiniTabs park={park} />
-    </div>
-  );
+    );
 }

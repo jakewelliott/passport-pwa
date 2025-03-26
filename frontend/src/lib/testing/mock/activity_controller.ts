@@ -1,40 +1,40 @@
 import type {
-  CollectStampRequest,
-  CollectStampResponse,
-  ParkNoteRequest,
-  ParkNoteResponse,
-  ToggleBucketListItemCompletionRequest,
-  ToggleBucketListItemCompletionResponse,
-  VisitParkRequest,
-  VisitParkResponse,
+    CollectStampRequest,
+    CollectStampResponse,
+    ParkNoteRequest,
+    ParkNoteResponse,
+    ToggleBucketListItemCompletionRequest,
+    ToggleBucketListItemCompletionResponse,
+    VisitParkRequest,
+    VisitParkResponse,
 } from '@/types';
 import { GetPark } from './locations_controller';
 import {
-  bucketListItems,
-  collectedStamps,
-  completedBucketListItems,
-  parkNotes,
-  parkVisits,
-  parks,
+    bucketListItems,
+    collectedStamps,
+    completedBucketListItems,
+    parkNotes,
+    parkVisits,
+    parks,
 } from './tables/index';
 import { postUserContent, selectById, selectByUser } from './utils';
 
 // helper function
 const postWithPark = <T>(abbreviation: string, req: T) => {
-  const park = GetPark(abbreviation);
-  return {
-    ...postUserContent(req),
-    parkAbbreviation: abbreviation,
-    parkId: park.id,
-  };
+    const park = GetPark(abbreviation);
+    return {
+        ...postUserContent(req),
+        parkAbbreviation: abbreviation,
+        parkId: park.id,
+    };
 };
 
 const postWithParkId = <T>(parkId: number, req: T) => {
-  const park = selectById(parks, parkId);
-  return {
-    ...postUserContent(req),
-    parkId: park.id,
-  };
+    const park = selectById(parks, parkId);
+    return {
+        ...postUserContent(req),
+        parkId: park.id,
+    };
 };
 
 //
@@ -50,8 +50,8 @@ export const GetCompletedBucketListItems = () => selectByUser(completedBucketLis
 export const GetVisitedParks = () => selectByUser(parkVisits);
 
 export const GetParkNote = (parkId: number) => {
-  const note = parkNotes.find((note) => note.parkId === parkId);
-  return note ? note : null;
+    const note = parkNotes.find((note) => note.parkId === parkId);
+    return note ? note : null;
 };
 
 export const GetAllNotes = () => selectByUser(parkNotes);
@@ -61,19 +61,19 @@ export const GetAllNotes = () => selectByUser(parkNotes);
 //
 
 export const PostCollectStamp = (param: string, req: CollectStampRequest): CollectStampResponse =>
-  postWithPark(param, req);
+    postWithPark(param, req);
 
 // TODO: map parkId 0 to null for general notes
 export const PostCreateUpdateNote = (param: number, req: ParkNoteRequest): ParkNoteResponse =>
-  postWithParkId(param, req);
+    postWithParkId(param, req);
 
 export const PostVisitPark = (parkAbbreviation: string, req: VisitParkRequest): VisitParkResponse =>
-  postWithPark(parkAbbreviation, req);
+    postWithPark(parkAbbreviation, req);
 
 export const PostToggleBucketListItemCompletion = (
-  itemId: number,
-  req: ToggleBucketListItemCompletionRequest,
+    itemId: number,
+    req: ToggleBucketListItemCompletionRequest,
 ): ToggleBucketListItemCompletionResponse => {
-  const item = selectById(bucketListItems, itemId);
-  return postUserContent({ ...req, bucketListItemId: item.id });
+    const item = selectById(bucketListItems, itemId);
+    return postUserContent({ ...req, bucketListItemId: item.id });
 };

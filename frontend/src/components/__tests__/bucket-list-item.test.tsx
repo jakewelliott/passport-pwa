@@ -6,16 +6,16 @@ import { describe, expect, it, vi } from 'vitest';
 const mockHandler = vi.fn();
 
 describe('BucketListItem', () => {
-  it('renders with correct text content', () => {
-    render(<BucketListItemView item={mockBucketListItem} handler={mockHandler} />);
+    it('renders with correct text content', () => {
+        render(<BucketListItemView item={mockBucketListItem} handler={mockHandler} />);
 
-    expect(screen.getByText(mockBucketListItem.task)).toBeInTheDocument();
-  });
+        expect(screen.getByText(mockBucketListItem.task)).toBeInTheDocument();
+    });
 
-  it('renders unchecked icon when bucketList status is false', () => {
-    render(<BucketListItemView item={mockBucketListItem} handler={mockHandler} />);
+    it('renders unchecked icon when bucketList status is false', () => {
+        render(<BucketListItemView item={mockBucketListItem} handler={mockHandler} />);
 
-    expect(screen.getByTestId('unchecked-icon')).toBeInTheDocument();
-    expect(screen.queryByTestId('checked-icon')).not.toBeInTheDocument();
-  });
+        expect(screen.getByTestId('unchecked-icon')).toBeInTheDocument();
+        expect(screen.queryByTestId('checked-icon')).not.toBeInTheDocument();
+    });
 });

@@ -10,13 +10,13 @@ import { useUser } from './useUser';
  * @returns The stamps for the user
  */
 export const useStamps = () => {
-  dbg('HOOK', 'useStamps');
-  const { data: user } = useUser();
-  const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
-    queryKey: ['stamps', user?.id],
-    queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL),
-  });
-  return { data, isLoading, refetch };
+    dbg('HOOK', 'useStamps');
+    const { data: user } = useUser();
+    const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
+        queryKey: ['stamps', user?.id],
+        queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL),
+    });
+    return { data, isLoading, refetch };
 };
 
 /**
@@ -25,35 +25,35 @@ export const useStamps = () => {
  * @returns The stamp for the user
  */
 export const useStamp = (parkId: number | undefined) => {
-  // re-use our query hooks whenever possible
-  dbg('HOOK', 'useStamp', parkId);
-  const { data, ...hook } = useStamps();
+    // re-use our query hooks whenever possible
+    dbg('HOOK', 'useStamp', parkId);
+    const { data, ...hook } = useStamps();
 
-  if (parkId === undefined) return { ...hook, data: undefined };
-  const stamp = data?.find((stamp) => stamp.parkId === parkId);
+    if (parkId === undefined) return { ...hook, data: undefined };
+    const stamp = data?.find((stamp) => stamp.parkId === parkId);
 
-  return { ...hook, data: stamp };
+    return { ...hook, data: stamp };
 };
 
 export const useStampMutation = () => {
-  const { refetch } = useStamps();
+    const { refetch } = useStamps();
 
-  return useMutation<string, Error, CollectStampRequest>({
-    mutationFn: async (stamp: CollectStampRequest) => {
-      dbg('MUTATE', 'Collecting stamp', { stamp });
-      const response = await fetchPost(`${API_STAMPS_URL}/${stamp.parkId}`, stamp);
-      return await response.text();
-    },
-    onSuccess: () => {
-      refetch();
-      toast.success('Stamp collected!');
-    },
-    onError: (error) => {
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error('An unknown error occurred');
-      }
-    },
-  });
+    return useMutation<string, Error, CollectStampRequest>({
+        mutationFn: async (stamp: CollectStampRequest) => {
+            dbg('MUTATE', 'Collecting stamp', { stamp });
+            const response = await fetchPost(`${API_STAMPS_URL}/${stamp.parkId}`, stamp);
+            return await response.text();
+        },
+        onSuccess: () => {
+            refetch();
+            toast.success('Stamp collected!');
+        },
+        onError: (error) => {
+            if (error instanceof Error) {
+                toast.error(error.message);
+            } else {
+                toast.error('An unknown error occurred');
+            }
+        },
+    });
 };

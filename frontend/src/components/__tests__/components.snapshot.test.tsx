@@ -16,9 +16,9 @@ const mockTrail = trails[0];
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
 }));
 
 // // Mock the useUser hook
@@ -44,52 +44,52 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 // }))
 
 describe('Component Snapshots', () => {
-  it('TabBar renders correctly', () => {
-    renderWithClient(<TabBar />);
-    expect(screen.getByText('Locations')).toBeInTheDocument();
-  });
+    it('TabBar renders correctly', () => {
+        renderWithClient(<TabBar />);
+        expect(screen.getByText('Locations')).toBeInTheDocument();
+    });
 
-  it('RoundedButton renders correctly', () => {
-    renderWithClient(<RoundedButton title='Test Button' color='secondary_darkteal' />);
-    expect(screen.getByText('Test Button')).toBeInTheDocument();
-  });
+    it('RoundedButton renders correctly', () => {
+        renderWithClient(<RoundedButton title='Test Button' color='secondary_darkteal' />);
+        expect(screen.getByText('Test Button')).toBeInTheDocument();
+    });
 
-  it('LoadingPlaceholder renders correctly', () => {
-    renderWithClient(<LoadingPlaceholder what='test' />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-  });
+    it('LoadingPlaceholder renders correctly', () => {
+        renderWithClient(<LoadingPlaceholder what='test' />);
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
+    });
 
-  it('SplashScreen renders correctly', () => {
-    renderWithClient(<SplashScreenView />);
-    expect(screen.getByText('Loading...')).toBeInTheDocument();
-  });
+    it('SplashScreen renders correctly', () => {
+        renderWithClient(<SplashScreenView />);
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
+    });
 
-  it('ImageModal renders correctly', () => {
-    renderWithClient(<ImageModal photo={{ photo: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />);
-    expect(screen.getByText('Test Image')).toBeInTheDocument();
-  });
+    it('ImageModal renders correctly', () => {
+        renderWithClient(<ImageModal photo={{ photo: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />);
+        expect(screen.getByText('Test Image')).toBeInTheDocument();
+    });
 
-  it('Header renders correctly', () => {
-    renderWithClient(<Header />);
-    expect(screen.getByText('Locations')).toBeInTheDocument();
-  });
+    it('Header renders correctly', () => {
+        renderWithClient(<Header />);
+        expect(screen.getByText('Locations')).toBeInTheDocument();
+    });
 
-  it('TrailIcons renders correctly', () => {
-    renderWithClient(<TrailIcons trail={mockTrail} size='md' showText={true} />);
-    expect(screen.getByText('Trail')).toBeInTheDocument();
-  });
+    it('TrailIcons renders correctly', () => {
+        renderWithClient(<TrailIcons trail={mockTrail} size='md' showText={true} />);
+        expect(screen.getByText('Trail')).toBeInTheDocument();
+    });
 
-  it('ListRow renders correctly', () => {
-    renderWithClient(
-      <ListRow>
-        <div>Test List Row</div>
-      </ListRow>,
-    );
-    expect(screen.getByText('Test List Row')).toBeInTheDocument();
-  });
+    it('ListRow renders correctly', () => {
+        renderWithClient(
+            <ListRow>
+                <div>Test List Row</div>
+            </ListRow>,
+        );
+        expect(screen.getByText('Test List Row')).toBeInTheDocument();
+    });
 
-  it('PassportHeader renders correctly', () => {
-    renderWithClient(<PassportHeader />);
-    expect(screen.getByText('Locations')).toBeInTheDocument();
-  });
+    it('PassportHeader renders correctly', () => {
+        renderWithClient(<PassportHeader />);
+        expect(screen.getByText('Locations')).toBeInTheDocument();
+    });
 });

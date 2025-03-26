@@ -1,20 +1,20 @@
 {
-  "private_notes": [
-    {
-      "id": 1,
-      "note": "This is a private note",
-      "created_at": "2021-01-01T00:00:00Z",
-      "updated_at": "2021-01-01T00:00:00Z",
-      "park": 1,
-      "user": 1
-    },
-    {
-      "id": 2,
-      "note": "This is a general note",
-      "created_at": "2021-01-01T00:00:00Z",
-      "updated_at": "2021-01-01T00:00:00Z",
-      "park": null,
-      "user": 1
-    }
-  ]
+    "private_notes": [
+        {
+            "id": 1,
+            "note": "This is a private note",
+            "created_at": "2021-01-01T00:00:00Z",
+            "updated_at": "2021-01-01T00:00:00Z",
+            "park": 1,
+            "user": 1
+        },
+        {
+            "id": 2,
+            "note": "This is a general note",
+            "created_at": "2021-01-01T00:00:00Z",
+            "updated_at": "2021-01-01T00:00:00Z",
+            "park": null,
+            "user": 1
+        }
+    ]
 }
