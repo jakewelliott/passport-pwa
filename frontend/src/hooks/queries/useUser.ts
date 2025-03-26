@@ -1,5 +1,5 @@
 import { dbg } from '@/lib/debug';
-import { API_USER_URL, fetchGet } from '@/lib/fetch';
+import { API_AUTH_URL, fetchGet } from '@/lib/fetch';
 import type { UserProfile } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 
@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 export const useUser = () => {
     const query = useQuery<UserProfile | null, Error>({
         queryKey: ['user'],
-        queryFn: async () => await fetchGet(API_USER_URL),
+        queryFn: async () => await fetchGet(API_AUTH_URL),
         staleTime: Infinity, // Prevent refetching unless explicitly invalidated
     });
 
