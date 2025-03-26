@@ -109,6 +109,7 @@ public class LocationsService : ILocationsService
         // add the data from GeoJson file to corresponding park in modifiable list
         foreach (var feature in processedFeatures)
         {
+            if (feature.Attributes.GetOptionalValue("SubUnit") != null && feature.Attributes.GetOptionalValue("SubUnit").ToString() == "Rendezvous Mountain") feature.Attributes["PKABBR"] = "REMO";
             var park = geometriesToAdd.Find(x => x.abb == feature.Attributes.GetOptionalValue("PKABBR").ToString());
             if (park != null)
             {
