@@ -7,6 +7,7 @@ import { type To, useNavigate } from 'react-router-dom';
 import { useBucketList } from './queries/useBucketList';
 import { useGetAllNotes } from './queries/useNotes';
 import { useParks } from './queries/useParks';
+import { useTrails } from './queries/useTrails';
 
 const DEFAULT_DELAY = 100;
 
@@ -96,6 +97,12 @@ const APP_LOADERS: Loader[] = [
     hook: useBucketList,
     validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
     what: 'bucket list',
+    refetch: true,
+  },
+  {
+    hook: useTrails,
+    validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
+    what: 'trails',
     refetch: true,
   },
   {

@@ -32,23 +32,14 @@ self.addEventListener('fetch', (event) => {
     (async () => {
       const cache = await caches.open(CACHE_NAME);
 
-      // Log all cache keys for debugging
-      const keys = await cache.keys();
-      console.log(
-        'Cache keys:',
-        keys.map((key) => key.url),
-      );
-
       // Get the resource from the cache.
       const cachedResponse = await cache.match(event.request.url, { ignoreVary: true });
       if (cachedResponse) {
-        console.log('getting from cache');
         return cachedResponse;
       }
       try {
         // If the resource was not in the cache, try the network.
         const fetchResponse = await fetch(event.request);
-        console.log('not getting from cache');
         // Save the resource in the cache and return it.
         cache.add(event.request, fetchResponse.clone());
         return fetchResponse;
