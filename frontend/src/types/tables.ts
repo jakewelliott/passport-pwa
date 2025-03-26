@@ -85,6 +85,7 @@ export interface CollectedStamp extends ParkVisit {
 export interface ParkNote extends ParkContent {
   note: string;
   updatedAt: Date;
+  parkAbbreviation: string;
 }
 
 export interface BucketListCompletion extends UserContent {

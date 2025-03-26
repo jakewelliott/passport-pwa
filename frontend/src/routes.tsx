@@ -48,6 +48,11 @@ const LoggedInRoutes = () => {
   );
 };
 
+const ProtectedRoute = () => {
+  const { data: user } = useUser();
+  return user ? <Outlet /> : <Navigate to='/login' replace />;
+};
+
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -61,35 +66,40 @@ export const router = createBrowserRouter([
         element: <AdminRoutes />,
       },
       {
-        element: <LoggedInRoutes />,
+        element: <ProtectedRoute />,
         children: [
           {
-            path: 'locations',
+            element: <LoggedInRoutes />,
             children: [
-              { index: true, element: <Locations /> },
-              { path: ':abbreviation', element: <LocationDetail /> },
-            ],
-          },
-          { path: 'stamps', element: <Stamps /> },
-          {
-            path: 'more',
-            children: [
-              { index: true, element: <More /> },
-              { path: 'app-info', element: <AppInfo /> },
-              { path: 'icon-legend', element: <IconLegend /> },
-              { path: 'welcome-message', element: <WelcomeMessage /> },
-              { path: 'trails', element: <Trails /> },
-              { path: 'staying-safe', element: <StayingSafe /> },
-              { path: 'hiking-essentials', element: <HikingEssentials /> },
               {
-                path: 'bucket-list',
-                element: <BucketList showAddress={true} />,
-              },
-              {
-                path: 'my-notes',
+                path: 'locations',
                 children: [
-                  { index: true, element: <MyNotes /> },
-                  { path: 'general-notes', element: <EditGeneralNotes /> },
+                  { index: true, element: <Locations /> },
+                  { path: ':abbreviation', element: <LocationDetail /> },
+                ],
+              },
+              { path: 'stamps', element: <Stamps /> },
+              {
+                path: 'more',
+                children: [
+                  { index: true, element: <More /> },
+                  { path: 'app-info', element: <AppInfo /> },
+                  { path: 'icon-legend', element: <IconLegend /> },
+                  { path: 'welcome-message', element: <WelcomeMessage /> },
+                  { path: 'trails', element: <Trails /> },
+                  { path: 'staying-safe', element: <StayingSafe /> },
+                  { path: 'hiking-essentials', element: <HikingEssentials /> },
+                  {
+                    path: 'bucket-list',
+                    element: <BucketList showAddress={true} />,
+                  },
+                  {
+                    path: 'my-notes',
+                    children: [
+                      { index: true, element: <MyNotes /> },
+                      { path: 'general-notes', element: <EditGeneralNotes /> },
+                    ],
+                  },
                 ],
               },
             ],
