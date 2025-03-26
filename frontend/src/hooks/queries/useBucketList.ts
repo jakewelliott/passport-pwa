@@ -1,6 +1,8 @@
+import { dbg } from '@/lib/debug';
 import { API_BUCKET_LIST_URL, API_COMPLETED_BUCKET_LIST_ITEMS_URL, fetchGet, fetchPost } from '@/lib/fetch';
 import type { BucketListCompletion, BucketListItem } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 import { useLocation } from '../useLocation';
 
 /** Gets all bucket list items for all parks */
@@ -28,8 +30,16 @@ const useToggleCompletion = () => {
     const { refetch } = useCompletedBucketListItems();
     const { geopoint } = useLocation();
 
+    const mutationFn = (itemId: number) => {
+        dbg('MUTATE', 'toggleCompletion', { itemId, geopoint });
+        if (geopoint === null) {
+            toast.error('Location must be enabled to toggle completion');
+        }
+        return fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, { geopoint: geopoint });
+    };
+
     return useMutation({
-        mutationFn: (itemId: number) => fetchPost(`${API_BUCKET_LIST_URL}/${itemId}`, { geopoint: geopoint }),
+        mutationFn: mutationFn,
         onSuccess: () => refetch(),
     });
 };
