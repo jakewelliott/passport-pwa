@@ -37,7 +37,7 @@ export const GenericIcon = ({
 }: GenericIconProps) => {
     const Icon = GENERIC_ICONS[name];
     return (
-        <div className={cn('flex flex-row items-center gap-2', `h-${size}`, `text-${color}`)}>
+        <div className={cn('flex h-fit flex-row items-center gap-2', `text-${color}`)}>
             <div className='aspect-square'>
                 <Icon {...props} />
             </div>
