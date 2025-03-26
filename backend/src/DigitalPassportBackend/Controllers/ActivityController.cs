@@ -48,7 +48,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     public IActionResult CreateUpdateNote(int parkId, [FromBody] PrivateNoteRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(parkId, userId, req.note, req.updatedAt)));
+        return Ok(PrivateNoteResponse.FromDomain(_activityService.CreateUpdatePrivateNote(userId, parkId, req.note, req.updatedAt)));
     }
 
     [HttpGet("notes/{parkId}")]
@@ -56,7 +56,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     public IActionResult GetParkNote(int parkId)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(PrivateNoteResponse.FromDomain(_activityService.GetParkNote(parkId, userId)));
+        return Ok(PrivateNoteResponse.FromDomain(_activityService.GetParkNote(userId, parkId)));
     }
 
     [HttpGet("notes")]
@@ -192,11 +192,11 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     {
     }
 
-    public record PrivateNoteResponse(string parkAbbreviation, string note, DateTime updatedAt)
+    public record PrivateNoteResponse(int parkId, string note, DateTime updatedAt)
     {
         public static PrivateNoteResponse FromDomain(PrivateNote note)
         {
-            return new PrivateNoteResponse(note.park != null ? note.park.parkAbbreviation : "generalNotes", note.note, note.updatedAt);
+            return new PrivateNoteResponse(note.park != null ? note.park.id : 0, note.note, note.updatedAt);
         }
     }
 

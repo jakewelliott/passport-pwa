@@ -14,10 +14,20 @@ import { useQuery } from '@tanstack/react-query';
 // - error: the error returned from the query
 
 export const useParks = () => {
-    return useQuery<Park[]>({
+    const query = useQuery<Park[]>({
         queryKey: ['parks'],
         queryFn: async () => await fetchGet(API_PARKS_URL),
     });
+
+    const parkIdToAbbreviation = (parkId: number) => {
+        return query.data?.find((park) => park.id === parkId)?.abbreviation;
+    };
+
+    const parkAbbreviationToId = (parkAbbreviation: string) => {
+        return query.data?.find((park) => park.abbreviation === parkAbbreviation)?.id;
+    };
+
+    return { ...query, parkIdToAbbreviation, parkAbbreviationToId };
 };
 
 export const usePark = (parkAbbreviation: string) => {

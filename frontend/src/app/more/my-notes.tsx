@@ -3,6 +3,7 @@ import { useGetAllNotes } from '@/hooks/queries/useNotes';
 import { useParks } from '@/hooks/queries/useParks';
 import { a11yOnClick } from '@/lib/a11y';
 import dateHelper from '@/lib/date-helper';
+import { dbg } from '@/lib/debug';
 import type { ParkNote } from '@/types';
 import { type NavigateFunction, useNavigate } from 'react-router-dom';
 import ListRow from '../../components/list-row';
@@ -18,11 +19,14 @@ const NoteRow = ({
     note: ParkNote;
     navigate: NavigateFunction;
 }) => {
-    const { data: parks } = useParks();
-    console.log(parks);
+    const { data: parks, parkIdToAbbreviation } = useParks();
+
+    dbg('RENDER', 'NoteRow', note);
+    dbg('RENDER', 'NoteRow parks', parks);
+
     const navigateTo = isGeneralNote(note)
         ? '/more/my-notes/general-notes'
-        : `/locations/${parks?.find((x) => x.id === note.parkId)?.abbreviation}?tab=notes`;
+        : `/locations/${parkIdToAbbreviation(note.parkId)}?tab=notes`;
 
     const title = isGeneralNote(note) ? 'General Notes' : parks?.find((x) => x.id === note.parkId)?.parkName;
 

@@ -82,11 +82,12 @@ public class ActivityService(
         return _collectedStampRepository.GetByUser(userId);
     }
 
-    public PrivateNote CreateUpdatePrivateNote(int parkId, int userId, string note, DateTime updatedAt)
+    public PrivateNote CreateUpdatePrivateNote(int userId, int parkId, string note, DateTime updatedAt)
     {
         // Check if there is already a note in the database.
         var locationId = parkId == 0 ? 0 : _locationsRepository.GetById(parkId).id;
-        var privateNote = _privateNoteRepository.GetByParkAndUser(locationId, userId);
+				// TODO: handle the case with an invalid parkId??
+        var privateNote = _privateNoteRepository.GetByParkAndUser(userId, locationId);
         if (privateNote != null)
         {
             // Update it
@@ -191,12 +192,12 @@ public class ActivityService(
         return _parkVisitRepository.GetAllByUser(userId);
     }
 
-    public PrivateNote GetParkNote(int parkId, int userId)
+    public PrivateNote GetParkNote(int userId, int parkId)
     {
-        var note = _privateNoteRepository.GetByParkAndUser(parkId, userId);
+        var note = _privateNoteRepository.GetByParkAndUser(userId, parkId);
         if (note == null)
         {
-            note = CreateUpdatePrivateNote(parkId, userId, "", DateTime.UtcNow);
+            note = CreateUpdatePrivateNote(userId, parkId, "", DateTime.UtcNow);
         }
         note.parkId = parkId;
         return note;
