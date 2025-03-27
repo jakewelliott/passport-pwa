@@ -5,7 +5,7 @@ import { TrailIcon, TrailIcons } from '../trail-icons';
 
 describe('TrailIcon', () => {
     it('renders with default props', () => {
-        render(<TrailIcon iconName={mockTrail.icons[0]} />);
+        render(<TrailIcon iconName={mockTrail.icons?.[0]} />);
         const img = screen.getByAltText('Hiking');
         expect(img).toBeInTheDocument();
         expect(img.parentElement).toHaveStyle({ height: '48px', width: '48px' });
