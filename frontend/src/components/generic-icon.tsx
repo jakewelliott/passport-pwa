@@ -25,6 +25,7 @@ export interface GenericIconProps {
     color?: string;
     text?: string;
     textClassName?: string;
+    testId?: string;
 }
 
 export const GenericIcon = ({
@@ -34,11 +35,12 @@ export const GenericIcon = ({
     color = 'supporting_inactiveblue',
     text,
     textClassName,
+    testId,
 }: GenericIconProps) => {
     const Icon = GENERIC_ICONS[name];
     return (
         <div className={cn('flex h-fit flex-row items-center gap-2', `text-${color}`)}>
-            <div className='aspect-square'>
+            <div className='aspect-square' data-testid={testId}>
                 <Icon {...props} />
             </div>
             {text && <p className={textClassName}>{text}</p>}

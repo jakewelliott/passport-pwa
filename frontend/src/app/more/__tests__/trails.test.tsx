@@ -1,6 +1,6 @@
 import { Trails } from '@/app/more/trails';
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 describe('Trails Component - User Stories', () => {
     // TODO: fix - test doesn't match actual component content
@@ -19,11 +19,7 @@ describe('Trails Component - User Stories', () => {
 
     // User Story: As a user, I want to understand trail ratings
     it('should explain trail ratings', () => {
-        render(
-            <BrowserRouter>
-                <Trails />
-            </BrowserRouter>,
-        );
+        renderWithClient(<Trails />);
 
         expect(screen.getByText(/Dan River State Trail/i)).toBeInTheDocument();
         expect(screen.getByText(/Deep River State Trail/i)).toBeInTheDocument();
@@ -31,11 +27,7 @@ describe('Trails Component - User Stories', () => {
     });
 
     it('should explain trail difficulty', () => {
-        render(
-            <BrowserRouter>
-                <Trails />
-            </BrowserRouter>,
-        );
+        renderWithClient(<Trails />);
 
         expect(screen.getByText(/90 miles/i)).toBeInTheDocument();
         expect(screen.getByText(/125 miles/i)).toBeInTheDocument();
@@ -44,11 +36,7 @@ describe('Trails Component - User Stories', () => {
 
     // User Story: As a user, I want to learn about trail safety
     it('should provide trail safety information', () => {
-        render(
-            <BrowserRouter>
-                <Trails />
-            </BrowserRouter>,
-        );
+        renderWithClient(<Trails />);
 
         expect(screen.getByText(/For maps and additional information/i)).toBeInTheDocument();
         expect(screen.getByText(/trails.nc.gov\/state-trails/i)).toBeInTheDocument();
@@ -56,11 +44,7 @@ describe('Trails Component - User Stories', () => {
 
     // User Story: As a user, I want to understand trail accessibility
     it('should display accessibility information', () => {
-        render(
-            <BrowserRouter>
-                <Trails />
-            </BrowserRouter>,
-        );
+        renderWithClient(<Trails />);
 
         expect(screen.getByText(/Dan River State Trail/i)).toBeInTheDocument();
         expect(screen.getByText(/90 miles/i)).toBeInTheDocument();
@@ -69,11 +53,7 @@ describe('Trails Component - User Stories', () => {
 
     // User Story: As a user, I want to learn about trail etiquette
     it('should provide trail etiquette guidelines', () => {
-        render(
-            <BrowserRouter>
-                <Trails />
-            </BrowserRouter>,
-        );
+        renderWithClient(<Trails />);
 
         expect(screen.getByText(/For maps and additional information/i)).toBeInTheDocument();
         expect(screen.getByText(/trails.nc.gov\/state-trails/i)).toBeInTheDocument();

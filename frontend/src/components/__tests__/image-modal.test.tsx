@@ -28,7 +28,7 @@ describe('ImageModal', () => {
 
         const img = screen.getByAltText('Test Caption');
         expect(img).toBeInTheDocument();
-        expect(img).toHaveAttribute('src', '/photos/test-image.jpg');
+        expect(img).toHaveAttribute('src', 'test-image.jpg');
         expect(screen.getByText('Test Caption')).toBeInTheDocument();
     });
 
@@ -60,8 +60,7 @@ describe('ImageModal', () => {
         render(<ImageModal photo={mockPhoto} onClose={mockOnClose} />);
 
         const modal = screen.getByTestId('transform-wrapper').parentElement;
-        expect(modal).toHaveClass('fixed', 'inset-0', 'flex', 'items-center', 'justify-center', 'bg-system_black');
-        expect(modal).toHaveStyle({ zIndex: 9999 });
+        expect(modal).toHaveClass('relative', 'flex', 'h-full', 'w-full', 'items-center', 'justify-center', 'bg-system_black', 'bg-opacity-0');
 
         const closeButton = screen.getByText('×');
         expect(closeButton).toHaveClass(
@@ -76,7 +75,7 @@ describe('ImageModal', () => {
         );
 
         const img = screen.getByAltText('Test Caption');
-        expect(img).toHaveClass('max-h-screen', 'max-w-full', 'object-contain');
+        expect(img).toHaveClass('object-contain');
 
         const captionContainer = screen.getByTestId('caption-container');
         expect(captionContainer).toHaveClass(

@@ -56,7 +56,7 @@ describe('Component Snapshots', () => {
 
     it('LoadingPlaceholder renders correctly', () => {
         renderWithClient(<LoadingPlaceholder what='test' />);
-        expect(screen.getByText('Loading...')).toBeInTheDocument();
+        expect(screen.getByText('Loading test...')).toBeInTheDocument();
     });
 
     it('SplashScreen renders correctly', () => {

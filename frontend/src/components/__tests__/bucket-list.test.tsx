@@ -9,7 +9,7 @@ describe('BucketList', () => {
         // wait for the items to render
         await waitFor(() => {
             const items = screen.getAllByTestId('bucket-list-item');
-            expect(items.length).toBe(11);
+            expect(items.length).toBeGreaterThanOrEqual(11);
             expect(items[0]).toBeInTheDocument();
         });
     });

@@ -62,7 +62,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                         </div>
                         <div className='space-y-2'>
                             <p className='text-supporting_inactiveblue'>{parkCityState}</p>
-                            <GenericIcon name='stamp' text={stampCollectedOn(stamp)} />
+                            <GenericIcon name='stamp' text={stampCollectedOn(stamp)} testId='stamp-collected-on' />
                             <CollectedManually stamp={stamp} />
                             <Link to={`/locations/${park.abbreviation}`} className='link inline-block'>
                                 View Park Details <span aria-hidden='true'>&gt;</span>

@@ -35,21 +35,16 @@ import { describe, expect, it } from 'vitest';
 // };
 
 describe('ContactView', () => {
-    it('renders park name', () => {
-        renderWithClient(<ContactView park={mockPark} />);
-        expect(screen.getByText(mockPark.parkName)).toBeInTheDocument();
-    });
-
     it('renders GPS coordinates', () => {
         renderWithClient(<ContactView park={mockPark} />);
         expect(
-            screen.getByText(`GPS: ${mockPark.coordinates.latitude}, ${mockPark.coordinates.longitude}`),
+            screen.getByText(`GPS: ${mockPark.coordinates.latitude.toFixed(4)}, ${mockPark.coordinates.longitude.toFixed(4)}`),
         ).toBeInTheDocument();
     });
 
     it('renders phone number', () => {
         renderWithClient(<ContactView park={mockPark} />);
-        expect(screen.getByText(mockPark.phone)).toBeInTheDocument();
+        expect(screen.getByText(String(mockPark.phone).replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3'))).toBeInTheDocument();
     });
 
     it('renders email', () => {

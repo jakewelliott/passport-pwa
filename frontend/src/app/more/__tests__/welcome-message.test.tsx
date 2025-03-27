@@ -8,7 +8,7 @@ describe('WelcomeMessage Component', () => {
 
         const title = screen.getByText('WELCOME!');
         expect(title).toBeInTheDocument();
-        expect(title).toHaveClass('break-words', 'text-center', 'text-main_green');
+        expect(title).toHaveClass('inline-block', 'w-full', 'text-[length:min(64px,_calc(100vw_/_7))]');
     });
 
     it('renders all paragraphs correctly', () => {

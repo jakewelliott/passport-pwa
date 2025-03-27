@@ -21,12 +21,6 @@ export const BucketList = ({ parkId, showAddress: showParkName = false }: Bucket
                 <LoadingPlaceholder />
             </div>
         );
-    if (isLoading || !items)
-        return (
-            <div className='m-6 flex flex-col'>
-                <LoadingPlaceholder />
-            </div>
-        );
 
     const parkNameHelper = (item: BucketListItem) => {
         const park = parks?.find((park) => park.id === item.parkId);
@@ -46,7 +40,7 @@ export const BucketList = ({ parkId, showAddress: showParkName = false }: Bucket
                     completion={completedHelper(item)}
                     handler={() => toggleCompletion(item.id)}
                     address={showParkName ? parkNameHelper(item) : undefined}
-                    data-testid={'bucket-list-item'}
+                    testId={'bucket-list-item'}
                 />
             ))}
         </div>
