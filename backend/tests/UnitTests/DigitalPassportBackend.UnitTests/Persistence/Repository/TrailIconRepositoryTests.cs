@@ -110,6 +110,27 @@ public class TrailIconRepositoryTests
         Assert.Contains(NewTrailIcon, _db.TrailIcons);
     }
 
+    [Fact]
+    public void GetByTrailId_ReturnsTrailIcon_WhenTrailExists()
+    {
+        // Action.
+        var item = _repo.GetByTrailId(TestData.Trails[1].id);
+
+        // Assert.
+        Assert.Single(item);
+        Assert.Equal(TestData.TrailIcons[1], item[0]);
+    }
+
+    [Fact]
+    public void GetByTrailId_ReturnsEmptyList_WhenTrailDNE()
+    {
+        // Action.
+        var item = _repo.GetByTrailId(-1);
+
+        // Assert.
+        Assert.Equal(new List<TrailIcon>(), item);
+    }
+
     private static readonly TrailIcon NewTrailIcon = new()
     {
         id = 100,

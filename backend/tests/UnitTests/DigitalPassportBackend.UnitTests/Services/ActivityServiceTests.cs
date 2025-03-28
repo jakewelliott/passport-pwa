@@ -310,9 +310,6 @@ namespace DigitalPassportBackend.UnitTests.Services
         [Fact]
         public void CreateUpdatePrivateNote_ReturnsNote_WhenNoteExists()
         {
-            // Refresh mock
-            _mockPrivateNotes.Reset();
-
             // Setup.
             var time = DateTime.UtcNow;
             var expected = TestData.PrivateNotes[0];

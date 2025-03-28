@@ -8,6 +8,7 @@ using static DigitalPassportBackend.Controllers.LocationsController;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.UnitTests.TestUtils;
 using Microsoft.AspNetCore.Http;
+using Microsoft.OpenApi.Extensions;
 
 namespace DigitalPassportBackend.UnitTests.Controllers;
 public class LocationsControllerTests
@@ -89,11 +90,38 @@ public class LocationsControllerTests
         // Act
         var result = _controller.GetAll();
 
-
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
         var returnedLocations = Assert.IsType<List<LocationResponse>>(okResult.Value);
         Assert.Empty(returnedLocations);
+    }
+
+    [Fact]
+    public void GetAllTrails_ReturnsAllTrails_WhenTrailsExist()
+    {
+        // Setup
+        _mockLocationsService.Setup(s => s.GetAllTrails())
+            .Returns(TestData.Trails);
+        SetupTrails(TestData.Trails[0]);
+        SetupTrails(TestData.Trails[1]);
+        SetupTrails(TestData.Trails[2]);
+        SetupTrails(TestData.Trails[3]);
+
+        // Action
+        var result = _controller.GetAllTrails();
+
+        // Assert.
+        var okResult = Assert.IsType<OkObjectResult>(result);
+        var list = Assert.IsAssignableFrom<IEnumerable<TrailResponse>>(okResult.Value);
+
+        int counter = 0;
+        foreach (var trail in list) {
+            List<TrailIcon> icons = new List<TrailIcon> { TestData.TrailIcons[counter] };
+            List<String> iconStrings = icons.Select(i => i.icon.GetDisplayName()).ToList();
+
+            Assert.True(Response.Equal(iconStrings, TestData.Trails[counter], trail));
+            counter++;
+        }
     }
 
     [Fact]
@@ -163,6 +191,14 @@ public class LocationsControllerTests
         var okResult = Assert.IsType<OkObjectResult>(result);
         var list = Assert.IsType<List<LocationGeoDataResponse>>(okResult.Value);
         Assert.Empty(list);
+    }
+
+    private List<TrailIcon> SetupTrails(Trail trail)
+    {
+        var icons = TestData.TrailIcons.Where(t => t.trail == trail).ToList();
+        _mockLocationsService.Setup(s => s.GetTrailIcons(trail.id))
+            .Returns(icons);
+        return icons;
     }
 
     private void SetupLocation(Park park)

@@ -16,6 +16,15 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class Response
 {
+    public static bool Equal(List<String> expectedIcons, Trail expected, TrailResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.trailName == actual.trailName
+            && expected.length == actual.distance
+            && expected.description == actual.description
+            && expectedIcons.SequenceEqual(actual.icons);
+    }
+
     public static bool Equal(ParkVisit expected, ParkVisitResponse actual)
     {
         return expected.id == actual.id
