@@ -1,4 +1,3 @@
-using System;
 using System.Security.Claims;
 using DigitalPassportBackend.Controllers;
 using DigitalPassportBackend.Domain;
@@ -7,7 +6,6 @@ using DigitalPassportBackend.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Xunit;
 
 namespace DigitalPassportBackend.UnitTests.Controllers
 {
@@ -71,14 +69,14 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void Register_NullLoginDto_ThrowsNullReferenceException()
         {
             // Act & Assert
-            Assert.Throws<NullReferenceException>(() => _controller.Register(null));
+            Assert.Throws<NullReferenceException>(() => _controller.Register(null!));
         }
 
         [Fact]
         public void Register_NullUsername_ThrowsArgumentNullException()
         {
             // Arrange
-            var dto = new LoginDto { username = null, password = "password" };
+            var dto = new LoginDto { username = null!, password = "password" };
             _mockAuthService.Setup(s => s.RegisterUser(It.IsAny<User>())).Returns("token");
 
             // Act & Assert
@@ -89,7 +87,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void Register_NullPassword_ThrowsArgumentNullException()
         {
             // Arrange
-            var dto = new LoginDto { username = "heyy", password = null };
+            var dto = new LoginDto { username = "heyy", password = null! };
             _mockAuthService.Setup(s => s.RegisterUser(It.IsAny<User>())).Returns("token");
 
             // Act & Assert
@@ -142,14 +140,14 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void Login_NullLoginDto_ThrowsArgumentNullException()
         {
             // Act & Assert
-            Assert.Throws<NullReferenceException>(() => _controller.Login(null));
+            Assert.Throws<NullReferenceException>(() => _controller.Login(null!));
         }
 
         [Fact]
         public void Login_NullUsername_ReturnsOkResult()
         {
             // Arrange
-            var dto = new LoginDto { username = null, password = "password" };
+            var dto = new LoginDto { username = null!, password = "password" };
             _mockAuthService.Setup(s => s.LoginUser(It.IsAny<User>())).Returns("token");
 
             // Act & Assert
@@ -160,7 +158,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void Login_NullPassword_ReturnsOkResult()
         {
             // Arrange
-            var dto = new LoginDto { username = "heyy", password = null };
+            var dto = new LoginDto { username = "heyy", password = null! };
             _mockAuthService.Setup(s => s.LoginUser(It.IsAny<User>())).Returns("token");
 
             // Act & Assert

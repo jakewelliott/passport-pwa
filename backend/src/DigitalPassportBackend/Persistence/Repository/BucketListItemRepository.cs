@@ -14,6 +14,11 @@ public class BucketListItemRepository(DigitalPassportDbContext digitalPassportDb
         return _digitalPassportDbContext.BucketListItems.Where(b => b.parkId.Equals(locationId)).ToList();
     }
 
+    public List<BucketListItem> GetAll()
+    {
+        return _digitalPassportDbContext.BucketListItems.ToList();
+    }
+
     public BucketListItem GetById(int id)
     {
         var result = _digitalPassportDbContext.BucketListItems.Where(a => a.id.Equals(id)).SingleOrDefault();

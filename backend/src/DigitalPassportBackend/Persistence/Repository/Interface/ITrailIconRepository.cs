@@ -5,5 +5,5 @@ namespace DigitalPassportBackend.Persistence.Repository;
 
 public interface ITrailIconRepository : IRepository<TrailIcon>
 {
-    // Add any specific methods for PrivateNote repository here
+    List<TrailIcon> GetByTrailId(int trailId);
 }

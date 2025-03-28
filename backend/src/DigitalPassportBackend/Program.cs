@@ -1,21 +1,24 @@
 using DigitalPassportBackend.Persistence.Database;
 using DigitalPassportBackend.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using DigitalPassportBackend;
 using Microsoft.AspNetCore.Diagnostics;
 using DigitalPassportBackend.Errors;
-using DigitalPassportBackend.Security;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Physical;
 
 const string corsPolicyName = "AllowSpecificOrigins";
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    var root = Directory.GetCurrentDirectory();
-    var dotenv = Path.Combine(root, builder.Environment.IsDevelopment() ? "../../../.env" : ".env");
-    DotEnv.Load(dotenv);
-    builder.Configuration.AddEnvironmentVariables();
-
-    
+    builder.Configuration
+        .AddIniFile(
+            new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(),
+                    builder.Environment.IsDevelopment() ? "../../../" : ""),
+                ExclusionFilters.None),
+            ".env",
+            false,
+            true);
 
     // configure services (DI)
     builder.Services
@@ -66,7 +69,7 @@ var app = builder.Build();
     }
 
     app.UseCors(corsPolicyName);
-
+    app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
 

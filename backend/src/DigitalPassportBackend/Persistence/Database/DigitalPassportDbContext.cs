@@ -18,6 +18,18 @@ public class DigitalPassportDbContext : DbContext
         _configuration = configuration;
     }
 
+    public override int SaveChanges()
+    {
+        // Update updatedAt.
+        var modified = ChangeTracker
+            .Entries<IEntity>()
+            .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
+        foreach (var e in modified)
+        {
+            e.Property(e => e.updatedAt).CurrentValue = DateTime.UtcNow;
+        }
+        return base.SaveChanges();
+    }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,8 +42,11 @@ public class DigitalPassportDbContext : DbContext
             .ToList()
             .ForEach(p =>
             {
-                p.SetColumnType("varchar(255)");
-                p.SetMaxLength(255);
+                if (p.GetColumnType() != "longtext")
+                {
+                    p.SetColumnType("varchar(255)");
+                    p.SetMaxLength(255);
+                }
             });
 
         var hashedAdminPassword = new PasswordHasher().HashPassword(_configuration["ADMIN_PASS"]!);
@@ -39,9 +54,20 @@ public class DigitalPassportDbContext : DbContext
         modelBuilder.Entity<User>().HasData(new User
         {
             id = 1,
-            username = "superAdmin",
+            username = _configuration["ADMIN_USER"]!,
             password = hashedAdminPassword,
             role = UserRole.admin,
+            createdAt = DateTime.UtcNow,
+        });
+
+        var hashedVisitorPassword = new PasswordHasher().HashPassword(_configuration["TEST_PASS"]!);
+
+        modelBuilder.Entity<User>().HasData(new User
+        {
+            id = 2,
+            username = _configuration["TEST_USER"]!,
+            password = hashedVisitorPassword,
+            role = UserRole.visitor,
             createdAt = DateTime.UtcNow,
         });
     }

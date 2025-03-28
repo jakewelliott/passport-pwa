@@ -131,4 +131,13 @@ body {
   .green-text {
     @apply text-main_green;
   }
+
+  .no-scrolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

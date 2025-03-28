@@ -1,118 +1,95 @@
-import { render } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import TabBar from '../tab-bar';
-import RoundedButton from '../rounded-button';
-import { LoadingPlaceholder } from '../loading-placeholder';
-import { SplashScreen } from '../splash-screen';
-import { ImageModal } from '../image-modal';
+import { trails } from '@/lib/testing/mock/tables';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { screen } from '@testing-library/react';
+import { describe, expect, it, vi } from 'vitest';
 import Header from '../header';
-import { TrailIcons } from '../trail-icons';
+import { ImageModal } from '../image-modal';
 import ListRow from '../list-row';
+import { LoadingPlaceholder } from '../loading-placeholder';
 import { PassportHeader } from '../passport-header';
+import RoundedButton from '../rounded-button';
+import { SplashScreenView } from '../splash-screen-view';
+import TabBar from '../tab-bar';
+import { TrailIcons } from '../trail-icons';
+
+const mockTrail = trails[0];
 
 // Mock ResizeObserver
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
-	observe: jest.fn(),
-	unobserve: jest.fn(),
-	disconnect: jest.fn(),
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+    observe: vi.fn(),
+    unobserve: vi.fn(),
+    disconnect: vi.fn(),
 }));
 
-// Mock the useUser hook
-jest.mock('@/hooks/queries/useUser', () => ({
-	useUser: () => ({
-		data: { role: 'visitor' },
-		isLoading: false
-	})
-}));
+// // Mock the useUser hook
+// vi.mock('@/hooks/queries/useUser', () => ({
+// 	vi.mock('@/hooks/queries/useUser', () => ({
+// 		useUser: () => ({
+// 			data: { role: 'visitor' },
+// 			isLoading: false,
+// 		}),
+// 		isLoading: false,
+// 	}),
+// }))
 
-// Mock the usePageTitle hook
-jest.mock('@/hooks/usePageTitle', () => ({
-	usePageTitle: () => ({
-		pageTitle: 'Test Title',
-		showBackButton: true
-	})
-}));
+// // Mock the usePageTitle hook
+// vi.mock('@/hooks/usePageTitle', () => ({
+// 	vi.mock('@/hooks/usePageTitle', () => ({
+// 		usePageTitle: () => ({
+// 			pageTitle: 'Test Title',
+// 			showBackButton: true,
+// 		}),
+// 		showBackButton: true,
+// 	}),
+// }))
 
 describe('Component Snapshots', () => {
-	it('TabBar renders correctly', () => {
-		const { container } = render(
-			<BrowserRouter>
-				<TabBar />
-			</BrowserRouter>
-		);
-		expect(container).toMatchSnapshot();
-	});
+    it('TabBar renders correctly', () => {
+        renderWithClient(<TabBar />);
+        expect(screen.getByText('Locations')).toBeInTheDocument();
+    });
 
-	it('RoundedButton renders correctly', () => {
-		const { container } = render(
-			<RoundedButton
-				title="Test Button"
-				color="secondary_darkteal"
-			/>
-		);
-		expect(container).toMatchSnapshot();
-	});
+    it('RoundedButton renders correctly', () => {
+        renderWithClient(<RoundedButton title='Test Button' color='secondary_darkteal' />);
+        expect(screen.getByText('Test Button')).toBeInTheDocument();
+    });
 
-	it('LoadingPlaceholder renders correctly', () => {
-		const { container } = render(<LoadingPlaceholder what="test" />);
-		expect(container).toMatchSnapshot();
-	});
+    it('LoadingPlaceholder renders correctly', () => {
+        renderWithClient(<LoadingPlaceholder what='test' />);
+        expect(screen.getByText('Loading test...')).toBeInTheDocument();
+    });
 
-	it('SplashScreen renders correctly', () => {
-		const { container } = render(<SplashScreen />);
-		expect(container).toMatchSnapshot();
-	});
+    it('SplashScreen renders correctly', () => {
+        renderWithClient(<SplashScreenView />);
+        expect(screen.getByText('Loading...')).toBeInTheDocument();
+    });
 
-	it('ImageModal renders correctly', () => {
+    it('ImageModal renders correctly', () => {
+        renderWithClient(<ImageModal photo={{ photo: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />);
+        expect(screen.getByText('Test Image')).toBeInTheDocument();
+    });
 
+    it('Header renders correctly', () => {
+        renderWithClient(<Header />);
+        expect(screen.getByText('Locations')).toBeInTheDocument();
+    });
 
-		const { container } = render(
-			<ImageModal
-				photo={{ url: 'test.jpg', caption: 'Test Image' }}
-				onClose={() => { }}
-			/>
-		);
-		expect(container).toMatchSnapshot();
-	});
+    it('TrailIcons renders correctly', () => {
+        renderWithClient(<TrailIcons trail={mockTrail} size='md' showText={true} />);
+        expect(screen.getByText('Trail')).toBeInTheDocument();
+    });
 
-	it('Header renders correctly', () => {
-		const { container } = render(
-			<BrowserRouter>
-				<Header />
-			</BrowserRouter>
-		);
-		expect(container).toMatchSnapshot();
-	});
+    it('ListRow renders correctly', () => {
+        renderWithClient(
+            <ListRow>
+                <div>Test List Row</div>
+            </ListRow>,
+        );
+        expect(screen.getByText('Test List Row')).toBeInTheDocument();
+    });
 
-	it('TrailIcons renders correctly', () => {
-		const mockTrail = {
-			trailName: 'Test Trail',
-			trailIcons: ['Hiking-Red', 'Camping-Green'],
-			distance: '2.5 miles',
-			description: 'A test trail'
-		};
-
-		const { container } = render(
-			<TrailIcons
-				trail={mockTrail}
-				size="md"
-				showText={true}
-			/>
-		);
-		expect(container).toMatchSnapshot();
-	});
-
-	it('ListRow renders correctly', () => {
-		const { container } = render(
-			<ListRow>
-				<div>Test List Row</div>
-			</ListRow>
-		);
-		expect(container).toMatchSnapshot();
-	});
-
-	it('PassportHeader renders correctly', () => {
-		const { container } = render(<PassportHeader />);
-		expect(container).toMatchSnapshot();
-	});
-}); 
+    it('PassportHeader renders correctly', () => {
+        renderWithClient(<PassportHeader />);
+        expect(screen.getByText('Locations')).toBeInTheDocument();
+    });
+});

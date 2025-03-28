@@ -44,4 +44,19 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public List<CompletedBucketListItem> GetByParkAndUser(int locationId, int userId)
+    {
+        return _digitalPassportDbContext.CompletedBucketListItems.Where(s => s.parkId == locationId && s.userId == userId).ToList();
+    }
+
+    public List<CompletedBucketListItem> GetByUser(int userId)
+    {
+        return _digitalPassportDbContext.CompletedBucketListItems.Where(s => s.userId == userId).ToList();
+    }
+
+    public CompletedBucketListItem? GetByItemAndUser(int itemId, int userId)
+    {
+        return _digitalPassportDbContext.CompletedBucketListItems.Where(s => s.bucketListItemId == itemId && s.userId == userId).SingleOrDefault();
+    }
 }

@@ -4,5 +4,7 @@ namespace DigitalPassportBackend.Persistence.Repository;
 
 public interface IParkVisitRepository : IRepository<ParkVisit>
 {
-    // Add any specific methods for ParkVisit repository here
+    List<ParkVisit> GetByParkAndUser(int locationId, int userId);
+    List<ParkVisit> GetAllByUser(int userId);
+		ParkVisit? GetParkVisitToday(int userId, int parkId);
 }

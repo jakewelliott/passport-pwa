@@ -108,19 +108,23 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("bucket_list_item");
 
-                    b.Property<DateTime>("created_at")
+                    b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
+
+                    b.Property<bool>("deleted")
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("deleted");
 
                     b.Property<Point>("location")
                         .IsRequired()
                         .HasColumnType("point");
 
-                    b.Property<int>("parkId")
+                    b.Property<int?>("parkId")
                         .HasColumnType("int")
                         .HasColumnName("park");
 
-                    b.Property<DateTime>("updated_at")
+                    b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
@@ -148,11 +152,10 @@ namespace DigitalPassportBackend.Migrations
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
                     b.Property<string>("accesses")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
-                    b.Property<Polygon>("boundaries")
-                        .HasColumnType("polygon");
+                    b.Property<GeometryCollection>("boundaries")
+                        .HasColumnType("GEOMETRYCOLLECTION");
 
                     b.Property<string>("city")
                         .HasMaxLength(255)
@@ -175,8 +178,7 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnName("established_year");
 
                     b.Property<string>("landmark")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("parkAbbreviation")
                         .IsRequired()
@@ -204,8 +206,7 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnName("stamp_image");
 
                     b.Property<string>("trails")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime(6)")
@@ -217,8 +218,7 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnType("varchar(255)");
 
                     b.Property<string>("youCanFind")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)")
+                        .HasColumnType("longtext")
                         .HasColumnName("you_can_find");
 
                     b.HasKey("id");
@@ -250,7 +250,7 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("created_at")
+                    b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
@@ -267,7 +267,7 @@ namespace DigitalPassportBackend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<DateTime>("updated_at")
+                    b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
@@ -289,7 +289,7 @@ namespace DigitalPassportBackend.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateTime>("created_at")
+                    b.Property<DateTime>("createdAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
@@ -301,7 +301,7 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("park");
 
-                    b.Property<DateTime>("updated_at")
+                    b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
 
@@ -361,6 +361,10 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnType("datetime(6)")
                         .HasColumnName("created_at");
 
+                    b.Property<Point>("location")
+                        .IsRequired()
+                        .HasColumnType("point");
+
                     b.Property<int>("parkId")
                         .HasColumnType("int")
                         .HasColumnName("park");
@@ -396,8 +400,7 @@ namespace DigitalPassportBackend.Migrations
 
                     b.Property<string>("note")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<int?>("parkId")
                         .HasColumnType("int")
@@ -434,12 +437,12 @@ namespace DigitalPassportBackend.Migrations
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("length")
                         .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("length");
 
                     b.Property<string>("trailName")
                         .IsRequired()
@@ -525,11 +528,20 @@ namespace DigitalPassportBackend.Migrations
                         new
                         {
                             id = 1,
-                            createdAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
-                            password = "10000.W8QErvwJ94AvgfYwFpWiVw==.NBzuowM3sOx7dBKmq35kI6UZaZAR3ZLN44ehkZMcN1w=",
+                            createdAt = new DateTime(2025, 3, 26, 18, 46, 53, 29, DateTimeKind.Utc).AddTicks(710),
+                            password = "10000.Djzl362OL0d24wpTrraO+A==.6LmG9N8CY7ZdZSU9gzMDbO4prHs4PVvFFUvZgLcThxA=",
                             role = "admin",
-                            updatedAt = new DateTime(2025, 2, 10, 0, 1, 48, 361, DateTimeKind.Utc).AddTicks(4130),
+                            updatedAt = new DateTime(2025, 3, 26, 18, 46, 53, 29, DateTimeKind.Utc).AddTicks(700),
                             username = "superAdmin"
+                        },
+                        new
+                        {
+                            id = 2,
+                            createdAt = new DateTime(2025, 3, 26, 18, 46, 53, 35, DateTimeKind.Utc).AddTicks(8540),
+                            password = "10000.+pauWaD7luEjnPyAHFEl1Q==.IYy48oeQ2UBBbDEMnuadDLI1Bp/Xjsmcyn+KICtI1Fk=",
+                            role = "visitor",
+                            updatedAt = new DateTime(2025, 3, 26, 18, 46, 53, 35, DateTimeKind.Utc).AddTicks(8540),
+                            username = "testUser"
                         });
                 });
 
@@ -571,9 +583,7 @@ namespace DigitalPassportBackend.Migrations
 
                     b.HasOne("DigitalPassportBackend.Domain.Park", "park")
                         .WithMany()
-                        .HasForeignKey("parkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("parkId");
 
                     b.HasOne("DigitalPassportBackend.Domain.User", "user")
                         .WithMany()

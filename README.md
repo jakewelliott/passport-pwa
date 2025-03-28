@@ -1,3 +1,15 @@
+# ITERATION 4
+
+## Added npm scripts to run the frontend and backend locally
+
+```bash
+npm run frontend
+npm run backend
+```
+
+Make sure you `npm install` in frontend first.
+
+
 # Frontend: /frontend
 
 ## Getting Started

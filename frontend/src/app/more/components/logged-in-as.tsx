@@ -1,18 +1,19 @@
-import { useUser } from "@/hooks/queries/useUser";
-import { useLogout } from "@/hooks/auth/useLogout";
+import { useUser } from '@/hooks/queries/useUser';
+import { useNavigate } from 'react-router-dom';
 
 export const LoggedInAs = () => {
-	const { data: user } = useUser();
-	const logout = useLogout();
+    const { data: user } = useUser();
+    const navigate = useNavigate();
 
-	// ADAM: jake, this component won't render if the user is not logged in. just leave this here for now pls. im so tired.
-	const message = user?.username ? `You are currently logged in as '${user.username}'` : 'You are not logged in';
+    const message = user?.username ? `You are currently logged in as '${user.username}'` : 'You are not logged in';
 
-	return (
-		<div className='text-center'>
-			{message}
-			<br />
-			<button className='link' onClick={() => logout()} type='button'>Log out</button>
-		</div>
-	);
+    return (
+        <div className='text-center'>
+            {message}
+            <br />
+            <button className='link' onClick={() => navigate('/logout')} type='button'>
+                Log out
+            </button>
+        </div>
+    );
 };

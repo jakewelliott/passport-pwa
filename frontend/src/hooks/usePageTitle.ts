@@ -1,40 +1,42 @@
+import { dbg } from '@/lib/debug';
 import { useEffect, useState } from 'react';
 import { useLocation as usePathLocation } from 'react-router-dom';
 
 const DEFAULT_TITLE = 'NC Parks Passport';
 
 const routeTitles: Record<string, string> = {
-  '/locations': 'Locations',
-  '/stamps': 'Stamps',
-  '/more': 'More',
-  '/more/app-info': 'App Information',
-  '/more/bucket-list': 'Bucket List',
-  '/more/icon-legend': 'Icon Legend',
-  '/more/trails': 'Trails',
-  '/more/welcome-message': 'Welcome',
-  '/more/staying-safe': 'Staying Safe',
-  '/more/hiking-essentials': 'Hiking Essentials',
-  '/more/my-notes': 'My Notes',
-  '/more/my-notes/general-notes': 'General Notes',
+    '/locations': 'Locations',
+    '/stamps': 'Stamps',
+    '/more': 'More',
+    '/more/app-info': 'App Information',
+    '/more/bucket-list': 'Bucket List',
+    '/more/icon-legend': 'Icon Legend',
+    '/more/trails': 'Trails',
+    '/more/welcome-message': 'Welcome',
+    '/more/staying-safe': 'Staying Safe',
+    '/more/hiking-essentials': 'Hiking Essentials',
+    '/more/my-notes': 'My Notes',
+    '/more/my-notes/general-notes': 'General Notes',
 };
 
 const topLevelCheck = (path: string) => path.split('/').length - 1 > 1; // /stamps will split into ['', 'stamps']
 
 const getTitle = (pathname: string) => {
-  if (pathname.startsWith('/locations') && !routeTitles[pathname]) return 'Park Details';
-  return routeTitles[pathname] || DEFAULT_TITLE;
+    if (pathname.startsWith('/locations') && !routeTitles[pathname]) return 'Park Details';
+    return routeTitles[pathname] || DEFAULT_TITLE;
 };
 
 export function usePageTitle() {
-  const location = usePathLocation();
-  const [pageTitle, setPageTitle] = useState(getTitle(location.pathname));
-  const showBackButton = topLevelCheck(location.pathname);
+    const location = usePathLocation();
+    const [pageTitle, setPageTitle] = useState(getTitle(location.pathname));
+    const showBackButton = topLevelCheck(location.pathname);
 
-  useEffect(() => {
-    const title = getTitle(location.pathname);
-    document.title = title;
-    setPageTitle(title);
-  }, [location]);
+    useEffect(() => {
+        dbg('EFFECT', 'usePageTitle', 'setting title');
+        const title = getTitle(location.pathname);
+        document.title = title;
+        setPageTitle(title);
+    }, [location]);
 
-  return { pageTitle, showBackButton };
+    return { pageTitle, showBackButton };
 }

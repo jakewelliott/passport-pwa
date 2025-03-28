@@ -1,58 +1,74 @@
 import { dbg } from '@/lib/debug';
-import type { Geopoint } from '@/lib/mock/types';
-import { useState, useEffect } from 'react';
+import type { Geopoint } from '@/types';
+import { useEffect, useState } from 'react';
 
 interface LocationState {
-  geopoint: {
-    latitude: number;
-    longitude: number;
-  } | null;
-  error: string | null;
-  isLoading: boolean;
+    geopoint: Geopoint | null;
+    error: string | null;
+    isLoading: boolean;
 }
 
-export const useLocation = (spoof?: Geopoint) => {
-  const [location, setLocation] = useState<LocationState>({
-    geopoint: spoof ?? null,
-    error: null,
-    isLoading: !spoof,
-  });
+// To spoof location, set SPOOF_LOCATION to a Geopoint object
+// To use real location, set SPOOF_LOCATION to null
 
-  useEffect(() => {
-    if (spoof) {
-      dbg('HOOK', 'useLocation', 'spoofing location');
-      return;
-    }
+// const SPOOF_LOCATION: Geopoint = {
+//   latitude: 35.87,
+//   longitude: -78.76,
+//   inaccuracyRadius: 0.001,
+// };
 
-    if (!navigator.geolocation) {
-      setLocation((prev) => ({
-        ...prev,
-        error: 'Geolocation is not supported by your browser',
-        isLoading: false,
-      }));
-      return;
-    }
+const SPOOF_LOCATION = null;
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setLocation({
-          geopoint: {
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-          },
-          error: null,
-          isLoading: false,
-        });
-      },
-      (error) => {
-        setLocation((prev) => ({
-          ...prev,
-          error: error.message,
-          isLoading: false,
-        }));
-      },
-    );
-  }, [spoof]);
+export const useLocation = () => {
+    dbg('HOOK', 'useLocation');
 
-  return location;
+    const [location, setLocation] = useState<LocationState>({
+        geopoint: SPOOF_LOCATION,
+        error: null,
+        isLoading: true,
+    });
+
+    useEffect(() => {
+        dbg('EFFECT', 'useLocation', 'updating...');
+
+        if (SPOOF_LOCATION !== null) {
+            dbg('EFFECT', 'useLocation', 'spoofing location');
+            return;
+        }
+
+        if (!navigator.geolocation) {
+            dbg('EFFECT', 'useLocation', 'geolocation not supported');
+            setLocation((prev) => ({
+                ...prev,
+                error: 'Geolocation is not supported by your browser',
+                isLoading: false,
+            }));
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                setLocation({
+                    geopoint: {
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                        inaccuracyRadius: position.coords.accuracy / 87000,
+                    },
+                    error: null,
+                    isLoading: false,
+                });
+                dbg('EFFECT', 'useLocation', 'location updated');
+            },
+            (error) => {
+                setLocation({
+                    geopoint: null,
+                    error: error.message,
+                    isLoading: false,
+                });
+                dbg('ERROR', 'useLocation', error);
+            },
+        );
+    }, []);
+
+    return location;
 };

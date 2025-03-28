@@ -1,0 +1,8 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"oderwat.indent-rainbow",
+		"bradlc.vscode-tailwindcss",
+		"vitest.explorer"
+	]
+}

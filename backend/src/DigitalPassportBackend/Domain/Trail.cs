@@ -5,11 +5,12 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("trails")]
-public class Trail
+public class Trail : IEntity
 {
     public int id { get; init; }
     [Column("trail_name")]
     public required string trailName { get; set; }
+    [Column("length")]
     public string? length { get; set; }
     [Column(TypeName="longtext")]
     public required string description { get; set; }

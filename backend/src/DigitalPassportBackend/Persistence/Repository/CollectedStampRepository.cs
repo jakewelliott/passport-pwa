@@ -44,4 +44,15 @@ public class CollectedStampRepository(DigitalPassportDbContext digitalPassportDb
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public CollectedStamp? GetByParkAndUser(int locationId, int userId)
+    {
+        return _digitalPassportDbContext.CollectedStamps.Where(s => s.parkId == locationId && s.userId == userId).OrderByDescending(v => v.createdAt).FirstOrDefault();
+    }
+
+    public List<CollectedStamp> GetByUser(int userId)
+    {
+        return _digitalPassportDbContext.CollectedStamps.Where(s => s.userId == userId).ToList();
+    }
+
 }

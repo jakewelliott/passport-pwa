@@ -58,9 +58,14 @@ mkcert -install
 echo "📜 Generating certificates for localhost and $IP..."
 mkcert localhost 127.0.0.1 $IP
 
+cp ./localhost+2.pem ./frontend/localhost+2.pem
+cp ./localhost+2-key.pem ./frontend/localhost+2-key.pem
+
 echo "✅ Setup complete! Certificates have been generated:"
 echo "   - Certificate: ./localhost+2.pem"
+echo "                  ./frontend/localhost+2.pem"
 echo "   - Private key: ./localhost+2-key.pem"
+echo "                  ./frontend/localhost+2-key.pem"
 echo ""
 echo "🔐 To use HTTPS on your mobile device:"
 echo "   1. Send $(mkcert -CAROOT)/rootCA.pem to your device"

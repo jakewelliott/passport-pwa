@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Services;
 using Microsoft.OpenApi.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using DigitalPassportBackend.Errors;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -15,8 +17,20 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     [HttpGet("{locationAbbrev}")]
     public IActionResult Get(string locationAbbrev)
     {
-        // invoking the use case
-        var location = _locationsService.GetByAbbreviation(locationAbbrev);
+        // Check if the input is a number
+        Park location;
+        if (int.TryParse(locationAbbrev, out int locationId))
+        {
+            // If it's a number, use GetById
+            location = _locationsService.GetById(locationId);
+        }
+        else
+        {
+            // Otherwise use GetByAbbreviation
+            location = _locationsService.GetByAbbreviation(locationAbbrev);
+        }
+        
+        // Rest of the method remains the same
         var addresses = _locationsService.GetAddressesByLocationId(location.id);
         var icons = _locationsService.GetIconsByLocationId(location.id);
         var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
@@ -26,7 +40,52 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(locationDataResponse);
     }
 
-    public record AddressResponse(string title, string addressesLineOne, string? addressesLineTwo, string city, string state, int zipcode)
+    [HttpGet()]
+    public IActionResult GetAll()
+    {
+        // invoking the use case
+        List<LocationResponse> parks = new List<LocationResponse>();
+        var locations = _locationsService.GetAll();
+        foreach (var location in locations)
+        {
+            var addresses = _locationsService.GetAddressesByLocationId(location.id);
+            var icons = _locationsService.GetIconsByLocationId(location.id);
+            var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
+            var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
+            var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
+            parks.Add(locationDataResponse);
+        }
+        // return 200 ok
+        return Ok(parks);
+    }
+
+    [HttpGet("trails")]
+    public IActionResult GetAllTrails()
+    {
+        return Ok(_locationsService.GetAllTrails()
+            .Select(t => TrailResponse.FromDomain(t, _locationsService.GetTrailIcons(t.id))));
+    }
+
+    [HttpPost("uploadGeoJson")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UploadGeoJson(IFormFile file)
+    {
+        if (file == null || file.ContentType != "application/json")
+        {
+            throw new ServiceException(StatusCodes.Status415UnsupportedMediaType, "You must upload a GeoJson file (ends in .json).");
+        }
+        return Ok(_locationsService.UploadGeoJson(file));
+    }
+
+    [HttpGet("geo")]
+    public IActionResult GetGeoData()
+    {
+        List<LocationGeoDataResponse> locations = new List<LocationGeoDataResponse>();
+        _locationsService.GetAll().ForEach(x => locations.Add(LocationGeoDataResponse.FromDomain(x)));
+        return Ok(locations);
+    }
+
+    public record AddressResponse(string title, string addressLineOne, string? addressLineTwo, string city, string state, int zipcode)
     {
         public static AddressResponse FromDomain(ParkAddress address)
         {
@@ -49,11 +108,11 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         }
     }
 
-    public record BucketListItemResponse(string task)
+    public record BucketListItemResponse(int id,string task)
     {
         public static BucketListItemResponse FromDomain(BucketListItem bucketListItem)
         {
-            return new BucketListItemResponse(bucketListItem.task);
+            return new BucketListItemResponse(bucketListItem.id, bucketListItem.task);
         }
     }
 
@@ -70,6 +129,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
 
     public record LocationResponse(
         int id,
+        string abbreviation,
         string parkName,
         object coordinates,
         long? phone,
@@ -82,8 +142,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         AddressResponse[] addresses,
         IconResponse[] icons,
         BucketListItemResponse[] bucketListItems,
-        PhotosResponse[] photos
-    )
+        PhotosResponse[] photos)
     {
         public static LocationResponse FromDomain(
             Park location,
@@ -125,6 +184,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
 
             return new LocationResponse(
                 location.id,
+                location.parkAbbreviation,
                 location.parkName,
                 lonLatObject,
                 location.phone,
@@ -141,5 +201,51 @@ public class LocationsController(ILocationsService locationsService) : Controlle
             );
         }
 
+    };
+
+    public record TrailResponse(
+        int id,
+        string trailName,
+        string? distance,
+        string description,
+        List<string> icons)
+    {
+        public static TrailResponse FromDomain(Trail trail, List<TrailIcon> icons)
+        {
+            return new(
+                trail.id,
+                trail.trailName,
+                distance: trail.length,
+                trail.description,
+                [.. icons.Select(i => i.icon.GetDisplayName())]);
+        }
+    }
+
+    public record LocationGeoDataResponse(
+        int id,
+        string abbreviation,
+        string parkName,
+        object coordinates,
+        string? boundaries
+    )
+    {
+        public static LocationGeoDataResponse FromDomain(
+            Park location
+        )
+        {
+            var lonLatObject = new
+            {
+                longitude = location.coordinates == null ? 0 : location.coordinates.X,
+                latitude = location.coordinates == null ? 0 : location.coordinates.Y
+            };
+
+            return new LocationGeoDataResponse(
+                location.id,
+                location.parkAbbreviation,
+                location.parkName,
+                lonLatObject,
+                location.boundaries?.ToString()
+            );
+        }
     };
 }

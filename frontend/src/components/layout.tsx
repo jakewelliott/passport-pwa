@@ -1,27 +1,23 @@
 import { useUser } from '@/hooks/queries/useUser';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 interface LayoutProps {
-	children: ReactNode;
+    children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
-	const { data: user, isLoading } = useUser();
-	const showNavigation = user && !isLoading;
+    const { data: user, isLoading } = useUser();
+    const showNavigation = user && !isLoading;
 
-	if (!showNavigation) {
-		return <div className="min-h-screen">{children}</div>;
-	}
+    if (!showNavigation) {
+        return <div className='min-h-screen'>{children}</div>;
+    }
 
-	return (
-		<div className="min-h-screen">
-			<div
-				className="overflow-y-auto pt-12 pb-16 h-dvh"
-			>
-				{children}
-			</div>
-		</div>
-	);
+    return (
+        <div className='min-h-screen'>
+            <main className='layout no-scrollbar h-dvh overflow-y-auto pt-12 pb-16'>{children}</main>
+        </div>
+    );
 };
 
-export default Layout; 
+export default Layout;

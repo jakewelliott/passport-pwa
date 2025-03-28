@@ -44,4 +44,17 @@ public class PrivateNoteRepository(DigitalPassportDbContext digitalPassportDbCon
         _digitalPassportDbContext.SaveChanges();
         return entity;
     }
+
+    public PrivateNote? GetByParkAndUser(int userId, int locationId)
+    {
+        if (locationId == 0)
+            return _digitalPassportDbContext.PrivateNotes.Where(s => s.userId == userId && s.parkId == null).FirstOrDefault();
+        return _digitalPassportDbContext.PrivateNotes.Where(s => s.parkId == locationId && s.userId == userId).FirstOrDefault();
+    }
+
+    public List<PrivateNote> GetByUser(int userId)
+    {
+        return _digitalPassportDbContext.PrivateNotes.Where(s => s.userId == userId).ToList();
+    }
+
 }
