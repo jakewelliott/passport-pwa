@@ -317,7 +317,7 @@ namespace DigitalPassportBackend.UnitTests.Services
             expected.updatedAt = time;
             _mockLocations.Setup(s => s.GetById((int)expected.parkId!))
                 .Returns(expected.park!);
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(expected.parkId, expected.userId))
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser((int)expected.parkId!, expected.userId))
                 .Returns(TestData.PrivateNotes[0]);
             _mockPrivateNotes.Setup(s => s.Update(expected))
                 .Returns(expected);
@@ -498,7 +498,7 @@ namespace DigitalPassportBackend.UnitTests.Services
             // Setup.
             _mockUsers.Setup(s => s.GetById(TestData.PrivateNotes[2].userId))
                 .Returns(TestData.PrivateNotes[2].user);
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(TestData.PrivateNotes[2].parkId, TestData.PrivateNotes[2].userId))
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser((int)TestData.PrivateNotes[2].parkId!, TestData.PrivateNotes[2].userId))
                 .Returns(TestData.PrivateNotes[2]);
 
             // Action.
@@ -560,7 +560,7 @@ namespace DigitalPassportBackend.UnitTests.Services
         public void GetParkNote_ReturnsExistingNote_WhenNoteExists()
         {
             var note = TestData.PrivateNotes[0];
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(note.parkId, note.userId)).Returns(note);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser((int)note.parkId!, note.userId)).Returns(note);
             _mockLocations.Setup(s => s.GetById((int)note.parkId!)).Returns(note.park!);
 
             var result = _activities.GetParkNote((int)note.parkId!, note.userId);
