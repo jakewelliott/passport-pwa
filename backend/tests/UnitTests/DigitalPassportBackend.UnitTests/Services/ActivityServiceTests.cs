@@ -301,7 +301,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns(expected.user);
 
             // Action.
-            var result = _activities.CreateUpdatePrivateNote((int)expected.parkId, expected.userId, expected.note, time);
+            var result = _activities.CreateUpdatePrivateNote(expected.userId, (int)expected.parkId, expected.note, time);
             
             // Assert.
             Assert.Equal(expected, result);
@@ -310,6 +310,9 @@ namespace DigitalPassportBackend.UnitTests.Services
         [Fact]
         public void CreateUpdatePrivateNote_ReturnsNote_WhenNoteExists()
         {
+            // Refresh mock
+            _mockPrivateNotes.Reset();
+
             // Setup.
             var time = DateTime.UtcNow;
             var expected = TestData.PrivateNotes[0];
@@ -317,13 +320,13 @@ namespace DigitalPassportBackend.UnitTests.Services
             expected.updatedAt = time;
             _mockLocations.Setup(s => s.GetById((int)expected.parkId!))
                 .Returns(expected.park!);
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser((int)expected.parkId!, expected.userId))
-                .Returns(TestData.PrivateNotes[0]);
             _mockPrivateNotes.Setup(s => s.Update(expected))
                 .Returns(expected);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(expected.userId, (int)expected.parkId!))
+                .Returns(TestData.PrivateNotes[0]);
             
             // Action.
-            var result = _activities.CreateUpdatePrivateNote((int)expected.parkId!, expected.userId, expected.note, time);
+            var result = _activities.CreateUpdatePrivateNote(expected.userId, (int)expected.parkId!, expected.note, time);
 
             // Assert.
             Assert.Equal(expected, result);
@@ -348,7 +351,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 .Returns(expected);
 
             // Action.
-            var result = _activities.CreateUpdatePrivateNote(0, expected.userId, expected.note, time);
+            var result = _activities.CreateUpdatePrivateNote(expected.userId, 0, expected.note, time);
 
             // Assert.
             Assert.Equal(expected, result);
@@ -514,7 +517,7 @@ namespace DigitalPassportBackend.UnitTests.Services
         public void GetParkNote_ReturnsEmptyNote_WhenNoteDNE()
         {
             // Action.
-            var result = _activities.GetParkNote(TestData.Parks[1].id, TestData.Users[1].id);
+            var result = _activities.GetParkNote(TestData.Users[1].id, TestData.Parks[1].id);
 
             // Assert.
             Assert.Equal("", result.note);
@@ -574,12 +577,12 @@ namespace DigitalPassportBackend.UnitTests.Services
             var user = TestData.Users[3];
             var park = TestData.Parks[0];
 
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(park.id, user.id)).Returns((PrivateNote?)null);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(user.id, park.id)).Returns((PrivateNote?)null);
             _mockPrivateNotes.Setup(s => s.Create(It.IsAny<PrivateNote>())).Returns<PrivateNote>(n => n);
             _mockUsers.Setup(s => s.GetById(user.id)).Returns(user);
             _mockLocations.Setup(s => s.GetById(park.id)).Returns(park);
 
-            var result = _activities.GetParkNote(park.id, user.id);
+            var result = _activities.GetParkNote(user.id, park.id);
 
             Assert.NotNull(result);
             Assert.Equal(park.id, result.parkId);

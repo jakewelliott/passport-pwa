@@ -190,8 +190,8 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             var req = new PrivateNoteRequest("sample note", DateTime.UtcNow);
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
             _mockActivityService.Setup(s => s.CreateUpdatePrivateNote(
-                -1,
                 TestData.Users[1].id,
+                -1,
                 req.note,
                 req.updatedAt
             )).Throws(new NotFoundException("Park not found with given Id."));
@@ -225,7 +225,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         {
             // Setup.
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
-            _mockActivityService.Setup(s => s.GetParkNote(TestData.Parks[0].id, TestData.Users[1].id))
+            _mockActivityService.Setup(s => s.GetParkNote(TestData.Users[1].id, TestData.Parks[0].id))
                 .Returns(TestData.PrivateNotes[0]);
 
             // Action.
@@ -254,7 +254,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             };
 
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
-            _mockActivityService.Setup(s => s.GetParkNote(0, TestData.Users[1].id))
+            _mockActivityService.Setup(s => s.GetParkNote(TestData.Users[1].id, 0))
                 .Returns(generalNote);
 
             // Action.
@@ -283,7 +283,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             };
 
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
-            _mockActivityService.Setup(s => s.GetParkNote(TestData.Parks[1].id, TestData.Users[1].id))
+            _mockActivityService.Setup(s => s.GetParkNote(TestData.Users[1].id, TestData.Parks[1].id))
                 .Returns(note);
 
             // Action.
@@ -303,7 +303,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
 
             // Setup, invalid park.
             SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
-            _mockActivityService.Setup(s => s.GetParkNote(-1, TestData.Users[1].id))
+            _mockActivityService.Setup(s => s.GetParkNote(TestData.Users[1].id, -1))
                 .Throws(new NotFoundException("Park not found with given Id."));
 
             // Action.
@@ -689,8 +689,8 @@ namespace DigitalPassportBackend.UnitTests.Controllers
 
             // Mock service
             _mockActivityService.Setup(s => s.CreateUpdatePrivateNote(
-                park != null ? park.id : 0,
                 user.id,
+                park != null ? park.id : 0,
                 req.note,
                 req.updatedAt
             )).Returns(note);
