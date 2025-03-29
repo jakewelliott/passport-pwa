@@ -69,7 +69,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
 
     // 
     // BUCKET LIST
-		//
+    //
 
     [HttpGet("bucketlist")]
     public IActionResult GetBucketListItems()
@@ -122,9 +122,39 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(ParkVisitResponse.FromDomain(_activityService.VisitPark(userId, parkId, req.geopoint)));
     }
 
-		public record Geopoint(double latitude, double longitude, double inaccuracyRadius)
-		{}
+    //
+    // FAVORITE PARKS
+    //
 
+    [HttpGet("favorites/parks")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult GetFavoriteParks()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(_activityService.GetFavoriteParks(userId));
+    }
+
+    [HttpPost("favorites/parks/{parkId}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult AddFavoritePark(int parkId)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        _activityService.AddFavoritePark(userId, parkId);
+        return Ok();
+    }
+
+    [HttpDelete("favorites/parks/{parkId}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult DeleteFavoritePark(int parkId)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        _activityService.DeleteFavoritePark(userId, parkId);
+        return Ok();
+    }
+
+    public record Geopoint(double latitude, double longitude, double inaccuracyRadius)
+    {
+    }
 
     public record VisitParkRequest(Geopoint geopoint)
     {
@@ -137,7 +167,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
             return new(
                 visit.id,
                 visit.createdAt,
-                visit.park.parkAbbreviation
+                visit.park!.parkAbbreviation
             );
         }
     }
