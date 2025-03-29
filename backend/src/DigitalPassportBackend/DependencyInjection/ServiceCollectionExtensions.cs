@@ -94,6 +94,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IParkIconRepository, ParkIconRepository>();
         services.AddScoped<IParkPhotoRepository, ParkPhotoRepository>();
         services.AddScoped<IParkVisitRepository, ParkVisitRepository>();
+        services.AddScoped<IFavoriteParkRepository, FavoriteParkRepository>();
         services.AddScoped<IPrivateNoteRepository, PrivateNoteRepository>();
         services.AddScoped<ITrailIconRepository, TrailIconRepository>();
         services.AddScoped<ITrailRepository, TrailRepository>();
