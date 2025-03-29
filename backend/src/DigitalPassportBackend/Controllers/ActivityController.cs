@@ -126,7 +126,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     // FAVORITE PARKS
     //
 
-    [HttpGet("favorites/parks")]
+    [HttpGet("parks/favorites")]
     [Authorize(Roles = "visitor")]
     public IActionResult GetFavoriteParks()
     {
@@ -134,7 +134,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(_activityService.GetFavoriteParks(userId));
     }
 
-    [HttpPost("favorites/parks/{parkId}")]
+    [HttpPost("parks/favorites/{parkId}")]
     [Authorize(Roles = "visitor")]
     public IActionResult AddFavoritePark(int parkId)
     {
@@ -143,7 +143,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok();
     }
 
-    [HttpDelete("favorites/parks/{parkId}")]
+    [HttpDelete("parks/favorites/{parkId}")]
     [Authorize(Roles = "visitor")]
     public IActionResult DeleteFavoritePark(int parkId)
     {
