@@ -118,7 +118,7 @@ public class PrivateNoteRepositoryTests
         var locationId = TestData.PrivateNotes[0].park!.id;
 
         // Act
-        var result = _repo.GetByParkAndUser(locationId, userId);
+        var result = _repo.GetByParkAndUser(userId, locationId);
 
         // Assert
         Assert.NotNull(result);
@@ -140,7 +140,7 @@ public class PrivateNoteRepositoryTests
         var locationId = 0;
 
         // Act
-        var result = _repo.GetByParkAndUser(locationId, userId);
+        var result = _repo.GetByParkAndUser(userId, locationId);
 
         // Assert
         Assert.NotNull(result);

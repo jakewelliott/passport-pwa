@@ -36,6 +36,7 @@ public class LocationsServiceTests
         SetupLocation0();
         SetupLocation1();
         SetupAllLocations();
+        SetupAllTrails();
 
         // Setup mock for UploadGeoJson update.
         _mockLocations.Setup(s => s.Update(It.IsAny<Park>()))
@@ -242,6 +243,84 @@ public class LocationsServiceTests
         Assert.Equal(StatusCodes.Status415UnsupportedMediaType, e.StatusCode);
     }
 
+    [Fact]
+    public void GetAllTrails_TrailsList_WhenTrailsExist()
+    {
+        // Action
+        var items = _locations.GetAllTrails();
+
+        // Assert
+        var counter = 0;
+        foreach(var trail in items) {
+            Assert.Equal(TestData.Trails[counter], trail);
+            counter++;
+        }
+    }
+
+    [Fact]
+    public void GetAllTrails_EmptyList_WhenTrailsDNE()
+    {
+        // Arrange
+        _mockTrails.Setup(s => s.GetAll()).Returns(new List<Trail>());
+
+        // Action
+        var items = _locations.GetAllTrails();
+
+        // Assert
+        Assert.Empty(items);
+    }
+
+    [Fact]
+    public void GetTrailIcons_ReturnsIcons_WhenTrailExists()
+    {
+        // Arrange
+        _mockTrailIcons.Setup(s => s.GetByTrailId(TestData.Trails[1].id)).Returns([TestData.TrailIcons[1]]);
+
+        // Action
+        var items = _locations.GetTrailIcons(TestData.Trails[1].id);
+
+        // Assert
+        Assert.Single(items);
+        Assert.Equal(TestData.TrailIcons[1], items[0]);
+    }
+
+    [Fact]
+    public void GetTrailIcons_ReturnsEmpty_WhenTrailDNE()
+    {
+        // Arrange
+        _mockTrailIcons.Setup(s => s.GetByTrailId(-1)).Returns([]);
+
+        // Action
+        var items = _locations.GetTrailIcons(-1);
+
+        // Assert
+        Assert.Empty(items);
+    }
+
+    [Fact]
+    public void GetById_ReturnsPark_WhenParkExists()
+    {
+        // Arrange
+        _mockLocations.Setup(s => s.GetById(TestData.Parks[0].id)).Returns(TestData.Parks[0]);
+
+        // Action
+        var item = _locations.GetById(TestData.Parks[0].id);
+
+        // Assert
+        Assert.Equal(TestData.Parks[0], item);
+    }
+
+        [Fact]
+    public void GetById_ThrowsException_WhenParkDNE()
+    {
+        // Action and assert.
+        var ex = Assert.Throws<NotFoundException>(() => _locations.GetById(-1));
+    }
+
+    private void SetupAllTrails() {
+        _mockTrails.Setup(s => s.GetAll()).Returns(TestData.Trails);
+    }
+
     private void SetupAllLocations() {
         _mockLocations.Setup(s => s.GetAll())
             .Returns(TestData.Parks);
@@ -289,6 +368,8 @@ public class LocationsServiceTests
     // Nonexistent park.
     private void SetupInvalidLocation()
     {
+        _mockLocations.Setup(s => s.GetById(It.IsAny<int>()))
+            .Throws(new NotFoundException($"Park not found"));
         _mockLocations.Setup(s => s.GetByAbbreviation(It.IsAny<string>()))
             .Throws(new NotFoundException($"Park not found"));
         _mockParkAddresses.Setup(s => s.GetByLocationId(It.IsAny<int>()))

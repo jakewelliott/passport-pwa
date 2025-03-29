@@ -16,6 +16,15 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class Response
 {
+    public static bool Equal(List<String> expectedIcons, Trail expected, TrailResponse actual)
+    {
+        return expected.id == actual.id
+            && expected.trailName == actual.trailName
+            && expected.length == actual.distance
+            && expected.description == actual.description
+            && expectedIcons.SequenceEqual(actual.icons);
+    }
+
     public static bool Equal(ParkVisit expected, ParkVisitResponse actual)
     {
         return expected.id == actual.id
@@ -43,13 +52,13 @@ public static class Response
     {
         if (park == null)
         {
-            return actual.parkAbbreviation == "generalNotes"
+            return actual.parkId == 0
                 && expected.note == actual.note
                 && expected.updatedAt == actual.updatedAt;
         }
         else
         {
-            return park.parkAbbreviation == actual.parkAbbreviation
+            return park.id == actual.parkId
                 && expected.note == actual.note
                 && expected.updatedAt == actual.updatedAt;
         }
@@ -59,13 +68,13 @@ public static class Response
     {
         if (expected.park == null)
         {
-            return actual.parkAbbreviation == "generalNotes"
+            return actual.parkId == 0
                 && expected.note == actual.note
                 && expected.updatedAt == actual.updatedAt;
         }
         else
         {
-            return expected.park.parkAbbreviation == actual.parkAbbreviation
+            return expected.park.id == actual.parkId
                 && expected.note == actual.note
                 && expected.updatedAt == actual.updatedAt;
         }

@@ -1,3 +1,5 @@
+using System.Diagnostics.Metrics;
+
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Database;
@@ -5,6 +7,8 @@ using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.UnitTests.TestUtils;
 
 using Microsoft.EntityFrameworkCore;
+
+using NetTopologySuite.Operation.Buffer;
 
 namespace DigitalPassportBackend.UnitTests.Persistence.Repository;
 public class TrailRepositoryTests
@@ -107,6 +111,20 @@ public class TrailRepositoryTests
         Assert.Equal(5, _db.Trails.Count());
         Assert.Equal(NewTrail, item);
         Assert.Contains(NewTrail, _db.Trails);
+    }
+
+        [Fact]
+    public void GetAll_ReturnsTrails_WhenTrailsExist()
+    {
+        // Action.
+        var item = _repo.GetAll();
+
+        // Assert.
+        int counter = 0;
+        foreach (var trail in item) {
+            Assert.Equal(TestData.Trails[counter], trail);
+            counter++;
+        }
     }
 
     private static readonly Trail NewTrail = new()
