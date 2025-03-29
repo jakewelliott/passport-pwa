@@ -86,6 +86,7 @@ public class DigitalPassportDbContext : DbContext
     public DbSet<CompletedBucketListItem> CompletedBucketListItems { get; set; }
     public DbSet<Park> Parks { get; set; }
     public DbSet<ParkAddress> ParkAddresses { get; set; }
+    public DbSet<FavoritePark> FavoriteParks { get; set; }
     public DbSet<ParkIcon> ParkIcons { get; set; }
     public DbSet<ParkPhoto> ParkPhotos { get; set; }
     public DbSet<ParkVisit> ParkVisits { get; set; }

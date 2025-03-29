@@ -5,7 +5,7 @@ namespace DigitalPassportBackend.Domain;
 
 [ExcludeFromCodeCoverage]
 [Table("favorite_parks")]
-public class FavoriteParks : IEntity
+public class FavoritePark : IEntity
 {
     public int id { get; init; }
     [Column("created_at")]

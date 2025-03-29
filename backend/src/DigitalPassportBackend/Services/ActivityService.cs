@@ -16,6 +16,7 @@ public class ActivityService(
     ICollectedStampRepository collectedStampRepository,
     IPrivateNoteRepository privateNoteRepository,
     IParkVisitRepository parkVisitRepository,
+    IFavoriteParkRepository favoriteParkRepository,
     ILocationsRepository locationsRepository,
     IUserRepository userRepository) : IActivityService
 {
@@ -24,6 +25,7 @@ public class ActivityService(
     private readonly ICollectedStampRepository _collectedStampRepository = collectedStampRepository;
     private readonly IPrivateNoteRepository _privateNoteRepository = privateNoteRepository;
     private readonly IParkVisitRepository _parkVisitRepository = parkVisitRepository;
+    private readonly IFavoriteParkRepository _favoriteParkRepository = favoriteParkRepository;
     private readonly ILocationsRepository _locationsRepository = locationsRepository;
     private readonly IUserRepository _userRepository = userRepository;
 
@@ -224,4 +226,31 @@ public class ActivityService(
             .ToList();
     }
 
+    public List<FavoritePark> GetFavoriteParks(int userId)
+    {
+        return _favoriteParkRepository.GetByUser(userId);
+    }
+
+    public void AddFavoritePark(int userId, int parkId)
+    {
+        if (_favoriteParkRepository.GetByUserAndPark(userId, parkId) is null)
+        {
+            _favoriteParkRepository.Create(new()
+            {
+                parkId = parkId,
+                park = _locationsRepository.GetById(parkId),
+                userId = userId,
+                user = _userRepository.GetById(userId)
+            });
+        }
+    }
+
+    public void DeleteFavoritePark(int userId, int parkId)
+    {
+        var fav = _favoriteParkRepository.GetByUserAndPark(userId, parkId);
+        if (fav is not null)
+        {
+            _favoriteParkRepository.Delete(fav.id);
+        }
+    }
 }
