@@ -16,7 +16,7 @@ public interface IActivityService
 	CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, Geopoint geopoint);
 	ParkVisit VisitPark(int userId, int parkId, Geopoint geopoint);
 	List<ParkVisit> GetParkVisits(int userId);
-	List<FavoritePark> GetFavoriteParks(int userId);
+	List<int> GetFavoriteParks(int userId);
 	void AddFavoritePark(int userId, int parkId);
 	void DeleteFavoritePark(int userid, int parkId);
 }

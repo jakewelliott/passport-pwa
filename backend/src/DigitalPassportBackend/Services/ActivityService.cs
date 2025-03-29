@@ -226,9 +226,10 @@ public class ActivityService(
             .ToList();
     }
 
-    public List<FavoritePark> GetFavoriteParks(int userId)
+    public List<int> GetFavoriteParks(int userId)
     {
-        return _favoriteParkRepository.GetByUser(userId);
+        return [.. _favoriteParkRepository.GetByUser(userId)
+            .Select(f => (int)f.parkId!)];
     }
 
     public void AddFavoritePark(int userId, int parkId)
