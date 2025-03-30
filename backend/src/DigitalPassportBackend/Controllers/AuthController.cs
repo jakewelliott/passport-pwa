@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Services;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -11,6 +12,22 @@ public class AuthController(IAuthService authService) : ControllerBase
 {
 
     private readonly IAuthService _authService = authService;
+
+    [HttpGet]
+    [Authorize]
+    public IActionResult GetUserDetails()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var user = _authService.GetUserById(userId);
+
+        var userDto = new CurrentUserDto
+        {
+            username = user.username,
+            role = user.role.ToString(),
+            token = User.FindFirstValue("token"),
+        };
+        return Ok(userDto);
+    }
 
     [HttpGet("{userId}")]
     [Authorize(Roles = "admin")]
@@ -57,6 +74,12 @@ public class LoginDto
 {
     public required string username { get; set; }
     public required string password { get; set; }
+}
+public class CurrentUserDto
+{
+    public required string username { get; set; }
+    public required string role { get; set; }
+    public string? token { get; set; }
 }
 
 public class UserDto

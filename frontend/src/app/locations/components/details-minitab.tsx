@@ -1,4 +1,5 @@
 import type { Park, ParkIcon } from '@/types';
+import { getParkIconTooltip } from '@/types/misc';
 import type React from 'react';
 
 const Highlight = ({ title, children }: { title: string; children?: React.ReactNode }) => {
@@ -24,7 +25,9 @@ const renderTrails = (trails: string) => {
 };
 
 const IconView = ({ icon }: { icon: ParkIcon }) => {
-    return <img src={`/icons/park/${icon.iconName}.svg`} width={55} height={55} alt={`${icon.iconName}`} />;
+    return (
+        <img src={`/icons/park/${icon.iconName}.svg`} width={55} height={55} alt={getParkIconTooltip(icon.iconName)} />
+    );
 };
 
 const ParkIcons = ({ park }: { park: Park }) => {

@@ -107,7 +107,7 @@ const APP_LOADERS: Loader[] = [
     },
     {
         hook: useGetAllNotes,
-        validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
+        validator: (hook) => Array.isArray(hook?.data),
         what: 'notes',
         refetch: true,
     },
