@@ -1,6 +1,24 @@
+import type React from 'react';
+import { useState } from 'react';
+import ReactDOM from 'react-dom';
 import type { Park, ParkIcon } from '@/types';
 import { getParkIconTooltip } from '@/types/misc';
-import type React from 'react';
+
+const Tooltip = ({ text, position }: { text: string; position: { top: number; left: number } }) => {
+    return ReactDOM.createPortal(
+        <div
+            className='pointer-events-none absolute rounded-md bg-supporting_lightgray bg-opacity-70 p-1'
+            style={{
+                top: position.top,
+                left: position.left,
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+            }}
+        >
+            {text}
+        </div>,
+        document.body // Render the tooltip outside of the scrollable container
+    );
+};
 
 const Highlight = ({ title, children }: { title: string; children?: React.ReactNode }) => {
     return (
@@ -11,7 +29,7 @@ const Highlight = ({ title, children }: { title: string; children?: React.ReactN
 };
 
 const renderTrails = (trails: string) => {
-    const trailLines = trails.split('\n').filter((line) => line.trim() !== ''); // Remove empty lines
+    const trailLines = trails.split('\n').filter((line) => line.trim() !== '');
 
     return (
         <div className='flex flex-col gap-1 py-2'>
@@ -25,13 +43,39 @@ const renderTrails = (trails: string) => {
 };
 
 const IconView = ({ icon }: { icon: ParkIcon }) => {
+    const [tooltipVisible, setTooltipVisible] = useState(false);
+    const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+    const tooltipText = getParkIconTooltip(icon.iconName);
+
+    const handleMouseEnter = (event: React.MouseEvent<HTMLImageElement>) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        setTooltipPosition({
+            top: rect.top + window.scrollY - 40, // Position tooltip above the icon
+            left: rect.left + window.scrollX, // Center horizontally
+        });
+        setTooltipVisible(true);
+    };
+
+    const handleMouseLeave = () => {
+        setTooltipVisible(false);
+    };
+
     return (
-        <img src={`/icons/park/${icon.iconName}.svg`} width={55} height={55} alt={getParkIconTooltip(icon.iconName)} />
+        <div style={{ position: 'relative', width: '55px', height: '55px' }}>
+            <img
+                src={`/icons/park/${icon.iconName}.svg`}
+                width={55}
+                height={55}
+                alt={tooltipText}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+            />
+            {tooltipVisible && <Tooltip text={tooltipText} position={tooltipPosition} />}
+        </div>
     );
 };
 
 const ParkIcons = ({ park }: { park: Park }) => {
-    console.log('park', park);
     return (
         <div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
             <div className='inline-flex gap-6 px-6'>
