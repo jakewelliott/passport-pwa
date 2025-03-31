@@ -10,7 +10,6 @@ import { PassportHeader } from '../passport-header';
 import RoundedButton from '../rounded-button';
 import { SplashScreenView } from '../splash-screen-view';
 import TabBar from '../tab-bar';
-import { TrailIcons } from '../trail-icons';
 
 const mockTrail = trails[0];
 

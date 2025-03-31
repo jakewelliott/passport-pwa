@@ -1,4 +1,5 @@
-import type { Address, Geopoint, ParkIconEnum, TrailIconEnum } from './misc';
+import type { ParkIcon, TrailIcon } from './icons';
+import type { Address, Geopoint } from './misc';
 
 interface DatabaseEntry {
     id: number;
@@ -26,9 +27,9 @@ interface ParkContent extends UserContent {
     parkId: number;
 }
 
-export interface ParkIcon extends DatabaseEntry {
-    iconName: ParkIconEnum;
-}
+// export interface ParkIcon extends DatabaseEntry {
+//     iconName: ParkIconEnum;
+// }
 
 export interface ParkPhoto {
     photoPath: string;
@@ -54,7 +55,7 @@ export interface Park extends DatabaseEntry {
 
 export interface Trail extends DatabaseEntry {
     trailName: string;
-    icons: TrailIconEnum[];
+    icons: TrailIcon[];
     distance: string;
     description: string;
 }

@@ -1,5 +1,8 @@
-import type { Park, ParkIcon } from '@/types';
+import { PARK_ICONS_TOOLTIPS, type Park, type ParkIcon } from '@/types';
 import type React from 'react';
+
+const path = (icon: ParkIcon) => `/icons/park/${icon}.svg`;
+const tooltip = (icon: ParkIcon) => PARK_ICONS_TOOLTIPS[icon];
 
 const Highlight = ({ title, children }: { title: string; children?: React.ReactNode }) => {
     return (
@@ -24,9 +27,7 @@ const renderTrails = (trails: string) => {
 };
 
 const IconView = ({ key, icon }: { key: string; icon: ParkIcon }) => {
-    // const tooltip = icon.iconName.split('-')[0];
-    const tooltip = 'tooltip';
-    return <img key={key} src={`/icons/park/${icon.iconName}.svg`} width={55} height={55} alt={tooltip} />;
+    return <img key={key} src={path(icon)} width={55} height={55} alt={tooltip(icon)} />;
 };
 
 const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
@@ -34,7 +35,7 @@ const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
         <div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
             <div className='inline-flex gap-6 px-6'>
                 {icons.map((icon) => (
-                    <IconView key={icon.iconName} icon={icon} />
+                    <IconView key={icon} icon={icon} />
                 ))}
                 <div className='w-px flex-shrink-0' />
             </div>
