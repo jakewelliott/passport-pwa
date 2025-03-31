@@ -6,7 +6,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { useParks } from './useParks';
 
 /** Gets the visit history for the current user */
-const useVisitsHistory = () =>
+export const useVisitsHistory = () =>
     useQuery<ParkVisit[]>({
         queryKey: ['park_visits'],
         queryFn: () => fetchGet(`${API_VISIT_HISTORY_URL}`),
