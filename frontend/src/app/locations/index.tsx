@@ -180,9 +180,12 @@ export default function LocationsScreen() {
             ...Object.values(BlazeIcons),
         ] as ParkIconEnum[];
 
+        // Sort icons alphabetically by their tooltip text
+        const sortedIcons = [...allIcons].sort((a, b) => getParkIconTooltip(a).localeCompare(getParkIconTooltip(b)));
+
         dbg('MISC', 'Filter Modal State', {
             selectedIcons: Array.from(selectedIcons),
-            allIcons: allIcons,
+            allIcons: sortedIcons,
             parksWithIcons: parks.map((p) => ({
                 name: p.parkName,
                 icons: p.icons.map((i) => i.iconName),
@@ -235,7 +238,7 @@ export default function LocationsScreen() {
                     <div>
                         <h3 className='mb-2 font-semibold'>Filter by Features</h3>
                         <div className='grid grid-cols-2 gap-2'>
-                            {allIcons.map((icon) => (
+                            {sortedIcons.map((icon) => (
                                 <label key={icon} className='flex items-center space-x-2'>
                                     <input
                                         type='checkbox'

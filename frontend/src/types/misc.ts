@@ -35,10 +35,10 @@ export const RedIconsTooltips: Record<RedIcons, string> = {
     [RedIcons.Biking]: 'Biking',
     [RedIcons.Fishing]: 'Fishing',
     [RedIcons.Hiking]: 'Hiking',
-    [RedIcons.HorsebackRiding]: 'HorsebackRiding',
+    [RedIcons.HorsebackRiding]: 'Horseback riding',
     [RedIcons.Paddling]: 'Paddling',
     [RedIcons.Picnicking]: 'Picnicking',
-    [RedIcons.RockClimbing]: 'RockClimbing',
+    [RedIcons.RockClimbing]: 'Rock climbing',
     [RedIcons.Swimming]: 'Swimming',
 };
 
@@ -51,11 +51,11 @@ export enum BlueIcons {
 }
 
 export const BlueIconsTooltips: Record<BlueIcons, string> = {
-    [BlueIcons.BoatRamp]: 'Boat Ramp',
-    [BlueIcons.BoatRental]: 'Boat Rental',
+    [BlueIcons.BoatRamp]: 'Boat ramp',
+    [BlueIcons.BoatRental]: 'Paddle equipment rental',
     [BlueIcons.Exhibits]: 'Exhibits',
     [BlueIcons.Playground]: 'Playground',
-    [BlueIcons.VisitorCenter]: 'Visitor Center',
+    [BlueIcons.VisitorCenter]: 'Visitor center',
 };
 
 export enum GreenIcons {
@@ -71,15 +71,15 @@ export enum GreenIcons {
 }
 
 export const GreenIconsTooltips: Record<GreenIcons, string> = {
-    [GreenIcons.CamperCabins]: 'Camper Cabins',
-    [GreenIcons.Camping]: 'Camping',
-    [GreenIcons.CanoeinCamping]: 'Canoe-in Camping',
-    [GreenIcons.EquestrianCamping]: 'Equestrian Camping',
-    [GreenIcons.GroupCabins]: 'Group Cabins',
-    [GreenIcons.GroupCamp]: 'Group Camping',
-    [GreenIcons.PrimitiveCabin]: 'Primitive Cabin',
-    [GreenIcons.RVCamping]: 'RV Camping',
-    [GreenIcons.VacationCabin]: 'Vacation Cabin',
+    [GreenIcons.CamperCabins]: 'Camper cabins',
+    [GreenIcons.Camping]: 'Tent camping',
+    [GreenIcons.CanoeinCamping]: 'Paddle-in camping',
+    [GreenIcons.EquestrianCamping]: 'Equestrian camping',
+    [GreenIcons.GroupCabins]: 'Group cabins',
+    [GreenIcons.GroupCamp]: 'Group camping',
+    [GreenIcons.PrimitiveCabin]: 'Primitive cabins',
+    [GreenIcons.RVCamping]: 'RV hookup camping',
+    [GreenIcons.VacationCabin]: 'Vacation cabins',
 };
 
 export enum BlackIcons {
@@ -204,12 +204,16 @@ export type TrailIconEnum = BlankIcons;
 
 export function getParkIconTooltip(icon: ParkIconEnum): string {
     const newIcon = icon.split('-').slice(0, -1).join('-');
-    
+
     return (
         RedIconsTooltips[newIcon as RedIcons] ||
         BlueIconsTooltips[newIcon as BlueIcons] ||
         GreenIconsTooltips[newIcon as GreenIcons] ||
         BlackIconsTooltips[newIcon as BlackIcons] ||
+        RedIconsTooltips[icon as RedIcons] ||
+        BlueIconsTooltips[icon as BlueIcons] ||
+        GreenIconsTooltips[icon as GreenIcons] ||
+        BlackIconsTooltips[icon as BlackIcons] ||
         BlazeIconsTooltips[icon as BlazeIcons] ||
         icon
     );
