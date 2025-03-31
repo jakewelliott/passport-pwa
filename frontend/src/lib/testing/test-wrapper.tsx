@@ -40,27 +40,22 @@ export const renderWithClient = (ui: React.ReactElement, options: RenderOptions 
     const mockUser = { role: 'visitor' }; // Adjust the role as needed
     testQueryClient.setQueryData(['user'], { data: mockUser, isLoading: false });
 
-    const { rerender, ...result } = render(
+    const wrapper = ({ children }: { children: React.ReactNode }) => (
         <QueryClientProvider client={testQueryClient}>
             {options.routerProps?.initialEntries ? (
                 <MemoryRouter initialEntries={options.routerProps.initialEntries}>{ui}</MemoryRouter>
             ) : (
-                <BrowserRouter>{ui}</BrowserRouter>
+                <BrowserRouter>{children}</BrowserRouter>
             )}
-        </QueryClientProvider>,
+        </QueryClientProvider>
     );
+
+    const { rerender, ...result } = render(ui, { wrapper });
 
     return {
         ...result,
-        rerender: (rerenderUi: React.ReactElement) =>
-            rerender(
-                <QueryClientProvider client={testQueryClient}>
-                    {options.routerProps?.initialEntries ? (
-                        <MemoryRouter initialEntries={options.routerProps.initialEntries}>{rerenderUi}</MemoryRouter>
-                    ) : (
-                        <BrowserRouter>{rerenderUi}</BrowserRouter>
-                    )}
-                </QueryClientProvider>,
-            ),
+        queryClient: testQueryClient,
+        wrapper,
+        rerender: (rerenderUi: React.ReactElement) => rerender(rerenderUi),
     };
 };

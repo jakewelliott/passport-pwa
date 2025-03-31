@@ -86,6 +86,7 @@ export const NotesMiniTab = ({
     };
 
     if (isLoading) return <div>Loading...</div>;
+    const placeholder = parkId === 0 ? 'Add some general notes!' : 'Add some personal notes about this park!';
 
     return (
         <div className='flex h-full flex-col'>
@@ -93,7 +94,7 @@ export const NotesMiniTab = ({
                 className='h-72 w-full flex-grow resize-none border border-secondary_darkteal p-4 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'
                 value={noteState}
                 onChange={handleChange}
-                placeholder='Add some personal notes about this park!'
+                placeholder={placeholder}
             />
             <div className='flex justify-center p-3' {...a11yOnClick(handleClick)}>
                 <RoundedButton title={'Save'} data-testid='save-button' />

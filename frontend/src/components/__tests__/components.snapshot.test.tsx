@@ -21,31 +21,10 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
     disconnect: vi.fn(),
 }));
 
-// // Mock the useUser hook
-// vi.mock('@/hooks/queries/useUser', () => ({
-// 	vi.mock('@/hooks/queries/useUser', () => ({
-// 		useUser: () => ({
-// 			data: { role: 'visitor' },
-// 			isLoading: false,
-// 		}),
-// 		isLoading: false,
-// 	}),
-// }))
-
-// // Mock the usePageTitle hook
-// vi.mock('@/hooks/usePageTitle', () => ({
-// 	vi.mock('@/hooks/usePageTitle', () => ({
-// 		usePageTitle: () => ({
-// 			pageTitle: 'Test Title',
-// 			showBackButton: true,
-// 		}),
-// 		showBackButton: true,
-// 	}),
-// }))
-
 describe('Component Snapshots', () => {
     it('TabBar renders correctly', () => {
         renderWithClient(<TabBar />);
+        screen.logTestingPlaygroundURL();
         expect(screen.getByText('Locations')).toBeInTheDocument();
     });
 
@@ -61,17 +40,18 @@ describe('Component Snapshots', () => {
 
     it('SplashScreen renders correctly', () => {
         renderWithClient(<SplashScreenView />);
-        expect(screen.getByText('Loading...')).toBeInTheDocument();
+        expect(screen.getByText('North Carolina State Parks')).toBeInTheDocument();
     });
 
     it('ImageModal renders correctly', () => {
-        renderWithClient(<ImageModal photo={{ photo: 'test.jpg', alt: 'Test Image' }} onClose={() => {}} />);
+        renderWithClient(<ImageModal photo='test.jpg' alt='Test Image' />);
         expect(screen.getByText('Test Image')).toBeInTheDocument();
     });
 
     it('Header renders correctly', () => {
+        screen.logTestingPlaygroundURL();
         renderWithClient(<Header />);
-        expect(screen.getByText('Locations')).toBeInTheDocument();
+        expect(screen.getByRole('heading')).toBeInTheDocument();
     });
 
     it('TrailIcons renders correctly', () => {

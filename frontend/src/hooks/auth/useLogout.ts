@@ -19,9 +19,9 @@ export const useLogout = () => {
         });
         localStorage.removeItem('user');
         setTimeout(() => {
+            navigate('/');
             dbg('AUTH', 'Successfully logged out');
             toast.success('Successfully logged out');
-        }, 1000);
-        navigate('/');
+        }, 2000);
     };
 };

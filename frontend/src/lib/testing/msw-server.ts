@@ -32,9 +32,11 @@ const abbreviationHelper = (params: any) => {
 
 const authHandlers = [
     // @ts-ignore
-    http.get('*/api/auth/:userId', ({ params }) => {
+    http.get('*/api/auth', ({ params }) => {
         return HttpResponse.json(GetUser());
     }),
+
+    // TODO: remove this one if it doesn't break
     // @ts-ignore
     http.get('*/api/auth/:userId', ({ params }) => {
         return HttpResponse.json(GetUser());

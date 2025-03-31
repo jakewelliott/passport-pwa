@@ -101,7 +101,7 @@ export const parks = camel.parks.map((park) => ({
 // for trails, we need to get an array of the icon names
 export const trails = camel.trails.map((trail) => ({
     ...trail,
-    trailIcons: camel.trailIcons.filter((icon) => icon.trail === trail.id).map((icon) => icon.icon),
+    icons: camel.trailIcons.filter((icon) => icon.trail === trail.id).map((icon) => icon.icon),
 }));
 
 // for the rest of the tables, we just need to camelify the keys

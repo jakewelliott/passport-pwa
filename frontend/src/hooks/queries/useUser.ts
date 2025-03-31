@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 
 // React Query hook for fetching user data
 export const useUser = () => {
+    // TODO: this endpoint doesn't actually exist, we should make it to return the user's data
     const query = useQuery<UserProfile | null, Error>({
         queryKey: ['user'],
         queryFn: async () => await fetchGet(API_AUTH_URL),

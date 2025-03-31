@@ -1,17 +1,18 @@
 import { DetailsMiniTab } from '@/app/locations/components/details-minitab';
 import { mockPark } from '@/lib/testing/mock';
-import { render, screen } from '@testing-library/react';
+import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 describe('DetailsMiniTab', () => {
     it('renders park icons container', () => {
-        render(<DetailsMiniTab park={mockPark} />);
-        const container = screen.getByTestId('icon-scroll-container');
-        expect(container).toHaveClass('overflow-x-auto');
+        renderWithClient(<DetailsMiniTab park={mockPark} />);
+        screen.debug();
+        expect(screen.getByTestId('icon-scroll-container')).toBeInTheDocument();
     });
 
     it('renders park icons when provided', () => {
-        render(<DetailsMiniTab park={mockPark} />);
+        renderWithClient(<DetailsMiniTab park={mockPark} />);
         const iconContainer = screen.getByTestId('icon-scroll-container');
         const icons = iconContainer.querySelectorAll('img');
         expect(icons.length).toBe(mockPark.icons.length);

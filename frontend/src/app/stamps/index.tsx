@@ -1,7 +1,7 @@
 import { StampDetails } from '@/app/stamps/components/stamp-details';
+import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
-import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park } from '@/types';
 import { useMemo, useState } from 'react';
@@ -39,7 +39,6 @@ export default function StampsScreen() {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const { data: parks, isLoading: parksLoading } = useParks();
     const { data: stamps, isLoading: stampsLoading } = useStamps();
-    const { isLoading: userLoading } = useUser();
 
     // TODO: toggle sort a/z, date last visited, date first achieved
     const sortedParks: Park[] = useMemo(() => {
@@ -48,7 +47,12 @@ export default function StampsScreen() {
         return [...achieved, ...notAchieved];
     }, [parks, stamps]);
 
-    if (userLoading || parksLoading || stampsLoading) return null;
+    if (parksLoading || stampsLoading)
+        return (
+            <div className='flex h-full items-center justify-center'>
+                <LoadingPlaceholder />
+            </div>
+        );
 
     return (
         <div className='px-4 py-4'>

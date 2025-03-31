@@ -3,7 +3,6 @@ import { API_COLLECTED_STAMPS_URL, API_STAMPS_URL, fetchGet, fetchPost } from '@
 import type { CollectStampRequest, CollectedStamp } from '@/types';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
-import { useUser } from './useUser';
 
 /**
  * Gets all of the local user's stamps, empty array if user is not loaded
@@ -11,9 +10,8 @@ import { useUser } from './useUser';
  */
 export const useStamps = () => {
     dbg('HOOK', 'useStamps');
-    const { data: user } = useUser();
     const { data, isLoading, refetch } = useQuery<CollectedStamp[]>({
-        queryKey: ['stamps', user?.id],
+        queryKey: ['stamps'],
         queryFn: async () => await fetchGet(API_COLLECTED_STAMPS_URL),
     });
     return { data, isLoading, refetch };

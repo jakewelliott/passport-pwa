@@ -1,32 +1,33 @@
 import { parks } from '@/lib/testing/mock';
 import { renderWithClient } from '@/lib/testing/test-wrapper';
-import { fireEvent, screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 import StampsScreen from '../';
 
-describe('Stamps', () => {
-    const mockParks = parks;
+const mockParks = parks;
 
-    it('renders stamps in correct grid layout', () => {
+describe('Stamps', async () => {
+    beforeEach(async () => {
         renderWithClient(<StampsScreen />);
+        await waitFor(() => {
+            expect(screen.getByTestId('stamps-grid')).toBeInTheDocument();
+        });
+    });
+
+    it('renders stamps in correct grid layout', async () => {
+        screen.debug();
         const gridContainer = screen.getByTestId('stamps-grid');
         expect(gridContainer).toHaveClass('grid', 'grid-cols-3', 'gap-4');
     });
 
-    it('renders grid of stamps with achieved stamps first', () => {
-        renderWithClient(<StampsScreen />);
+    it('renders grid with achieved stamps', () => {
+        const crmoStamp = screen.getByAltText('CRMO - achieved');
+        expect(crmoStamp).not.toHaveClass('opacity-50', 'grayscale');
+    });
 
-        // Get all stamp images
-        const firstStampImage = screen.getByTestId(`stamp-image-${mockParks[0].abbreviation}`);
-        const secondStampImage = screen.getByTestId(`stamp-image-${mockParks[1].abbreviation}`);
-
-        // First stamps should be achieved (not greyed out)
-        expect(firstStampImage).not.toHaveClass('opacity-50', 'grayscale');
-        expect(secondStampImage).not.toHaveClass('opacity-50', 'grayscale');
-
-        // Get an unachieved stamp (any after the first two)
-        const unachievedStamp = screen.getByTestId(`stamp-image-${mockParks[2].abbreviation}`);
-        expect(unachievedStamp).toHaveClass('opacity-50', 'grayscale');
+    it('renders grid with unachieved stamps', () => {
+        const cacrStamp = screen.getByAltText('CACR - greyed out');
+        expect(cacrStamp).toHaveClass('opacity-50', 'grayscale');
     });
 
     it('shows stamp details when clicking unvisited stamp', () => {

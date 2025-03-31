@@ -2,6 +2,14 @@ import { createQueryHookWrapper } from '@/lib/testing/test-wrapper';
 import { renderHook, waitFor } from '@testing-library/react';
 import { expect } from 'vitest';
 
+export type TestableQueryHook<T> = (...args: any[]) => {
+    isLoading: boolean;
+    isError: boolean;
+    isSuccess: boolean;
+    data: T | undefined;
+    error: unknown;
+};
+
 /**
  * Generic test utility for testing query hooks
  * @param useQueryHook - The query hook to test
@@ -9,13 +17,7 @@ import { expect } from 'vitest';
  * @param hookParams - Optional parameters to pass to the hook
  */
 export const testQueryHook = async <T extends { id: number } | { id: number }[]>(
-    useQueryHook: (...args: any[]) => {
-        isLoading: boolean;
-        isError: boolean;
-        isSuccess: boolean;
-        data: T | undefined;
-        error: unknown;
-    },
+    useQueryHook: TestableQueryHook<T>,
     mockData: T,
     hookParams: any[] = [],
 ) => {
