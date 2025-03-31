@@ -4,11 +4,11 @@ import { useStamps } from '@/hooks/queries/useStamps';
 import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
-import type { Park, ParkIconEnum, ParkVisit } from '@/types';
-import { BlazeIcons, BlueIcons, GreenIcons, RedIcons, getParkIconTooltip } from '@/types/misc';
+import type { Park, ParkIconEnum } from '@/types';
 import { useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { sortParks, filterParks, FilterModal, type SortOption } from '@/components/sort-filter';
 
 const LoadingPlaceholder = () => {
     // TODO: add a loading placeholder (blank grey boxes)
@@ -29,8 +29,6 @@ const Row = ({ park }: { park: Park }) => {
         </ListRow>
     );
 };
-
-type SortOption = 'alphabetical' | 'favorited' | 'stamps' | 'lastVisited' | 'distance';
 
 export default function LocationsScreen() {
     dbg('RENDER', 'Locations');
@@ -60,6 +58,10 @@ export default function LocationsScreen() {
         localStorage.setItem('parkSortOption', option);
     };
 
+    const handleCloseFilterModal = () => {
+        setIsFilterModalOpen(false);
+    };
+
     const handleReverseOrderChange = (reverse: boolean) => {
         setIsReverseOrder(reverse);
         localStorage.setItem('parkReverseOrder', reverse.toString());
@@ -74,195 +76,20 @@ export default function LocationsScreen() {
     if (isError) return <div>Error: {error.message}</div>;
     if (!parks || parks.length === 0) return <div>No parks found</div>;
 
-    const calculateDistance = (park: Park) => {
-        if (!geopoint) return Infinity;
-        const R = 6371; // Earth's radius in km
-        const lat1 = (geopoint.latitude * Math.PI) / 180;
-        const lat2 = (park.coordinates.latitude * Math.PI) / 180;
-        const deltaLat = ((park.coordinates.latitude - geopoint.latitude) * Math.PI) / 180;
-        const deltaLon = ((park.coordinates.longitude - geopoint.longitude) * Math.PI) / 180;
-
-        const a =
-            Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
-            Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        return R * c;
-    };
-
-    const sortParks = (parks: Park[]) => {
-        return [...parks].sort((a, b) => {
-            // Primary sort based on selected option
-            let primarySort = 0;
-            switch (sortOption) {
-                case 'alphabetical': {
-                    primarySort = a.parkName.localeCompare(b.parkName);
-                    break;
-                }
-                case 'favorited': {
-                    // TODO: Implement favorited sorting when favorites feature is added
-                    primarySort = 0;
-                    break;
-                }
-                case 'stamps': {
-                    const aHasStamp = stamps?.some((s) => s.parkId === a.id);
-                    const bHasStamp = stamps?.some((s) => s.parkId === b.id);
-                    primarySort = (bHasStamp ? 1 : 0) - (aHasStamp ? 1 : 0);
-                    break;
-                }
-                case 'lastVisited': {
-                    const aLastVisit = visitHistory?.find((v: ParkVisit) => v.parkId === a.id)?.updatedAt;
-                    const bLastVisit = visitHistory?.find((v: ParkVisit) => v.parkId === b.id)?.updatedAt;
-                    primarySort = (bLastVisit?.getTime() ?? 0) - (aLastVisit?.getTime() ?? 0);
-                    break;
-                }
-                case 'distance': {
-                    primarySort = calculateDistance(a) - calculateDistance(b);
-                    break;
-                }
-                default: {
-                    primarySort = 0;
-                    break;
-                }
-            }
-
-            // If primary sort is equal (0), use alphabetical as fallback
-            if (primarySort === 0) {
-                primarySort = a.parkName.localeCompare(b.parkName);
-            }
-
-            // Apply reverse order if enabled
-            return isReverseOrder ? -primarySort : primarySort;
-        });
-    };
-
-    const filterParks = (parks: Park[]) => {
-        return parks.filter((park) => {
-            // Text search filter
-            const matchesSearch =
-                park.parkName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                (park.addresses?.length > 0 &&
-                    park.addresses?.[0].city.toLowerCase().includes(searchQuery.toLowerCase()));
-
-            // Icon filter
-            const matchesIcons =
-                selectedIcons.size === 0 ||
-                Array.from(selectedIcons).every((selectedIcon) => {
-                    // Check if the park has this icon (with any color)
-                    const hasIcon = park.icons.some((icon) => {
-                        const baseIconName = icon.iconName.split('-')[0];
-                        dbg('MISC', 'Checking icon', {
-                            parkName: park.parkName,
-                            parkIcon: icon.iconName,
-                            baseIconName,
-                            selectedIcon,
-                            isSelected: baseIconName === selectedIcon,
-                            allSelectedIcons: Array.from(selectedIcons),
-                            parkIcons: park.icons.map((i) => i.iconName),
-                        });
-                        return baseIconName === selectedIcon;
-                    });
-                    return hasIcon;
-                });
-
-            return matchesSearch && matchesIcons;
-        });
-    };
-
-    const filteredParks = sortParks(filterParks(parks));
-
-    const FilterModal = () => {
-        if (!isFilterModalOpen) return null;
-
-        const allIcons = [
-            ...Object.values(RedIcons),
-            ...Object.values(BlueIcons),
-            ...Object.values(GreenIcons),
-            ...Object.values(BlazeIcons),
-        ] as ParkIconEnum[];
-
-        // Sort icons alphabetically by their tooltip text
-        const sortedIcons = [...allIcons].sort((a, b) => getParkIconTooltip(a).localeCompare(getParkIconTooltip(b)));
-
-        dbg('MISC', 'Filter Modal State', {
-            selectedIcons: Array.from(selectedIcons),
-            allIcons: sortedIcons,
-            parksWithIcons: parks.map((p) => ({
-                name: p.parkName,
-                icons: p.icons.map((i) => i.iconName),
-            })),
-        });
-
-        return (
-            <div className='fixed inset-0 z-50 flex items-center justify-center bg-system_black bg-opacity-50'>
-                <div className='max-h-[80vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-system_white p-6'>
-                    <div className='mb-4 flex items-center justify-between'>
-                        <h2 className='font-bold text-xl'>Sort & Filter</h2>
-                        <button
-                            type='button'
-                            onClick={() => setIsFilterModalOpen(false)}
-                            className='text-h2 hover:text-gray-700' // Increased size
-                        >
-                            &times;
-                        </button>
-                    </div>
-
-                    <div className='mb-6'>
-                        <h3 className='mb-2 font-semibold'>Sort By</h3>
-                        <div className='flex gap-2'>
-                            <select
-                                value={sortOption}
-                                onChange={(e) => handleSortOptionChange(e.target.value as SortOption)}
-                                className='flex-1 appearance-none rounded border p-2'
-                                style={{
-                                    background: 'url("icons/misc/AngleDown.svg") no-repeat #fff',
-                                    backgroundPosition: 'calc(100% - 8px) center',
-                                }}
-                            >
-                                <option value='alphabetical'>Alphabetically</option>
-                                <option value='favorited'>Favorited Parks</option>
-                                <option value='stamps'>Stamp Collection Status</option>
-                                <option value='lastVisited'>Last Visited Date</option>
-                                <option value='distance'>Distance from Current Location</option>
-                            </select>
-                            <button
-                                type='button'
-                                onClick={() => handleReverseOrderChange(!isReverseOrder)}
-                                className='rounded border p-2 hover:bg-gray-100'
-                                title={isReverseOrder ? 'Sort ascending' : 'Sort descending'}
-                            >
-                                {isReverseOrder ? '↑' : '↓'}
-                            </button>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 className='mb-2 font-semibold'>Filter by Features</h3>
-                        <div className='grid grid-cols-2 gap-2'>
-                            {sortedIcons.map((icon) => (
-                                <label key={icon} className='flex items-center space-x-2'>
-                                    <input
-                                        type='checkbox'
-                                        checked={selectedIcons.has(icon)}
-                                        onChange={(e) => {
-                                            const newSelected = new Set(selectedIcons);
-                                            if (e.target.checked) {
-                                                newSelected.add(icon);
-                                            } else {
-                                                newSelected.delete(icon);
-                                            }
-                                            handleSelectedIconsChange(newSelected);
-                                        }}
-                                        className='rounded'
-                                    />
-                                    <span>{getParkIconTooltip(icon)}</span>
-                                </label>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    };
+    const collectedStamps: { parkId: number }[] = [];
+    if (stamps) {
+        for (const x of stamps) {
+            collectedStamps.push({ parkId: x.parkId });
+        }
+    }
+    const filteredParks = sortParks(
+        filterParks(parks, searchQuery, selectedIcons),
+        sortOption,
+        isReverseOrder,
+        collectedStamps,
+        visitHistory,
+        geopoint || undefined,
+    );
 
     return (
         <>
@@ -306,7 +133,16 @@ export default function LocationsScreen() {
                     </Link>
                 </div>
             ))}
-            <FilterModal />
+            <FilterModal
+                isFilterModalOpen={isFilterModalOpen}
+                handleCloseFilterModal={handleCloseFilterModal}
+                handleSortOptionChange={handleSortOptionChange}
+                sortOption={sortOption}
+                handleReverseOrderChange={handleReverseOrderChange}
+                isReverseOrder={isReverseOrder}
+                handleSelectedIconsChange={handleSelectedIconsChange}
+                selectedIcons={selectedIcons}
+            />
         </>
     );
 }
