@@ -5,7 +5,7 @@ import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { Park, ParkIconEnum, ParkVisit } from '@/types';
-import { BlackIcons, BlazeIcons, BlueIcons, GreenIcons, RedIcons, getParkIconTooltip } from '@/types/misc';
+import { BlazeIcons, BlueIcons, GreenIcons, RedIcons, getParkIconTooltip } from '@/types/misc';
 import { useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -40,9 +40,35 @@ export default function LocationsScreen() {
     const { geopoint } = useLocation();
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
-    const [sortOption, setSortOption] = useState<SortOption>('alphabetical');
-    const [isReverseOrder, setIsReverseOrder] = useState(false);
-    const [selectedIcons, setSelectedIcons] = useState<Set<ParkIconEnum>>(new Set());
+    const [sortOption, setSortOption] = useState<SortOption>(() => {
+        const saved = localStorage.getItem('parkSortOption');
+        return (saved as SortOption) || 'alphabetical';
+    });
+    const [isReverseOrder, setIsReverseOrder] = useState(() => {
+        const saved = localStorage.getItem('parkReverseOrder');
+        return saved === 'true';
+    });
+    const [selectedIcons, setSelectedIcons] = useState<Set<ParkIconEnum>>(() => {
+        const saved = localStorage.getItem('parkSelectedIcons');
+        return saved ? new Set(JSON.parse(saved)) : new Set();
+    });
+    const [isTypingSearch, setIsTypingSearch] = useState(false);
+
+    // Save settings to localStorage whenever they change
+    const handleSortOptionChange = (option: SortOption) => {
+        setSortOption(option);
+        localStorage.setItem('parkSortOption', option);
+    };
+
+    const handleReverseOrderChange = (reverse: boolean) => {
+        setIsReverseOrder(reverse);
+        localStorage.setItem('parkReverseOrder', reverse.toString());
+    };
+
+    const handleSelectedIconsChange = (newSelected: Set<ParkIconEnum>) => {
+        setSelectedIcons(newSelected);
+        localStorage.setItem('parkSelectedIcons', JSON.stringify(Array.from(newSelected)));
+    };
 
     if (isLoading) return <LoadingPlaceholder />;
     if (isError) return <div>Error: {error.message}</div>;
@@ -119,7 +145,24 @@ export default function LocationsScreen() {
 
             // Icon filter
             const matchesIcons =
-                selectedIcons.size === 0 || park.icons.some((icon) => selectedIcons.has(icon.iconName));
+                selectedIcons.size === 0 ||
+                Array.from(selectedIcons).every((selectedIcon) => {
+                    // Check if the park has this icon (with any color)
+                    const hasIcon = park.icons.some((icon) => {
+                        const baseIconName = icon.iconName.split('-')[0];
+                        dbg('MISC', 'Checking icon', {
+                            parkName: park.parkName,
+                            parkIcon: icon.iconName,
+                            baseIconName,
+                            selectedIcon,
+                            isSelected: baseIconName === selectedIcon,
+                            allSelectedIcons: Array.from(selectedIcons),
+                            parkIcons: park.icons.map((i) => i.iconName),
+                        });
+                        return baseIconName === selectedIcon;
+                    });
+                    return hasIcon;
+                });
 
             return matchesSearch && matchesIcons;
         });
@@ -134,9 +177,17 @@ export default function LocationsScreen() {
             ...Object.values(RedIcons),
             ...Object.values(BlueIcons),
             ...Object.values(GreenIcons),
-            ...Object.values(BlackIcons),
             ...Object.values(BlazeIcons),
         ] as ParkIconEnum[];
+
+        dbg('MISC', 'Filter Modal State', {
+            selectedIcons: Array.from(selectedIcons),
+            allIcons: allIcons,
+            parksWithIcons: parks.map((p) => ({
+                name: p.parkName,
+                icons: p.icons.map((i) => i.iconName),
+            })),
+        });
 
         return (
             <div className='fixed inset-0 z-50 flex items-center justify-center bg-system_black bg-opacity-50'>
@@ -157,7 +208,7 @@ export default function LocationsScreen() {
                         <div className='flex gap-2'>
                             <select
                                 value={sortOption}
-                                onChange={(e) => setSortOption(e.target.value as SortOption)}
+                                onChange={(e) => handleSortOptionChange(e.target.value as SortOption)}
                                 className='flex-1 appearance-none rounded border p-2'
                                 style={{
                                     background: 'url("icons/misc/AngleDown.svg") no-repeat #fff',
@@ -172,7 +223,7 @@ export default function LocationsScreen() {
                             </select>
                             <button
                                 type='button'
-                                onClick={() => setIsReverseOrder(!isReverseOrder)}
+                                onClick={() => handleReverseOrderChange(!isReverseOrder)}
                                 className='rounded border p-2 hover:bg-gray-100'
                                 title={isReverseOrder ? 'Sort ascending' : 'Sort descending'}
                             >
@@ -196,7 +247,7 @@ export default function LocationsScreen() {
                                             } else {
                                                 newSelected.delete(icon);
                                             }
-                                            setSelectedIcons(newSelected);
+                                            handleSelectedIconsChange(newSelected);
                                         }}
                                         className='rounded'
                                     />
@@ -219,6 +270,8 @@ export default function LocationsScreen() {
                         placeholder='Search parks...'
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
+                        onFocus={() => setIsTypingSearch(true)}
+                        onBlur={() => setIsTypingSearch(false)}
                         className='w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'
                     />
                     {searchQuery && (
@@ -235,8 +288,10 @@ export default function LocationsScreen() {
                 <button
                     type='button'
                     onClick={() => setIsFilterModalOpen(true)}
-                    className={'w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200'}
-                    style={{display: searchQuery ? 'none' : 'inline'}}
+                    className={
+                        'w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200'
+                    }
+                    style={{ display: isTypingSearch ? 'none' : 'inline' }}
                 >
                     <FaFilter />
                 </button>
