@@ -19,7 +19,7 @@ export const NotesMiniTab = ({
     const [noteState, setNoteState] = useState('');
 
     useEffect(() => {
-        dbg('EFFECT', 'NotesMiniTab', 'useEffect');
+        dbg('EFFECT', 'NotesMiniTab');
         dbgif(isLoading, 'EFFECT', 'NotesMiniTab', 'Note is still loading!');
 
         // check and see if we got the note from the server

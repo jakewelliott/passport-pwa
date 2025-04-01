@@ -25,7 +25,7 @@ const DebugControl = {
     NOTIFICATIONS: true,
     STORE: true,
     ERROR: true,
-    FETCH: true,
+    FETCH: false,
 } as const;
 
 type DebugType = keyof typeof DebugControl;

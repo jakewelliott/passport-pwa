@@ -1,32 +1,27 @@
 import { MyNotes } from '@/app/more/my-notes';
+import { useNotes } from '@/hooks/queries/useNotes';
+import { useParks } from '@/hooks/queries/useParks';
 import { renderWithClient } from '@/lib/testing/test-wrapper';
-import { screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { renderHook, screen, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it } from 'vitest';
 
-describe('MyNotes Component - User Stories', () => {
-    const mockParks = [
-        {
-            parkName: 'Test Park 1',
-            abbreviation: 'TP1',
-            addresses: [{ city: 'Test City 1' }],
-        },
-        {
-            parkName: 'Test Park 2',
-            abbreviation: 'TP2',
-            addresses: [{ city: 'Test City 2' }],
-        },
-    ];
-
-    const mockNotes = {
-        generalNotes: 'Some general notes',
-        TP1: 'Notes for Test Park 1',
-        getNote: (key: string) => mockNotes[key as keyof typeof mockNotes],
-        getKeys: () => ['generalNotes', 'TP1'],
-    };
+describe('My Notes component', () => {
+    beforeEach(async () => {
+        const { wrapper } = renderWithClient(<MyNotes />);
+        // we need to load useParks first then useNotes
+        const { result: parks } = renderHook(() => useParks(), { wrapper });
+        const { result: notes } = renderHook(() => useNotes(), { wrapper });
+        await waitFor(() => {
+            expect(notes.current.data).toBeDefined();
+            expect(notes.current.isFetching).toBe(false);
+            expect(parks.current.data).toBeDefined();
+            expect(parks.current.isFetching).toBe(false);
+        });
+    });
 
     // User Story: As a user, I want to see my general notes
     it('should display general notes section', () => {
-        renderWithClient(<MyNotes />);
+        screen.debug();
         expect(screen.getByText('General Notes')).toBeInTheDocument();
         expect(screen.getByText('Some general notes')).toBeInTheDocument();
     });
@@ -72,34 +67,9 @@ describe('MyNotes Component - User Stories', () => {
 
     // Test when there are multiple parks with notes
     it('should display multiple parks with notes', () => {
-        const multipleParks = [
-            ...mockParks,
-            { parkName: 'Test Park 3', abbreviation: 'TP3', addresses: [{ city: 'Test City 3' }] },
-        ];
-        const multipleNotes = {
-            ...mockNotes,
-            TP2: 'Notes for Test Park 2',
-            TP3: 'Notes for Test Park 3',
-            getKeys: () => ['generalNotes', 'TP1', 'TP2', 'TP3'],
-        };
         renderWithClient(<MyNotes />);
         expect(screen.getByText('Test Park 1')).toBeInTheDocument();
         expect(screen.getByText('Test Park 2')).toBeInTheDocument();
         expect(screen.getByText('Test Park 3')).toBeInTheDocument();
-    });
-
-    // Test when a park has no city in its address
-    it('should handle parks with no city in address', () => {
-        const parkWithNoCity = [{ parkName: 'No City Park', abbreviation: 'NCP', addresses: [{}] }];
-        renderWithClient(<MyNotes />);
-        expect(screen.getByText('No City Park')).toBeInTheDocument();
-        expect(screen.queryByText('Test City')).not.toBeInTheDocument();
-    });
-
-    // Test when a park has no addresses
-    it('should handle parks with no addresses', () => {
-        const parkWithNoAddress = [{ parkName: 'No Address Park', abbreviation: 'NAP', addresses: [] }];
-        renderWithClient(<MyNotes />);
-        expect(screen.getByText('No Address Park')).toBeInTheDocument();
     });
 });

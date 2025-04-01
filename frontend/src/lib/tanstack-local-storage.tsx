@@ -1,7 +1,11 @@
-import { persistQueryClient } from '@tanstack/query-persist-client-core';
 import { createSyncStoragePersister } from '@tanstack/query-sync-storage-persister';
 import { QueryClient } from '@tanstack/react-query';
+import { PersistQueryClientProvider } from '@tanstack/react-query-persist-client';
 import { dbg } from './debug';
+
+const persister = createSyncStoragePersister({
+    storage: window.localStorage,
+});
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -10,9 +14,7 @@ const queryClient = new QueryClient({
             gcTime: Infinity,
             retry: (failureCount, error: Error) => {
                 // Don't retry on 401 errors
-                if (error.message === 'Unauthorized: Please log in again') {
-                    return false;
-                }
+                if (error.message === 'Unauthorized: Please log in again') return false;
                 dbg('QUERY', 'ERROR', error);
                 return failureCount < 3;
             },
@@ -20,16 +22,17 @@ const queryClient = new QueryClient({
     },
 });
 
-// Create the persister
-const persister = createSyncStoragePersister({
-    storage: window.localStorage,
-});
+export const TanstackQueryProvider = ({ children }: { children: React.ReactNode }) => (
+    <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
+        {children}
+    </PersistQueryClientProvider>
+);
 
 // Configure persistence
-persistQueryClient({
-    queryClient,
-    persister,
-    maxAge: Infinity,
-});
+// persistQueryClient({
+//     queryClient,
+//     persister,
+//     maxAge: Infinity,
+// });
 
 export { queryClient };

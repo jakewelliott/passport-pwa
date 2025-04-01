@@ -5,7 +5,6 @@ import { TrailIconView, TrailIcons } from '../trail-icons';
 
 const mockIcon = mockTrail.icons?.[0];
 const mockIcons = trails[1].icons;
-console.log(mockIcons);
 
 describe('Individual TrailIcon', () => {
     it('renders with default props', () => {

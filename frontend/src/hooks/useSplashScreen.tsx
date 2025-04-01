@@ -5,7 +5,7 @@ import type { UseQueryResult } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { type To, useNavigate } from 'react-router-dom';
 import { useBucketList } from './queries/useBucketList';
-import { useGetAllNotes } from './queries/useNotes';
+import { useNotes } from './queries/useNotes';
 import { useParks } from './queries/useParks';
 import { useTrails } from './queries/useTrails';
 
@@ -106,7 +106,7 @@ const APP_LOADERS: Loader[] = [
         refetch: true,
     },
     {
-        hook: useGetAllNotes,
+        hook: useNotes,
         validator: (hook) => Array.isArray(hook?.data),
         what: 'notes',
         refetch: true,

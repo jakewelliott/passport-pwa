@@ -72,7 +72,6 @@ export const cachedFiles = [
   '/splash/apple-splash-1640-2360.jpg',
   '/splash/apple-splash-640-1136.jpg',
   '/screenshots/desktop-screenshot.png',
-  '/.DS_Store',
   '/PassportMap_TrailsOnly.svg',
   '/trail-icons.json',
   '/PassportLogosvg',

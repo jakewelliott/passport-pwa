@@ -3,43 +3,49 @@
 //
 
 const RED_ICONS = [
-    'Biking',
-    'Fishing',
-    'Hiking',
-    'HorsebackRiding',
-    'Paddling',
-    'Picnicking',
-    'RockClimbing',
-    'Swimming',
+    'Biking-Red',
+    'Fishing-Red',
+    'Hiking-Red',
+    'HorsebackRiding-Red',
+    'Paddling-Red',
+    'Picnicking-Red',
+    'RockClimbing-Red',
+    'Swimming-Red',
 ] as const;
 
 type RedIcons = (typeof RED_ICONS)[number];
 
 const RED_ICONS_TOOLTIPS: Record<RedIcons, string> = {
-    Biking: 'Biking',
-    Fishing: 'Fishing',
-    Hiking: 'Hiking',
-    HorsebackRiding: 'Horseback Riding',
-    Paddling: 'Paddling',
-    Picnicking: 'Picnicking',
-    RockClimbing: 'Rock Climbing',
-    Swimming: 'Swimming',
+    'Biking-Red': 'Biking',
+    'Fishing-Red': 'Fishing',
+    'Hiking-Red': 'Hiking',
+    'HorsebackRiding-Red': 'Horseback Riding',
+    'Paddling-Red': 'Paddling',
+    'Picnicking-Red': 'Picnicking',
+    'RockClimbing-Red': 'Rock Climbing',
+    'Swimming-Red': 'Swimming',
 };
 
 //
 // BLUE ICONS
 //
 
-const BLUE_ICONS = ['BoatRamp', 'BoatRental', 'Exhibits', 'Playground', 'VisitorCenter'] as const;
+const BLUE_ICONS = [
+    'BoatRamp-Blue',
+    'BoatRental-Blue',
+    'Exhibits-Blue',
+    'Playground-Blue',
+    'VisitorCenter-Blue',
+] as const;
 
 type BlueIcons = (typeof BLUE_ICONS)[number];
 
 const BLUE_ICONS_TOOLTIPS: Record<BlueIcons, string> = {
-    BoatRamp: 'Boat Ramp',
-    BoatRental: 'Boat Rental',
-    Exhibits: 'Exhibits',
-    Playground: 'Playground',
-    VisitorCenter: 'Visitor Center',
+    'BoatRamp-Blue': 'Boat Ramp',
+    'BoatRental-Blue': 'Boat Rental',
+    'Exhibits-Blue': 'Exhibits',
+    'Playground-Blue': 'Playground',
+    'VisitorCenter-Blue': 'Visitor Center',
 };
 
 //
@@ -47,42 +53,42 @@ const BLUE_ICONS_TOOLTIPS: Record<BlueIcons, string> = {
 //
 
 const GREEN_ICONS = [
-    'CamperCabins',
-    'Camping',
-    'CanoeinCamping',
-    'EquestrianCamping',
-    'GroupCabins',
-    'GroupCamp',
-    'PrimitiveCabin',
-    'RVCamping',
-    'VacationCabin',
+    'CamperCabins-Green',
+    'Camping-Green',
+    'CanoeinCamping-Green',
+    'EquestrianCamping-Green',
+    'GroupCabins-Green',
+    'GroupCamp-Green',
+    'PrimitiveCabin-Green',
+    'RVCamping-Green',
+    'VacationCabin-Green',
 ] as const;
 
 type GreenIcons = (typeof GREEN_ICONS)[number];
 
 const GREEN_ICONS_TOOLTIPS: Record<GreenIcons, string> = {
-    CamperCabins: 'Camper Cabins',
-    Camping: 'Camping',
-    CanoeinCamping: 'Canoe-in Camping',
-    EquestrianCamping: 'Equestrian Camping',
-    GroupCabins: 'Group Cabins',
-    GroupCamp: 'Group Camping',
-    PrimitiveCabin: 'Primitive Cabin',
-    RVCamping: 'RV Camping',
-    VacationCabin: 'Vacation Cabin',
+    'CamperCabins-Green': 'Camper Cabins',
+    'Camping-Green': 'Camping',
+    'CanoeinCamping-Green': 'Canoe-in Camping',
+    'EquestrianCamping-Green': 'Equestrian Camping',
+    'GroupCabins-Green': 'Group Cabins',
+    'GroupCamp-Green': 'Group Camping',
+    'PrimitiveCabin-Green': 'Primitive Cabin',
+    'RVCamping-Green': 'RV Camping',
+    'VacationCabin-Green': 'Vacation Cabin',
 };
 
 //
 // BLACK ICONS
 //
 
-const BLACK_ICONS = ['Camping', 'PicnicShelter'] as const;
+const BLACK_ICONS = ['Camping-Black', 'PicnicShelter-Black'] as const;
 
 type BlackIcons = (typeof BLACK_ICONS)[number];
 
 const BLACK_ICONS_TOOLTIPS: Record<BlackIcons, string> = {
-    Camping: 'Camping Sites',
-    PicnicShelter: 'Picnic Shelter',
+    'Camping-Black': 'Camping Sites',
+    'PicnicShelter-Black': 'Picnic Shelter',
 };
 
 //
@@ -106,7 +112,7 @@ const BLAZE_ICONS_TOOLTIPS: Record<BlazeIcons, string> = {
 //
 
 const TRAIL_ICONS = [
-    'FourWDBeach',
+    '4WDBeach',
     'Accessible',
     'Amphiteater',
     'BackpackCamping',
@@ -153,7 +159,7 @@ const TRAIL_ICONS = [
 type TrailIcon = (typeof TRAIL_ICONS)[number];
 
 const TRAIL_ICONS_TOOLTIPS: Record<TrailIcon, string> = {
-    FourWDBeach: '4WD Beach Access',
+    '4WDBeach': '4WD Beach Access',
     Accessible: 'Accessible Facilities',
     Amphiteater: 'Amphitheater',
     BackpackCamping: 'Backpack Camping',

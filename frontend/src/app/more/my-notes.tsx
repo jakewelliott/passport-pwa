@@ -1,10 +1,11 @@
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
-import { useGetAllNotes } from '@/hooks/queries/useNotes';
+import { useNotes } from '@/hooks/queries/useNotes';
 import { useParks } from '@/hooks/queries/useParks';
 import { a11yOnClick } from '@/lib/a11y';
 import dateHelper from '@/lib/date-helper';
 import { dbg } from '@/lib/debug';
 import type { ParkNote } from '@/types';
+import { useMemo } from 'react';
 import { type NavigateFunction, useNavigate } from 'react-router-dom';
 import ListRow from '../../components/list-row';
 
@@ -21,14 +22,17 @@ const NoteRow = ({
 }) => {
     const { data: parks, parkIdToAbbreviation } = useParks();
 
-    dbg('RENDER', 'NoteRow', note);
-    dbg('RENDER', 'NoteRow parks', parks);
+    dbg('RENDER', 'NoteRow', `park: ${note.parkId}`);
 
-    const navigateTo = isGeneralNote(note)
-        ? '/more/my-notes/general-notes'
-        : `/locations/${parkIdToAbbreviation(note.parkId)}?tab=notes`;
+    const navigateTo = useMemo(() => {
+        return isGeneralNote(note)
+            ? '/more/my-notes/general-notes'
+            : `/locations/${parkIdToAbbreviation(note.parkId)}?tab=notes`;
+    }, [note, parkIdToAbbreviation]);
 
-    const title = isGeneralNote(note) ? 'General Notes' : parks?.find((x) => x.id === note.parkId)?.parkName;
+    const title = useMemo(() => {
+        return isGeneralNote(note) ? 'General Notes' : parks?.find((x) => x.id === note.parkId)?.parkName;
+    }, [note, parks]);
 
     return (
         <div key={note.parkId} {...a11yOnClick(() => navigate(navigateTo))} className={`cursor-pointer ${note.parkId}`}>
@@ -53,7 +57,7 @@ const NoteRow = ({
 
 export const MyNotes = () => {
     const navigate = useNavigate();
-    const { data: remoteNotes, isLoading } = useGetAllNotes();
+    const { data: remoteNotes, isLoading } = useNotes();
 
     const generalNote = remoteNotes?.find((note) => isGeneralNote(note));
     const restOfNotes = remoteNotes?.filter((note) => !isGeneralNote(note)) || [];
