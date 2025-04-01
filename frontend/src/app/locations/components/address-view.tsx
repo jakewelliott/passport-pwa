@@ -13,7 +13,7 @@ export const AddressView = ({ park }: { park: Park }) => {
     const addressesToShow = showAll ? park.addresses : park.addresses?.slice(0, 2);
 
     const Button = () => (
-        <button type='button' onClick={toggle} className='ml-4 inline-flex items-center'>
+        <button type='button' onClick={toggle} className='ml-7 inline-flex items-center'>
             {showAll ? (
                 <>
                     Show Less <MdExpandLess className='ml-1' />

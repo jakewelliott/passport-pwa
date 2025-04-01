@@ -1,8 +1,6 @@
 import { BLAZE_ICONS, BLUE_ICONS, GREEN_ICONS, type PARK_ICONS, type ParkIcon, RED_ICONS } from '@/types/icons';
 
-type IconWithExtraText = ParkIcon & {
-    extraText?: string;
-};
+type IconWithExtraText = ParkIcon;
 
 interface IconSection {
     sectionName: string;
@@ -11,14 +9,8 @@ interface IconSection {
 
 type IconName = (typeof PARK_ICONS)[number]['iconName'];
 
-const EXTRA_TEXT: Partial<Record<IconName, string>> = {
-    'RVCamping-Green':
-        '*has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups',
-};
-
 const textHelper = (icon: ParkIcon) => ({
     ...icon,
-    extraText: EXTRA_TEXT[icon.iconName as IconName],
 });
 
 // @biome-ignore lint/style/noNonNullAssertion: we know this icon exists
@@ -49,7 +41,7 @@ const IconView = ({ icon }: { icon: IconSection['icons'][number] }) => {
             <img src={path(icon.iconName)} alt={icon.tooltip} width={'36px'} height={'36px'} />
             <div className='ml-2 flex w-full flex-col justify-center'>
                 <p>{icon.tooltip}</p>
-                {icon.extraText && <p className='max-w-56 p-mini'>{icon.extraText}</p>}
+                {icon.extraText && <p className='max-w-56 p-mini'>*{icon.extraText}</p>}
             </div>
         </div>
     );
