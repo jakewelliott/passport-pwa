@@ -1,6 +1,6 @@
 import type { Park, ParkIcon } from '@/types';
+import { parkIconHelper } from '@/types/icons';
 import type React from 'react';
-
 const path = (icon: ParkIcon) => `/icons/park/${icon.iconName}.svg`;
 
 const Highlight = ({ title, children }: { title: string; children?: React.ReactNode }) => {
@@ -43,15 +43,8 @@ const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
     );
 };
 
-// ADAM: we need to store the tooltips on the server
-// and then we can get rid of this tomfoolery & get rid of the tooltip object
-// ideally we'd do icon.name & icon.tooltip
-const mapServerToClientIcons = (icons: any): ParkIcon[] => {
-    return icons.map((icon: any) => icon.iconName);
-};
-
 export const DetailsMiniTab = ({ park }: { park: Park }) => {
-    const icons = mapServerToClientIcons(park.icons);
+    const icons = park.icons.map((icon) => parkIconHelper({ iconName: icon.iconName }));
 
     return (
         <div className='mt-6 mb-6 flex flex-col'>

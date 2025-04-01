@@ -2,7 +2,7 @@
 // PARK ICONS
 //
 
-const RED_ICONS = [
+export const RED_ICONS = [
     { iconName: 'Biking-Red', tooltip: 'Biking' },
     { iconName: 'Fishing-Red', tooltip: 'Fishing' },
     { iconName: 'Hiking-Red', tooltip: 'Hiking' },
@@ -13,7 +13,7 @@ const RED_ICONS = [
     { iconName: 'Swimming-Red', tooltip: 'Swimming' },
 ] as const;
 
-const BLUE_ICONS = [
+export const BLUE_ICONS = [
     { iconName: 'BoatRamp-Blue', tooltip: 'Boat Ramp' },
     { iconName: 'BoatRental-Blue', tooltip: 'Boat Rental' },
     { iconName: 'Exhibits-Blue', tooltip: 'Exhibits' },
@@ -21,7 +21,7 @@ const BLUE_ICONS = [
     { iconName: 'VisitorCenter-Blue', tooltip: 'Visitor Center' },
 ] as const;
 
-const GREEN_ICONS = [
+export const GREEN_ICONS = [
     { iconName: 'CamperCabins-Green', tooltip: 'Camper Cabins' },
     { iconName: 'Camping-Green', tooltip: 'Camping' },
     { iconName: 'CanoeinCamping-Green', tooltip: 'Canoe-in Camping' },
@@ -33,26 +33,26 @@ const GREEN_ICONS = [
     { iconName: 'VacationCabin-Green', tooltip: 'Vacation Cabin' },
 ] as const;
 
-const BLACK_ICONS = [
+export const BLACK_ICONS = [
     { iconName: 'Camping-Black', tooltip: 'Camping Sites' },
     { iconName: 'PicnicShelter-Black', tooltip: 'Picnic Shelter' },
 ] as const;
 
-const BLAZE_ICONS = [
+export const BLAZE_ICONS = [
     { iconName: 'FBST-Blaze', tooltip: 'French Broad State Trail' },
     { iconName: 'FFST-Blaze', tooltip: 'Fontana Lake State Trail' },
     { iconName: 'HGST-Blaze', tooltip: 'Hickory Nut Gorge State Trail' },
     { iconName: 'MST-Blaze', tooltip: 'Mountains-to-Sea State Trail' },
-    { iconName: 'YST-Blaze', tooltip: 'Yadkin State Trail' },
+    { iconName: 'YRST-Blaze', tooltip: 'Yadkin River State Trail' },
 ] as const;
 
-const PARK_ICONS = [...RED_ICONS, ...BLUE_ICONS, ...GREEN_ICONS, ...BLACK_ICONS, ...BLAZE_ICONS] as const;
+export const PARK_ICONS = [...RED_ICONS, ...BLUE_ICONS, ...GREEN_ICONS, ...BLACK_ICONS, ...BLAZE_ICONS] as const;
 
 //
 // TRAIL ICONS
 //
 
-const TRAIL_ICONS = [
+export const TRAIL_ICONS = [
     { iconName: '4WDBeach', tooltip: '4WD Beach Access' },
     { iconName: 'Accessible', tooltip: 'Accessible Facilities' },
     { iconName: 'Amphiteater', tooltip: 'Amphitheater' },
@@ -101,12 +101,15 @@ const TRAIL_ICONS = [
 // TYPES
 //
 
-type ParkIcon = (typeof PARK_ICONS)[number];
-type TrailIcon = (typeof TRAIL_ICONS)[number];
+export type ParkIcon = (typeof PARK_ICONS)[number];
+export type TrailIcon = (typeof TRAIL_ICONS)[number];
 
-//
-// EXPORTS
-//
+// we can get rid of this once we have tooltips on the server
+export const parkIconHelper = ({ iconName }: { iconName: string }) => {
+    return PARK_ICONS.find((icon) => icon.iconName === iconName);
+};
 
-export { PARK_ICONS, TRAIL_ICONS };
-export type { ParkIcon, TrailIcon };
+// we can get rid of this once we have tooltips on the server
+export const trailIconHelper = ({ iconName }: { iconName: string }) => {
+    return TRAIL_ICONS.find((icon) => icon.iconName === iconName);
+};

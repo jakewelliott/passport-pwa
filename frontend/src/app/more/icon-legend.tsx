@@ -1,4 +1,4 @@
-import { IconSection } from '@/app/more/components/icon-section';
+import { LegendSections } from '@/app/more/components/legend-sections';
 
 export const IconLegend = () => {
     return (
@@ -6,16 +6,7 @@ export const IconLegend = () => {
             <h2 className='mt-4 mb-5 text-center'>Icon Legend</h2>
             <div className='flex flex-wrap justify-center'>
                 <div className='min-w-[250px] flex-1'>
-                    <IconSection sectionName={'Camping'} />
-                </div>
-                <div className='min-w-[200px] flex-1'>
-                    <IconSection sectionName={'Activities'} />
-                </div>
-                <div className='min-w-[200px] flex-1'>
-                    <IconSection sectionName={'Amenities'} />
-                </div>
-                <div className='min-w-[200px] flex-1'>
-                    <IconSection sectionName={'State Trail Stamps'} />
+                    <LegendSections />
                 </div>
                 <p className='m-4 min-w-[200px] flex-1'>
                     <span className='text-icon_amenities'>Kids TRACK Trail: </span>Kids in Parks is a group that creates
