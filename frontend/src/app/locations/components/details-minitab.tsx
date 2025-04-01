@@ -30,12 +30,11 @@ const IconView = ({ key, icon }: { key: string; icon: ParkIcon }) => {
 };
 
 const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
-    console.log('icons', icons);
     return (
         <div data-testid='icon-scroll-container' className='icon-scroll-container overflow-x-auto'>
             <div className='inline-flex gap-6 px-6'>
                 {icons.map((icon) => (
-                    <IconView key={icon.toString()} icon={icon} />
+                    <IconView key={icon.iconName} icon={icon} />
                 ))}
                 <div className='w-px flex-shrink-0' />
             </div>
@@ -44,7 +43,7 @@ const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
 };
 
 export const DetailsMiniTab = ({ park }: { park: Park }) => {
-    const icons = park.icons.map((icon) => parkIconHelper({ iconName: icon.iconName }));
+    const icons = park.icons.map((icon) => parkIconHelper({ iconName: icon.iconName })) as ParkIcon[];
 
     return (
         <div className='mt-6 mb-6 flex flex-col'>
