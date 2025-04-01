@@ -1,6 +1,7 @@
 import { StampDetails } from '@/app/stamps/components/stamp-details';
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import { FilterModal, type SortOption, filterParks, sortParks } from '@/components/sort-filter';
+import { useFavoriteParks } from '@/hooks/queries/useParkFavorites';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
@@ -45,6 +46,7 @@ export default function StampsScreen() {
     const { data: parks, isLoading: parksLoading } = useParks();
     const { data: stamps, isLoading: stampsLoading } = useStamps();
     const { data: visitHistory } = useVisitsHistory();
+    const { data: favoritedParks } = useFavoriteParks();
     const { geopoint } = useLocation();
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -64,6 +66,10 @@ export default function StampsScreen() {
     const [selectedIcons, setSelectedIcons] = useState<Set<ParkIcon>>(() => {
         const saved = localStorage.getItem('parkSelectedIcons');
         return saved ? new Set(JSON.parse(saved)) : new Set();
+    });
+    const [showOnlyFavorites, setShowOnlyFavorites] = useState(() => {
+        const saved = localStorage.getItem('showOnlyFavorites');
+        return saved === 'true';
     });
     const [isTypingSearch, setIsTypingSearch] = useState(false);
 
@@ -87,6 +93,11 @@ export default function StampsScreen() {
         localStorage.setItem('parkSelectedIcons', JSON.stringify(Array.from(newSelected)));
     };
 
+    const handleShowOnlyFavoritesChange = (favorites: boolean) => {
+        setShowOnlyFavorites(favorites);
+        localStorage.setItem('showOnlyFavorites', favorites.toString());
+    };
+
     if (parksLoading || stampsLoading) return <LoadingPlaceholder what='stamps' />;
 
     const collectedStamps: { parkId: number }[] = [];
@@ -96,9 +107,10 @@ export default function StampsScreen() {
         }
     }
     const filteredParks = sortParks(
-        filterParks(parks || [], searchQuery, selectedIcons),
+        filterParks(parks || [], searchQuery, selectedIcons, favoritedParks || [], showOnlyFavorites),
         sortOption,
         isReverseOrder,
+        favoritedParks || [],
         collectedStamps,
         visitHistory,
         geopoint || undefined,
@@ -163,6 +175,9 @@ export default function StampsScreen() {
                 isReverseOrder={isReverseOrder}
                 handleSelectedIconsChange={handleSelectedIconsChange}
                 selectedIcons={selectedIcons}
+                favoritedParks={favoritedParks}
+                showOnlyFavorites={showOnlyFavorites}
+                handleShowOnlyFavoritesChange={handleShowOnlyFavoritesChange}
             />
         </>
     );

@@ -1,5 +1,6 @@
 import ListRow from '@/components/list-row';
 import { FilterModal, type SortOption, filterParks, sortParks } from '@/components/sort-filter';
+import { useFavoriteParks } from '@/hooks/queries/useParkFavorites';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
@@ -35,6 +36,7 @@ export default function LocationsScreen() {
     const { data: parks, isLoading, isError, error } = useParks();
     const { data: stamps } = useStamps();
     const { data: visitHistory } = useVisitsHistory();
+    const { data: favoritedParks } = useFavoriteParks();
     const { geopoint } = useLocation();
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -49,6 +51,10 @@ export default function LocationsScreen() {
     const [selectedIcons, setSelectedIcons] = useState<Set<ParkIcon>>(() => {
         const saved = localStorage.getItem('parkSelectedIcons');
         return saved ? new Set(JSON.parse(saved)) : new Set();
+    });
+    const [showOnlyFavorites, setShowOnlyFavorites] = useState(() => {
+        const saved = localStorage.getItem('showOnlyFavorites');
+        return saved === 'true';
     });
     const [isTypingSearch, setIsTypingSearch] = useState(false);
 
@@ -72,6 +78,11 @@ export default function LocationsScreen() {
         localStorage.setItem('parkSelectedIcons', JSON.stringify(Array.from(newSelected)));
     };
 
+    const handleShowOnlyFavoritesChange = (favorites: boolean) => {
+        setShowOnlyFavorites(favorites);
+        localStorage.setItem('showOnlyFavorites', favorites.toString());
+    };
+
     if (isLoading) return <LoadingPlaceholder />;
     if (isError) return <div>Error: {error.message}</div>;
     if (!parks || parks.length === 0) return <div>No parks found</div>;
@@ -83,9 +94,10 @@ export default function LocationsScreen() {
         }
     }
     const filteredParks = sortParks(
-        filterParks(parks, searchQuery, selectedIcons),
+        filterParks(parks, searchQuery, selectedIcons, favoritedParks || [], showOnlyFavorites),
         sortOption,
         isReverseOrder,
+        favoritedParks || [],
         collectedStamps,
         visitHistory,
         geopoint || undefined,
@@ -142,6 +154,9 @@ export default function LocationsScreen() {
                 isReverseOrder={isReverseOrder}
                 handleSelectedIconsChange={handleSelectedIconsChange}
                 selectedIcons={selectedIcons}
+                favoritedParks={favoritedParks}
+                showOnlyFavorites={showOnlyFavorites}
+                handleShowOnlyFavoritesChange={handleShowOnlyFavoritesChange}
             />
         </>
     );
