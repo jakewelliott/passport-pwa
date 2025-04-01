@@ -8,7 +8,7 @@ import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park, ParkIcon } from '@/types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaFilter } from 'react-icons/fa';
 
 const isVisited = (code: string, stamps: CollectedStamp[]) =>
@@ -43,12 +43,16 @@ export default function StampsScreen() {
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const { data: parks, isLoading: parksLoading } = useParks();
-    const { data: stamps, isLoading: stampsLoading } = useStamps();
+    const { data: stamps, isLoading: stampsLoading, refetch } = useStamps();
     const { data: visitHistory } = useVisitsHistory();
     const { data: favoritedParks } = useFavoriteParks();
     const { geopoint } = useLocation();
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     // ADAM: PLEASE use zustand for this and have it in an external hook
     // you can get it to persist the entire store really easily
