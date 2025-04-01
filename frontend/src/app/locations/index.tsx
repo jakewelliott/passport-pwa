@@ -7,7 +7,7 @@ import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { Park, ParkIcon } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -33,11 +33,17 @@ const Row = ({ park }: { park: Park }) => {
 
 export default function LocationsScreen() {
     dbg('RENDER', 'Locations');
-    const { data: parks, isLoading, isError, error } = useParks();
+    const { data: parks, isLoading, isError, error, refetch: refetchParks } = useParks();
     const { data: stamps } = useStamps();
     const { data: visitHistory } = useVisitsHistory();
-    const { data: favoritedParks } = useFavoriteParks();
+    const { data: favoritedParks, refetch: refetchFavorites } = useFavoriteParks();
     const { geopoint } = useLocation();
+
+    useEffect(() => {
+        refetchParks();
+        refetchFavorites();
+    }, [refetchParks, refetchFavorites]);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const [sortOption, setSortOption] = useState<SortOption>(() => {
