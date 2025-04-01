@@ -27,7 +27,7 @@ const StampView = ({
             data-testid={`stamp-button-${park.abbreviation}`}
         >
             <img
-                src={park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://')) ? park.stampImage : `/stamps/${park.abbreviation}.svg`}
+                src={park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://')) ? park.stampImage : `/stamps/${park.stampImage}`}
                 alt={`${park.abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
                 className={greyed ? 'opacity-50 grayscale' : ''}
                 data-testid={`stamp-image-${park.abbreviation}`}
