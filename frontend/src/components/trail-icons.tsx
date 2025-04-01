@@ -26,7 +26,6 @@ export const sizeMap = {
     },
 } as const;
 
-// ADAM: this is only exported for testing!!
 export const TrailIconView = ({
     icon,
     size = 'md',

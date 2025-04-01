@@ -6,7 +6,7 @@ import { useStamps } from '@/hooks/queries/useStamps';
 import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
-import type { CollectedStamp, Park, ParkIconEnum } from '@/types';
+import type { CollectedStamp, Park, ParkIcon } from '@/types';
 import { useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 
@@ -51,6 +51,7 @@ export default function StampsScreen() {
 
     // ADAM: PLEASE use zustand for this and have it in an external hook
     // you can get it to persist the entire store really easily
+    // or useReducer, or something
 
     const [sortOption, setSortOption] = useState<SortOption>(() => {
         const saved = localStorage.getItem('parkSortOption');
@@ -60,7 +61,7 @@ export default function StampsScreen() {
         const saved = localStorage.getItem('parkReverseOrder');
         return saved === 'true';
     });
-    const [selectedIcons, setSelectedIcons] = useState<Set<ParkIconEnum>>(() => {
+    const [selectedIcons, setSelectedIcons] = useState<Set<ParkIcon>>(() => {
         const saved = localStorage.getItem('parkSelectedIcons');
         return saved ? new Set(JSON.parse(saved)) : new Set();
     });
@@ -81,7 +82,7 @@ export default function StampsScreen() {
         localStorage.setItem('parkReverseOrder', reverse.toString());
     };
 
-    const handleSelectedIconsChange = (newSelected: Set<ParkIconEnum>) => {
+    const handleSelectedIconsChange = (newSelected: Set<ParkIcon>) => {
         setSelectedIcons(newSelected);
         localStorage.setItem('parkSelectedIcons', JSON.stringify(Array.from(newSelected)));
     };

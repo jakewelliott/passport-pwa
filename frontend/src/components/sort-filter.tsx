@@ -1,7 +1,8 @@
 // src/utils/parkUtils.ts
-import type { Park, ParkIconEnum, ParkVisit } from '@/types';
-import { RedIcons, BlueIcons, GreenIcons, BlazeIcons, getParkIconTooltip } from '@/types';
+import type { Park, ParkIcon, ParkVisit } from '@/types';
+import { PARK_ICONS } from '@/types';
 
+// ADAM: move this to lib, we might use it for the map stretch goal?
 export const calculateDistance = (geopoint: { latitude: number; longitude: number } | null, park: Park): number => {
     if (!geopoint) return Infinity;
     const R = 6371; // Earth's radius in km
@@ -25,10 +26,11 @@ export const sortParks = (
     isReverseOrder: boolean,
     stamps?: { parkId: number }[],
     visitHistory?: ParkVisit[],
-    geopoint?: { latitude: number; longitude: number }
+    geopoint?: { latitude: number; longitude: number },
 ): Park[] => {
     return [...parks].sort((a, b) => {
         let primarySort = 0;
+        // ADAM: use a map for this
         switch (sortOption) {
             case 'alphabetical':
                 primarySort = a.parkName.localeCompare(b.parkName);
@@ -59,71 +61,55 @@ export const sortParks = (
     });
 };
 
-export const filterParks = (
-    parks: Park[],
-    searchQuery: string,
-    selectedIcons: Set<ParkIconEnum>
-): Park[] => {
+// ADAM: beautiful
+export const filterParks = (parks: Park[], searchQuery: string, selectedIcons: Set<ParkIcon>): Park[] => {
     return parks.filter((park) => {
         const matchesSearch =
             park.parkName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            (park.addresses?.length > 0 &&
-                park.addresses[0].city.toLowerCase().includes(searchQuery.toLowerCase()));
+            (park.addresses?.length > 0 && park.addresses[0].city.toLowerCase().includes(searchQuery.toLowerCase()));
 
         const matchesIcons =
             selectedIcons.size === 0 ||
             Array.from(selectedIcons).every((selectedIcon) =>
-                park.icons.some((icon) => icon.iconName.split('-')[0] === selectedIcon)
+                park.icons.some((icon) => icon.iconName.split('-')[0] === selectedIcon.iconName.split('-')[0]),
             );
 
         return matchesSearch && matchesIcons;
     });
 };
 
-export const FilterModal = (
-    {
-        isFilterModalOpen,
-        handleCloseFilterModal,
-        handleSortOptionChange,
-        sortOption,
-        handleReverseOrderChange,
-        isReverseOrder,
-        handleSelectedIconsChange,
-        selectedIcons
-    }: {
-        isFilterModalOpen: boolean;
-        handleCloseFilterModal: () => void;
-        handleSortOptionChange: (option: SortOption) => void;
-        sortOption: SortOption;
-        handleReverseOrderChange: (reverse: boolean) => void;
-        isReverseOrder: boolean;
-        handleSelectedIconsChange: (newSelected: Set<ParkIconEnum>) => void;
-        selectedIcons: Set<ParkIconEnum>;
-    }
-) => {
+// ADAM: that is a ton of props
+export const FilterModal = ({
+    isFilterModalOpen,
+    handleCloseFilterModal,
+    handleSortOptionChange,
+    sortOption,
+    handleReverseOrderChange,
+    isReverseOrder,
+    handleSelectedIconsChange,
+    selectedIcons,
+}: {
+    isFilterModalOpen: boolean;
+    handleCloseFilterModal: () => void;
+    handleSortOptionChange: (option: SortOption) => void;
+    sortOption: SortOption;
+    handleReverseOrderChange: (reverse: boolean) => void;
+    isReverseOrder: boolean;
+    handleSelectedIconsChange: (newSelected: Set<ParkIcon>) => void;
+    selectedIcons: Set<ParkIcon>;
+}) => {
     if (!isFilterModalOpen) return null;
 
-    const allIcons = [
-        ...Object.values(RedIcons),
-        ...Object.values(BlueIcons),
-        ...Object.values(GreenIcons),
-        ...Object.values(BlazeIcons),
-    ] as ParkIconEnum[];
+    const allIcons = PARK_ICONS;
 
-    const sortedIcons = [...allIcons].sort((a, b) => 
-    getParkIconTooltip(a).localeCompare(getParkIconTooltip(b))
-);
+    const sortedIcons = [...allIcons].sort((a, b) => a.tooltip.localeCompare(b.tooltip));
 
     return (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-system_black bg-opacity-50'>
             <div className='max-h-[80vh] w-full max-w-2xl overflow-y-auto rounded-lg bg-system_white p-6'>
                 <div className='mb-4 flex items-center justify-between'>
                     <h2 className='font-bold text-xl'>Sort & Filter</h2>
-                    <button
-                        type='button'
-                        onClick={() => handleCloseFilterModal()}
-                        className='text-h2'
-                    >
+                    <button type='button' onClick={() => handleCloseFilterModal()} className='text-h2'>
                         &times;
                     </button>
                 </div>
@@ -161,7 +147,7 @@ export const FilterModal = (
                     <h3 className='mb-2 font-semibold'>Filter by Features</h3>
                     <div className='grid grid-cols-2 gap-2'>
                         {sortedIcons.map((icon) => (
-                            <label key={icon} className='flex items-center space-x-2'>
+                            <label key={icon.iconName} className='flex items-center space-x-2'>
                                 <input
                                     type='checkbox'
                                     checked={selectedIcons.has(icon)}
@@ -176,7 +162,7 @@ export const FilterModal = (
                                     }}
                                     className='rounded'
                                 />
-                                <span>{getParkIconTooltip(icon)}</span>
+                                <span>{icon.tooltip}</span>
                             </label>
                         ))}
                     </div>

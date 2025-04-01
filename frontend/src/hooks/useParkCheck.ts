@@ -3,7 +3,7 @@ import { useVisitPark } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg, dbgif } from '@/lib/debug';
 import type { Geopoint, Park, ParkGeoData } from '@/types';
-import { buffer, booleanIntersects, booleanPointInPolygon } from '@turf/turf';
+import { booleanIntersects, booleanPointInPolygon, buffer } from '@turf/turf';
 import { useEffect, useState } from 'react';
 import wkt from 'wellknown';
 
@@ -20,8 +20,6 @@ export type ParkCheckResult = {
 // CASE 3 -> {undefined, false} : user is error
 // CASE 4 -> {park, true}			 	: this may occur between calls to useParkCheck
 
-// ADAM: we might wanna move this to lib if we use this elsewhere
-// for now it's just here
 const castGeopoint = (geopoint: Geopoint): GeoJSON.Feature<GeoJSON.Point> => {
     return {
         type: 'Feature',

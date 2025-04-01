@@ -89,6 +89,7 @@ export const cachedFiles = [
   '/icons/misc/4WDBeach.svg',
   '/icons/misc/VisitorCenter.svg',
   '/icons/misc/Paddling.svg',
+  '/icons/misc/AngleDown.svg',
   '/icons/misc/HorsebackRiding.svg',
   '/icons/misc/IE_Exhibits.svg',
   '/icons/misc/VacationCabin.svg',

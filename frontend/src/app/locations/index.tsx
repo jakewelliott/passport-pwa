@@ -5,7 +5,7 @@ import { useStamps } from '@/hooks/queries/useStamps';
 import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
-import type { Park, ParkIconEnum } from '@/types';
+import type { Park, ParkIcon } from '@/types';
 import { useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -46,7 +46,7 @@ export default function LocationsScreen() {
         const saved = localStorage.getItem('parkReverseOrder');
         return saved === 'true';
     });
-    const [selectedIcons, setSelectedIcons] = useState<Set<ParkIconEnum>>(() => {
+    const [selectedIcons, setSelectedIcons] = useState<Set<ParkIcon>>(() => {
         const saved = localStorage.getItem('parkSelectedIcons');
         return saved ? new Set(JSON.parse(saved)) : new Set();
     });
@@ -67,7 +67,7 @@ export default function LocationsScreen() {
         localStorage.setItem('parkReverseOrder', reverse.toString());
     };
 
-    const handleSelectedIconsChange = (newSelected: Set<ParkIconEnum>) => {
+    const handleSelectedIconsChange = (newSelected: Set<ParkIcon>) => {
         setSelectedIcons(newSelected);
         localStorage.setItem('parkSelectedIcons', JSON.stringify(Array.from(newSelected)));
     };

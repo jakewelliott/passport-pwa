@@ -31,7 +31,7 @@ export interface GenericIconProps {
 export const GenericIcon = ({
     name,
     props = { strokeWidth: 3 },
-    size = 4,
+    // size = 4,
     color = 'supporting_inactiveblue',
     text,
     textClassName,

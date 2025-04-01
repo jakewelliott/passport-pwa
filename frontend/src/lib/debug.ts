@@ -5,7 +5,7 @@ const MUTED = false;
 
 // variable to switch between production and development
 export const PRODUCTION = process.env.PROD === 'PROD';
-export const DEBUG = !PRODUCTION || process.env.ADAM === 'ADAM'; // adam: i use docker to run the backend, but i do the frontend locally so i added this flag
+export const DEBUG = !PRODUCTION;
 
 // debugging utility function & types
 const DebugControl = {
