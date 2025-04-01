@@ -33,7 +33,7 @@ export default function LocationsScreen() {
     if (!parks || parks.length === 0) return <div>No parks found</div>;
 
     return (
-        <>
+        <div data-testid='locations-list'>
             {parks.map((park) => (
                 <div className='m-3' key={park.id} data-testid={'park'}>
                     <Link to={`/locations/${park.abbreviation}`} className='text-supporting_inactiveblue no-underline'>
@@ -41,6 +41,6 @@ export default function LocationsScreen() {
                     </Link>
                 </div>
             ))}
-        </>
+        </div>
     );
 }

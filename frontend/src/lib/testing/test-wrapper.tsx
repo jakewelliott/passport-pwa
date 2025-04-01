@@ -4,7 +4,7 @@ import { BrowserRouter, MemoryRouter } from 'react-router-dom';
 
 export const createCache = () => new QueryCache();
 
-const createTestQueryClient = () => {
+export const createTestQueryClient = () => {
     return new QueryClient({
         defaultOptions: {
             queries: {
@@ -33,16 +33,16 @@ export const createQueryHookWrapper = () => {
     return wrapper;
 };
 
-export const renderWithClient = (ui: React.ReactElement, options: RenderOptions = {}) => {
-    const testQueryClient = createTestQueryClient();
-
-    // Mock user data
-    const mockUser = { role: 'visitor' }; // Adjust the role as needed
-    testQueryClient.setQueryData(['user'], { data: mockUser, isLoading: false });
+export const renderWithClient = (
+    ui: React.ReactElement,
+    options?: RenderOptions,
+    overrideQueryClient?: QueryClient,
+) => {
+    const queryClient = overrideQueryClient ?? createTestQueryClient();
 
     const wrapper = ({ children }: { children: React.ReactNode }) => (
-        <QueryClientProvider client={testQueryClient}>
-            {options.routerProps?.initialEntries ? (
+        <QueryClientProvider client={queryClient}>
+            {options?.routerProps?.initialEntries ? (
                 <MemoryRouter initialEntries={options.routerProps.initialEntries}>{ui}</MemoryRouter>
             ) : (
                 <BrowserRouter>{children}</BrowserRouter>
@@ -54,7 +54,7 @@ export const renderWithClient = (ui: React.ReactElement, options: RenderOptions 
 
     return {
         ...result,
-        queryClient: testQueryClient,
+        queryClient,
         wrapper,
         rerender: (rerenderUi: React.ReactElement) => rerender(rerenderUi),
     };
