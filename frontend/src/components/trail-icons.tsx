@@ -1,7 +1,6 @@
 import { cn } from '@/lib/cn-helper';
 import type { TrailIcon } from '@/types';
-
-const path = (icon: TrailIcon) => `/icons/misc/${icon.iconName}.svg`;
+import { getIconPath } from '@/types/icons';
 
 type IconSize = 'sm' | 'md' | 'lg' | 'xs';
 
@@ -44,7 +43,7 @@ export const TrailIconView = ({
                 className='aspect-square'
                 data-testid={icon.iconName}
             >
-                <img src={path(icon)} alt={icon.tooltip} />
+                <img src={getIconPath(icon)} alt={icon.tooltip} />
             </div>
             {showText && <div className={cn(sizeMap[size].text, 'text-center')}>{icon.tooltip}</div>}
             <div

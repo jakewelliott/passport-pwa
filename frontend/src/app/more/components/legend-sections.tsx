@@ -1,6 +1,15 @@
-import { BLAZE_ICONS, BLUE_ICONS, GREEN_ICONS, type PARK_ICONS, type ParkIcon, RED_ICONS } from '@/types/icons';
+import {
+    BLAZE_ICONS,
+    BLUE_ICONS,
+    GREEN_ICONS,
+    type PARK_ICONS,
+    type PassportIcon,
+    RED_ICONS,
+    TRAIL_ICONS,
+    getIconPath,
+} from '@/types/icons';
 
-type IconWithExtraText = ParkIcon & {
+type IconWithExtraText = PassportIcon & {
     extraText?: string;
 };
 
@@ -16,7 +25,7 @@ const EXTRA_TEXT: Partial<Record<IconName, string>> = {
         '*has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups',
 };
 
-const textHelper = (icon: ParkIcon) => ({
+const textHelper = (icon: PassportIcon) => ({
     ...icon,
     extraText: EXTRA_TEXT[icon.iconName as IconName],
 });
@@ -39,14 +48,16 @@ const ICON_SECTIONS: IconSection[] = [
         sectionName: 'State Trail Stamps',
         icons: BLAZE_ICONS.map(textHelper),
     },
+    {
+        sectionName: 'Trail Amenities',
+        icons: TRAIL_ICONS.map(textHelper),
+    },
 ];
-
-const path = (iconName: IconName) => `/icons/park/${iconName}.svg`;
 
 const IconView = ({ icon }: { icon: IconSection['icons'][number] }) => {
     return (
         <div key={icon.iconName} className='my-1 flex items-center'>
-            <img src={path(icon.iconName)} alt={icon.tooltip} width={'36px'} height={'36px'} />
+            <img src={getIconPath(icon)} alt={icon.tooltip} width={'36px'} height={'36px'} />
             <div className='ml-2 flex w-full flex-col justify-center'>
                 <p>{icon.tooltip}</p>
                 {icon.extraText && <p className='max-w-56 p-mini'>{icon.extraText}</p>}

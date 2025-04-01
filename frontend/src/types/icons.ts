@@ -102,9 +102,16 @@ export const TRAIL_ICONS = [
 //
 
 export type ParkIcon = (typeof PARK_ICONS)[number];
-export type TrailIcon = (typeof TRAIL_ICONS)[number];
+type ParkIconName = (typeof PARK_ICONS)[number]['iconName'];
 
-// we can get rid of this once we have tooltips on the server
-export const trailIconHelper = ({ iconName }: { iconName: string }) => {
-    return TRAIL_ICONS.find((icon) => icon.iconName === iconName);
+export type TrailIcon = (typeof TRAIL_ICONS)[number];
+type TrailIconName = (typeof TRAIL_ICONS)[number]['iconName'];
+
+export type PassportIcon = ParkIcon | TrailIcon;
+export type PassportIconName = ParkIconName | TrailIconName;
+
+// HELPERS
+export const getIconPath = (icon: PassportIcon) => {
+    const name = icon.iconName;
+    return name.includes('-') ? `/icons/park/${name}.svg` : `/icons/misc/${name}.svg`;
 };
