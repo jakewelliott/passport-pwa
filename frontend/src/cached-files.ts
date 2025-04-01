@@ -1,4 +1,5 @@
 export const cachedFiles = [
+  '/PassportLogo.svg',
   '/stamps/FOMA.svg',
   '/stamps/WIUM.svg',
   '/stamps/MOMI.svg',
@@ -75,7 +76,6 @@ export const cachedFiles = [
   '/.DS_Store',
   '/PassportMap_TrailsOnly.svg',
   '/trail-icons.json',
-  '/PassportLogosvg',
   '/DPRLogoWhite.svg',
   '/icons/misc/TRACKTrail.svg',
   '/icons/misc/CamperCabin.svg',

@@ -1,3 +1,4 @@
+import { EditParkModal } from '@/components/edit-park-modal';
 import { useFavoriteParks } from '@/hooks/queries/useParkFavorites';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStampMutation } from '@/hooks/queries/useStamps';
@@ -12,6 +13,7 @@ import { toast } from 'react-toastify';
 export const ManualStampButton = () => {
     dbg('RENDER', 'ManualStampButton');
     const [isOpen, setIsOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const { mutate } = useStampMutation();
     const { geopoint } = useLocationHook();
@@ -67,45 +69,60 @@ export const ManualStampButton = () => {
             markFavorite(park?.id, {
                 onSuccess: () => {
                     setIsFavorite(true);
-                    toast.success('Park added to favorites')
-                }
+                    toast.success('Park added to favorites');
+                },
             });
         }
 
         setIsOpen(false);
     };
 
-    return (
-        <div className='relative' ref={menuRef}>
-            <button
-                onClick={() => setIsOpen(!isOpen)}
-                className='flex items-center p-2 text-system_white'
-                type='button'
-                aria-label='Open menu'
-            >
-                <FaEllipsisV />
-            </button>
+    const handleEditParkPress = () => {
+        setIsEditModalOpen(true);
+        setIsOpen(false);
+    };
 
-            {isOpen && (
-                <div className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5'>
-                    <div className='py-1'>
-                        <button
-                            className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
-                            type='button'
-                            onClick={handleCollectStampPress}
-                        >
-                            Collect Stamp
-                        </button>
-                        <button
-                            className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
-                            type='button'
-                            onClick={handleToggleFavoritePress}
-                        >
-                            {isFavorite ? 'Remove Favorite' : 'Mark Favorite'}
-                        </button>
+    return (
+        <>
+            <div className='relative' ref={menuRef}>
+                <button
+                    onClick={() => setIsOpen(!isOpen)}
+                    className='flex items-center p-2 text-system_white'
+                    type='button'
+                    aria-label='Open menu'
+                >
+                    <FaEllipsisV />
+                </button>
+
+                {isOpen && (
+                    <div className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5'>
+                        <div className='py-1'>
+                            <button
+                                className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
+                                type='button'
+                                onClick={handleCollectStampPress}
+                            >
+                                Collect Stamp
+                            </button>
+                            <button
+                                className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
+                                type='button'
+                                onClick={handleToggleFavoritePress}
+                            >
+                                {isFavorite ? 'Remove Favorite' : 'Mark Favorite'}
+                            </button>
+                            <button
+                                className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
+                                type='button'
+                                onClick={handleEditParkPress}
+                            >
+                                Edit Park
+                            </button>
+                        </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+            <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} park={park} />
+        </>
     );
 };

@@ -52,7 +52,8 @@ export interface Park extends DatabaseEntry {
     icons: ParkIcon[];
     photos: ParkPhoto[];
     abbreviation: string;
-    stampImage?: string;
+    stampImage: string;
+    accesses: string;
 }
 
 export interface Trail extends DatabaseEntry {
