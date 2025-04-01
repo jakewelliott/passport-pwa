@@ -29,7 +29,7 @@ const Header = () => {
                     </div>
                 )}
                 <h4 className='text-system_white'>{pageTitle}</h4>
-                <div className='absolute right-4 w-[70px] bg-red-500' data-testid='balance-placeholder'>
+                <div className='absolute right-4' data-testid='balance-placeholder'>
                     {pageTitle === 'Park Details' && <ManualStampButton />}
                 </div>
             </header>

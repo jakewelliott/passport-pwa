@@ -2,6 +2,7 @@ import { EditParkModal } from '@/components/edit-park-modal';
 import { useFavoriteParks } from '@/hooks/queries/useParkFavorites';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStampMutation } from '@/hooks/queries/useStamps';
+import { useUser } from '@/hooks/queries/useUser';
 import { useLocation as useLocationHook } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { CollectStampRequest } from '@/types/api';
@@ -18,6 +19,7 @@ export const ManualStampButton = () => {
     const { mutate } = useStampMutation();
     const { geopoint } = useLocationHook();
     const { data, markFavorite, removeFavorite } = useFavoriteParks();
+    const { data: user } = useUser();
 
     // get the park from the pathname
     const { pathname } = useLocation();
@@ -98,31 +100,35 @@ export const ManualStampButton = () => {
                     <div className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5'>
                         <div className='py-1'>
                             <button
-                                className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
+                                className='block w-full px-4 py-2 text-left '
                                 type='button'
                                 onClick={handleCollectStampPress}
                             >
                                 Collect Stamp
                             </button>
                             <button
-                                className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
+                                className='block w-full px-4 py-2 text-left'
                                 type='button'
                                 onClick={handleToggleFavoritePress}
                             >
                                 {isFavorite ? 'Remove Favorite' : 'Mark Favorite'}
                             </button>
-                            <button
-                                className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
-                                type='button'
-                                onClick={handleEditParkPress}
-                            >
-                                Edit Park
-                            </button>
+                            {user?.role === 'admin' && (
+                                <button
+                                    className='block w-full px-4 py-2 text-left'
+                                    type='button'
+                                    onClick={handleEditParkPress}
+                                >
+                                    Edit Park
+                                </button>
+                            )}
                         </div>
                     </div>
                 )}
             </div>
-            <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} park={park} />
+            {isEditModalOpen && (
+                <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} park={park} />
+            )}
         </>
     );
 };
