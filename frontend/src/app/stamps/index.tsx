@@ -13,25 +13,24 @@ import { FaFilter } from 'react-icons/fa';
 
 const isVisited = (code: string, stamps: CollectedStamp[]) =>
     stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
-const sortByName = (a: Park, b: Park) => a.parkName.localeCompare(b.parkName);
 
 const StampView = ({
-    abbreviation,
+    park,
     handleClick,
     greyed,
-}: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
+}: { park: Park; handleClick: () => void; greyed: boolean }) => {
     return (
         <button
             onClick={handleClick}
             className='flex items-center justify-center p-2'
             type='button'
-            data-testid={`stamp-button-${abbreviation}`}
+            data-testid={`stamp-button-${park.abbreviation}`}
         >
             <img
-                src={`/stamps/${abbreviation}.svg`}
-                alt={`${abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
+                src={park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://')) ? park.stampImage : `/stamps/${park.abbreviation}.svg`}
+                alt={`${park.abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
                 className={greyed ? 'opacity-50 grayscale' : ''}
-                data-testid={`stamp-image-${abbreviation}`}
+                data-testid={`stamp-image-${park.abbreviation}`}
             />
         </button>
     );
@@ -156,7 +155,7 @@ export default function StampsScreen() {
                     {filteredParks.map((park, index) => (
                         <StampView
                             key={park.abbreviation}
-                            abbreviation={park.abbreviation}
+                            park={park}
                             greyed={!isVisited(park.abbreviation, stamps ?? [])}
                             handleClick={() => setSelectedIndex(index)}
                         />
