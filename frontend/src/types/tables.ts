@@ -27,8 +27,10 @@ interface ParkContent extends UserContent {
     parkId: number;
 }
 
+// This is defined in icons.ts
 // export interface ParkIcon extends DatabaseEntry {
-//     iconName: ParkIconEnum;
+//     iconName: string;
+//     tooltip: string;
 // }
 
 export interface ParkPhoto {
@@ -48,7 +50,6 @@ export interface Park extends DatabaseEntry {
     website: string;
     addresses: Address[];
     icons: ParkIcon[];
-    // bucketListItems: { id: number; task: string }[];
     photos: ParkPhoto[];
     abbreviation: string;
 }

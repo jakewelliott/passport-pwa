@@ -1,225 +1,112 @@
 //
-// RED ICONS
+// PARK ICONS
 //
 
 const RED_ICONS = [
-    'Biking-Red',
-    'Fishing-Red',
-    'Hiking-Red',
-    'HorsebackRiding-Red',
-    'Paddling-Red',
-    'Picnicking-Red',
-    'RockClimbing-Red',
-    'Swimming-Red',
+    { iconName: 'Biking-Red', tooltip: 'Biking' },
+    { iconName: 'Fishing-Red', tooltip: 'Fishing' },
+    { iconName: 'Hiking-Red', tooltip: 'Hiking' },
+    { iconName: 'HorsebackRiding-Red', tooltip: 'Horseback Riding' },
+    { iconName: 'Paddling-Red', tooltip: 'Paddling' },
+    { iconName: 'Picnicking-Red', tooltip: 'Picnicking' },
+    { iconName: 'RockClimbing-Red', tooltip: 'Rock Climbing' },
+    { iconName: 'Swimming-Red', tooltip: 'Swimming' },
 ] as const;
-
-type RedIcons = (typeof RED_ICONS)[number];
-
-const RED_ICONS_TOOLTIPS: Record<RedIcons, string> = {
-    'Biking-Red': 'Biking',
-    'Fishing-Red': 'Fishing',
-    'Hiking-Red': 'Hiking',
-    'HorsebackRiding-Red': 'Horseback Riding',
-    'Paddling-Red': 'Paddling',
-    'Picnicking-Red': 'Picnicking',
-    'RockClimbing-Red': 'Rock Climbing',
-    'Swimming-Red': 'Swimming',
-};
-
-//
-// BLUE ICONS
-//
 
 const BLUE_ICONS = [
-    'BoatRamp-Blue',
-    'BoatRental-Blue',
-    'Exhibits-Blue',
-    'Playground-Blue',
-    'VisitorCenter-Blue',
+    { iconName: 'BoatRamp-Blue', tooltip: 'Boat Ramp' },
+    { iconName: 'BoatRental-Blue', tooltip: 'Boat Rental' },
+    { iconName: 'Exhibits-Blue', tooltip: 'Exhibits' },
+    { iconName: 'Playground-Blue', tooltip: 'Playground' },
+    { iconName: 'VisitorCenter-Blue', tooltip: 'Visitor Center' },
 ] as const;
-
-type BlueIcons = (typeof BLUE_ICONS)[number];
-
-const BLUE_ICONS_TOOLTIPS: Record<BlueIcons, string> = {
-    'BoatRamp-Blue': 'Boat Ramp',
-    'BoatRental-Blue': 'Boat Rental',
-    'Exhibits-Blue': 'Exhibits',
-    'Playground-Blue': 'Playground',
-    'VisitorCenter-Blue': 'Visitor Center',
-};
-
-//
-// GREEN ICONS
-//
 
 const GREEN_ICONS = [
-    'CamperCabins-Green',
-    'Camping-Green',
-    'CanoeinCamping-Green',
-    'EquestrianCamping-Green',
-    'GroupCabins-Green',
-    'GroupCamp-Green',
-    'PrimitiveCabin-Green',
-    'RVCamping-Green',
-    'VacationCabin-Green',
+    { iconName: 'CamperCabins-Green', tooltip: 'Camper Cabins' },
+    { iconName: 'Camping-Green', tooltip: 'Camping' },
+    { iconName: 'CanoeinCamping-Green', tooltip: 'Canoe-in Camping' },
+    { iconName: 'EquestrianCamping-Green', tooltip: 'Equestrian Camping' },
+    { iconName: 'GroupCabins-Green', tooltip: 'Group Cabins' },
+    { iconName: 'GroupCamp-Green', tooltip: 'Group Camping' },
+    { iconName: 'PrimitiveCabin-Green', tooltip: 'Primitive Cabin' },
+    { iconName: 'RVCamping-Green', tooltip: 'RV Camping' },
+    { iconName: 'VacationCabin-Green', tooltip: 'Vacation Cabin' },
 ] as const;
 
-type GreenIcons = (typeof GREEN_ICONS)[number];
+const BLACK_ICONS = [
+    { iconName: 'Camping-Black', tooltip: 'Camping Sites' },
+    { iconName: 'PicnicShelter-Black', tooltip: 'Picnic Shelter' },
+] as const;
 
-const GREEN_ICONS_TOOLTIPS: Record<GreenIcons, string> = {
-    'CamperCabins-Green': 'Camper Cabins',
-    'Camping-Green': 'Camping',
-    'CanoeinCamping-Green': 'Canoe-in Camping',
-    'EquestrianCamping-Green': 'Equestrian Camping',
-    'GroupCabins-Green': 'Group Cabins',
-    'GroupCamp-Green': 'Group Camping',
-    'PrimitiveCabin-Green': 'Primitive Cabin',
-    'RVCamping-Green': 'RV Camping',
-    'VacationCabin-Green': 'Vacation Cabin',
-};
+const BLAZE_ICONS = [
+    { iconName: 'FBST-Blaze', tooltip: 'French Broad State Trail' },
+    { iconName: 'FFST-Blaze', tooltip: 'Fontana Lake State Trail' },
+    { iconName: 'HGST-Blaze', tooltip: 'Hickory Nut Gorge State Trail' },
+    { iconName: 'MST-Blaze', tooltip: 'Mountains-to-Sea State Trail' },
+    { iconName: 'YST-Blaze', tooltip: 'Yadkin State Trail' },
+] as const;
 
-//
-// BLACK ICONS
-//
-
-const BLACK_ICONS = ['Camping-Black', 'PicnicShelter-Black'] as const;
-
-type BlackIcons = (typeof BLACK_ICONS)[number];
-
-const BLACK_ICONS_TOOLTIPS: Record<BlackIcons, string> = {
-    'Camping-Black': 'Camping Sites',
-    'PicnicShelter-Black': 'Picnic Shelter',
-};
-
-//
-// BLAZE ICONS
-//
-
-const BLAZE_ICONS = ['FBST-Blaze', 'FFST-Blaze', 'HGST-Blaze', 'MST-Blaze', 'YST-Blaze'] as const;
-
-type BlazeIcons = (typeof BLAZE_ICONS)[number];
-
-const BLAZE_ICONS_TOOLTIPS: Record<BlazeIcons, string> = {
-    'FBST-Blaze': 'French Broad State Trail',
-    'FFST-Blaze': 'Fontana Lake State Trail',
-    'HGST-Blaze': 'Hickory Nut Gorge State Trail',
-    'MST-Blaze': 'Mountains-to-Sea State Trail',
-    'YST-Blaze': 'Yadkin State Trail',
-};
+const PARK_ICONS = [...RED_ICONS, ...BLUE_ICONS, ...GREEN_ICONS, ...BLACK_ICONS, ...BLAZE_ICONS] as const;
 
 //
 // TRAIL ICONS
 //
 
 const TRAIL_ICONS = [
-    '4WDBeach',
-    'Accessible',
-    'Amphiteater',
-    'BackpackCamping',
-    'Bathhouse',
-    'Biking',
-    'BoatRamp',
-    'Boating',
-    'CamperCabin',
-    'Camping',
-    'DumpStation',
-    'ElectricHookup',
-    'ElectricWaterHookups',
-    'EquestrianCamping',
-    'Firewood',
-    'Fishing',
-    'GroupCamp',
-    'Hiking',
-    'HorseTrailerParking',
-    'HorsebackRiding',
-    'Hospital',
-    'IE_Exhibits',
-    'Information',
-    'Marina',
-    'PaddleInCamping',
-    'Paddling',
-    'ParkGate',
-    'Picnic',
-    'PicnicShelter',
-    'PointofInterest',
-    'PrimitiveCabin',
-    'Restroom',
-    'RockClimbing',
-    'SewerHookup',
-    'Swimming',
-    'TRACKTrail',
-    'TentTrailerCamping',
-    'VacationCabin',
-    'ViewingSymbol',
-    'VisitorCenter',
-    'WaterHookup',
-    'WaterSpigot',
+    { iconName: '4WDBeach', tooltip: '4WD Beach Access' },
+    { iconName: 'Accessible', tooltip: 'Accessible Facilities' },
+    { iconName: 'Amphiteater', tooltip: 'Amphitheater' },
+    { iconName: 'BackpackCamping', tooltip: 'Backpack Camping' },
+    { iconName: 'Bathhouse', tooltip: 'Bathhouse' },
+    { iconName: 'Biking', tooltip: 'Biking Trails' },
+    { iconName: 'BoatRamp', tooltip: 'Boat Ramp' },
+    { iconName: 'Boating', tooltip: 'Boating Activities' },
+    { iconName: 'CamperCabin', tooltip: 'Camper Cabin' },
+    { iconName: 'Camping', tooltip: 'Camping Area' },
+    { iconName: 'DumpStation', tooltip: 'Dump Station' },
+    { iconName: 'ElectricHookup', tooltip: 'Electric Hookup' },
+    { iconName: 'ElectricWaterHookups', tooltip: 'Electric and Water Hookups' },
+    { iconName: 'EquestrianCamping', tooltip: 'Equestrian Camping' },
+    { iconName: 'Firewood', tooltip: 'Firewood Available' },
+    { iconName: 'Fishing', tooltip: 'Fishing Opportunities' },
+    { iconName: 'GroupCamp', tooltip: 'Group Camping Area' },
+    { iconName: 'Hiking', tooltip: 'Hiking Trails' },
+    { iconName: 'HorseTrailerParking', tooltip: 'Horse Trailer Parking' },
+    { iconName: 'HorsebackRiding', tooltip: 'Horseback Riding' },
+    { iconName: 'Hospital', tooltip: 'Nearby Hospital' },
+    { iconName: 'IE_Exhibits', tooltip: 'IE Exhibits' },
+    { iconName: 'Information', tooltip: 'Information Center' },
+    { iconName: 'Marina', tooltip: 'Marina Facilities' },
+    { iconName: 'PaddleInCamping', tooltip: 'Paddle-In Camping' },
+    { iconName: 'Paddling', tooltip: 'Paddling' },
+    { iconName: 'ParkGate', tooltip: 'Park Gate' },
+    { iconName: 'Picnic', tooltip: 'Picnic' },
+    { iconName: 'PicnicShelter', tooltip: 'Picnic Shelter' },
+    { iconName: 'PointofInterest', tooltip: 'Point of Interest' },
+    { iconName: 'PrimitiveCabin', tooltip: 'Primitive Cabin' },
+    { iconName: 'Restroom', tooltip: 'Restroom' },
+    { iconName: 'RockClimbing', tooltip: 'Rock Climbing' },
+    { iconName: 'SewerHookup', tooltip: 'Sewer Hookup' },
+    { iconName: 'Swimming', tooltip: 'Swimming' },
+    { iconName: 'TRACKTrail', tooltip: 'TRACK Trail' },
+    { iconName: 'TentTrailerCamping', tooltip: 'Tent and Trailer Camping' },
+    { iconName: 'VacationCabin', tooltip: 'Vacation Cabin' },
+    { iconName: 'ViewingSymbol', tooltip: 'Viewing Area' },
+    { iconName: 'VisitorCenter', tooltip: 'Visitor Center' },
+    { iconName: 'WaterHookup', tooltip: 'Water Hookup' },
+    { iconName: 'WaterSpigot', tooltip: 'Water Spigot' },
 ] as const;
 
+//
+// TYPES
+//
+
+type ParkIcon = (typeof PARK_ICONS)[number];
 type TrailIcon = (typeof TRAIL_ICONS)[number];
-
-const TRAIL_ICONS_TOOLTIPS: Record<TrailIcon, string> = {
-    '4WDBeach': '4WD Beach Access',
-    Accessible: 'Accessible Facilities',
-    Amphiteater: 'Amphitheater',
-    BackpackCamping: 'Backpack Camping',
-    Bathhouse: 'Bathhouse',
-    Biking: 'Biking Trails',
-    BoatRamp: 'Boat Ramp',
-    Boating: 'Boating Activities',
-    CamperCabin: 'Camper Cabin',
-    Camping: 'Camping Area',
-    DumpStation: 'Dump Station',
-    ElectricHookup: 'Electric Hookup',
-    ElectricWaterHookups: 'Electric and Water Hookups',
-    EquestrianCamping: 'Equestrian Camping',
-    Firewood: 'Firewood Available',
-    Fishing: 'Fishing Opportunities',
-    GroupCamp: 'Group Camping Area',
-    Hiking: 'Hiking Trails',
-    HorseTrailerParking: 'Horse Trailer Parking',
-    HorsebackRiding: 'Horseback Riding',
-    Hospital: 'Nearby Hospital',
-    IE_Exhibits: 'IE Exhibits',
-    Information: 'Information Center',
-    Marina: 'Marina Facilities',
-    PaddleInCamping: 'Paddle-In Camping',
-    Paddling: 'Paddling',
-    ParkGate: 'Park Gate',
-    Picnic: 'Picnic',
-    PicnicShelter: 'Picnic Shelter',
-    PointofInterest: 'Point of Interest',
-    PrimitiveCabin: 'Primitive Cabin',
-    Restroom: 'Restroom',
-    RockClimbing: 'Rock Climbing',
-    SewerHookup: 'Sewer Hookup',
-    Swimming: 'Swimming',
-    TRACKTrail: 'TRACK Trail',
-    TentTrailerCamping: 'Tent and Trailer Camping',
-    VacationCabin: 'Vacation Cabin',
-    ViewingSymbol: 'Viewing Area',
-    VisitorCenter: 'Visitor Center',
-    WaterHookup: 'Water Hookup',
-    WaterSpigot: 'Water Spigot',
-};
-
-//
-// PARK ICONS (combined)
-//
-
-type ParkIcon = RedIcons | BlueIcons | GreenIcons | BlackIcons | BlazeIcons;
-
-const PARK_ICONS_TOOLTIPS: Record<ParkIcon, string> = {
-    ...RED_ICONS_TOOLTIPS,
-    ...BLACK_ICONS_TOOLTIPS,
-    ...BLUE_ICONS_TOOLTIPS,
-    ...GREEN_ICONS_TOOLTIPS,
-    ...BLAZE_ICONS_TOOLTIPS,
-};
 
 //
 // EXPORTS
 //
 
-export { PARK_ICONS_TOOLTIPS, TRAIL_ICONS_TOOLTIPS };
+export { PARK_ICONS, TRAIL_ICONS };
 export type { ParkIcon, TrailIcon };

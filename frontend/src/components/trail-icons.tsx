@@ -1,9 +1,8 @@
 import { cn } from '@/lib/cn-helper';
 import { dbg } from '@/lib/debug';
-import { TRAIL_ICONS_TOOLTIPS, type TrailIcon } from '@/types';
+import type { TrailIcon } from '@/types';
 
-const tooltip = (iconName: TrailIcon) => TRAIL_ICONS_TOOLTIPS[iconName];
-const iconPath = (iconName: TrailIcon) => `/icons/misc/${iconName}.svg`;
+const path = (icon: TrailIcon) => `/icons/misc/${icon.iconName}.svg`;
 
 type IconSize = 'sm' | 'md' | 'lg' | 'xs';
 
@@ -44,14 +43,14 @@ export const TrailIconView = ({
                 className='aspect-square'
                 data-testid={iconName}
             >
-                <img src={iconPath(iconName)} alt={tooltip(iconName)} />
+                <img src={path(iconName)} alt={iconName.tooltip} />
             </div>
-            {showText && <div className={cn(sizeMap[size].text, 'text-center')}>{tooltip(iconName)}</div>}
+            {showText && <div className={cn(sizeMap[size].text, 'text-center')}>{iconName.tooltip}</div>}
             <div
                 className='absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block'
                 style={{ zIndex: 9999 }}
             >
-                {tooltip(iconName)}
+                {iconName.tooltip}
             </div>
         </div>
     );
@@ -72,7 +71,7 @@ export const TrailIcons = ({
     return (
         <div className={cn('inline-flex items-center gap-1 px-1', className)}>
             {icons.map((icon) => (
-                <TrailIconView key={icon} iconName={icon} size={size} showText={showText} />
+                <TrailIconView key={icon.iconName} iconName={icon} size={size} showText={showText} />
             ))}
         </div>
     );
