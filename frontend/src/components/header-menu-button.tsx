@@ -1,3 +1,4 @@
+import { useFavoriteParks } from '@/hooks/queries/useParkFavorites';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStampMutation } from '@/hooks/queries/useStamps';
 import { useLocation as useLocationHook } from '@/hooks/useLocation';
@@ -14,11 +15,13 @@ export const ManualStampButton = () => {
     const menuRef = useRef<HTMLDivElement>(null);
     const { mutate } = useStampMutation();
     const { geopoint } = useLocationHook();
+    const { data, markFavorite, removeFavorite } = useFavoriteParks();
 
     // get the park from the pathname
     const { pathname } = useLocation();
     const { data: parks } = useParks();
     const park = parks?.find((p) => p.abbreviation === pathname.split('/').pop());
+    const [isFavorite, setIsFavorite] = useState(park ? data?.includes(park?.id) : false);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -33,7 +36,7 @@ export const ManualStampButton = () => {
     // if we can't find the park, return null
     if (!park) return null;
 
-    const handlePress = () => {
+    const handleCollectStampPress = () => {
         if (!geopoint) {
             toast.error('Unable to see your current location.');
             return;
@@ -48,6 +51,26 @@ export const ManualStampButton = () => {
         };
 
         mutate(update);
+
+        setIsOpen(false);
+    };
+
+    const handleToggleFavoritePress = () => {
+        if (isFavorite) {
+            removeFavorite(park?.id, {
+                onSuccess: () => {
+                    setIsFavorite(false);
+                    toast.success('Park removed from favorites');
+                },
+            });
+        } else {
+            markFavorite(park?.id, {
+                onSuccess: () => {
+                    setIsFavorite(true);
+                    toast.success('Park added to favorites')
+                }
+            });
+        }
 
         setIsOpen(false);
     };
@@ -69,9 +92,16 @@ export const ManualStampButton = () => {
                         <button
                             className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
                             type='button'
-                            onClick={handlePress}
+                            onClick={handleCollectStampPress}
                         >
                             Collect Stamp
+                        </button>
+                        <button
+                            className='block w-full px-4 py-2 text-left text-gray-700 text-sm hover:bg-gray-100'
+                            type='button'
+                            onClick={handleToggleFavoritePress}
+                        >
+                            {isFavorite ? 'Remove Favorite' : 'Mark Favorite'}
                         </button>
                     </div>
                 </div>
