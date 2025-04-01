@@ -26,7 +26,7 @@
         "backend/**/DependencyInjection": true,
         "backend/**/DotEnv.cs": true,
         "backend/**/global.json": true,
-        "backend/**/Migrations": true,
+        "backend/**/Migrations": false,
         "backend/**/obj": true,
         "backend/**/Program.cs": true,
         "backend/**/Security": true

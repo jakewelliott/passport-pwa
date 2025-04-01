@@ -211,7 +211,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         string trailName,
         string? distance,
         string description,
-        List<string> icons)
+        List<TrailIconResponse> icons)
     {
         public static TrailResponse FromDomain(Trail trail, List<TrailIcon> icons)
         {
@@ -220,9 +220,14 @@ public class LocationsController(ILocationsService locationsService) : Controlle
                 trail.trailName,
                 distance: trail.length,
                 trail.description,
-                [.. icons.Select(i => i.icon.GetDisplayName())]);
+                icons.Select(i => new TrailIconResponse(
+                    i.icon.GetDisplayName(),
+                    i.tooltip
+                )).ToList());
         }
     }
+
+    public record TrailIconResponse(string iconName, string? tooltip);
 
     public record LocationGeoDataResponse(
         int id,
