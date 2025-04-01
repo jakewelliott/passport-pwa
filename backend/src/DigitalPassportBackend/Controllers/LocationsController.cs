@@ -100,11 +100,14 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         }
     }
 
-    public record IconResponse(string iconName)
+    public record IconResponse(string iconName, string? tooltip)
     {
         public static IconResponse FromDomain(ParkIcon icon)
         {
-            return new IconResponse(icon.icon.GetDisplayName().Replace("_", "-"));
+            return new IconResponse(
+                icon.icon.GetDisplayName().Replace("_", "-"), 
+                icon.tooltip
+            );
         }
     }
 

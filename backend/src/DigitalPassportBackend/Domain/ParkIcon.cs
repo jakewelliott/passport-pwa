@@ -13,6 +13,7 @@ public class ParkIcon : IEntity
     public DateTime createdAt { get; set; } = DateTime.UtcNow;
     [Column("updated_at")]
     public DateTime updatedAt { get; set; } = DateTime.UtcNow;
+    public string? tooltip { get; set; }
 
     // References
     [ForeignKey("park")]

@@ -105,11 +105,6 @@ export type ParkIcon = (typeof PARK_ICONS)[number];
 export type TrailIcon = (typeof TRAIL_ICONS)[number];
 
 // we can get rid of this once we have tooltips on the server
-export const parkIconHelper = ({ iconName }: { iconName: string }) => {
-    return PARK_ICONS.find((icon) => icon.iconName === iconName);
-};
-
-// we can get rid of this once we have tooltips on the server
 export const trailIconHelper = ({ iconName }: { iconName: string }) => {
     return TRAIL_ICONS.find((icon) => icon.iconName === iconName);
 };
