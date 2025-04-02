@@ -8,7 +8,7 @@ interface FormFieldProps {
     onChange: (value: string) => void;
     error?: boolean;
     longText?: boolean;
-    bulleted?: boolean;
+    // bulleted?: boolean;
 }
 
 export function FormField({
@@ -18,10 +18,9 @@ export function FormField({
     onChange,
     error = false,
     longText = false,
-    bulleted = false,
+    // bulleted = false,
 }: FormFieldProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const previousValueRef = useRef(value);
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;

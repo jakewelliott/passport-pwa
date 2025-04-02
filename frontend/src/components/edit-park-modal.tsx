@@ -260,7 +260,7 @@ export function EditParkModal({ isOpen, onClose, park }: EditParkModalProps) {
                             setError(false);
                         }}
                         error={error}
-                        bulleted={true}
+                        // bulleted={true}
                         longText={true}
                     />
                     <FormField
@@ -309,7 +309,7 @@ export function EditParkModal({ isOpen, onClose, park }: EditParkModalProps) {
                                     </div>
                                     <button
                                         className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
-                                        onClick={() => handleRemoveIcon(index)}
+                                        onClick={() => handleRemovePhoto(index)}
                                         type='button'
                                     >
                                         &minus;

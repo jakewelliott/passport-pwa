@@ -178,7 +178,6 @@ export default function StampsScreen() {
                 isReverseOrder={isReverseOrder}
                 handleSelectedIconsChange={handleSelectedIconsChange}
                 selectedIcons={selectedIcons}
-                favoritedParks={favoritedParks}
                 showOnlyFavorites={showOnlyFavorites}
                 handleShowOnlyFavoritesChange={handleShowOnlyFavoritesChange}
             />

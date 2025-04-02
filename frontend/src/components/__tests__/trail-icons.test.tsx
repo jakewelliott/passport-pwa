@@ -11,20 +11,20 @@ const mockIcons = trails[1].icons;
 describe('Individual TrailIcon', () => {
     it('renders with default props', () => {
         render(<TrailIconView icon={mockIcon} />);
-        const img = screen.getByTestId(mockIcon).children[0];
+        const img = screen.getByTestId(mockIcon.iconName).children[0];
         expect(img).toBeInTheDocument();
         expect(img.parentElement).toHaveStyle({ height: '48px', width: '48px' });
     });
 
     it('renders with custom size', () => {
         render(<TrailIconView icon={mockIcon} size='lg' />);
-        const icon = screen.getByTestId(mockIcon);
+        const icon = screen.getByTestId(mockIcon.iconName);
         expect(icon).toHaveStyle({ height: '64px', width: '64px' });
     });
 
     it('shows text when showText is true', () => {
         render(<TrailIconView icon={mockIcon} showText />);
-        expect(screen.getByText(mockIcon)).toBeInTheDocument();
+        expect(screen.getByText(mockIcon.iconName)).toBeInTheDocument();
     });
 
     it('uses correct image source', () => {

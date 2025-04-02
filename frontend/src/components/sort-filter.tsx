@@ -100,7 +100,6 @@ export const FilterModal = ({
     isReverseOrder,
     handleSelectedIconsChange,
     selectedIcons,
-    favoritedParks,
     showOnlyFavorites,
     handleShowOnlyFavoritesChange,
 }: {
@@ -112,7 +111,6 @@ export const FilterModal = ({
     isReverseOrder: boolean;
     handleSelectedIconsChange: (newSelected: Set<ParkIcon>) => void;
     selectedIcons: Set<ParkIcon>;
-    favoritedParks?: number[];
     showOnlyFavorites: boolean;
     handleShowOnlyFavoritesChange: (show: boolean) => void;
 }) => {

@@ -160,7 +160,6 @@ export default function LocationsScreen() {
                 isReverseOrder={isReverseOrder}
                 handleSelectedIconsChange={handleSelectedIconsChange}
                 selectedIcons={selectedIcons}
-                favoritedParks={favoritedParks}
                 showOnlyFavorites={showOnlyFavorites}
                 handleShowOnlyFavoritesChange={handleShowOnlyFavoritesChange}
             />
