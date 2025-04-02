@@ -127,7 +127,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     //
 
     [HttpGet("parks/favorites")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult GetFavoriteParks()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -135,7 +135,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpPost("parks/favorites/{parkId}")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult AddFavoritePark(int parkId)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -144,7 +144,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpDelete("parks/favorites/{parkId}")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult DeleteFavoritePark(int parkId)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
