@@ -1,4 +1,4 @@
-import { createQueryHookWrapper } from '@/lib/testing/test-wrapper';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { renderHook, waitFor } from '@testing-library/react';
 import { expect } from 'vitest';
 
@@ -21,9 +21,9 @@ export const testQueryHook = async <T extends { id: number } | { id: number }[]>
     mockData: T,
     hookParams: any[] = [],
 ) => {
-    const { result } = renderHook(() => useQueryHook(...hookParams), {
-        wrapper: createQueryHookWrapper(),
-    });
+    const { wrapper } = setupTestEnv();
+
+    const { result } = renderHook(() => useQueryHook(...hookParams), { wrapper });
 
     // Wait for the data to be loaded
     await waitFor(() => {

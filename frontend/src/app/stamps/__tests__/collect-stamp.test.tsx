@@ -1,15 +1,27 @@
+import { useParks, useParksGeo } from '@/hooks/queries/useParks';
+import { useStamp, useStampMutation } from '@/hooks/queries/useStamps';
+import { useLocation } from '@/hooks/useLocation';
+import { useParkCheck } from '@/hooks/useParkCheck';
 import { mockPark } from '@/lib/testing/mock';
-import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import CollectStamp from '../collect-stamp';
 
-describe('CollectStamp', () => {
-    beforeEach(() => {
-        renderWithClient(<CollectStamp />);
+const { render, checkHook } = setupTestEnv();
+
+describe('Collect Stamp popup screen', () => {
+    beforeAll(() => {
+        checkHook(useParks, 'useParks');
+        checkHook(useParksGeo, 'useParksGeo');
+        checkHook(useParkCheck, 'useParkCheck');
+        checkHook(useStamp, 'useStamp');
+        checkHook(useStampMutation, 'useStampMutation');
+        checkHook(useLocation, 'useLocation');
     });
 
     it('renders the congratulatory header', () => {
+        render(<CollectStamp />);
         expect(screen.getByText('Woohoo!')).toBeInTheDocument();
     });
     it('renders the congratulatory header', () => {

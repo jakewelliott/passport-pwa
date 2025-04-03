@@ -1,0 +1,151 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`More Page > matches snapshot 1`] = `
+<div>
+  <div
+    class="mx-4 my-4 flex flex-col gap-3.5"
+    data-testid="more-list"
+  >
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/trails"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          Trails
+        </h2>
+      </div>
+    </a>
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/bucket-list"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          Bucket List
+        </h2>
+      </div>
+    </a>
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/my-notes"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          My Notes
+        </h2>
+      </div>
+    </a>
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/welcome-message"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          Welcome Message
+        </h2>
+      </div>
+    </a>
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/staying-safe"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          Staying Safe
+        </h2>
+      </div>
+    </a>
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/hiking-essentials"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          Hiking Essentials
+        </h2>
+      </div>
+    </a>
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/icon-legend"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          Icon Legend
+        </h2>
+      </div>
+    </a>
+    <a
+      class="text-supporting_inactiveblue no-underline"
+      data-discover="true"
+      href="/more/app-info"
+    >
+      <div
+        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
+      >
+        <h2
+          class="mx-4 my-6"
+        >
+          App Info
+        </h2>
+      </div>
+    </a>
+    <div
+      class="text-center"
+    >
+      You are not logged in
+      <br />
+      <button
+        class="link"
+        type="button"
+      >
+        Log out
+      </button>
+    </div>
+  </div>
+</div>
+`;

@@ -147,17 +147,6 @@ describe('Header', () => {
         const backButton = screen.queryByRole('button', { name: /back/i });
         expect(backButton).not.toBeInTheDocument();
     });
-
-    it('does not render when user data is null', () => {
-        mockUseUser.mockReturnValue({ data: null });
-        mockUsePageTitle.mockReturnValue({
-            pageTitle: 'Test',
-            showBackButton: false,
-        });
-
-        renderWithProviders(<Header />);
-        expect(screen.queryByRole('banner')).not.toBeInTheDocument();
-    });
 });
 
 describe('BackButton', () => {

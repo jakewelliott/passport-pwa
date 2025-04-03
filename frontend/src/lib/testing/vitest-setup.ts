@@ -3,13 +3,13 @@ import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, expect } from 'vitest';
 import { server } from './msw-server';
-import { createCache } from './test-wrapper';
+import { QueryCache } from '@tanstack/react-query';
 
 // Extend Vitest's expect with jest-dom matchers since they're not included by default
 expect.extend(matchers);
 
 // Make a query cache for the tests
-const queryCache = createCache();
+const queryCache = new QueryCache();
 
 // Start the mock server before all tests
 beforeAll(() => {

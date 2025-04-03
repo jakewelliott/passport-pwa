@@ -5,23 +5,14 @@ import { useParkCheck } from '@/hooks/useParkCheck';
 import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
 import type { CollectStampRequest } from '@/types/api';
-import { useEffect, useState } from 'react';
 
 export default function CollectStamp() {
     const { mutate: collectStamp } = useStampMutation();
     const { park, isLoading } = useParkCheck();
-    const [visible, setVisible] = useState(false);
     const { geopoint } = useLocation();
-
-    const close = () => setVisible(false);
-
-    const hidden = !visible || !park || isLoading || !geopoint;
-
     const { data: stamp, isLoading: stampLoading } = useStamp(park?.id);
 
-    useEffect(() => {
-        if (park !== undefined && stampLoading === false && stamp === null) setVisible(true);
-    }, [park]);
+    const hidden = stamp !== undefined || !park || !geopoint || isLoading || stampLoading;
 
     // This is AIDs. I will fix later.
 
@@ -61,13 +52,10 @@ export default function CollectStamp() {
 
         // mark the stamp as collected
         collectStamp(collected);
-
-        // close this screen
-        close();
     };
 
+    dbg('RENDER', 'CollectStamp', hidden);
     if (hidden) return null;
-    dbg('RENDER', 'CollectStamp', park.abbreviation);
 
     return (
         <div className='fixed inset-0 flex items-center justify-center bg-secondary_lightblue' style={{ zIndex: 9999 }}>

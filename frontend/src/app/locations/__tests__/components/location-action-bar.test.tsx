@@ -1,34 +1,12 @@
 import { mockPark } from '@/lib/testing/mock';
-import { renderWithClient } from '@/lib/testing/test-wrapper';
-import { screen } from '@testing-library/react';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { describe, expect, it } from 'vitest';
 import { LocationActionBar } from '../../components/location-action-bar';
 
+const { render } = setupTestEnv();
 describe('LocationActionBar', () => {
-    it('should render', () => {
-        renderWithClient(<LocationActionBar park={mockPark} />);
-        expect(screen.getByTestId('location-action-bar')).toBeInTheDocument();
-    });
-
-    it('should contain coordinates link', () => {
-        renderWithClient(<LocationActionBar park={mockPark} />);
-        expect(screen.getByTestId('location-action-bar').innerHTML).contains(
-            `href="https://www.google.com/maps/place/${mockPark.coordinates.latitude},${mockPark.coordinates.longitude}"`,
-        );
-    });
-
-    it('should contain telephone link', () => {
-        renderWithClient(<LocationActionBar park={mockPark} />);
-        expect(screen.getByTestId('location-action-bar').innerHTML).contains(`href="tel://${mockPark.phone}"`);
-    });
-
-    it('should contain website link', () => {
-        renderWithClient(<LocationActionBar park={mockPark} />);
-        expect(screen.getByTestId('location-action-bar').innerHTML).contains(`href="${mockPark.website}"`);
-    });
-
-    it('should contain email link', () => {
-        renderWithClient(<LocationActionBar park={mockPark} />);
-        expect(screen.getByTestId('location-action-bar').innerHTML).contains(`href="mailto:${mockPark.email}"`);
+    it('matches snapshot', () => {
+        const { container } = render(<LocationActionBar park={mockPark} />);
+        expect(container).toMatchSnapshot();
     });
 });

@@ -10,4 +10,4 @@ export const mockPark = parks[0];
 export const mockParkNote = parkNotes[0];
 export const mockParkVisit = parkVisits[0];
 export const mockTrail = trails[0];
-export const mockUserProfile = users[0];
+export const mockUserProfile = users[1];

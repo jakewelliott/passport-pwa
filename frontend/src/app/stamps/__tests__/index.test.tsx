@@ -1,50 +1,63 @@
+import { useParks } from '@/hooks/queries/useParks';
+import { useStamp, useStamps } from '@/hooks/queries/useStamps';
+import { useUser } from '@/hooks/queries/useUser';
+import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { parks } from '@/lib/testing/mock';
-import { renderWithClient } from '@/lib/testing/test-wrapper';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
+import { fireEvent, screen } from '@testing-library/react';
+import { beforeAll, describe, expect, it } from 'vitest';
 import StampsScreen from '../';
-
-const mockParks = parks;
-
+const { render, checkHook } = setupTestEnv();
 describe('Stamps', async () => {
-    beforeEach(async () => {
-        renderWithClient(<StampsScreen />);
-        await waitFor(() => {
-            expect(screen.getByTestId('stamps-grid')).toBeInTheDocument();
-        });
+    beforeAll(async () => {
+        await checkHook(useStamps, 'useStamps');
+        await checkHook(useStamp, 'useStamp', 5);
+        await checkHook(useUser, 'useUser');
+        await checkHook(useParks, 'useParks');
+        // TODO: useVisitsHistory endpoint might need to be mocked
+        await checkHook(useVisitsHistory, 'useVisitsHistory');
+    });
+
+    it('matches snapshot', () => {
+        const { container } = render(<StampsScreen />);
+        expect(container).toMatchSnapshot();
     });
 
     it('renders stamps in correct grid layout', async () => {
-        screen.debug();
+        render(<StampsScreen />);
         const gridContainer = screen.getByTestId('stamps-grid');
         expect(gridContainer).toHaveClass('grid', 'grid-cols-3', 'gap-4');
     });
 
+    // ADAM: i'm at a loss to why this test is failing
     it('renders grid with achieved stamps', () => {
-        const crmoStamp = screen.getByAltText('CRMO - achieved');
+        render(<StampsScreen />);
+        screen.logTestingPlaygroundURL();
+        const crmoStamp = screen.getByAltText('CLNE - achieved');
         expect(crmoStamp).not.toHaveClass('opacity-50', 'grayscale');
     });
 
     it('renders grid with unachieved stamps', () => {
+        render(<StampsScreen />);
         const cacrStamp = screen.getByAltText('CACR - greyed out');
         expect(cacrStamp).toHaveClass('opacity-50', 'grayscale');
     });
 
     it('shows stamp details when clicking unvisited stamp', () => {
-        renderWithClient(<StampsScreen />);
+        render(<StampsScreen />);
 
         // Click an unvisited stamp (third park onwards)
-        const unvisitedStamp = screen.getByTestId(`stamp-button-${mockParks[2].abbreviation}`);
+        const unvisitedStamp = screen.getByTestId(`stamp-button-${parks[2].abbreviation}`);
         fireEvent.click(unvisitedStamp);
 
         expect(screen.getByRole('article')).toBeInTheDocument();
     });
 
     it('shows stamp details when clicking a stamp', () => {
-        renderWithClient(<StampsScreen />);
+        render(<StampsScreen />);
 
         // Click the first stamp (which is visited)
-        const firstStamp = screen.getByTestId(`stamp-button-${mockParks[0].abbreviation}`);
+        const firstStamp = screen.getByTestId(`stamp-button-${parks[0].abbreviation}`);
         fireEvent.click(firstStamp);
 
         // StampDetails component should be rendered
@@ -52,10 +65,10 @@ describe('Stamps', async () => {
     });
 
     it('hides stamp details when close button is clicked', () => {
-        renderWithClient(<StampsScreen />);
+        render(<StampsScreen />);
 
         // Click a stamp to show details
-        const firstStamp = screen.getByTestId(`stamp-button-${mockParks[0].abbreviation}`);
+        const firstStamp = screen.getByTestId(`stamp-button-${parks[0].abbreviation}`);
         fireEvent.click(firstStamp);
 
         // Click the close button
@@ -67,10 +80,10 @@ describe('Stamps', async () => {
     });
 
     it('applies correct styling to stamp buttons', () => {
-        renderWithClient(<StampsScreen />);
+        render(<StampsScreen />);
 
         // Test the first stamp button's styling
-        const stampButton = screen.getByTestId(`stamp-button-${mockParks[0].abbreviation}`);
+        const stampButton = screen.getByTestId(`stamp-button-${parks[0].abbreviation}`);
         expect(stampButton).toHaveClass('flex', 'items-center', 'justify-center', 'p-2');
     });
 });

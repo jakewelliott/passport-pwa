@@ -57,14 +57,11 @@ const NoteRow = ({
 
 export const MyNotes = () => {
     const navigate = useNavigate();
-    const { data: remoteNotes, isLoading } = useNotes();
+    const { data, isLoading } = useNotes();
 
-    const generalNote = remoteNotes?.find((note) => isGeneralNote(note));
-    const restOfNotes = remoteNotes?.filter((note) => !isGeneralNote(note)) || [];
+    const generalNote = data?.find((note) => isGeneralNote(note));
+    const restOfNotes = data?.filter((note) => !isGeneralNote(note)) || [];
     const allNotes = [generalNote, ...restOfNotes];
-
-    // TODO: restore general note functionality
-    // we are going to use parkID of 0 for this
 
     if (isLoading) return <LoadingPlaceholder what='notes' />;
 

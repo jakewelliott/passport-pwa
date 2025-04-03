@@ -80,25 +80,25 @@ export const fetchGet = async (url: string) => {
     return data;
 };
 
-export const fetchPut = async (url: string, body: any) => {
-    dbg('FETCH', 'PUT', { url, body });
-    const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-        ...getAuthHeaders(),
-    };
+// export const fetchPut = async (url: string, body: any) => {
+//     dbg('FETCH', 'PUT', { url, body });
+//     const headers: Record<string, string> = {
+//         'Content-Type': 'application/json',
+//         ...getAuthHeaders(),
+//     };
 
-    const response = await fetch(url, {
-        method: 'PUT',
-        headers,
-        credentials: 'include',
-        body: JSON.stringify(body),
-    });
+//     const response = await fetch(url, {
+//         method: 'PUT',
+//         headers,
+//         credentials: 'include',
+//         body: JSON.stringify(body),
+//     });
 
-    if (!response.ok) await fetchError(response);
+//     if (!response.ok) await fetchError(response);
 
-    // dbg('FETCH', 'PUT RESPONSE', { response });
-    return response;
-};
+//     // dbg('FETCH', 'PUT RESPONSE', { response });
+//     return response;
+// };
 
 const fetchError = async (response: Response) => {
     dbg('ERROR', 'FETCH', { response });

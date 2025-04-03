@@ -1,7 +1,12 @@
 import { PhotoGalleryMiniTab } from '@/app/locations/components/photos-minitab';
 import { mockPark } from '@/lib/testing/mock';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
+import { fireEvent, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it } from 'vitest';
+
+const { render } = setupTestEnv();
+
+const noPhotos = { ...mockPark, photos: [] };
 
 describe('PhotoGalleryMiniTab', () => {
     beforeEach(() => {
@@ -12,11 +17,17 @@ describe('PhotoGalleryMiniTab', () => {
         };
     });
 
+    it('matches snapshot', () => {
+        const { container } = render(<PhotoGalleryMiniTab park={mockPark} />);
+        expect(container).toMatchSnapshot();
+    });
+
     it('renders no photos message when photos array is empty', () => {
-        const parkWithoutPhotos = { ...mockPark, photos: [] };
-        render(<PhotoGalleryMiniTab park={parkWithoutPhotos} />);
+        render(<PhotoGalleryMiniTab park={noPhotos} />);
         expect(screen.getByText('No photos available for this location.')).toBeInTheDocument();
     });
+
+    // ADAM: I chose not to delete these tests because they seem useful for edge cases
 
     it('renders all photos in a grid', () => {
         render(<PhotoGalleryMiniTab park={mockPark} />);

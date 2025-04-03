@@ -1,29 +1,21 @@
 import { EditGeneralNotes } from '@/app/more/general-notes';
 import { useNote } from '@/hooks/queries/useNotes';
-import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { fireEvent, renderHook, screen, waitFor } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 
-vi.mock('react-router-dom', () => ({
-    useBlocker: vi.fn(() => ({ state: 'unblocked', reset: vi.fn() })),
-}));
+const { render } = setupTestEnv({ usingBrowserRouter: true });
 
+// ADAM: gotta figure out how to get BrowserRouter working in tests
+// skipping for now
 describe('EditGeneralNotes', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
-        // (useNavigate as Mock).mockReturnValue(mockNavigate);
-        // localStorage.clear();
+    it('matches snapshot', () => {
+        const { container } = render(<EditGeneralNotes />);
+        expect(container).toMatchSnapshot();
     });
 
     it('renders correctly with initial state', async () => {
-        localStorage.setItem('generalNotes', 'Initial notes');
-        const { wrapper } = renderWithClient(<EditGeneralNotes />);
-        const { result } = renderHook(() => useNote(0), { wrapper });
-        await waitFor(() => {
-            expect(result.current.data).toBeDefined();
-        });
-        console.log(result.current.data);
-        screen.debug();
+        render(<EditGeneralNotes />);
 
         const textarea = screen.getByPlaceholderText('Add some general notes!');
         expect(textarea).toBeInTheDocument();

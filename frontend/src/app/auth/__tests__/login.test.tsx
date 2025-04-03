@@ -1,75 +1,51 @@
-import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import { toast } from 'react-toastify';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import LoginPage from '../login';
 
-// Mock the react-toastify
-vi.mock('react-toastify');
-
-// Mock the auth hooks
-const loginMutate = vi.fn();
-const registerMutate = vi.fn();
-
-vi.mock('@/hooks/auth/useLogin', () => ({
-    useLogin: () => ({
-        mutate: loginMutate,
-    }),
-}));
-
-vi.mock('@/hooks/auth/useRegister', () => ({
-    useRegister: () => ({
-        mutate: registerMutate,
-    }),
-}));
-
-const renderLoginPage = () => {
-    renderWithClient(<LoginPage />);
-};
-
+const { render, checkHook } = setupTestEnv();
 describe('LoginPage', () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
+    it('matches snapshot', () => {
+        const { container } = render(<LoginPage />);
+        expect(container).toMatchSnapshot();
     });
 
-    it('renders login form with all elements', () => {
-        renderLoginPage();
+    it('shows username and password error', async () => {
+        render(<LoginPage />);
+        const loginButton = screen.getByText('Login');
 
-        expect(screen.getByPlaceholderText('Username')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('Password')).toBeInTheDocument();
-        expect(screen.getByText('Login')).toBeInTheDocument();
-        expect(screen.getByText('Register')).toBeInTheDocument();
-    });
-
-    it('shows validation errors when submitting empty form', async () => {
-        renderLoginPage();
-
-        fireEvent.click(screen.getByText('Login'));
+        fireEvent.click(loginButton);
 
         await waitFor(() => {
             expect(toast.error).toHaveBeenCalledWith('Username and Password are required.');
         });
     });
 
-    it('shows validation errors when submitting empty field', async () => {
-        renderLoginPage();
-        fireEvent.change(screen.getByPlaceholderText('Username'), {
+    it('shows empty password error', async () => {
+        render(<LoginPage />);
+        const usernameField = screen.getByPlaceholderText('Username');
+        const loginButton = screen.getByText('Login');
+
+        fireEvent.change(usernameField, {
             target: { value: 'username' },
         });
-        fireEvent.click(screen.getByText('Login'));
+        fireEvent.click(loginButton);
 
         await waitFor(() => {
             expect(toast.error).toHaveBeenCalledWith('Password is required.');
         });
+    });
 
-        fireEvent.change(screen.getByPlaceholderText('Password'), {
+    it('shows empty username error', async () => {
+        render(<LoginPage />);
+        const passwordField = screen.getByPlaceholderText('Password');
+        const loginButton = screen.getByText('Login');
+
+        fireEvent.change(passwordField, {
             target: { value: 'password' },
         });
-        fireEvent.change(screen.getByPlaceholderText('Username'), {
-            target: { value: '' },
-        });
-        fireEvent.click(screen.getByText('Login'));
+        fireEvent.click(loginButton);
 
         await waitFor(() => {
             expect(toast.error).toHaveBeenCalledWith('Username is required.');
@@ -77,46 +53,38 @@ describe('LoginPage', () => {
     });
 
     it('handles successful login', async () => {
-        renderLoginPage();
+        render(<LoginPage />);
+        const usernameField = screen.getByPlaceholderText('Username');
+        const passwordField = screen.getByPlaceholderText('Password');
+        const loginButton = screen.getByText('Login');
 
-        fireEvent.change(screen.getByPlaceholderText('Username'), {
+        fireEvent.change(usernameField, {
             target: { value: 'testuser' },
         });
-        fireEvent.change(screen.getByPlaceholderText('Password'), {
+        fireEvent.change(passwordField, {
             target: { value: 'password' },
         });
+        fireEvent.click(loginButton);
 
-        await act(async () => {
-            fireEvent.click(screen.getByText('Login'));
+        await waitFor(() => {
+            expect(toast.success).toHaveBeenCalledWith('Welcome back, testuser');
         });
-
-        expect(loginMutate).toHaveBeenCalledWith(
-            { username: 'testuser', password: 'password' },
-            expect.objectContaining({
-                onError: expect.any(Function),
-            }),
-        );
     });
 
     it('handles failed login', async () => {
-        renderLoginPage();
+        render(<LoginPage />);
+        const usernameField = screen.getByPlaceholderText('Username');
+        const passwordField = screen.getByPlaceholderText('Password');
+        const loginButton = screen.getByText('Login');
 
-        fireEvent.change(screen.getByPlaceholderText('Username'), {
+        fireEvent.change(usernameField, {
             target: { value: 'wronguser' },
         });
-        fireEvent.change(screen.getByPlaceholderText('Password'), {
+        fireEvent.change(passwordField, {
             target: { value: 'wrongpass' },
         });
 
-        let errorCallback: (error: Error) => void;
-        loginMutate.mockImplementation((_, options) => {
-            errorCallback = options.onError;
-        });
-
-        await act(async () => {
-            fireEvent.click(screen.getByText('Login'));
-            errorCallback?.(new Error('Invalid credentials'));
-        });
+        fireEvent.click(loginButton);
 
         await waitFor(() => {
             expect(screen.getByPlaceholderText('Username')).toHaveClass('border-system_red');
@@ -125,29 +93,27 @@ describe('LoginPage', () => {
     });
 
     it('handles successful registration', async () => {
-        renderLoginPage();
+        render(<LoginPage />);
+        const usernameField = screen.getByPlaceholderText('Username');
+        const passwordField = screen.getByPlaceholderText('Password');
+        const registerButton = screen.getByText('Register');
 
-        fireEvent.change(screen.getByPlaceholderText('Username'), {
+        fireEvent.change(usernameField, {
             target: { value: 'newuser' },
         });
-        fireEvent.change(screen.getByPlaceholderText('Password'), {
+        fireEvent.change(passwordField, {
             target: { value: 'password' },
         });
 
-        await act(async () => {
-            fireEvent.click(screen.getByText('Register'));
-        });
+        fireEvent.click(registerButton);
 
-        expect(registerMutate).toHaveBeenCalledWith(
-            { username: 'newuser', password: 'password' },
-            expect.objectContaining({
-                onError: expect.any(Function),
-            }),
-        );
+        await waitFor(() => {
+            expect(toast.success).toHaveBeenCalledWith('Successfully registered as newuser');
+        });
     });
 
     it('handles failed registration', async () => {
-        renderLoginPage();
+        render(<LoginPage />);
 
         fireEvent.change(screen.getByPlaceholderText('Username'), {
             target: { value: 'existinguser' },
@@ -156,29 +122,14 @@ describe('LoginPage', () => {
             target: { value: 'password' },
         });
 
-        let errorCallback: (error: Error) => void;
-        registerMutate.mockImplementation((_, options) => {
-            errorCallback = options.onError;
-        });
-
-        await act(async () => {
-            fireEvent.click(screen.getByText('Register'));
-            errorCallback?.(new Error('Username already exists'));
-        });
+        fireEvent.click(screen.getByText('Register'));
 
         await waitFor(() => {
-            expect(screen.getByPlaceholderText('Username')).toHaveClass('border-system_red');
-            expect(screen.getByPlaceholderText('Username')).toHaveClass('focus:border-system_red');
-            expect(screen.getByPlaceholderText('Username')).toHaveClass('ring-system_red');
+            expect(toast.error).toHaveBeenCalledWith('Username already exists');
         });
-    });
 
-    it('renders privacy policy link', () => {
-        renderLoginPage();
-
-        const privacyLink = screen.getByText('Privacy Policy');
-        expect(privacyLink).toBeInTheDocument();
-        expect(privacyLink).toHaveAttribute('href', 'https://www.nc.gov/privacy');
-        expect(privacyLink).toHaveAttribute('target', '_blank');
+        expect(screen.getByPlaceholderText('Username')).toHaveClass('border-system_red');
+        expect(screen.getByPlaceholderText('Username')).toHaveClass('focus:border-system_red');
+        expect(screen.getByPlaceholderText('Username')).toHaveClass('ring-system_red');
     });
 });

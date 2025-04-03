@@ -1,0 +1,20 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PhotoGalleryMiniTab > matches snapshot 1`] = `
+<div>
+  <div
+    class="z-0 grid w-full grid-cols-3"
+  >
+    <div
+      class="aspect-square cursor-pointer"
+    >
+      <img
+        alt="Chimney Rock State Park main photo"
+        class="h-full w-full object-cover transition-opacity duration-300 hover:opacity-80"
+        data-testid="photo"
+        src="/photos/undefined"
+      />
+    </div>
+  </div>
+</div>
+`;

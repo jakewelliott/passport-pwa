@@ -1,24 +1,25 @@
-import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { useUser } from '@/hooks/queries/useUser';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { fireEvent, screen } from '@testing-library/react';
-import { describe, expect, it, test } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { LoggedInAs } from '../../components/logged-in-as';
 
+const { render, checkHook } = setupTestEnv();
 describe('LoggedInAs', () => {
-    it('displays logged in message when user exists', () => {
-        renderWithClient(<LoggedInAs />);
-        expect(screen.getByText("You are currently logged in as 'testUser'")).toBeInTheDocument();
-        expect(screen.getByText('Log out')).toBeInTheDocument();
+    beforeAll(async () => {
+        await checkHook(useUser, 'useUser');
     });
 
-    test('displays not logged in message when no user', () => {
-        renderWithClient(<LoggedInAs />);
-        expect(screen.getByText('You are not logged in')).toBeInTheDocument();
-        expect(screen.getByText('Log out')).toBeInTheDocument();
+    it('matches snapshot', () => {
+        const { container } = render(<LoggedInAs />);
+        expect(container).toMatchSnapshot();
     });
 
-    test('calls logout function when logout button is clicked', () => {
-        renderWithClient(<LoggedInAs />);
+    it('calls logout function when logout button is clicked', () => {
+        render(<LoggedInAs />);
         const logoutLink = screen.getByText('Log out');
         fireEvent.click(logoutLink);
+        // TODO: find some way to test that the logout function is called
+        expect(false).toBe(true);
     });
 });

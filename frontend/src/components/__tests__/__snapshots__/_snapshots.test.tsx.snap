@@ -466,6 +466,140 @@ exports[`Component Snapshots > TabBar renders correctly 1`] = `
 </div>
 `;
 
+exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
+<div>
+  <div
+    class="inline-flex items-center gap-1 px-1"
+  >
+    <div
+      class="group relative flex flex-col items-center gap-1"
+    >
+      <div
+        class="aspect-square"
+        data-testid="4WDBeach"
+        style="height: 48px; width: 48px;"
+      >
+        <img
+          alt="4WD Beach Access"
+          src="/icons/misc/4WDBeach.svg"
+        />
+      </div>
+      <div
+        class="text-sm text-center"
+      >
+        4WD Beach Access
+      </div>
+      <div
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        style="z-index: 9999;"
+      >
+        4WD Beach Access
+      </div>
+    </div>
+    <div
+      class="group relative flex flex-col items-center gap-1"
+    >
+      <div
+        class="aspect-square"
+        data-testid="Accessible"
+        style="height: 48px; width: 48px;"
+      >
+        <img
+          alt="Accessible Facilities"
+          src="/icons/misc/Accessible.svg"
+        />
+      </div>
+      <div
+        class="text-sm text-center"
+      >
+        Accessible Facilities
+      </div>
+      <div
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        style="z-index: 9999;"
+      >
+        Accessible Facilities
+      </div>
+    </div>
+    <div
+      class="group relative flex flex-col items-center gap-1"
+    >
+      <div
+        class="aspect-square"
+        data-testid="Amphiteater"
+        style="height: 48px; width: 48px;"
+      >
+        <img
+          alt="Amphitheater"
+          src="/icons/misc/Amphiteater.svg"
+        />
+      </div>
+      <div
+        class="text-sm text-center"
+      >
+        Amphitheater
+      </div>
+      <div
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        style="z-index: 9999;"
+      >
+        Amphitheater
+      </div>
+    </div>
+    <div
+      class="group relative flex flex-col items-center gap-1"
+    >
+      <div
+        class="aspect-square"
+        data-testid="BackpackCamping"
+        style="height: 48px; width: 48px;"
+      >
+        <img
+          alt="Backpack Camping"
+          src="/icons/misc/BackpackCamping.svg"
+        />
+      </div>
+      <div
+        class="text-sm text-center"
+      >
+        Backpack Camping
+      </div>
+      <div
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        style="z-index: 9999;"
+      >
+        Backpack Camping
+      </div>
+    </div>
+    <div
+      class="group relative flex flex-col items-center gap-1"
+    >
+      <div
+        class="aspect-square"
+        data-testid="Bathhouse"
+        style="height: 48px; width: 48px;"
+      >
+        <img
+          alt="Bathhouse"
+          src="/icons/misc/Bathhouse.svg"
+        />
+      </div>
+      <div
+        class="text-sm text-center"
+      >
+        Bathhouse
+      </div>
+      <div
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        style="z-index: 9999;"
+      >
+        Bathhouse
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Route Snapshots > /locations matches snapshot 1`] = `
 <div>
   <div

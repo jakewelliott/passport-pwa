@@ -46,8 +46,6 @@ const IconView = ({ icon }: { icon: ParkIcon }) => {
     const [tooltipVisible, setTooltipVisible] = useState(false);
     const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
 
-    console.log(icon);
-
     const handleMouseEnter = (event: React.MouseEvent<HTMLImageElement>) => {
         const rect = event.currentTarget.getBoundingClientRect();
         setTooltipPosition({

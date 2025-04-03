@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LocationMiniTabBar > matches snapshot 1`] = `
+<div>
+  <div
+    class="flex h-12 items-center justify-around border-supporting_bluegray border-b"
+  >
+    <div
+      class="relative flex h-full w-full cursor-pointer items-center justify-center p-2 text-system_black"
+    >
+      <p>
+        Details
+      </p>
+      <div
+        class="absolute right-0 bottom-0 left-0 h-0.5 bg-secondary_darkteal "
+      />
+    </div>
+    <div
+      class="relative flex h-full w-full cursor-pointer items-center justify-center p-2 text-supporting_darkgray"
+    >
+      <p>
+        Photos
+      </p>
+      <div
+        class="absolute right-0 bottom-0 left-0 h-0.5 bg-secondary_darkteal hidden"
+      />
+    </div>
+    <div
+      class="relative flex h-full w-full cursor-pointer items-center justify-center p-2 text-supporting_darkgray"
+    >
+      <p>
+        Notes
+      </p>
+      <div
+        class="absolute right-0 bottom-0 left-0 h-0.5 bg-secondary_darkteal hidden"
+      />
+    </div>
+  </div>
+  <div>
+    Details Content
+  </div>
+</div>
+`;

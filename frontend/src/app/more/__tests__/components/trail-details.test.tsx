@@ -1,34 +1,13 @@
 import { TrailDetailView } from '@/app/more/components/trail-details';
 import { mockTrail } from '@/lib/testing/mock';
-import { render, screen } from '@testing-library/react';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { describe, expect, it } from 'vitest';
 
+const { render } = setupTestEnv();
+
 describe('TrailDetailView', () => {
-    it('renders trail name with correct styling', () => {
-        render(<TrailDetailView trail={mockTrail} />);
-        const trailName = screen.getByText(`${mockTrail.trailName}:`);
-        expect(trailName).toBeInTheDocument();
-        expect(trailName).toHaveClass('text-secondary_orange');
+    it('matches snapshot', () => {
+        const { container } = render(<TrailDetailView trail={mockTrail} />);
+        expect(container).toMatchSnapshot();
     });
-
-    it('renders rest of trail details', () => {
-        render(<TrailDetailView trail={mockTrail} />);
-        expect(screen.queryByText(mockTrail.distance)).not.toBeNull;
-        expect(screen.queryByText(mockTrail.description)).not.toBeNull;
-    });
-
-    it('renders bullet points with correct styling', () => {
-        render(<TrailDetailView trail={mockTrail} />);
-        const bullets = screen.getAllByText('▪');
-        expect(bullets).toHaveLength(2);
-        for (const bullet of bullets) {
-            expect(bullet).toHaveClass('text-secondary_orange');
-        }
-    });
-
-    // TODO: trail icons aren't stored in db yet
-    // it('renders trail icons component', () => {
-    // 	render(<TrailDetailView trail={mockTrail} />);
-    // 	expect(screen.getByTestId('trail-icons')).toBeInTheDocument();
-    // });
 });

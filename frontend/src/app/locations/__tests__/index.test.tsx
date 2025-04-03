@@ -1,15 +1,19 @@
-import { parks } from '@/lib/testing/mock/tables';
-import { renderWithClient } from '@/lib/testing/test-wrapper';
-import { screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { useParks } from '@/hooks/queries/useParks';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
+import { beforeAll, describe, expect, it } from 'vitest';
 import Locations from '../index';
 
+const { render, checkHook } = setupTestEnv();
+
 describe('Locations', () => {
-    // ADAM: this test is failing because its not waiting for the data to be loaded
-    // i will figure out how to fix this later
-    it('renders all parks in a list', async () => {
-        renderWithClient(<Locations />);
-        const parkElements = screen.getAllByTestId('park');
-        expect(parkElements).toHaveLength(parks.length);
+    beforeAll(async () => {
+        await checkHook(useParks, 'useParks');
     });
+
+    it('matches snapshot', async () => {
+        const { container } = render(<Locations />);
+        expect(container).toMatchSnapshot();
+    });
+
+    // ADAM: add tests for filter buttons, definitely in another file tho
 });

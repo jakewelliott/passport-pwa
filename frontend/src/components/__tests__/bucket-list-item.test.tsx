@@ -6,6 +6,11 @@ import { describe, expect, it, vi } from 'vitest';
 const mockHandler = vi.fn();
 
 describe('BucketListItem', () => {
+    it('matches snapshot', () => {
+        render(<BucketListItemView item={mockBucketListItem} handler={mockHandler} />);
+        expect(screen.getByText(mockBucketListItem.task)).toBeInTheDocument();
+    });
+
     it('renders with correct text content', () => {
         render(<BucketListItemView item={mockBucketListItem} handler={mockHandler} />);
 

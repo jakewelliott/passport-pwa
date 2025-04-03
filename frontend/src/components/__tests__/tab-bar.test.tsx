@@ -1,5 +1,5 @@
 import * as useUserHook from '@/hooks/queries/useUser';
-import { renderWithClient } from '@/lib/testing/test-wrapper';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import { screen } from '@testing-library/react';
 import { useLocation } from 'react-router-dom';
 import { type Mock, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -20,6 +20,8 @@ vi.mock('@/hooks/queries/useUser');
 const mockUseLocation = useLocation as Mock;
 const mockUseUser = useUserHook.useUser as Mock;
 
+// We mock useUser here so we don't need to check the hook in the test
+const { render } = setupTestEnv();
 describe('TabBar', () => {
     beforeEach(() => {
         vi.clearAllMocks();
@@ -28,7 +30,7 @@ describe('TabBar', () => {
     });
 
     it('renders all navigation tabs for visitor role', () => {
-        renderWithClient(<TabBar />);
+        render(<TabBar />);
 
         const tabs = ['Locations', 'Stamps', 'More'];
         for (const tab of tabs) {
@@ -40,7 +42,7 @@ describe('TabBar', () => {
 
     it('highlights active tab based on current route', () => {
         mockUseLocation.mockReturnValue({ pathname: '/stamps' });
-        renderWithClient(<TabBar />);
+        render(<TabBar />);
 
         const stampsTab = screen.getByText('Stamps').closest('div');
         const locationsTab = screen.getByText('Locations').closest('div');
@@ -53,7 +55,7 @@ describe('TabBar', () => {
 
     it('shows correct tabs for admin role', () => {
         mockUseUser.mockReturnValue({ data: { role: 'admin', username: 'admin' } });
-        renderWithClient(<TabBar />);
+        render(<TabBar />);
 
         expect(screen.getByText('Locations')).toBeInTheDocument();
         expect(screen.getByText('More')).toBeInTheDocument();
@@ -66,19 +68,19 @@ describe('TabBar', () => {
 
     it('returns null when user data is loading', () => {
         mockUseUser.mockReturnValue({ isLoading: true, data: undefined });
-        const { container } = renderWithClient(<TabBar />);
+        const { container } = render(<TabBar />);
         expect(container.firstChild).toBeNull();
     });
 
     it('returns null when user data is undefined', () => {
         mockUseUser.mockReturnValue({ data: undefined, isLoading: false });
-        const { container } = renderWithClient(<TabBar />);
+        const { container } = render(<TabBar />);
         expect(container.firstChild).toBeNull();
     });
 
     it('highlights tab when pathname partially matches', () => {
         mockUseLocation.mockReturnValue({ pathname: '/stamps/details' });
-        renderWithClient(<TabBar />);
+        render(<TabBar />);
 
         const stampsTab = screen.getByText('Stamps').closest('div');
         const locationsTab = screen.getByText('Locations').closest('div');
@@ -90,7 +92,7 @@ describe('TabBar', () => {
     });
 
     it('renders icons for each tab', () => {
-        renderWithClient(<TabBar />);
+        render(<TabBar />);
 
         const links = screen.getAllByRole('link');
         expect(links).toHaveLength(3);

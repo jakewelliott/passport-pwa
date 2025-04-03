@@ -1,61 +1,17 @@
 import { Trails } from '@/app/more/trails';
-import { renderWithClient } from '@/lib/testing/test-wrapper';
-import { screen } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { useTrails } from '@/hooks/queries/useTrails';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
+import { beforeAll, describe, expect, it } from 'vitest';
+
+const { render, checkHook } = setupTestEnv();
+
 describe('Trails Component - User Stories', () => {
-    // TODO: fix - test doesn't match actual component content
-    // // User Story: As a user, I want to learn about trail difficulty levels
-    // it('should display information about trail difficulty levels', () => {
-    // 	render(
-    // 		<BrowserRouter>
-    // 			<Trails />
-    // 		</BrowserRouter>
-    // 	);
-
-    // 	expect(screen.getByText(/Easy/)).toBeInTheDocument();
-    // 	expect(screen.getByText(/Moderate/)).toBeInTheDocument();
-    // 	expect(screen.getByText(/Strenuous/)).toBeInTheDocument();
-    // });
-
-    // User Story: As a user, I want to understand trail ratings
-    it('should explain trail ratings', () => {
-        renderWithClient(<Trails />);
-
-        expect(screen.getByText(/Dan River State Trail/i)).toBeInTheDocument();
-        expect(screen.getByText(/Deep River State Trail/i)).toBeInTheDocument();
-        expect(screen.getByText(/East Coast Greenway State Trail/i)).toBeInTheDocument();
+    beforeAll(() => {
+        checkHook(useTrails, 'useTrails');
     });
 
-    it('should explain trail difficulty', () => {
-        renderWithClient(<Trails />);
-
-        expect(screen.getByText(/90 miles/i)).toBeInTheDocument();
-        expect(screen.getByText(/125 miles/i)).toBeInTheDocument();
-        expect(screen.getByText(/795 miles/i)).toBeInTheDocument();
-    });
-
-    // User Story: As a user, I want to learn about trail safety
-    it('should provide trail safety information', () => {
-        renderWithClient(<Trails />);
-
-        expect(screen.getByText(/For maps and additional information/i)).toBeInTheDocument();
-        expect(screen.getByText(/trails.nc.gov\/state-trails/i)).toBeInTheDocument();
-    });
-
-    // User Story: As a user, I want to understand trail accessibility
-    it('should display accessibility information', () => {
-        renderWithClient(<Trails />);
-
-        expect(screen.getByText(/Dan River State Trail/i)).toBeInTheDocument();
-        expect(screen.getByText(/90 miles/i)).toBeInTheDocument();
-        expect(screen.getByText(/northern Piedmont Triad/i)).toBeInTheDocument();
-    });
-
-    // User Story: As a user, I want to learn about trail etiquette
-    it('should provide trail etiquette guidelines', () => {
-        renderWithClient(<Trails />);
-
-        expect(screen.getByText(/For maps and additional information/i)).toBeInTheDocument();
-        expect(screen.getByText(/trails.nc.gov\/state-trails/i)).toBeInTheDocument();
+    it('matches snapshot', () => {
+        const { container } = render(<Trails />);
+        expect(container).toMatchSnapshot();
     });
 });

@@ -1,0 +1,331 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StampDetails > matches collected stamp snapshot 1`] = `
+<div>
+  <div
+    class="fixed inset-0 bg-system_black opacity-65"
+    style="z-index: 40;"
+  />
+  <div
+    class="fixed inset-0 flex items-center justify-center"
+    style="z-index: 50;"
+  >
+    <article
+      class="relative mx-4 w-full max-w-sm rounded-lg bg-supporting_lightblue p-4 shadow-xl"
+    >
+      <header
+        class="mb-4"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <h3
+            class="text-center"
+          >
+            Crowders Mountain State Park
+          </h3>
+          <button
+            aria-label="Close park details"
+            class="rounded-full p-2 transition-colors hover:bg-black/10"
+            type="button"
+          >
+            <svg
+              class="text-system_gray"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 352 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div
+        class="space-y-3"
+      >
+        <div
+          class="flex justify-center"
+        >
+          <img
+            alt="CRMO stamp"
+            class="h-32 w-32"
+            src="/stamps/CRMO.svg"
+          />
+        </div>
+        <div
+          class="space-y-2"
+        >
+          <p
+            class="text-supporting_inactiveblue"
+          >
+            Kings Mountain, NC
+          </p>
+          <div
+            class="flex h-fit flex-row items-center gap-2 text-supporting_inactiveblue"
+          >
+            <div
+              class="aspect-square"
+              data-testid="stamp-collected-on"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="3"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M32 512h448v-64H32v64zm384-256h-66.56c-16.26 0-29.44-13.18-29.44-29.44v-9.46c0-27.37 8.88-53.41 21.46-77.72 9.11-17.61 12.9-38.39 9.05-60.42-6.77-38.78-38.47-70.7-77.26-77.45C212.62-9.04 160 37.33 160 96c0 14.16 3.12 27.54 8.69 39.58C182.02 164.43 192 194.7 192 226.49v.07c0 16.26-13.18 29.44-29.44 29.44H96c-53.02 0-96 42.98-96 96v32c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-32c0-53.02-42.98-96-96-96z"
+                />
+              </svg>
+            </div>
+            <p>
+              Stamp not yet collected
+            </p>
+          </div>
+          <a
+            class="link inline-block"
+            data-discover="true"
+            href="/locations/CRMO"
+          >
+            View Park Details 
+            <span
+              aria-hidden="true"
+            >
+              &gt;
+            </span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+`;
+
+exports[`StampDetails > matches snapshot 1`] = `
+<div>
+  <div
+    class="fixed inset-0 bg-system_black opacity-65"
+    style="z-index: 40;"
+  />
+  <div
+    class="fixed inset-0 flex items-center justify-center"
+    style="z-index: 50;"
+  >
+    <article
+      class="relative mx-4 w-full max-w-sm rounded-lg bg-supporting_lightblue p-4 shadow-xl"
+    >
+      <header
+        class="mb-4"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <h3
+            class="text-center"
+          >
+            Chimney Rock State Park
+          </h3>
+          <button
+            aria-label="Close park details"
+            class="rounded-full p-2 transition-colors hover:bg-black/10"
+            type="button"
+          >
+            <svg
+              class="text-system_gray"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 352 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div
+        class="space-y-3"
+      >
+        <div
+          class="flex justify-center"
+        >
+          <img
+            alt="CHRO stamp"
+            class="h-32 w-32"
+            src="/stamps/CHRO.svg"
+          />
+        </div>
+        <div
+          class="space-y-2"
+        >
+          <p
+            class="text-supporting_inactiveblue"
+          >
+            Chimney Rock, NC
+          </p>
+          <div
+            class="flex h-fit flex-row items-center gap-2 text-supporting_inactiveblue"
+          >
+            <div
+              class="aspect-square"
+              data-testid="stamp-collected-on"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="3"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M32 512h448v-64H32v64zm384-256h-66.56c-16.26 0-29.44-13.18-29.44-29.44v-9.46c0-27.37 8.88-53.41 21.46-77.72 9.11-17.61 12.9-38.39 9.05-60.42-6.77-38.78-38.47-70.7-77.26-77.45C212.62-9.04 160 37.33 160 96c0 14.16 3.12 27.54 8.69 39.58C182.02 164.43 192 194.7 192 226.49v.07c0 16.26-13.18 29.44-29.44 29.44H96c-53.02 0-96 42.98-96 96v32c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-32c0-53.02-42.98-96-96-96z"
+                />
+              </svg>
+            </div>
+            <p>
+              Stamp not yet collected
+            </p>
+          </div>
+          <a
+            class="link inline-block"
+            data-discover="true"
+            href="/locations/CHRO"
+          >
+            View Park Details 
+            <span
+              aria-hidden="true"
+            >
+              &gt;
+            </span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+`;
+
+exports[`StampDetails > matches uncollected stamp snapshot 1`] = `
+<div>
+  <div
+    class="fixed inset-0 bg-system_black opacity-65"
+    style="z-index: 40;"
+  />
+  <div
+    class="fixed inset-0 flex items-center justify-center"
+    style="z-index: 50;"
+  >
+    <article
+      class="relative mx-4 w-full max-w-sm rounded-lg bg-supporting_lightblue p-4 shadow-xl"
+    >
+      <header
+        class="mb-4"
+      >
+        <div
+          class="flex items-center justify-between"
+        >
+          <h3
+            class="text-center"
+          >
+            Chimney Rock State Park
+          </h3>
+          <button
+            aria-label="Close park details"
+            class="rounded-full p-2 transition-colors hover:bg-black/10"
+            type="button"
+          >
+            <svg
+              class="text-system_gray"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 352 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+              />
+            </svg>
+          </button>
+        </div>
+      </header>
+      <div
+        class="space-y-3"
+      >
+        <div
+          class="flex justify-center"
+        >
+          <img
+            alt="CHRO stamp"
+            class="h-32 w-32"
+            src="/stamps/CHRO.svg"
+          />
+        </div>
+        <div
+          class="space-y-2"
+        >
+          <p
+            class="text-supporting_inactiveblue"
+          >
+            Chimney Rock, NC
+          </p>
+          <div
+            class="flex h-fit flex-row items-center gap-2 text-supporting_inactiveblue"
+          >
+            <div
+              class="aspect-square"
+              data-testid="stamp-collected-on"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="3"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M32 512h448v-64H32v64zm384-256h-66.56c-16.26 0-29.44-13.18-29.44-29.44v-9.46c0-27.37 8.88-53.41 21.46-77.72 9.11-17.61 12.9-38.39 9.05-60.42-6.77-38.78-38.47-70.7-77.26-77.45C212.62-9.04 160 37.33 160 96c0 14.16 3.12 27.54 8.69 39.58C182.02 164.43 192 194.7 192 226.49v.07c0 16.26-13.18 29.44-29.44 29.44H96c-53.02 0-96 42.98-96 96v32c0 17.67 14.33 32 32 32h448c17.67 0 32-14.33 32-32v-32c0-53.02-42.98-96-96-96z"
+                />
+              </svg>
+            </div>
+            <p>
+              Stamp not yet collected
+            </p>
+          </div>
+          <a
+            class="link inline-block"
+            data-discover="true"
+            href="/locations/CHRO"
+          >
+            View Park Details 
+            <span
+              aria-hidden="true"
+            >
+              &gt;
+            </span>
+          </a>
+        </div>
+      </div>
+    </article>
+  </div>
+</div>
+`;

@@ -1,13 +1,21 @@
 import { LocationMiniTabBar } from '@/app/locations/components/minitab-bar';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
+import { fireEvent, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
+const mockChildren = [
+    <div key='details'>Details Content</div>,
+    <div key='photos'>Photos Content</div>,
+    <div key='notes'>Notes Content</div>,
+];
+
+const { render } = setupTestEnv();
+
 describe('LocationMiniTabBar', () => {
-    const mockChildren = [
-        <div key='details'>Details Content</div>,
-        <div key='photos'>Photos Content</div>,
-        <div key='notes'>Notes Content</div>,
-    ];
+    it('matches snapshot', () => {
+        const { container } = render(<LocationMiniTabBar>{mockChildren}</LocationMiniTabBar>);
+        expect(container).toMatchSnapshot();
+    });
 
     it('renders all tab buttons', () => {
         render(<LocationMiniTabBar>{mockChildren}</LocationMiniTabBar>);
