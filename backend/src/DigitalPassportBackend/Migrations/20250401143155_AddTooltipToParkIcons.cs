@@ -12,34 +12,6 @@ namespace DigitalPassportBackend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "favorite_parks",
-                columns: table => new
-                {
-                    id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    created_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    park = table.Column<int>(type: "int", nullable: true),
-                    user = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_favorite_parks", x => x.id);
-                    table.ForeignKey(
-                        name: "FK_favorite_parks_parks_park",
-                        column: x => x.park,
-                        principalTable: "parks",
-                        principalColumn: "id");
-                    table.ForeignKey(
-                        name: "FK_favorite_parks_users_user",
-                        column: x => x.user,
-                        principalTable: "users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
             migrationBuilder.UpdateData(
                 table: "users",
                 keyColumn: "id",
@@ -53,16 +25,6 @@ namespace DigitalPassportBackend.Migrations
                 keyValue: 2,
                 columns: new[] { "created_at", "password", "updated_at" },
                 values: new object[] { new DateTime(2025, 4, 1, 14, 31, 55, 191, DateTimeKind.Utc).AddTicks(4700), "10000.qFqsE7ISmiGAtsIN/FrqgQ==.mZOWkLhBcSvluRdI06JCioEde1bHGQGuwx6vS3TaoPA=", new DateTime(2025, 4, 1, 14, 31, 55, 191, DateTimeKind.Utc).AddTicks(4680) });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_favorite_parks_park",
-                table: "favorite_parks",
-                column: "park");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_favorite_parks_user",
-                table: "favorite_parks",
-                column: "user");
 
             // Add tooltip column to park_icons table
             migrationBuilder.AddColumn<string>(
@@ -122,8 +84,6 @@ namespace DigitalPassportBackend.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "favorite_parks");
 
             migrationBuilder.UpdateData(
                 table: "users",

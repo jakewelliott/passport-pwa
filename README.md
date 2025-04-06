@@ -42,4 +42,12 @@ The page auto-updates as you edit the files. See the README in the frontend fold
 - If you are using WSL, you need to install the root certificate in Windows too.
 - If you are using WSL, you need to run `./setup-dev-certs.sh` in the WSL terminal.
 
-# Backend: TBD @V
+# Backend:
+
+## Running migrations
+
+```bash
+npm run database
+```
+
+

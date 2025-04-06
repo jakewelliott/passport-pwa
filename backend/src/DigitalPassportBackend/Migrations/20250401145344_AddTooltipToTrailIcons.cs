@@ -11,13 +11,13 @@ namespace DigitalPassportBackend.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // migrationBuilder.AddColumn<string>(
-            //     name: "tooltip",
-            //     table: "trail_icons",
-            //     type: "varchar(255)",
-            //     maxLength: 255,
-            //     nullable: true)
-            //     .Annotation("MySql:CharSet", "utf8mb4");
+            migrationBuilder.AddColumn<string>(
+                name: "tooltip",
+                table: "trail_icons",
+                type: "varchar(255)",
+                maxLength: 255,
+                nullable: true)
+                .Annotation("MySql:CharSet", "utf8mb4");
                 
             // Update trail_icons tooltips based on icon names
             migrationBuilder.Sql(@"
