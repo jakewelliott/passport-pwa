@@ -15,12 +15,16 @@ import { dbg } from '@/lib/debug';
 import type { Park } from '@/types';
 import { useParams } from 'react-router-dom';
 
+// TODO: styling here needs to be fixed
 const MiniTabs = ({ park }: { park: Park }) => (
-    <LocationMiniTabBar>
-        <DetailsMiniTab park={park} />
-        <PhotoGalleryMiniTab park={park} />
-        <NotesMiniTab parkId={park.id} />
-    </LocationMiniTabBar>
+    <div className='flex flex-col'>
+        <LocationActionBar park={park} />
+        <LocationMiniTabBar>
+            <DetailsMiniTab park={park} />
+            <PhotoGalleryMiniTab park={park} />
+            <NotesMiniTab parkId={park.id} />
+        </LocationMiniTabBar>
+    </div>
 );
 
 export default function ParkInfoScreen() {
@@ -35,9 +39,9 @@ export default function ParkInfoScreen() {
     if (isStampLoading) return <LoadingPlaceholder what='stamp' />;
 
     return (
-        <div>
-            <div className='m-6 flex flex-col gap-3'>
-                <div>
+        <div className='flex flex-col gap-3'>
+            <div className='flex flex-col gap-3'>
+                <div className='text-center'>
                     <h2>{park.parkName}</h2>
                 </div>
                 <AddressView park={park} />
@@ -45,7 +49,7 @@ export default function ParkInfoScreen() {
                 <GenericIcon name='stamp' text={stampCollectedOn(stamp)} />
                 <BucketList parkId={park.id} />
             </div>
-            <LocationActionBar park={park} />
+
             <MiniTabs park={park} />
         </div>
     );

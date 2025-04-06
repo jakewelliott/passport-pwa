@@ -2,6 +2,7 @@ import type { Park } from '@/types';
 import { FiGlobe, FiMail, FiNavigation, FiPhone } from 'react-icons/fi';
 
 export const LocationActionBar = ({ park }: { park: Park }) => {
+    // TODO: styling here needs to be fixed
     return (
         <div
             className='flex flex-row items-center justify-evenly bg-secondary_darkteal p-2.5'

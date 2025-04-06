@@ -89,8 +89,8 @@ const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
 
 export const DetailsMiniTab = ({ park }: { park: Park }) => {
     return (
-        <div className='mt-6 mb-6 flex flex-col'>
-            <div className='gap-2 pr-6 pb-6 pl-6'>
+        <div className='mt-4 ml-4 flex flex-col'>
+            <div className='gap-2'>
                 <Highlight title='Established'>{park.establishedYear}</Highlight>
                 <Highlight title='Landmark'>{park.landmark}</Highlight>
                 <Highlight title='You can find'>{park.youCanFind}</Highlight>

@@ -24,7 +24,7 @@ export const BucketListItemView = ({ item, completion, handler, address, testId 
     return (
         <div
             key={item.id}
-            className='flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white'
+            className='flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white'
             {...a11yOnClick(handler)}
             data-testid={testId}
         >

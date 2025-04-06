@@ -56,6 +56,7 @@ const NoteRow = ({
 };
 
 export const MyNotes = () => {
+    dbg('RENDER', 'MyNotes');
     const navigate = useNavigate();
     const { data, isLoading } = useNotes();
 
@@ -64,16 +65,15 @@ export const MyNotes = () => {
     const allNotes = [generalNote, ...restOfNotes];
 
     if (isLoading) return <LoadingPlaceholder what='notes' />;
+    dbg('RENDER', 'MyNotes', `allNotes: ${allNotes?.length}`);
 
     return (
-        <div className='container mx-auto px-4 py-4'>
-            <div className='space-y-4'>
-                {allNotes?.length === 0 ? (
-                    <p className='text-gray-600'>No park notes found.</p>
-                ) : (
-                    allNotes?.map((note) => note && <NoteRow key={note.parkId} note={note} navigate={navigate} />)
-                )}
-            </div>
+        <div className='space-y-4'>
+            {allNotes?.length === 0 ? (
+                <p className='text-gray-600'>No park notes found.</p>
+            ) : (
+                allNotes?.map((note) => note && <NoteRow key={note.parkId} note={note} navigate={navigate} />)
+            )}
         </div>
     );
 };
