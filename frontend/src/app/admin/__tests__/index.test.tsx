@@ -1,6 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import { AdminPage } from '../index';
+
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
+
+const { render } = setupTestEnv();
 
 describe('AdminPage', () => {
     it('renders the welcome message', () => {
