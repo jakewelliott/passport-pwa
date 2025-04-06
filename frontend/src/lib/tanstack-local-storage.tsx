@@ -14,7 +14,7 @@ const queryClient = new QueryClient({
             gcTime: Infinity,
             retry: (failureCount, error: Error) => {
                 // Don't retry on 401 errors
-                if (error.message === 'Unauthorized: Please log in again') return false;
+                if (error.message.includes('Unauthorized')) return false;
                 dbg('QUERY', 'ERROR', error);
                 return failureCount < 3;
             },

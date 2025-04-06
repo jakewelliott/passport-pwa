@@ -1,7 +1,5 @@
 import Header from '@/components/header';
-import Layout from '@/components/layout';
 import TabBar from '@/components/tab-bar';
-import { useUser } from '@/hooks/queries/useUser';
 import { useSplashScreen } from '@/hooks/useSplashScreen';
 import { dbg } from '@/lib/debug';
 import { Outlet } from 'react-router-dom';
@@ -11,21 +9,16 @@ import ScrollToTop from './components/scroll-to-top';
 
 const App = () => {
     dbg('RENDER', 'App.tsx');
-    const { data: user } = useUser();
-
-    const { SplashScreen, splashFinished } = useSplashScreen();
+    const { SplashScreen } = useSplashScreen();
     return (
-        <>
+        <main className='layout no-scrollbar h-screen w-screen max-w-full overflow-hidden overflow-x-hidden'>
             <ScrollToTop />
-            <div className='app'>
-                <Header />
-                <Layout>
-                    <main>{!user ? <Outlet /> : splashFinished ? <Outlet /> : <SplashScreen />}</main>
-                </Layout>
-                <TabBar />
-            </div>
+            <Header />
+            <Outlet />
+            <TabBar />
+            <SplashScreen />
             <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
-        </>
+        </main>
     );
 };
 

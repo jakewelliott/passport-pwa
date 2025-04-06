@@ -55,7 +55,7 @@ const useRemoveParkFavorite = () => {
 };
 
 export const useFavoriteParks = () => {
-    const { data: allItems, isLoading: isLoadingAllItems, refetch } = useGetFavoriteParks();
+    const { data: allItems, isLoading: isLoadingAllItems, isFetching, refetch } = useGetFavoriteParks();
     const { mutate: markFavorite } = useMarkParkFavorite();
     const { mutate: removeFavorite } = useRemoveParkFavorite();
 
@@ -66,6 +66,7 @@ export const useFavoriteParks = () => {
         markFavorite,
         removeFavorite,
         isLoading,
+        isFetching,
         refetch,
     };
 };

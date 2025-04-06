@@ -6,15 +6,15 @@ import { useEffect, useState } from 'react';
 import { type To, useNavigate } from 'react-router-dom';
 import { useBucketList } from './queries/useBucketList';
 import { useNotes } from './queries/useNotes';
+import { useFavoriteParks } from './queries/useParkFavorites';
 import { useParks } from './queries/useParks';
 import { useTrails } from './queries/useTrails';
-import { useFavoriteParks } from './queries/useParkFavorites';
 
 const DEFAULT_DELAY = 100;
 
 interface LoadableHook {
     data: any[] | undefined;
-    isLoading: boolean;
+    isFetching: boolean;
     refetch: () => void;
 }
 
@@ -90,45 +90,41 @@ const AllDone = ({ mark }: { mark: () => void }) => {
 const APP_LOADERS: Loader[] = [
     {
         hook: useParks,
-        validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
+        validator: (hook) => hook.isFetching === false,
         what: 'parks',
-        refetch: true,
     },
     {
         hook: useBucketList,
-        validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
+        validator: (hook) => hook.isFetching === false,
         what: 'bucket list',
-        refetch: true,
     },
     {
         hook: useTrails,
-        validator: (hook) => hook?.data?.length !== undefined && hook?.data?.length > 0,
+        validator: (hook) => hook.isFetching === false,
         what: 'trails',
-        refetch: true,
     },
     {
         hook: useFavoriteParks,
-        validator: (hook) => Array.isArray(hook?.data),
+        validator: (hook) => hook.isFetching === false,
         what: 'favorite parks',
-        refetch: true,
     },
     {
         hook: useNotes,
-        validator: (hook) => Array.isArray(hook?.data),
+        validator: (hook) => hook.isFetching === false,
         what: 'notes',
-        refetch: true,
     },
 ];
 
 export const useSplashScreen = () => {
-    const [splashFinished, setSplashFinished] = useState(false);
-    const allDone = <AllDone mark={() => setSplashFinished(true)} />;
+    const [finished, setFinished] = useState(false);
+
+    const allDone = <AllDone mark={() => setFinished(true)} />;
     const loaders = nestLoaders(APP_LOADERS, allDone);
 
-    const SplashScreen = () => <SplashScreenView>{loaders}</SplashScreenView>;
+    const SplashScreen = () => (finished ? null : <SplashScreenView>{loaders}</SplashScreenView>);
 
     return {
         SplashScreen,
-        splashFinished,
+        splashFinished: finished,
     };
 };

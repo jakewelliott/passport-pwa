@@ -46,10 +46,16 @@ const useToggleCompletion = () => {
 
 /** Call with parkId as undefined to get all bucket list items and completed items */
 export const useBucketList = (parkId?: number) => {
-    const { data: allItems, isLoading: isLoadingAllItems } = useBucketListItems();
-    const { data: allCompletedItems, isLoading: isLoadingCompletedItems, refetch } = useCompletedBucketListItems();
+    const { data: allItems, isLoading: isLoadingAllItems, isFetching: isFetchingAllItems } = useBucketListItems();
+    const {
+        data: allCompletedItems,
+        isLoading: isLoadingCompletedItems,
+        isFetching: isFetchingCompletedItems,
+        refetch,
+    } = useCompletedBucketListItems();
     const { mutate: toggleCompletion } = useToggleCompletion();
 
+    const isFetching = isFetchingAllItems || isFetchingCompletedItems;
     const isLoading = isLoadingAllItems || isLoadingCompletedItems || !allItems || !allCompletedItems;
 
     // filtering logic (useMemo?)
@@ -63,6 +69,7 @@ export const useBucketList = (parkId?: number) => {
         completed: parkId === undefined ? allCompletedItems : parkCompletedItems,
         toggleCompletion,
         isLoading,
+        isFetching,
         refetch,
     };
 };

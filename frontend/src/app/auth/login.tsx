@@ -83,7 +83,7 @@ export default function LoginPage() {
 
     return (
         <div
-            className='flex min-h-screen w-full items-center justify-center bg-center bg-cover bg-no-repeat'
+            className='flex h-svh items-center justify-center bg-center bg-cover bg-no-repeat'
             style={{ backgroundImage: "url('/photos/SILA-BackCover.jpg')" }}
         >
             {!navigator.onLine && (
