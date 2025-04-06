@@ -17,6 +17,7 @@ namespace DigitalPassportBackend.UnitTests.Services
         private readonly Mock<ICollectedStampRepository> _mockCollectedStamps;
         private readonly Mock<IPrivateNoteRepository> _mockPrivateNotes;
         private readonly Mock<IParkVisitRepository> _mockParkVisits;
+        private readonly Mock<IFavoriteParkRepository> _mockFavoriteParks;
         private readonly Mock<ILocationsRepository> _mockLocations;
         private readonly Mock<IUserRepository> _mockUsers;
 
@@ -30,6 +31,7 @@ namespace DigitalPassportBackend.UnitTests.Services
             _mockCollectedStamps = new();
             _mockPrivateNotes = new();
             _mockParkVisits = new();
+            _mockFavoriteParks = new();
             _mockLocations = new();
             _mockUsers = new();
 
@@ -102,6 +104,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 _mockCollectedStamps.Object,
                 _mockPrivateNotes.Object,
                 _mockParkVisits.Object,
+                _mockFavoriteParks.Object,
                 _mockLocations.Object,
                 _mockUsers.Object);
         }

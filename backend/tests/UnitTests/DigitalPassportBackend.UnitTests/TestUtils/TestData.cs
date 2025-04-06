@@ -462,5 +462,33 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
                 park = Parks[1]
             }
         ];
+
+        public static readonly List<FavoritePark> FavoriteParks =
+        [
+            new()
+            {
+                id = 1,
+                userId = Users[1].id,
+                user = Users[1],
+                parkId = Parks[0].id,
+                park = Parks[0]
+            },
+            new()
+            {
+                id = 2,
+                userId = Users[1].id,
+                user = Users[1],
+                parkId = Parks[1].id,
+                park = Parks[1]
+            },
+            new()
+            {
+                id = 3,
+                userId = Users[3].id,
+                user = Users[3],
+                parkId = Parks[1].id,
+                park = Parks[1]
+            }
+        ];
     }
 }

@@ -6,7 +6,7 @@
     },
     "editor.defaultFormatter": "biomejs.biome",
     "files.exclude": {
-        "frontend/node_modules": true,
+        "**/node_modules": true,
         "**/coverage": true,
         "**.pem": true,
         "**/package-lock.json": true,

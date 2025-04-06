@@ -1,36 +1,36 @@
 import { StampDetails } from '@/app/stamps/components/stamp-details';
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import { FilterModal, type SortOption, filterParks, sortParks } from '@/components/sort-filter';
+import { useFavoriteParks } from '@/hooks/queries/useParkFavorites';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park, ParkIcon } from '@/types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaFilter } from 'react-icons/fa';
 
 const isVisited = (code: string, stamps: CollectedStamp[]) =>
     stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
-const sortByName = (a: Park, b: Park) => a.parkName.localeCompare(b.parkName);
 
 const StampView = ({
-    abbreviation,
+    park,
     handleClick,
     greyed,
-}: { abbreviation: string; handleClick: () => void; greyed: boolean }) => {
+}: { park: Park; handleClick: () => void; greyed: boolean }) => {
     return (
         <button
             onClick={handleClick}
             className='flex items-center justify-center p-2'
             type='button'
-            data-testid={`stamp-button-${abbreviation}`}
+            data-testid={`stamp-button-${park.abbreviation}`}
         >
             <img
-                src={`/stamps/${abbreviation}.svg`}
-                alt={`${abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
+                src={park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://')) ? park.stampImage : `/stamps/${park.stampImage}`}
+                alt={`${park.abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
                 className={greyed ? 'opacity-50 grayscale' : ''}
-                data-testid={`stamp-image-${abbreviation}`}
+                data-testid={`stamp-image-${park.abbreviation}`}
             />
         </button>
     );
@@ -43,11 +43,16 @@ export default function StampsScreen() {
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const { data: parks, isLoading: parksLoading } = useParks();
-    const { data: stamps, isLoading: stampsLoading } = useStamps();
+    const { data: stamps, isLoading: stampsLoading, refetch } = useStamps();
     const { data: visitHistory } = useVisitsHistory();
+    const { data: favoritedParks } = useFavoriteParks();
     const { geopoint } = useLocation();
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+
+    useEffect(() => {
+        refetch();
+    }, [refetch]);
 
     // ADAM: PLEASE use zustand for this and have it in an external hook
     // you can get it to persist the entire store really easily
@@ -64,6 +69,10 @@ export default function StampsScreen() {
     const [selectedIcons, setSelectedIcons] = useState<Set<ParkIcon>>(() => {
         const saved = localStorage.getItem('parkSelectedIcons');
         return saved ? new Set(JSON.parse(saved)) : new Set();
+    });
+    const [showOnlyFavorites, setShowOnlyFavorites] = useState(() => {
+        const saved = localStorage.getItem('showOnlyFavorites');
+        return saved === 'true';
     });
     const [isTypingSearch, setIsTypingSearch] = useState(false);
 
@@ -87,6 +96,11 @@ export default function StampsScreen() {
         localStorage.setItem('parkSelectedIcons', JSON.stringify(Array.from(newSelected)));
     };
 
+    const handleShowOnlyFavoritesChange = (favorites: boolean) => {
+        setShowOnlyFavorites(favorites);
+        localStorage.setItem('showOnlyFavorites', favorites.toString());
+    };
+
     if (parksLoading || stampsLoading) return <LoadingPlaceholder what='stamps' />;
 
     const collectedStamps: { parkId: number }[] = [];
@@ -96,9 +110,10 @@ export default function StampsScreen() {
         }
     }
     const filteredParks = sortParks(
-        filterParks(parks || [], searchQuery, selectedIcons),
+        filterParks(parks || [], searchQuery, selectedIcons, favoritedParks || [], showOnlyFavorites),
         sortOption,
         isReverseOrder,
+        favoritedParks || [],
         collectedStamps,
         visitHistory,
         geopoint || undefined,
@@ -144,7 +159,7 @@ export default function StampsScreen() {
                     {filteredParks.map((park, index) => (
                         <StampView
                             key={park.abbreviation}
-                            abbreviation={park.abbreviation}
+                            park={park}
                             greyed={!isVisited(park.abbreviation, stamps ?? [])}
                             handleClick={() => setSelectedIndex(index)}
                         />
@@ -163,6 +178,8 @@ export default function StampsScreen() {
                 isReverseOrder={isReverseOrder}
                 handleSelectedIconsChange={handleSelectedIconsChange}
                 selectedIcons={selectedIcons}
+                showOnlyFavorites={showOnlyFavorites}
+                handleShowOnlyFavoritesChange={handleShowOnlyFavoritesChange}
             />
         </>
     );

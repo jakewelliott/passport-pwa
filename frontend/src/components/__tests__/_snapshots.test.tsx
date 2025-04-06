@@ -7,7 +7,6 @@ import { useNotes } from '@/hooks/queries/useNotes';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
-import { trails } from '@/lib/testing/mock/tables';
 import { createTestQueryClient, renderWithClient } from '@/lib/testing/test-wrapper';
 import type { TrailIcon } from '@/types';
 import { renderHook, screen, waitFor } from '@testing-library/react';
@@ -20,7 +19,6 @@ import RoundedButton from '../rounded-button';
 import { SplashScreenView } from '../splash-screen-view';
 import TabBar from '../tab-bar';
 import { TrailIcons } from '../trail-icons';
-const mockTrail = trails[0];
 
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({

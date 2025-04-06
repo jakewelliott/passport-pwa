@@ -9,6 +9,7 @@ interface ButtonProps {
     color?: string;
     onClick?: (e: React.FormEvent) => unknown;
     type?: 'button' | 'submit' | 'reset';
+    width?: string;
 }
 
 const RoundedButton: React.FC<ButtonProps> = ({
@@ -18,13 +19,14 @@ const RoundedButton: React.FC<ButtonProps> = ({
         e.preventDefault();
     },
     type = 'button',
+    width = '128'
 }) => {
     const className = cn(
-        `bg-${color} flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full`,
+        `bg-${color} flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full`,
     );
 
     return (
-        <button type={type} className={className} onClick={onClick}>
+        <button type={type} className={className} onClick={onClick} style={{minWidth: `${width}px`}}>
             <p className='button-text text-system_white'>{title}</p>
         </button>
     );

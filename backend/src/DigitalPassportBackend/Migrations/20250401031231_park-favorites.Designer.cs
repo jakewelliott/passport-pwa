@@ -4,6 +4,7 @@ using DigitalPassportBackend.Persistence.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 
@@ -12,9 +13,11 @@ using NetTopologySuite.Geometries;
 namespace DigitalPassportBackend.Migrations
 {
     [DbContext(typeof(DigitalPassportDbContext))]
-    partial class DigitalPassportDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250401031231_park-favorites")]
+    partial class parkfavorites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -334,10 +337,6 @@ namespace DigitalPassportBackend.Migrations
                         .HasColumnType("int")
                         .HasColumnName("park");
 
-                    b.Property<string>("tooltip")
-                        .HasMaxLength(255)
-                        .HasColumnType("varchar(255)");
-
                     b.Property<DateTime>("updatedAt")
                         .HasColumnType("datetime(6)")
                         .HasColumnName("updated_at");
@@ -510,10 +509,6 @@ namespace DigitalPassportBackend.Migrations
 
                     b.Property<string>("icon")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.Property<string>("tooltip")
-                        .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
                     b.Property<int>("trailId")

@@ -73,7 +73,7 @@ export default function CollectStamp() {
                 </p>
                 <RoundedButton title={'Collect!'} onClick={handleCollectStamp} />
                 <div className='aspect-square w-48'>
-                    <img src={`/stamps/${park.abbreviation}.svg`} alt={`${park.parkName} stamp`} />
+                    <img src={park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://')) ? park.stampImage : `/stamps/${park.abbreviation}.svg`} alt={`${park.abbreviation} stamp`} />
                 </div>
             </div>
         </div>

@@ -40,7 +40,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
                     <TransformComponent wrapperClass='!w-full !h-full'>
                         <div className='flex h-full w-full items-center justify-center'>
                             <img
-                                src={photo.photoPath}
+                                src={photo.photoPath.startsWith('http://') || photo.photoPath.startsWith('https://') ? photo.photoPath : photo.photoPath}
                                 alt={photo.alt || 'Photo'}
                                 className='object-contain'
                                 style={{

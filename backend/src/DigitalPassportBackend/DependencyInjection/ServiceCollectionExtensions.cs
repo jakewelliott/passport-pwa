@@ -99,6 +99,7 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ITrailIconRepository, TrailIconRepository>();
         services.AddScoped<ITrailRepository, TrailRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IFavoriteParkRepository, FavoriteParkRepository>();
 
         var envAddendum = isDevelopment ? "DEV_" : "";
         var connectionString = $"host={configuration[$"DB_{envAddendum}HOST"]};" +

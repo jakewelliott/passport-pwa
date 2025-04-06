@@ -24,6 +24,9 @@ export const API_COLLECTED_STAMPS_URL = `${API_STAMPS_URL}/collected`;
 export const API_BUCKET_LIST_URL = `${API_URL}/activity/bucketlist`;
 export const API_COMPLETED_BUCKET_LIST_ITEMS_URL = `${API_BUCKET_LIST_URL}/completed`;
 
+// favorite parks
+export const API_FAVORITE_PARKS_URL = `${API_URL}/activity/parks/favorites`;
+
 // public data
 export const API_PARKS_URL = `${API_URL}/locations`;
 export const API_TRAILS_URL = `${API_URL}/locations/trails`;
@@ -99,6 +102,26 @@ export const fetchGet = async (url: string) => {
 //     // dbg('FETCH', 'PUT RESPONSE', { response });
 //     return response;
 // };
+
+export const fetchDelete = async (url: string, body: any) => {
+    dbg('FETCH', 'DELETE', { url, body });
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+    };
+
+    const response = await fetch(url, {
+        method: 'DELETE',
+        headers,
+        credentials: 'include',
+        body: JSON.stringify(body),
+    });
+
+    if (!response.ok) await fetchError(response);
+
+    // dbg('FETCH', 'POST RESPONSE', { response });
+    return response;
+};
 
 const fetchError = async (response: Response) => {
     dbg('ERROR', 'FETCH', { response });

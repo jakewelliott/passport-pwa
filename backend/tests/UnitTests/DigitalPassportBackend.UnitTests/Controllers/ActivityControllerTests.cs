@@ -731,5 +731,57 @@ namespace DigitalPassportBackend.UnitTests.Controllers
                     req.dateTime))
                 .Throws(new NotFoundException($"Park not found with ID {parkId}"));
         }
+
+        [Fact]
+        public void GetFavoriteParks_ReturnsList_WhenFavoritesExist()
+        {
+            // Arrange
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            var favoriteParkIds = TestData.FavoriteParks.Select(p => p.parkId!.Value).ToList(); // Ensure non-null
+
+            _mockActivityService.Setup(s => s.GetFavoriteParks(TestData.Users[1].id))
+                .Returns(favoriteParkIds);
+
+            // Act
+            var result = _controller.GetFavoriteParks();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var resp = Assert.IsType<List<int>>(okResult.Value);
+            Assert.Equal(favoriteParkIds.Count, resp.Count);
+            Assert.All(favoriteParkIds, id => Assert.Contains(id, resp));
+        }
+
+
+        [Fact]
+        public void AddFavoritePark_Returns200Ok_WhenParkValid()
+        {
+            // Arrange
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            var parkId = TestData.Parks[0].id;
+
+            // Act
+            var result = _controller.AddFavoritePark(parkId);
+
+            // Assert
+            var okResult = Assert.IsType<OkResult>(result);
+            _mockActivityService.Verify(s => s.AddFavoritePark(TestData.Users[1].id, parkId), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteFavoritePark_Returns200Ok_WhenParkValid()
+        {
+            // Arrange
+            SetupUser(TestData.Users[1].id, TestData.Users[1].role.GetDisplayName());
+            var parkId = TestData.Parks[0].id;
+
+            // Act
+            var result = _controller.DeleteFavoritePark(parkId);
+
+            // Assert
+            var okResult = Assert.IsType<OkResult>(result);
+            _mockActivityService.Verify(s => s.DeleteFavoritePark(TestData.Users[1].id, parkId), Times.Once);
+        }
+
     }
 }

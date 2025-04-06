@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 PUBLIC_DIR="public"
 OUTPUT_TS="src/cached-files.ts"
 

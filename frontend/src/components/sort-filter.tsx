@@ -24,6 +24,7 @@ export const sortParks = (
     parks: Park[],
     sortOption: 'alphabetical' | 'favorited' | 'stamps' | 'lastVisited' | 'distance',
     isReverseOrder: boolean,
+    favoritedParks: number[],
     stamps?: { parkId: number }[],
     visitHistory?: ParkVisit[],
     geopoint?: { latitude: number; longitude: number },
@@ -35,9 +36,12 @@ export const sortParks = (
             case 'alphabetical':
                 primarySort = a.parkName.localeCompare(b.parkName);
                 break;
-            case 'favorited':
-                primarySort = 0; // Implement favorited sorting when available
+            case 'favorited': {
+                const aIsFavorited = favoritedParks?.includes(a.id) ?? false;
+                const bIsFavorited = favoritedParks?.includes(b.id) ?? false;
+                primarySort = (bIsFavorited ? 1 : 0) - (aIsFavorited ? 1 : 0);
                 break;
+            }
             case 'stamps': {
                 const aHasStamp = stamps?.some((s) => s.parkId === a.id);
                 const bHasStamp = stamps?.some((s) => s.parkId === b.id);
@@ -62,7 +66,13 @@ export const sortParks = (
 };
 
 // ADAM: beautiful
-export const filterParks = (parks: Park[], searchQuery: string, selectedIcons: Set<ParkIcon>): Park[] => {
+export const filterParks = (
+    parks: Park[],
+    searchQuery: string,
+    selectedIcons: Set<ParkIcon>,
+    favoritedParks: number[],
+    showOnlyFavorites = false,
+): Park[] => {
     return parks.filter((park) => {
         const matchesSearch =
             park.parkName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -74,7 +84,9 @@ export const filterParks = (parks: Park[], searchQuery: string, selectedIcons: S
                 park.icons.some((icon) => icon.iconName.split('-')[0] === selectedIcon.iconName.split('-')[0]),
             );
 
-        return matchesSearch && matchesIcons;
+        const matchesFavorites = !showOnlyFavorites || favoritedParks?.includes(park.id);
+
+        return matchesSearch && matchesIcons && matchesFavorites;
     });
 };
 
@@ -88,6 +100,8 @@ export const FilterModal = ({
     isReverseOrder,
     handleSelectedIconsChange,
     selectedIcons,
+    showOnlyFavorites,
+    handleShowOnlyFavoritesChange,
 }: {
     isFilterModalOpen: boolean;
     handleCloseFilterModal: () => void;
@@ -97,6 +111,8 @@ export const FilterModal = ({
     isReverseOrder: boolean;
     handleSelectedIconsChange: (newSelected: Set<ParkIcon>) => void;
     selectedIcons: Set<ParkIcon>;
+    showOnlyFavorites: boolean;
+    handleShowOnlyFavoritesChange: (show: boolean) => void;
 }) => {
     if (!isFilterModalOpen) return null;
 
@@ -141,6 +157,19 @@ export const FilterModal = ({
                             {isReverseOrder ? '↑' : '↓'}
                         </button>
                     </div>
+                </div>
+
+                <div className='mb-6'>
+                    <h3 className='mb-2 font-semibold'>Filter Options</h3>
+                    <label className='flex items-center space-x-2'>
+                        <input
+                            type='checkbox'
+                            checked={showOnlyFavorites}
+                            onChange={(e) => handleShowOnlyFavoritesChange(e.target.checked)}
+                            className='rounded'
+                        />
+                        <span>Show only favorited parks</span>
+                    </label>
                 </div>
 
                 <div>

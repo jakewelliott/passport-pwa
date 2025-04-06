@@ -1,12 +1,13 @@
 import ListRow from '@/components/list-row';
 import { FilterModal, type SortOption, filterParks, sortParks } from '@/components/sort-filter';
+import { useFavoriteParks } from '@/hooks/queries/useParkFavorites';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { Park, ParkIcon } from '@/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
@@ -32,10 +33,17 @@ const Row = ({ park }: { park: Park }) => {
 
 export default function LocationsScreen() {
     dbg('RENDER', 'Locations');
-    const { data: parks, isLoading, isError, error } = useParks();
+    const { data: parks, isLoading, isError, error, refetch: refetchParks } = useParks();
     const { data: stamps } = useStamps();
     const { data: visitHistory } = useVisitsHistory();
+    const { data: favoritedParks, refetch: refetchFavorites } = useFavoriteParks();
     const { geopoint } = useLocation();
+
+    useEffect(() => {
+        refetchParks();
+        refetchFavorites();
+    }, [refetchParks, refetchFavorites]);
+
     const [searchQuery, setSearchQuery] = useState('');
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
     const [sortOption, setSortOption] = useState<SortOption>(() => {
@@ -49,6 +57,10 @@ export default function LocationsScreen() {
     const [selectedIcons, setSelectedIcons] = useState<Set<ParkIcon>>(() => {
         const saved = localStorage.getItem('parkSelectedIcons');
         return saved ? new Set(JSON.parse(saved)) : new Set();
+    });
+    const [showOnlyFavorites, setShowOnlyFavorites] = useState(() => {
+        const saved = localStorage.getItem('showOnlyFavorites');
+        return saved === 'true';
     });
     const [isTypingSearch, setIsTypingSearch] = useState(false);
 
@@ -72,6 +84,11 @@ export default function LocationsScreen() {
         localStorage.setItem('parkSelectedIcons', JSON.stringify(Array.from(newSelected)));
     };
 
+    const handleShowOnlyFavoritesChange = (favorites: boolean) => {
+        setShowOnlyFavorites(favorites);
+        localStorage.setItem('showOnlyFavorites', favorites.toString());
+    };
+
     if (isLoading) return <LoadingPlaceholder />;
     if (isError) return <div>Error: {error.message}</div>;
     if (!parks || parks.length === 0) return <div>No parks found</div>;
@@ -83,9 +100,10 @@ export default function LocationsScreen() {
         }
     }
     const filteredParks = sortParks(
-        filterParks(parks, searchQuery, selectedIcons),
+        filterParks(parks, searchQuery, selectedIcons, favoritedParks || [], showOnlyFavorites),
         sortOption,
         isReverseOrder,
+        favoritedParks || [],
         collectedStamps,
         visitHistory,
         geopoint || undefined,
@@ -142,6 +160,8 @@ export default function LocationsScreen() {
                 isReverseOrder={isReverseOrder}
                 handleSelectedIconsChange={handleSelectedIconsChange}
                 selectedIcons={selectedIcons}
+                showOnlyFavorites={showOnlyFavorites}
+                handleShowOnlyFavoritesChange={handleShowOnlyFavoritesChange}
             />
         </>
     );

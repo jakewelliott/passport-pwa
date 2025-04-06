@@ -27,7 +27,6 @@ const EXTRA_TEXT: Partial<Record<IconName, string>> = {
 
 const textHelper = (icon: PassportIcon) => ({
     ...icon,
-    extraText: EXTRA_TEXT[icon.iconName as IconName],
 });
 
 // @biome-ignore lint/style/noNonNullAssertion: we know this icon exists
@@ -60,7 +59,7 @@ const IconView = ({ icon }: { icon: IconSection['icons'][number] }) => {
             <img src={getIconPath(icon)} alt={icon.tooltip} width={'36px'} height={'36px'} />
             <div className='ml-2 flex w-full flex-col justify-center'>
                 <p>{icon.tooltip}</p>
-                {icon.extraText && <p className='max-w-56 p-mini'>{icon.extraText}</p>}
+                {icon.extraText && <p className='max-w-56 p-mini'>*{icon.extraText}</p>}
             </div>
         </div>
     );

@@ -3,47 +3,51 @@
 //
 
 export const RED_ICONS = [
-    { iconName: 'Biking-Red', tooltip: 'Biking' },
-    { iconName: 'Fishing-Red', tooltip: 'Fishing' },
-    { iconName: 'Hiking-Red', tooltip: 'Hiking' },
-    { iconName: 'HorsebackRiding-Red', tooltip: 'Horseback Riding' },
-    { iconName: 'Paddling-Red', tooltip: 'Paddling' },
-    { iconName: 'Picnicking-Red', tooltip: 'Picnicking' },
-    { iconName: 'RockClimbing-Red', tooltip: 'Rock Climbing' },
-    { iconName: 'Swimming-Red', tooltip: 'Swimming' },
+    { iconName: 'Biking-Red', tooltip: 'Biking', extraText: '' },
+    { iconName: 'Fishing-Red', tooltip: 'Fishing', extraText: '' },
+    { iconName: 'Hiking-Red', tooltip: 'Hiking', extraText: '' },
+    { iconName: 'HorsebackRiding-Red', tooltip: 'Horseback Riding', extraText: '' },
+    { iconName: 'Paddling-Red', tooltip: 'Paddling', extraText: '' },
+    { iconName: 'Picnicking-Red', tooltip: 'Picnicking', extraText: '' },
+    { iconName: 'RockClimbing-Red', tooltip: 'Rock Climbing', extraText: '' },
+    { iconName: 'Swimming-Red', tooltip: 'Swimming', extraText: '' },
 ] as const;
 
 export const BLUE_ICONS = [
-    { iconName: 'BoatRamp-Blue', tooltip: 'Boat Ramp' },
-    { iconName: 'BoatRental-Blue', tooltip: 'Boat Rental' },
-    { iconName: 'Exhibits-Blue', tooltip: 'Exhibits' },
-    { iconName: 'Playground-Blue', tooltip: 'Playground' },
-    { iconName: 'VisitorCenter-Blue', tooltip: 'Visitor Center' },
+    { iconName: 'BoatRamp-Blue', tooltip: 'Boat Ramp', extraText: '' },
+    { iconName: 'BoatRental-Blue', tooltip: 'Boat Rental', extraText: '' },
+    { iconName: 'Exhibits-Blue', tooltip: 'Exhibits', extraText: '' },
+    { iconName: 'Playground-Blue', tooltip: 'Playground', extraText: '' },
+    { iconName: 'VisitorCenter-Blue', tooltip: 'Visitor Center', extraText: '' },
 ] as const;
 
 export const GREEN_ICONS = [
-    { iconName: 'CamperCabins-Green', tooltip: 'Camper Cabins' },
-    { iconName: 'Camping-Green', tooltip: 'Camping' },
-    { iconName: 'CanoeinCamping-Green', tooltip: 'Canoe-in Camping' },
-    { iconName: 'EquestrianCamping-Green', tooltip: 'Equestrian Camping' },
-    { iconName: 'GroupCabins-Green', tooltip: 'Group Cabins' },
-    { iconName: 'GroupCamp-Green', tooltip: 'Group Camping' },
-    { iconName: 'PrimitiveCabin-Green', tooltip: 'Primitive Cabin' },
-    { iconName: 'RVCamping-Green', tooltip: 'RV Camping' },
-    { iconName: 'VacationCabin-Green', tooltip: 'Vacation Cabin' },
+    { iconName: 'CamperCabins-Green', tooltip: 'Camper Cabins', extraText: '' },
+    { iconName: 'Camping-Green', tooltip: 'Camping', extraText: '' },
+    { iconName: 'CanoeinCamping-Green', tooltip: 'Canoe-in Camping', extraText: '' },
+    { iconName: 'EquestrianCamping-Green', tooltip: 'Equestrian Camping', extraText: '' },
+    { iconName: 'GroupCabins-Green', tooltip: 'Group Cabins', extraText: '' },
+    { iconName: 'GroupCamp-Green', tooltip: 'Group Camping', extraText: '' },
+    { iconName: 'PrimitiveCabin-Green', tooltip: 'Primitive Cabin', extraText: '' },
+    {
+        iconName: 'RVCamping-Green',
+        tooltip: 'RV Camping',
+        extraText: 'has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups',
+    },
+    { iconName: 'VacationCabin-Green', tooltip: 'Vacation Cabin', extraText: '' },
 ] as const;
 
 export const BLACK_ICONS = [
-    { iconName: 'Camping-Black', tooltip: 'Camping Sites' },
-    { iconName: 'PicnicShelter-Black', tooltip: 'Picnic Shelter' },
+    { iconName: 'Camping-Black', tooltip: 'Camping Sites', extraText: '' },
+    { iconName: 'PicnicShelter-Black', tooltip: 'Picnic Shelter', extraText: '' },
 ] as const;
 
 export const BLAZE_ICONS = [
-    { iconName: 'FBST-Blaze', tooltip: 'French Broad State Trail' },
-    { iconName: 'FFST-Blaze', tooltip: 'Fontana Lake State Trail' },
-    { iconName: 'HGST-Blaze', tooltip: 'Hickory Nut Gorge State Trail' },
-    { iconName: 'MST-Blaze', tooltip: 'Mountains-to-Sea State Trail' },
-    { iconName: 'YRST-Blaze', tooltip: 'Yadkin River State Trail' },
+    { iconName: 'FBST-Blaze', tooltip: 'French Broad State Trail', extraText: '' },
+    { iconName: 'FFST-Blaze', tooltip: 'Fontana Lake State Trail', extraText: '' },
+    { iconName: 'HGST-Blaze', tooltip: 'Hickory Nut Gorge State Trail', extraText: '' },
+    { iconName: 'MST-Blaze', tooltip: 'Mountains-to-Sea State Trail', extraText: '' },
+    { iconName: 'YRST-Blaze', tooltip: 'Yadkin River State Trail', extraText: '' },
 ] as const;
 
 export const PARK_ICONS = [...RED_ICONS, ...BLUE_ICONS, ...GREEN_ICONS, ...BLACK_ICONS, ...BLAZE_ICONS] as const;

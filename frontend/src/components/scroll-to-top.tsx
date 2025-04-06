@@ -7,7 +7,7 @@ const ScrollToTop = () => {
     useEffect(() => {
         const scrollableContainer = document.querySelector('.layout');
         if (scrollableContainer) {
-            if (pathname === '/locations') {
+            if (pathname === '/locations' || pathname === '/stamps') {
                 scrollableContainer.scrollTo(0, 60);
             } else {
                 scrollableContainer.scrollTo(0, 0);
