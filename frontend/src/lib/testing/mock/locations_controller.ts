@@ -13,3 +13,7 @@ export const GetAllParks = (): Park[] => {
 
 // TODO: add UploadGeoJson
 // TODO: add GetGeoData
+
+// export const GetGeoData = (): ParkGeoData[] => {
+//     return geoData;
+// };

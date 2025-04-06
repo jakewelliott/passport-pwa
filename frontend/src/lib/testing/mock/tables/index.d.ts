@@ -21,3 +21,4 @@ export declare const parks: Park[];
 export declare const parkVisits: ParkVisit[];
 export declare const trails: Trail[];
 export declare const users: UserProfile[];
+export declare const parkGeoData: ParkGeoData[];

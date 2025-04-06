@@ -2,6 +2,7 @@ import { bucket_list_items } from './bucket_list_items.json';
 import { collected_stamps } from './collected_stamps.json';
 import { completed_bucket_list_items } from './completed_bucket_list_items.json';
 import { park_addresses } from './park_addresses.json';
+import { park_geo_data } from './park_geo_data.json';
 import { park_icons } from './park_icons.json';
 import { park_photos } from './park_photos.json';
 import { park_visits } from './park_visits.json';
@@ -67,6 +68,7 @@ const camel = Object.entries({
     trail_icons,
     trails_,
     users_,
+    park_geo_data,
 }).reduce((acc, [key, value]) => {
     // Now we map over each array and camelify each item
     acc[snakeStringToCamelCase(key)] = Array.isArray(value)
@@ -113,3 +115,4 @@ export const completedBucketListItems = camel.completedBucketListItems;
 export const parkVisits = camel.parkVisits;
 export const parkNotes = camel.privateNotes;
 export const users = camel.users;
+export const parkGeoData = camel.parkGeoData;

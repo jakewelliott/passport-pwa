@@ -1,5 +1,5 @@
 import { dbg } from '@/lib/debug';
-import { queryClient } from '@/lib/tanstack-local-storage';
+import { useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
  */
 export const useLogout = () => {
     const navigate = useNavigate();
+    const queryClient = useQueryClient();
     return () => {
         dbg('AUTH', 'Logging out...');
         Cookies.remove('token');
@@ -19,7 +20,7 @@ export const useLogout = () => {
         });
         localStorage.removeItem('user');
         setTimeout(() => {
-            navigate('/');
+            navigate('/login');
             dbg('AUTH', 'Successfully logged out');
             toast.success('Successfully logged out');
         }, 2000);

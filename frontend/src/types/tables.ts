@@ -62,9 +62,9 @@ export interface Trail extends DatabaseEntry {
 }
 
 export interface ParkGeoData extends DatabaseEntry {
-    // TODO: I'm not sure how this is store
-    // or if it's for trails too, but we should probably
-    // be more clear
+    id: number; // parkId
+    abbreviation: string;
+    parkName: string;
     coordinates: Geopoint;
     boundaries: string;
 }
