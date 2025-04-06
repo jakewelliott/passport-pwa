@@ -8,8 +8,8 @@ import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { Park, ParkIcon } from '@/types';
 import { useEffect, useState } from 'react';
-import { FaFilter } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { FilterMenu } from './components/filter-menu';
 
 const LoadingPlaceholder = () => {
     // TODO: add a loading placeholder (blank grey boxes)
@@ -100,57 +100,36 @@ export default function LocationsScreen() {
         }
     }
     const filteredParks = sortParks(
-        filterParks(parks, searchQuery, selectedIcons, favoritedParks || [], showOnlyFavorites),
+        filterParks(parks, searchQuery, selectedIcons, favoritedParks ?? [], showOnlyFavorites),
         sortOption,
         isReverseOrder,
-        favoritedParks || [],
+        favoritedParks ?? [],
         collectedStamps,
-        visitHistory,
-        geopoint || undefined,
+        visitHistory ?? [],
+        geopoint,
     );
 
     return (
         <>
-            <div className='relative mx-3 mt-3 flex gap-2'>
-                <div className='relative flex-1'>
-                    <input
-                        type='text'
-                        placeholder='Search parks...'
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onFocus={() => setIsTypingSearch(true)}
-                        onBlur={() => setIsTypingSearch(false)}
-                        className='w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'
-                    />
-                    {searchQuery && (
-                        <button
-                            type='button'
-                            onClick={() => setSearchQuery('')}
-                            className='-translate-y-1/2 absolute top-1/2 right-3 transform text-system_gray hover:text-secondary_darkteal'
-                            aria-label='Clear search'
+            <div className='relative flex flex-col gap-4'>
+                <FilterMenu
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    isTypingSearch={isTypingSearch}
+                    setIsTypingSearch={setIsTypingSearch}
+                    setIsFilterModalOpen={setIsFilterModalOpen}
+                />
+                {filteredParks.map((park) => (
+                    <div key={park.id} data-testid={'park'}>
+                        <Link
+                            to={`/locations/${park.abbreviation}`}
+                            className='text-supporting_inactiveblue no-underline'
                         >
-                            &times;
-                        </button>
-                    )}
-                </div>
-                <button
-                    type='button'
-                    onClick={() => setIsFilterModalOpen(true)}
-                    className={
-                        'w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200'
-                    }
-                    style={{ display: isTypingSearch ? 'none' : 'inline' }}
-                >
-                    <FaFilter />
-                </button>
+                            <Row park={park} />
+                        </Link>
+                    </div>
+                ))}
             </div>
-            {filteredParks.map((park) => (
-                <div className='m-3' key={park.id} data-testid={'park'}>
-                    <Link to={`/locations/${park.abbreviation}`} className='text-supporting_inactiveblue no-underline'>
-                        <Row park={park} />
-                    </Link>
-                </div>
-            ))}
             <FilterModal
                 isFilterModalOpen={isFilterModalOpen}
                 handleCloseFilterModal={handleCloseFilterModal}

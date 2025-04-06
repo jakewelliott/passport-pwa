@@ -8,17 +8,13 @@ import { useVisitsHistory } from '@/hooks/queries/useVisitPark';
 import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park, ParkIcon } from '@/types';
-import { useState, useEffect } from 'react';
-import { FaFilter } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FilterMenu } from '../locations/components/filter-menu';
 
 const isVisited = (code: string, stamps: CollectedStamp[]) =>
     stamps?.some((stamp) => stamp.parkAbbreviation === code) ?? false;
 
-const StampView = ({
-    park,
-    handleClick,
-    greyed,
-}: { park: Park; handleClick: () => void; greyed: boolean }) => {
+const StampView = ({ park, handleClick, greyed }: { park: Park; handleClick: () => void; greyed: boolean }) => {
     return (
         <button
             onClick={handleClick}
@@ -27,7 +23,11 @@ const StampView = ({
             data-testid={`stamp-button-${park.abbreviation}`}
         >
             <img
-                src={park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://')) ? park.stampImage : `/stamps/${park.stampImage}`}
+                src={
+                    park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://'))
+                        ? park.stampImage
+                        : `/stamps/${park.stampImage}`
+                }
                 alt={`${park.abbreviation} - ${greyed ? 'greyed out' : 'achieved'}`}
                 className={greyed ? 'opacity-50 grayscale' : ''}
                 data-testid={`stamp-image-${park.abbreviation}`}
@@ -110,51 +110,25 @@ export default function StampsScreen() {
         }
     }
     const filteredParks = sortParks(
-        filterParks(parks || [], searchQuery, selectedIcons, favoritedParks || [], showOnlyFavorites),
+        filterParks(parks ?? [], searchQuery, selectedIcons, favoritedParks ?? [], showOnlyFavorites),
         sortOption,
         isReverseOrder,
-        favoritedParks || [],
+        favoritedParks ?? [],
         collectedStamps,
-        visitHistory,
-        geopoint || undefined,
+        visitHistory ?? [],
+        geopoint,
     );
 
     return (
         <>
-            <div className='relative mx-3 mt-3 flex gap-2'>
-                <div className='relative flex-1'>
-                    <input
-                        type='text'
-                        placeholder='Search parks...'
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        onFocus={() => setIsTypingSearch(true)}
-                        onBlur={() => setIsTypingSearch(false)}
-                        className='w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'
-                    />
-                    {searchQuery && (
-                        <button
-                            type='button'
-                            onClick={() => setSearchQuery('')}
-                            className='-translate-y-1/2 absolute top-1/2 right-3 transform text-system_gray hover:text-secondary_darkteal'
-                            aria-label='Clear search'
-                        >
-                            &times;
-                        </button>
-                    )}
-                </div>
-                <button
-                    type='button'
-                    onClick={() => setIsFilterModalOpen(true)}
-                    className={
-                        'w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200'
-                    }
-                    style={{ display: isTypingSearch ? 'none' : 'inline' }}
-                >
-                    <FaFilter />
-                </button>
-            </div>
-            <div className='px-4 py-4'>
+            <div className='flex flex-col gap-2'>
+                <FilterMenu
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
+                    isTypingSearch={isTypingSearch}
+                    setIsTypingSearch={setIsTypingSearch}
+                    setIsFilterModalOpen={setIsFilterModalOpen}
+                />
                 <div className='grid grid-cols-3 gap-4' data-testid='stamps-grid'>
                     {filteredParks.map((park, index) => (
                         <StampView

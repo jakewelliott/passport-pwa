@@ -23,7 +23,7 @@ export const Trails = () => {
     if (isLoading) return <div>Loading</div>;
 
     return (
-        <div className='m-6 flex flex-col gap-4'>
+        <div className='flex flex-col gap-4'>
             {trailDetails?.map((trail) => (
                 <TrailDetailView trail={trail} key={trail.id} />
             ))}

@@ -4,7 +4,7 @@ import { a11yOnClick } from '@/lib/a11y';
 import { dbg, dbgif } from '@/lib/debug';
 // components/NotesMiniTab.tsx
 import { useEffect, useState } from 'react';
-import { useBlocker } from 'react-router-dom';
+import { useBeforeUnload } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 export const NotesMiniTab = ({
@@ -17,6 +17,12 @@ export const NotesMiniTab = ({
 
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
     const [noteState, setNoteState] = useState('');
+
+    useBeforeUnload(() => {
+        if (hasUnsavedChanges) {
+            return 'You have unsaved changes. Are you sure you want to leave?';
+        }
+    });
 
     useEffect(() => {
         dbg('EFFECT', 'NotesMiniTab');
@@ -48,20 +54,20 @@ export const NotesMiniTab = ({
         };
     }, [hasUnsavedChanges]);
 
-    const blocker = useBlocker(
-        ({ currentLocation, nextLocation }) => hasUnsavedChanges && currentLocation.pathname !== nextLocation.pathname,
-    );
+    // const blocker = useBlocker(
+    //     ({ currentLocation, nextLocation }) => hasUnsavedChanges && currentLocation.pathname !== nextLocation.pathname,
+    // );
 
-    useEffect(() => {
-        if (blocker.state === 'blocked') {
-            const proceed = window.confirm('You have unsaved changes. Are you sure you want to leave?');
-            if (proceed) {
-                blocker.proceed();
-            } else {
-                blocker.reset();
-            }
-        }
-    }, [blocker]);
+    // useEffect(() => {
+    //     if (blocker.state === 'blocked') {
+    //         const proceed = window.confirm('You have unsaved changes. Are you sure you want to leave?');
+    //         if (proceed) {
+    //             blocker.proceed();
+    //         } else {
+    //             blocker.reset();
+    //         }
+    //     }
+    // }, [blocker]);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setNoteState(e.target.value);

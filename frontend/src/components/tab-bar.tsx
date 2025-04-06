@@ -43,8 +43,8 @@ const TabBar = () => {
     if (!user || isLoading) return null;
 
     return (
-        <nav className='fixed right-0 bottom-0 left-0 bg-secondary_darkteal'>
-            <ul className='flex h-16 items-center justify-around'>
+        <nav className='fixed bottom-0 h-16 w-full bg-secondary_darkteal'>
+            <ul className='flex h-full items-center justify-around'>
                 {tabs.map(
                     (tab) =>
                         tab.roles.includes(user.role) && <Tab key={tab.name} tab={tab} selected={isSelected(tab)} />,

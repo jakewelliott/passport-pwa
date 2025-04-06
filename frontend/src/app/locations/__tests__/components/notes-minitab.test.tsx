@@ -7,9 +7,10 @@ import { toast } from 'react-toastify';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 mockToast();
+// mockUseBlocker();
 // TODO: figure out how to get browser router working
 // going to fix rest of the tests for now
-const { render, checkHook } = setupTestEnv({ usingBrowserRouter: true });
+const { render, checkHook } = setupTestEnv({ usingBrowserRouter: false });
 
 describe('NotesMiniTab', () => {
     beforeAll(async () => {

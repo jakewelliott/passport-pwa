@@ -109,3 +109,13 @@ export const mockToast = () => {
         },
     }));
 };
+
+// export const mockUseBlocker = () => {
+//     vi.mock('react-router-dom', () => ({
+//         useBlocker: vi.fn().mockReturnValue({
+//             state: 'blocked',
+//             proceed: vi.fn(),
+//             reset: vi.fn(),
+//         }),
+//     }));
+// };

@@ -19,7 +19,7 @@ const Header = () => {
 
     return (
         <header
-            className='relative flex items-center justify-center bg-secondary_darkteal p-4'
+            className='static top-0 flex w-full items-center justify-center bg-secondary_darkteal p-4'
             style={{ height: '50px' }}
         >
             {showBackButton && (

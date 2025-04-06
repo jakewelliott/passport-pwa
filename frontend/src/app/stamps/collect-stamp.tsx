@@ -54,7 +54,7 @@ export default function CollectStamp() {
         collectStamp(collected);
     };
 
-    dbg('RENDER', 'CollectStamp', hidden);
+    dbg('RENDER', 'CollectStamp', `hidden: ${hidden}`);
     if (hidden) return null;
 
     return (
@@ -73,7 +73,15 @@ export default function CollectStamp() {
                 </p>
                 <RoundedButton title={'Collect!'} onClick={handleCollectStamp} />
                 <div className='aspect-square w-48'>
-                    <img src={park.stampImage && (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://')) ? park.stampImage : `/stamps/${park.abbreviation}.svg`} alt={`${park.abbreviation} stamp`} />
+                    <img
+                        src={
+                            park.stampImage &&
+                            (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://'))
+                                ? park.stampImage
+                                : `/stamps/${park.abbreviation}.svg`
+                        }
+                        alt={`${park.abbreviation} stamp`}
+                    />
                 </div>
             </div>
         </div>

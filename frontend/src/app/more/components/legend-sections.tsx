@@ -53,13 +53,13 @@ const ICON_SECTIONS: IconSection[] = [
     },
 ];
 
-const IconView = ({ icon }: { icon: IconSection['icons'][number] }) => {
+export const LegendIconView = ({ icon }: { icon: IconSection['icons'][number] }) => {
     return (
         <div key={icon.iconName} className='my-1 flex items-center'>
             <img src={getIconPath(icon)} alt={icon.tooltip} width={'36px'} height={'36px'} />
             <div className='ml-2 flex w-full flex-col justify-center'>
                 <p>{icon.tooltip}</p>
-                {icon.extraText && <p className='max-w-56 p-mini'>*{icon.extraText}</p>}
+                {icon.extraText && <p className='p-mini'>*{icon.extraText}</p>}
             </div>
         </div>
     );
@@ -67,15 +67,15 @@ const IconView = ({ icon }: { icon: IconSection['icons'][number] }) => {
 
 export const LegendSections = () => {
     return (
-        <>
+        <div className='flex flex-col gap-4'>
             {ICON_SECTIONS.map((section) => (
-                <div className='m-4' key={section.sectionName}>
+                <div key={section.sectionName}>
                     <h4 className={`pb-3 text-icon_${section.sectionName.toLowerCase()}`}>{section.sectionName}</h4>
                     {section.icons.map((icon) => (
-                        <IconView key={icon.iconName} icon={icon} />
+                        <LegendIconView key={icon.iconName} icon={icon} />
                     ))}
                 </div>
             ))}
-        </>
+        </div>
     );
 };

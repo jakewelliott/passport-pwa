@@ -60,7 +60,7 @@ export const MyNotes = () => {
     const { data, isLoading } = useNotes();
 
     const generalNote = data?.find((note) => isGeneralNote(note));
-    const restOfNotes = data?.filter((note) => !isGeneralNote(note)) || [];
+    const restOfNotes = data?.filter((note) => !isGeneralNote(note)) ?? [];
     const allNotes = [generalNote, ...restOfNotes];
 
     if (isLoading) return <LoadingPlaceholder what='notes' />;

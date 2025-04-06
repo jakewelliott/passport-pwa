@@ -12,7 +12,7 @@ const LinkRow = ({ to, label }: { to: string; label: string }) => (
 
 export default function More() {
     return (
-        <div className='mx-4 my-4 flex flex-col gap-3.5' data-testid='more-list'>
+        <div className='flex flex-col gap-3.5' data-testid='more-list'>
             <LinkRow to={'/more/trails'} label='Trails' />
             <LinkRow to={'/more/bucket-list'} label='Bucket List' />
             <LinkRow to={'/more/my-notes'} label='My Notes' />
