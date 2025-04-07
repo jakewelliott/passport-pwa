@@ -116,10 +116,11 @@ public class LocationsControllerTests
 
         int counter = 0;
         foreach (var trail in list) {
-            List<TrailIcon> icons = new List<TrailIcon> { TestData.TrailIcons[counter] };
-            List<String> iconStrings = icons.Select(i => i.icon.GetDisplayName()).ToList();
+            List<TrailIconResponse> iconResponses = new List<TrailIconResponse> { 
+                new TrailIconResponse( TestData.TrailIcons[counter].icon.GetDisplayName(), null ) 
+             };
 
-            Assert.True(Response.Equal(iconStrings, TestData.Trails[counter], trail));
+            Assert.True(Response.Equal(iconResponses, TestData.Trails[counter], trail));
             counter++;
         }
     }
