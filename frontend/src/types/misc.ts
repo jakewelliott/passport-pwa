@@ -11,14 +11,14 @@ export interface LoginCredentials {
     password: string;
 }
 
-export interface Address {
+export type Address = {
     title: string;
     addressLineOne: string;
     addressLineTwo: string;
     city: string;
     state: string;
     zipcode: number;
-}
+};
 
 // denotes when an API call takes no body
 const emptySymbol = Symbol('EmptyObject type');

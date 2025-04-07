@@ -1,7 +1,7 @@
 import type { ParkIcon, TrailIcon } from './icons';
 import type { Address, Geopoint } from './misc';
 
-interface DatabaseEntry {
+export interface DatabaseEntry {
     id: number;
     createdAt: Date;
     updatedAt: Date;
