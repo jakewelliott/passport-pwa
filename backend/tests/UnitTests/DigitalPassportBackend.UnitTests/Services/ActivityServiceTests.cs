@@ -281,6 +281,28 @@ namespace DigitalPassportBackend.UnitTests.Services
         }
 
         [Fact]
+        public void CreateUpdatePrivateNote_ReturnsNote_WhenNoteExists()
+        {
+            // Setup.
+            var time = DateTime.UtcNow;
+            var expected = TestData.PrivateNotes[0];
+            expected.note = "updated note";
+            expected.updatedAt = time;
+            _mockLocations.Setup(s => s.GetById((int)expected.parkId!))
+                .Returns(expected.park!);
+            _mockPrivateNotes.Setup(s => s.Update(expected))
+                .Returns(expected);
+            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(expected.userId, (int)expected.parkId!))
+                .Returns(TestData.PrivateNotes[0]);
+            
+            // Action.
+            var result = _activities.CreateUpdatePrivateNote(expected.userId, (int)expected.parkId!, expected.note, time);
+
+            // Assert.
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
         public void CreateUpdatePrivateNote_ReturnsNote_WhenNoteDNE()
         {
             // Setup.
@@ -306,28 +328,6 @@ namespace DigitalPassportBackend.UnitTests.Services
             // Action.
             var result = _activities.CreateUpdatePrivateNote(expected.userId, (int)expected.parkId, expected.note, time);
             
-            // Assert.
-            Assert.Equal(expected, result);
-        }
-
-        [Fact]
-        public void CreateUpdatePrivateNote_ReturnsNote_WhenNoteExists()
-        {
-            // Setup.
-            var time = DateTime.UtcNow;
-            var expected = TestData.PrivateNotes[0];
-            expected.note = "updated note";
-            expected.updatedAt = time;
-            _mockLocations.Setup(s => s.GetById((int)expected.parkId!))
-                .Returns(expected.park!);
-            _mockPrivateNotes.Setup(s => s.Update(expected))
-                .Returns(expected);
-            _mockPrivateNotes.Setup(s => s.GetByParkAndUser(expected.userId, (int)expected.parkId!))
-                .Returns(TestData.PrivateNotes[0]);
-            
-            // Action.
-            var result = _activities.CreateUpdatePrivateNote(expected.userId, (int)expected.parkId!, expected.note, time);
-
             // Assert.
             Assert.Equal(expected, result);
         }
