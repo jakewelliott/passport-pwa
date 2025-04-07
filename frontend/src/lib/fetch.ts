@@ -5,8 +5,11 @@ const MOCK_PORT = 6969;
 
 const API_PORT = (DEBUG ? process.env.API_DEV_PORT : process.env.NGINX_PORT) ?? MOCK_PORT;
 const PROTOCOL = DEBUG ? 'http' : 'https';
+const USE_PORT = process.env.USE_PORT === "true" ? `:${API_PORT}` : "";
+const HOST = process.env.HOST ?? "localhost";
 
-export const API_URL = `${PROTOCOL}://localhost:${API_PORT}/api`;
+export const API_URL = `${PROTOCOL}://${HOST}${USE_PORT}/api`;
+
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
