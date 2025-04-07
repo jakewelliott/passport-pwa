@@ -11,7 +11,6 @@ namespace DigitalPassportBackend.Controllers;
 [Route("/api/locations")]
 public class LocationsController(ILocationsService locationsService) : ControllerBase
 {
-
     private readonly ILocationsService _locationsService = locationsService;
 
     [HttpGet("{locationAbbrev}")]

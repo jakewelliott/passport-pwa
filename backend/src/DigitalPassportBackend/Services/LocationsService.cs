@@ -1,13 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
-
-using NetTopologySuite.IO;
-
-using Newtonsoft.Json;
 
 namespace DigitalPassportBackend.Services;
 
