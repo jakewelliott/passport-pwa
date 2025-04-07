@@ -1,43 +1,10 @@
 import { useField } from '@/hooks/useField';
-import { useForm } from '@tanstack/react-form';
-
-import { usePark } from '@/hooks/queries/useParks';
 import type { DatabaseEntry, Park as ParkT } from '@/types';
 import { PARK_ICONS, type ParkIcon } from '@/types/icons';
-import { useLocation } from 'react-router-dom';
+import { useForm } from '@tanstack/react-form';
 import { z } from 'zod';
 
 type Park = Omit<ParkT, keyof DatabaseEntry>;
-
-const EMPTY_PARK: Park = {
-    parkName: 'Loading...',
-    coordinates: {
-        latitude: 0,
-        longitude: 0,
-        inaccuracyRadius: 0,
-    },
-    phone: 0,
-    email: '',
-    establishedYear: '',
-    landmark: '',
-    youCanFind: '',
-    trails: '',
-    website: '',
-    addresses: [],
-    icons: [],
-    photos: [],
-    abbreviation: '',
-    stampImage: '',
-    accesses: '',
-};
-
-// TODO: make this match the database AND readability stuff
-// i.e. parkName should have "State Park" at the end
-// coordinates should be to xyz decmial places
-
-// NOTE: some of the fields that are stored internally in
-// different tables and joined in the request will need separate
-// fields in the form
 
 // this is somewhat expensive
 const isParkIcon = (obj: any): obj is ParkIcon => {
@@ -48,6 +15,16 @@ const isParkIcon = (obj: any): obj is ParkIcon => {
 
 const parkIconSchema = z.custom<ParkIcon>(isParkIcon);
 
+// TODO: make this match the database AND readability stuff
+// i.e. parkName should have "State Park" at the end
+// coordinates should be to xyz decmial places
+
+// NOTE: some of the fields that are stored internally in
+// different tables and joined in the request will need separate
+// fields in the form
+
+// ADAM: jake i just am now seeing ur edit-park-modal.tsx
+// so i will reuse the UI u made there for addresses, icons, photos, etc.
 const parkSchema = z.object({
     parkName: z.string().min(1),
     coordinates: z.object({
@@ -84,13 +61,7 @@ const parkSchema = z.object({
     accesses: z.string().min(1),
 });
 
-export const EditParkForm = () => {
-    // TODO: make this like a sub route (/admin/edit/park/:abbreviation) how it is for location info
-    const abbreviation = useLocation().pathname.split('/').pop() ?? '';
-    const { data } = usePark(abbreviation);
-
-    const park = data ?? EMPTY_PARK;
-
+export const EditParkForm = ({ park, refetch }: { park: Park; refetch: () => void }) => {
     const form = useForm({
         defaultValues: {
             ...park,
