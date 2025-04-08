@@ -4,6 +4,28 @@ import { useEffect, useState } from 'react';
 import { FormField } from './form-field';
 import RoundedButton from './rounded-button';
 
+const defaultPark: Park = {
+    id: 0, // Use ID 0 for new parks
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    deleted: false,
+    parkName: '',
+    coordinates: { latitude: 0, longitude: 0, inaccuracyRadius: 0 },
+    phone: 0,
+    email: '',
+    establishedYear: '',
+    landmark: '',
+    youCanFind: '',
+    trails: '',
+    website: '',
+    addresses: [],
+    icons: [],
+    photos: [],
+    abbreviation: '',
+    stampImage: '',
+    accesses: '',
+};
+
 const US_STATES = ['NC', 'SC', 'TN', 'VA'] as const;
 
 // Helper function to transform icon names from database format to frontend format
@@ -14,11 +36,12 @@ const transformIconName = (dbIconName: string): string => {
 interface EditParkModalProps {
     isOpen: boolean;
     onClose: () => void;
-    park: Park;
+    parkProp?: Park;
+    isNew?: boolean;
 }
 
-export function EditParkModal({ isOpen, onClose, park }: EditParkModalProps) {
-    const [editedPark, setEditedPark] = useState({ ...park, trails: park.trails.split('\n').filter((line) => line.trim() !== '').join('\n') });
+export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew = false }: EditParkModalProps) {
+    const [editedPark, setEditedPark] = useState({ ...parkProp, trails: parkProp.trails.split('\n').filter((line) => line.trim() !== '').join('\n') });
     const [isVisible, setIsVisible] = useState(false);
     const [error, setError] = useState(false);
     const [selectedIcon, setSelectedIcon] = useState<ParkIcon | null>(null);
@@ -40,6 +63,11 @@ export function EditParkModal({ isOpen, onClose, park }: EditParkModalProps) {
         }
         setError(false);
         // TODO: Implement park update mutation
+        if (isNew) {
+            // Handle creating a park
+        } else {
+            // Handle updating a park
+        }
         onClose();
     };
 
@@ -139,7 +167,8 @@ export function EditParkModal({ isOpen, onClose, park }: EditParkModalProps) {
             <div
                 className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
             >
-                <h3>Edit Park</h3>
+                <h2>{isNew ? 'New Park' : 'Edit Park'}</h2>
+                <div className='absolute right-4 top-4 text-h2'>&times;</div>
                 <form onSubmit={handleSubmit} className='w-full'>
                     <FormField
                         label='Park Name'

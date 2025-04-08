@@ -4,6 +4,7 @@ import { useParks } from '@/hooks/queries/useParks';
 import { useStampMutation } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
 import { useLocation as useLocationHook } from '@/hooks/useLocation';
+import { usePageTitle } from '@/hooks/usePageTitle';
 import { dbg } from '@/lib/debug';
 import type { CollectStampRequest } from '@/types/api';
 import { useEffect, useRef, useState } from 'react';
@@ -11,7 +12,7 @@ import { FaEllipsisV } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-export const ManualStampButton = () => {
+export const HeaderMenuButton = () => {
     dbg('RENDER', 'ManualStampButton');
     const [isOpen, setIsOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -23,6 +24,7 @@ export const ManualStampButton = () => {
 
     // get the park from the pathname
     const { pathname } = useLocation();
+    const { pageTitle } = usePageTitle();
     const { data: parks } = useParks();
     const park = parks?.find((p) => p.abbreviation === pathname.split('/').pop());
     const [isFavorite, setIsFavorite] = useState(park ? data?.includes(park?.id) : false);
@@ -38,7 +40,7 @@ export const ManualStampButton = () => {
     }, []);
 
     // if we can't find the park, return null
-    if (!park) return null;
+    if (!park && pageTitle === "Park Details") return null;
 
     const handleCollectStampPress = () => {
         if (!geopoint) {
@@ -50,8 +52,8 @@ export const ManualStampButton = () => {
             geopoint,
             method: 'manual',
             dateTime: new Date(),
-            parkId: park?.id,
-            parkAbbreviation: park?.abbreviation,
+            parkId: park?.id || 0,
+            parkAbbreviation: park?.abbreviation || '',
         };
 
         mutate(update);
@@ -61,14 +63,14 @@ export const ManualStampButton = () => {
 
     const handleToggleFavoritePress = () => {
         if (isFavorite) {
-            removeFavorite(park?.id, {
+            removeFavorite(park?.id || 0, {
                 onSuccess: () => {
                     setIsFavorite(false);
                     toast.success('Park removed from favorites');
                 },
             });
         } else {
-            markFavorite(park?.id, {
+            markFavorite(park?.id || 0, {
                 onSuccess: () => {
                     setIsFavorite(true);
                     toast.success('Park added to favorites');
@@ -87,7 +89,8 @@ export const ManualStampButton = () => {
     return (
         <>
             <div className='relative' ref={menuRef}>
-                <button
+                {(pageTitle === 'Locations' || pageTitle === 'Park Details') && (
+                    <button
                     onClick={() => setIsOpen(!isOpen)}
                     className='flex items-center p-2 text-system_white'
                     type='button'
@@ -95,11 +98,14 @@ export const ManualStampButton = () => {
                 >
                     <FaEllipsisV />
                 </button>
+                )}
 
                 {isOpen && (
-                    <div className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5'>
+                    <div className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5' style={{zIndex: 9999}}>
                         <div className='py-1'>
-                            <button
+                            {pageTitle === 'Park Details' && (
+                                <>
+                                <button
                                 className='block w-full px-4 py-2 text-left '
                                 type='button'
                                 onClick={handleCollectStampPress}
@@ -113,13 +119,15 @@ export const ManualStampButton = () => {
                             >
                                 {isFavorite ? 'Remove Favorite' : 'Mark Favorite'}
                             </button>
+                            </>
+                            )}
                             {user?.role === 'admin' && (
                                 <button
                                     className='block w-full px-4 py-2 text-left'
                                     type='button'
                                     onClick={handleEditParkPress}
                                 >
-                                    Edit Park
+                                    { pageTitle === 'Locations' ? 'New' : 'Edit' } Park
                                 </button>
                             )}
                         </div>
@@ -127,7 +135,7 @@ export const ManualStampButton = () => {
                 )}
             </div>
             {isEditModalOpen && (
-                <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} park={park} />
+                <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} parkProp={park} isNew={pageTitle === 'Locations' ? true : false} />
             )}
         </>
     );
