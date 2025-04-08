@@ -135,7 +135,7 @@ export const HeaderMenuButton = () => {
                 )}
             </div>
             {isEditModalOpen && (
-                <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} parkProp={park} isNew={pageTitle === 'Locations' ? true : false} />
+                <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} parkProp={park} isNew={pageTitle === 'Locations'} />
             )}
         </>
     );
