@@ -13,15 +13,14 @@ export const TrailDetailView = ({ trail, handleEditTrail }: { trail: Trail; hand
                 {` ${trail.description}`}
             </div>
             <div className='ml-auto w-7'>
-            <button
-                className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
-                onClick={handleEditTrail}
-                type='button'
-            >
-                <FaPen size={15} />
-            </button>
+                <button
+                    className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                    onClick={handleEditTrail}
+                    type='button'
+                >
+                    <FaPen size={15} />
+                </button>
             </div>
-            
         </div>
     );
 };
