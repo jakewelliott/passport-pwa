@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`EditGeneralNotes > matches snapshot 1`] = `
+<div>
+  <div
+    class="container mx-auto"
+  >
+    <div
+      class="flex h-[calc(100vh-1.5rem-100px)] flex-col"
+    >
+      <div>
+        Loading...
+      </div>
+    </div>
+  </div>
+</div>
+`;

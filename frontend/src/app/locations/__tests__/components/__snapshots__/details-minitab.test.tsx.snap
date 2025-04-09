@@ -3,10 +3,10 @@
 exports[`DetailsMiniTab > matches snapshot 1`] = `
 <div>
   <div
-    class="mt-6 mb-6 flex flex-col"
+    class="mt-4 ml-4 flex flex-col"
   >
     <div
-      class="gap-2 pr-6 pb-6 pl-6"
+      class="gap-2"
     >
       <p>
         <span

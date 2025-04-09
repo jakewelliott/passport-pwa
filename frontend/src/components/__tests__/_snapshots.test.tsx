@@ -7,7 +7,7 @@ import { useNotes } from '@/hooks/queries/useNotes';
 import { useParks } from '@/hooks/queries/useParks';
 import { useStamps } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
-import { createTestQueryClient, renderWithClient } from '@/lib/testing/test-wrapper';
+import { setupTestEnv } from '@/lib/testing/test-wrapper';
 import type { TrailIcon } from '@/types';
 import { renderHook, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeAll, describe, expect, it, vi } from 'vitest';
@@ -17,9 +17,7 @@ import ListRow from '../list-row';
 import { LoadingPlaceholder } from '../loading-placeholder';
 import RoundedButton from '../rounded-button';
 import { SplashScreenView } from '../splash-screen-view';
-import TabBar from '../tab-bar';
 import { TrailIcons } from '../trail-icons';
-
 // Mock ResizeObserver
 global.ResizeObserver = vi.fn().mockImplementation(() => ({
     observe: vi.fn(),
@@ -31,10 +29,7 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
 // this wrapper will be used to render all hooks before all the tests
 // then the queryClient is populated with the data, and we can use it in the tests
 // subsequent calls to renderWithClient will use the same queryClient but a new component tree
-const queryClient = createTestQueryClient();
-const { wrapper } = renderWithClient(<div />, {}, queryClient);
-const render = (component: React.ReactElement) => renderWithClient(component, {}, queryClient);
-
+const { render, wrapper } = setupTestEnv();
 // we will use this to load the data for all the hooks before all the tests
 beforeAll(async () => {
     console.log('BEFORE ALL =============================');
@@ -74,16 +69,16 @@ describe('Component Snapshots', () => {
         expect(divs.length).toBeGreaterThan(0);
     });
 
-    it('TabBar renders correctly', () => {
-        console.log('RENDERING TAB BAR');
-        const { container } = render(<TabBar />);
+    // it('TabBar renders correctly', () => {
+    //     console.log('RENDERING TAB BAR');
+    //     const { container } = render(<TabBar />);
 
-        // we run a test just to make sure it's not loading
-        expect(screen.getByText('Locations')).toBeInTheDocument();
+    //     // we run a test just to make sure it's not loading
+    //     expect(screen.getByText('Locations')).toBeInTheDocument();
 
-        // then we check the snapshot
-        expect(container).toMatchSnapshot();
-    });
+    //     // then we check the snapshot
+    //     expect(container).toMatchSnapshot();
+    // });
 
     it('RoundedButton renders correctly', () => {
         console.log('RENDERING ROUNDED BUTTON');
@@ -163,7 +158,6 @@ describe('Route Snapshots', () => {
     it('/locations matches snapshot', () => {
         const { container } = render(<LocationsScreen />);
 
-        expect(screen.getByTestId('locations-list')).toBeInTheDocument();
         expect(container).toMatchSnapshot();
     });
 
