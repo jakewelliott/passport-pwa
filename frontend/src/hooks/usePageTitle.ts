@@ -1,10 +1,10 @@
-import { dbg } from '@/lib/debug';
-import { useEffect, useState } from 'react';
 import { useLocation as usePathLocation } from 'react-router-dom';
 
 const DEFAULT_TITLE = 'NC Parks Passport';
 
 const routeTitles: Record<string, string> = {
+    '/login': 'Login',
+    '/logout': 'Logout',
     '/locations': 'Locations',
     '/stamps': 'Stamps',
     '/more': 'More',
@@ -28,15 +28,10 @@ const getTitle = (pathname: string) => {
 
 export function usePageTitle() {
     const location = usePathLocation();
-    const [pageTitle, setPageTitle] = useState(getTitle(location.pathname));
+    // const [pageTitle, setPageTitle] = useState(DEFAULT_TITLE);
     const showBackButton = topLevelCheck(location.pathname);
 
-    useEffect(() => {
-        dbg('EFFECT', 'usePageTitle', 'setting title');
-        const title = getTitle(location.pathname);
-        document.title = title;
-        setPageTitle(title);
-    }, [location]);
+    const pageTitle = getTitle(location.pathname);
 
     return { pageTitle, showBackButton };
 }

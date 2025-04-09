@@ -30,7 +30,7 @@ const Tab = ({ tab, selected }: { tab: TabProps; selected: boolean }) => {
 };
 
 const TabBar = () => {
-    const { data: user, isLoading } = useUser();
+    const { isLoggedIn, data: user } = useUser();
     const location = useLocation();
     const isSelected = (tab: TabProps) => location.pathname.startsWith(tab.path);
 
@@ -41,7 +41,7 @@ const TabBar = () => {
         { name: 'More', path: '/more', roles: ['admin', 'visitor'], icon: <MdMoreHoriz size={'24px'} /> },
     ];
 
-    if (!user || isLoading) return null;
+    if (!isLoggedIn || !user) return null;
 
     return (
         <nav className='fixed bottom-0 h-16 w-full bg-secondary_darkteal'>

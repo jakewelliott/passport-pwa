@@ -1,4 +1,4 @@
-import { dbg } from '@/lib/debug';
+import { dbg, dbgif } from '@/lib/debug';
 import { API_AUTH_URL, fetchGet } from '@/lib/fetch';
 import type { UserProfile } from '@/types';
 import { useQuery } from '@tanstack/react-query';
@@ -14,7 +14,8 @@ export const useUser = () => {
 
     const token = Cookies.get('token');
     const user = query.data;
-    const isLoggedIn = !!token;
+    const isLoggedIn = token !== undefined;
+    dbgif(!isLoggedIn, 'HOOK', 'useUser', 'user is not logged in');
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
     dbg('HOOK', 'useUser', user?.username ?? 'no user');

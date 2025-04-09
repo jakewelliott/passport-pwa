@@ -14,6 +14,7 @@ import { toast } from 'react-toastify';
 
 export const HeaderMenuButton = () => {
     dbg('RENDER', 'ManualStampButton');
+
     const [isOpen, setIsOpen] = useState(false);
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -40,7 +41,7 @@ export const HeaderMenuButton = () => {
     }, []);
 
     // if we can't find the park, return null
-    if (!park && pageTitle === "Park Details") return null;
+    if (!park && pageTitle === 'Park Details') return null;
 
     const handleCollectStampPress = () => {
         if (!geopoint) {
@@ -91,35 +92,38 @@ export const HeaderMenuButton = () => {
             <div className='relative' ref={menuRef}>
                 {(pageTitle === 'Locations' || pageTitle === 'Park Details') && (
                     <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className='flex items-center p-2 text-system_white'
-                    type='button'
-                    aria-label='Open menu'
-                >
-                    <FaEllipsisV />
-                </button>
+                        onClick={() => setIsOpen(!isOpen)}
+                        className='flex items-center p-2 text-system_white'
+                        type='button'
+                        aria-label='Open menu'
+                    >
+                        <FaEllipsisV />
+                    </button>
                 )}
 
                 {isOpen && (
-                    <div className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5' style={{zIndex: 9999}}>
+                    <div
+                        className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5'
+                        style={{ zIndex: 9999 }}
+                    >
                         <div className='py-1'>
                             {pageTitle === 'Park Details' && (
                                 <>
-                                <button
-                                className='block w-full px-4 py-2 text-left '
-                                type='button'
-                                onClick={handleCollectStampPress}
-                            >
-                                Collect Stamp
-                            </button>
-                            <button
-                                className='block w-full px-4 py-2 text-left'
-                                type='button'
-                                onClick={handleToggleFavoritePress}
-                            >
-                                {isFavorite ? 'Remove Favorite' : 'Mark Favorite'}
-                            </button>
-                            </>
+                                    <button
+                                        className='block w-full px-4 py-2 text-left '
+                                        type='button'
+                                        onClick={handleCollectStampPress}
+                                    >
+                                        Collect Stamp
+                                    </button>
+                                    <button
+                                        className='block w-full px-4 py-2 text-left'
+                                        type='button'
+                                        onClick={handleToggleFavoritePress}
+                                    >
+                                        {isFavorite ? 'Remove Favorite' : 'Mark Favorite'}
+                                    </button>
+                                </>
                             )}
                             {user?.role === 'admin' && (
                                 <button
@@ -127,7 +131,7 @@ export const HeaderMenuButton = () => {
                                     type='button'
                                     onClick={handleEditParkPress}
                                 >
-                                    { pageTitle === 'Locations' ? 'New' : 'Edit' } Park
+                                    {pageTitle === 'Locations' ? 'New' : 'Edit'} Park
                                 </button>
                             )}
                         </div>
@@ -135,7 +139,12 @@ export const HeaderMenuButton = () => {
                 )}
             </div>
             {isEditModalOpen && (
-                <EditParkModal isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} parkProp={park} isNew={pageTitle === 'Locations'} />
+                <EditParkModal
+                    isOpen={isEditModalOpen}
+                    onClose={() => setIsEditModalOpen(false)}
+                    parkProp={park}
+                    isNew={pageTitle === 'Locations'}
+                />
             )}
         </>
     );

@@ -24,8 +24,10 @@ const RoleBasedRedirect = () => {
     const { isLoggedIn, data: user, isLoading } = useUser();
     if (isLoading) return null;
     if (!isLoggedIn) return <Navigate to='/login' replace />;
-    dbg('RENDER', 'RoleBasedRedirect', user?.role);
-    return user?.role === 'admin' ? <Navigate to='/admin' replace /> : <Navigate to='/locations' replace />;
+    if (!user) return null;
+
+    dbg('RENDER', 'RoleBasedRedirect', user.role);
+    return user.role === 'admin' ? <Navigate to='/admin' replace /> : <Navigate to='/locations' replace />;
 };
 
 const AdminRoutes = () => {

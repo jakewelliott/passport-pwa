@@ -1,3 +1,4 @@
+import { useUser } from '@/hooks/queries/useUser';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +17,7 @@ export const BackButton = ({ hidden }: { hidden: boolean }) => {
 
 const Header = () => {
     const { pageTitle, showBackButton } = usePageTitle();
+    const { isLoggedIn } = useUser();
 
     return (
         <header
@@ -29,7 +31,7 @@ const Header = () => {
             )}
             <h4 className='text-system_white'>{pageTitle}</h4>
             <div className='absolute right-4' data-testid='balance-placeholder'>
-                <HeaderMenuButton />
+                {isLoggedIn && <HeaderMenuButton />}
             </div>
         </header>
     );
