@@ -3,10 +3,10 @@
 exports[`AppInfo Component - User Stories > matches snapshot 1`] = `
 <div>
   <div
-    class="mx-auto max-w-[500px]"
+    class="flex flex-col gap-4"
   >
     <div
-      class="my-3.5"
+      class="mb-3.5"
     >
       <div
         class="flex h-2/4 flex-col items-center justify-center"
@@ -31,29 +31,20 @@ exports[`AppInfo Component - User Stories > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="p-4"
+      class="flex-col"
     >
       <div
-        class="bg-supporting_inactiveblue p-2 text-center text-system_white"
+        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-supporting_inactiveblue"
       >
         <h3>
           CONTACT US
         </h3>
       </div>
       <div
-        class="space-y-2 bg-supporting_lightblue p-2.5 text-center"
+        class="p-4 bg-supporting_lightblue flex flex-col gap-3"
       >
-        <div>
-          <a
-            class="text-supporting_inactiveblue no-underline"
-            data-discover="true"
-            href="/www.ncparks.gov"
-          >
-            www.ncparks.gov
-          </a>
-        </div>
         <div
-          class="flex justify-center gap-3"
+          class="flex flex-row justify-center gap-3"
         >
           <a
             class="flex h-8 w-8 items-center justify-center rounded-full bg-supporting_inactiveblue"
@@ -113,6 +104,13 @@ exports[`AppInfo Component - User Stories > matches snapshot 1`] = `
             </svg>
           </a>
         </div>
+        <a
+          class="text-center text-supporting_inactiveblue"
+          data-discover="true"
+          href="/www.ncparks.gov"
+        >
+          www.ncparks.gov
+        </a>
         <p
           class="space-y-1"
         >
@@ -139,20 +137,20 @@ exports[`AppInfo Component - User Stories > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="p-4"
+      class="flex-col"
     >
       <div
-        class="bg-secondary_orange p-2 text-center text-system_white"
+        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-secondary_orange"
       >
         <h3>
           DOWNLOAD PARK MAPS
         </h3>
       </div>
       <div
-        class="flex items-center bg-supporting_lightorange p-2.5"
+        class="p-4 bg-supporting_lightorange"
       >
         <div
-          class="-ml-8 float-left"
+          class="-ml-6 float-left mt-6"
         >
           <svg
             fill="currentColor"
@@ -180,27 +178,30 @@ exports[`AppInfo Component - User Stories > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="p-4"
+      class="flex-col"
     >
       <div
-        class="mb-3 flex items-center"
+        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-main_green"
       >
-        <img
-          alt=""
-          class="mr-2 h-[50px] w-[50px]"
-          src="/icons/misc/Camping.png"
-        />
+        <h3>
+          MAKE A RESERVATION
+        </h3>
+      </div>
+      <div
+        class="p-4 bg-supporting_green"
+      >
         <div
-          class="flex w-full flex-col justify-center"
+          class="flex flex-col items-center gap-2"
         >
-          <h4
-            class="pb-1 text-center text-main_green"
-          >
-            MAKE A RESERVATION
-          </h4>
           <div
-            class="flex flex-wrap items-center justify-between gap-2"
+            class="flex w-full flex-row items-center gap-2"
           >
+            <img
+              alt="picnic"
+              height="36px"
+              src="/icons/misc/Picnic.svg"
+              width="36px"
+            />
             <a
               class="p-mini"
               href="https://www.ncparks.gov/reservations"
@@ -213,21 +214,22 @@ exports[`AppInfo Component - User Stories > matches snapshot 1`] = `
               1-877-722-6762
             </p>
           </div>
+          <div
+            class="flex w-full flex-row items-center gap-2"
+          >
+            <img
+              alt="campsite"
+              height="36px"
+              src="/icons/misc/Camping.svg"
+              width="36px"
+            />
+            <p
+              class="p-mini"
+            >
+              Reserve campsites, picnic shelters and other park facilities online or over the phone.
+            </p>
+          </div>
         </div>
-      </div>
-      <div
-        class="mt-3 flex items-center"
-      >
-        <img
-          alt=""
-          class="mr-2 h-[50px] w-[50px]"
-          src="/icons/misc/PicnicShelter.png"
-        />
-        <p
-          class="p-mini"
-        >
-          Reserve campsites, picnic shelters and other park facilities online or over the phone.
-        </p>
       </div>
     </div>
   </div>

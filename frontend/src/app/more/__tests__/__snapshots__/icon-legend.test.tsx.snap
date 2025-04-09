@@ -2,20 +2,18 @@
 
 exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
 <div>
-  <h2
-    class="mt-4 mb-5 text-center"
-  >
-    Icon Legend
-  </h2>
   <div
-    class="flex flex-wrap justify-center"
+    class="flex flex-col gap-4"
   >
-    <div
-      class="min-w-[250px] flex-1"
+    <h2
+      class="text-center"
     >
-      <div
-        class="m-4"
-      >
+      Legend
+    </h2>
+    <div
+      class="flex flex-col gap-4"
+    >
+      <div>
         <h4
           class="pb-3 text-icon_camping"
         >
@@ -156,9 +154,10 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
               RV Camping
             </p>
             <p
-              class="max-w-56 p-mini"
+              class="p-mini"
             >
-              *has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups
+              *
+              has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups
             </p>
           </div>
         </div>
@@ -180,9 +179,7 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="m-4"
-      >
+      <div>
         <h4
           class="pb-3 text-icon_activities"
         >
@@ -325,9 +322,7 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="m-4"
-      >
+      <div>
         <h4
           class="pb-3 text-icon_amenities"
         >
@@ -419,9 +414,7 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="m-4"
-      >
+      <div>
         <h4
           class="pb-3 text-icon_state trail stamps"
         >
@@ -513,9 +506,7 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
           </div>
         </div>
       </div>
-      <div
-        class="m-4"
-      >
+      <div>
         <h4
           class="pb-3 text-icon_trail amenities"
         >
@@ -1238,7 +1229,7 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
       </div>
     </div>
     <p
-      class="m-4 min-w-[200px] flex-1"
+      class="min-w-[200px]"
     >
       <span
         class="text-icon_amenities"

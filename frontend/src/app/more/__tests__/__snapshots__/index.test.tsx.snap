@@ -3,7 +3,7 @@
 exports[`More Page > matches snapshot 1`] = `
 <div>
   <div
-    class="mx-4 my-4 flex flex-col gap-3.5"
+    class="flex flex-col gap-3.5"
     data-testid="more-list"
   >
     <a
