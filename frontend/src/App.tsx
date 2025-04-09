@@ -22,7 +22,6 @@ const App = () => {
             <Header />
             <TabBar />
             <Content />
-
             <SplashScreen />
             <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
         </div>

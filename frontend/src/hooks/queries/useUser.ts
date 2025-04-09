@@ -2,7 +2,7 @@ import { dbg } from '@/lib/debug';
 import { API_AUTH_URL, fetchGet } from '@/lib/fetch';
 import type { UserProfile } from '@/types';
 import { useQuery } from '@tanstack/react-query';
-
+import Cookies from 'js-cookie';
 // React Query hook for fetching user data
 export const useUser = () => {
     // TODO: this endpoint doesn't actually exist, we should make it to return the user's data
@@ -12,8 +12,9 @@ export const useUser = () => {
         staleTime: Infinity, // Prevent refetching unless explicitly invalidated
     });
 
+    const token = Cookies.get('token');
     const user = query.data;
-    const isLoggedIn = !!user;
+    const isLoggedIn = !!token;
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
     dbg('HOOK', 'useUser', user?.username ?? 'no user');

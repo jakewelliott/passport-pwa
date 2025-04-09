@@ -21,11 +21,11 @@ import Stamps from './app/stamps';
 import { BucketList } from './components/bucket-list';
 
 const RoleBasedRedirect = () => {
-    const { data: user, isLoading } = useUser();
+    const { isLoggedIn, data: user, isLoading } = useUser();
     if (isLoading) return null;
-    if (!user) return <Navigate to='/login' replace />;
-    dbg('RENDER', 'RoleBasedRedirect', user.role);
-    return user.role === 'admin' ? <Navigate to='/admin' replace /> : <Navigate to='/locations' replace />;
+    if (!isLoggedIn) return <Navigate to='/login' replace />;
+    dbg('RENDER', 'RoleBasedRedirect', user?.role);
+    return user?.role === 'admin' ? <Navigate to='/admin' replace /> : <Navigate to='/locations' replace />;
 };
 
 const AdminRoutes = () => {

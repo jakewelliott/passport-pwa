@@ -1,6 +1,6 @@
 import { useUser } from '@/hooks/queries/useUser';
 import { cn } from '@/lib/cn-helper';
-import { FaStamp } from 'react-icons/fa';
+import { FaStamp, FaUserShield } from 'react-icons/fa';
 import { MdMoreHoriz } from 'react-icons/md';
 import { TbMap } from 'react-icons/tb';
 import { Link, useLocation } from 'react-router-dom';
@@ -37,6 +37,7 @@ const TabBar = () => {
     const tabs = [
         { name: 'Locations', path: '/locations', roles: ['admin', 'visitor'], icon: <TbMap size={'24px'} /> },
         { name: 'Stamps', path: '/stamps', roles: ['visitor'], icon: <FaStamp size={'24px'} /> },
+        { name: 'Admin', path: '/admin', roles: ['admin'], icon: <FaUserShield size={'24px'} /> },
         { name: 'More', path: '/more', roles: ['admin', 'visitor'], icon: <MdMoreHoriz size={'24px'} /> },
     ];
 

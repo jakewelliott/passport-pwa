@@ -20,15 +20,15 @@ const getInputStyles = (isError: boolean) =>
 // hook lives here since it's only used on this page
 const useRedirectIfLoggedIn = () => {
     const navigate = useNavigate();
-    const { data: user } = useUser();
+    const { isLoggedIn } = useUser();
 
     useEffect(() => {
         dbg('EFFECT', 'LoginPage', 'checking if user logged in');
-        if (user) {
+        if (isLoggedIn) {
             dbg('EFFECT', 'LoginPage', 'User already logged in, redirecting...');
             navigate('/');
         }
-    }, [user, navigate]);
+    }, [isLoggedIn, navigate]);
 };
 
 export default function LoginPage() {
