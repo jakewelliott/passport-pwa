@@ -1,21 +1,29 @@
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Errors;
+using DigitalPassportBackend.Persistence.Repository;
 
 namespace DigitalPassportBackend.Services;
 
 public class AdminService : IAdminService
 {
-    private readonly IActivityService _activity;
-    private readonly IAuthService _auth;
-    private readonly ILocationsService _locations;
+    private readonly ILocationsRepository _locations;
+    private readonly IParkAddressRepository _addresses;
+    private readonly IBucketListItemRepository _bucketList;
+    private readonly IParkIconRepository _parkIcons;
+    private readonly IParkPhotoRepository _parkPhotos;
 
     public AdminService(
-        IActivityService activityService,
-        IAuthService authService,
-        ILocationsService locationsService)
+        ILocationsRepository locationsRepository,
+        IParkAddressRepository addressRepository,
+        IBucketListItemRepository bucketListItemRepository,
+        IParkIconRepository parkIconRepository,
+        IParkPhotoRepository parkPhotoRepository)
     {
-        _activity = activityService;
-        _auth = authService;
-        _locations = locationsService;
+        _locations = locationsRepository;
+        _addresses = addressRepository;
+        _bucketList = bucketListItemRepository;
+        _parkIcons = parkIconRepository;
+        _parkPhotos = parkPhotoRepository;
     }
 
     //
@@ -24,7 +32,15 @@ public class AdminService : IAdminService
 
     public void CreatePark(Park park)
     {
-
+        try
+        {
+            _locations.GetByAbbreviation(park.parkAbbreviation);
+            throw new ServiceException(409, $"Park {park.parkAbbreviation} already exists.");
+        }
+        catch (NotFoundException)
+        {
+            _locations.Create(park);
+        }
     }
 
     public void UpdatePark(Park park)
