@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { describe, expect, it } from 'vitest';
 import LoginPage from '../login';
 
-const { render, checkHook } = setupTestEnv();
+const { render } = setupTestEnv();
 describe('LoginPage', () => {
     it('matches snapshot', () => {
         const { container } = render(<LoginPage />);
