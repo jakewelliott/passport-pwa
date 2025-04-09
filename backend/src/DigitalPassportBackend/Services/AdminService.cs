@@ -113,10 +113,4 @@ public class AdminService : IAdminService
     {
 
     }
-
-    public void CreatePark(Park park)
-    {
-        throw new NotImplementedException();
-    }
-
 }
