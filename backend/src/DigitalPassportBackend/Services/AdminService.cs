@@ -30,7 +30,12 @@ public class AdminService : IAdminService
     // Locations
     //
 
-    public void CreatePark(Park park)
+    public void CreatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos)
     {
         try
         {
@@ -40,6 +45,10 @@ public class AdminService : IAdminService
         catch (NotFoundException)
         {
             _locations.Create(park);
+            addrs.ForEach(a => _addresses.Create(a));
+            icons.ForEach(i => _parkIcons.Create(i));
+            blItems.ForEach(i => _bucketList.Create(i));
+            photos.ForEach(p => _parkPhotos.Create(p));
         }
     }
 
@@ -104,4 +113,10 @@ public class AdminService : IAdminService
     {
 
     }
+
+    public void CreatePark(Park park)
+    {
+        throw new NotImplementedException();
+    }
+
 }

@@ -5,7 +5,12 @@ namespace DigitalPassportBackend.Services;
 public interface IAdminService
 {
     // Locations
-    void CreatePark(Park park);
+    void CreatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos);
     void UpdatePark(Park park);
     void DeletePark(int id);
 
