@@ -21,4 +21,18 @@ public record ParkAddressDTO(
             address.zipcode
         );
     }
+
+    public ParkAddress ToDomain(Park park)
+    {
+        return new()
+        {
+            title = title,
+            addressLineOne = addressLineOne,
+            addressLineTwo = addressLineTwo,
+            city = city,
+            state = Enum.Parse<State>(state),
+            zipcode = zipcode,
+            park = park
+        };
+    }
 }

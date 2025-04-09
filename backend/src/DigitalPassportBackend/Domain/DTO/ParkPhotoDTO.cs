@@ -11,4 +11,14 @@ public record ParkPhotoDTO(
             photo.alt
         );
     }
+
+    public ParkPhoto ToDomain(Park park)
+    {
+        return new()
+        {
+            photo = photoPath,
+            alt = alt,
+            park = park
+        };
+    }
 }

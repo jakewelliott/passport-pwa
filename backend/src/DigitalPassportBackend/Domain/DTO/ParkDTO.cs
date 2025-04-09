@@ -1,10 +1,17 @@
+using Microsoft.OpenApi.Extensions;
+
+using NetTopologySuite.Geometries;
+
+using static DigitalPassportBackend.Domain.DTO.ParkDTO;
+
 namespace DigitalPassportBackend.Domain.DTO;
 
 public record ParkDTO(
     int id,
     string abbreviation,
     string parkName,
-    object coordinates,
+    string parkType,
+    CoordinateDTO coordinates,
     long? phone,
     string? email,
     string? establishedYear,
@@ -51,17 +58,12 @@ public record ParkDTO(
             photosArray.Add(ParkPhotoDTO.FromDomain(newPhoto));
         }
 
-        var lonLatObject = new
-        {
-            longitude = location.coordinates == null ? 0 : location.coordinates.X,
-            latitude = location.coordinates == null ? 0 : location.coordinates.Y
-        };
-
         return new ParkDTO(
             location.id,
             location.parkAbbreviation,
             location.parkName,
-            lonLatObject,
+            location.parkType.GetDisplayName(),
+            CoordinateDTO.FromDomain(location.coordinates),
             location.phone,
             location.email,
             location.establishedYear,
@@ -76,5 +78,79 @@ public record ParkDTO(
             [.. bucketListItemsArray],
             [.. photosArray]
         );
+    }
+
+    public Park ToDomain(
+        out List<ParkAddress> addrs,
+        out List<ParkIcon> icons,
+        out List<BucketListItem> blItems,
+        out List<ParkPhoto> photos)
+    {
+        var p = new Park()
+        {
+            id = id,
+            parkAbbreviation = abbreviation,
+            parkName = parkName,
+            parkType = Enum.Parse<ParkType>(parkType),
+            coordinates = coordinates.ToDomain(),
+            phone = phone,
+            email = email,
+            establishedYear = establishedYear,
+            landmark = landmark,
+            youCanFind = youCanFind,
+            trails = trails,
+            website = website,
+            stampImage = stampImage,
+            accesses = accesses
+        };
+
+        addrs = [];
+        icons = [];
+        blItems = [];
+        photos = [];
+
+        foreach (var addr in addresses)
+        {
+            addrs.Add(addr.ToDomain(p));
+        }
+
+        foreach (var icon in this.icons)
+        {
+            icons.Add(icon.ToDomain(p));
+        }
+
+        foreach (var blItem in bucketListItems)
+        {
+            blItems.Add(blItem.ToDomain(p));
+        }
+
+        foreach (var photo in this.photos)
+        {
+            photos.Add(photo.ToDomain(p));
+        }
+
+        return p;
+    }
+
+    public record CoordinateDTO(
+        double longitude,
+        double latitude)
+    {
+        public static CoordinateDTO FromDomain(Point? coordinates)
+        {
+            return new(
+                coordinates is null ? 0 : coordinates.X,
+                coordinates is null ? 0 : coordinates.Y);
+        }
+
+        public Point? ToDomain()
+        {
+            if (longitude == 0 && latitude == 0)
+            {
+                return null;
+            }
+
+            return new(longitude, latitude);
+        }
     }
 };

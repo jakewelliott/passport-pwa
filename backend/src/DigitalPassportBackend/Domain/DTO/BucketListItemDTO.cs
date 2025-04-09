@@ -8,4 +8,14 @@ public record BucketListItemDTO(
     {
         return new BucketListItemDTO(bucketListItem.id, bucketListItem.task);
     }
+
+    public BucketListItem ToDomain(Park park)
+    {
+        return new()
+        {
+            id = id,
+            task = task,
+            park = park
+        };
+    }
 }
