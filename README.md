@@ -60,3 +60,6 @@ docker system prune -a --volumes
 docker-compose build --no-cache frontend
 docker-compose up
 ```
+
+also i was reading about pwas and sw and we should use this:
+https://www.webpagetest.org/

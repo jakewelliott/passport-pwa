@@ -1,6 +1,5 @@
 import ListRow from '@/components/list-row';
 import { Link } from 'react-router-dom';
-import { LoggedInAs } from './components/logged-in-as';
 
 const LinkRow = ({ to, label }: { to: string; label: string }) => (
     <Link to={to} className='text-supporting_inactiveblue no-underline'>
@@ -20,8 +19,8 @@ export default function More() {
             <LinkRow to={'/more/staying-safe'} label='Staying Safe' />
             <LinkRow to={'/more/hiking-essentials'} label='Hiking Essentials' />
             <LinkRow to={'/more/icon-legend'} label='Icon Legend' />
+            <LinkRow to={'/more/my-profile'} label='My Profile' />
             <LinkRow to={'/more/app-info'} label='App Info' />
-            <LoggedInAs />
         </div>
     );
 }

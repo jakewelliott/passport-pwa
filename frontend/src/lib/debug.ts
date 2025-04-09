@@ -25,7 +25,9 @@ const DebugControl = {
     NOTIFICATIONS: true,
     STORE: true,
     ERROR: true,
-    FETCH: false,
+    FETCH: true,
+    CACHE: true,
+    SW: true,
 } as const;
 
 type DebugType = keyof typeof DebugControl;
@@ -49,6 +51,8 @@ const MessageColors: Record<DebugType, (str: string) => string> = {
     NOTIFICATIONS: chalk.redBright,
     STORE: chalk.greenBright, // lime
     ERROR: chalk.red,
+    CACHE: chalk.blue,
+    SW: chalk.green,
 };
 
 const padRight = (str: string, length: number): string => str.padEnd(length, ' ');
