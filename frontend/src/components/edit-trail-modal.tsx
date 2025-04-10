@@ -104,7 +104,7 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
                     onClick={onClose}
                     onKeyUp={(e) => e.key === 'Enter' && onClose()}
                     onKeyDown={(e) => e.key === 'Enter' && onClose()}
-                    aria-label="Close"
+                    aria-label='Close'
                 >
                     &times;
                 </div>

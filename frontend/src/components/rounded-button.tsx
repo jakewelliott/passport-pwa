@@ -30,7 +30,7 @@ const RoundedButton: React.FC<ButtonProps> = ({
     );
 
     return (
-        <button type={type} className={className} onClick={onClick} style={{minWidth: `${width}px`}}>
+        <button type={type} className={className} onClick={onClick} style={{ minWidth: `${width}px` }}>
             <p className={`text-${textColor} ${textSize}`}>{title}</p>
         </button>
     );

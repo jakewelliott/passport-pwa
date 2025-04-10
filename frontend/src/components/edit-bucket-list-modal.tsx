@@ -31,7 +31,7 @@ export function EditBucketListItemModal({
     const [error, setError] = useState(false);
     const { data: parks } = useParks();
     const [selectedPark, setSelectedPark] = useState<Park | null>(
-        editedItem.parkId ? parks?.find(x => x.id === editedItem.parkId) || null : null
+        editedItem.parkId ? parks?.find((x) => x.id === editedItem.parkId) || null : null,
     );
 
     useEffect(() => {
@@ -69,7 +69,7 @@ export function EditBucketListItemModal({
             setEditedItem((prev) => ({
                 ...prev,
                 parkId: null,
-            }))
+            }));
         }
     };
 

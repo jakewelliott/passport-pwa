@@ -32,7 +32,11 @@ export const PhotoGalleryMiniTab = ({ park }: { park: Park }) => {
                     >
                         <img
                             data-testid={'photo'}
-                            src={photo.photoPath.startsWith('http://') || photo.photoPath.startsWith('https://') ? photo.photoPath : `/photos/${photo.photoPath}`}
+                            src={
+                                photo.photoPath.startsWith('http://') || photo.photoPath.startsWith('https://')
+                                    ? photo.photoPath
+                                    : `/photos/${photo.photoPath}`
+                            }
                             alt={photo.alt || `Park photo ${index + 1}`}
                             className='h-full w-full object-cover transition-opacity duration-300 hover:opacity-80'
                         />

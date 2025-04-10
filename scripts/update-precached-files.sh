@@ -22,7 +22,7 @@ echo "export const precachedFiles = [" >> "$FILE_PATH"
 
 # Loop through the files and add them to the .ts file
 while IFS= read -r FILE; do
-    echo "  '$FILE'," >> "$FILE_PATH"
+    echo "    '$FILE'," >> "$FILE_PATH"
 done <<< "$FILES"
 
 echo "];" >> "$FILE_PATH"

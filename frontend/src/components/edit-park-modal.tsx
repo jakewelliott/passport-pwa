@@ -41,7 +41,13 @@ interface EditParkModalProps {
 }
 
 export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew = false }: EditParkModalProps) {
-    const [editedPark, setEditedPark] = useState({ ...parkProp, trails: parkProp.trails.split('\n').filter((line) => line.trim() !== '').join('\n') });
+    const [editedPark, setEditedPark] = useState({
+        ...parkProp,
+        trails: parkProp.trails
+            .split('\n')
+            .filter((line) => line.trim() !== '')
+            .join('\n'),
+    });
     const [isVisible, setIsVisible] = useState(false);
     const [error, setError] = useState(false);
     const [selectedIcon, setSelectedIcon] = useState<ParkIcon | null>(null);
@@ -168,7 +174,9 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                 className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
             >
                 <h2>{isNew ? 'New Park' : 'Edit Park'}</h2>
-                <div className='absolute right-4 top-4 text-h2' onClick={onClose}>&times;</div>
+                <div className='absolute top-4 right-4 text-h2' onClick={onClose}>
+                    &times;
+                </div>
                 <form onSubmit={handleSubmit} className='w-full'>
                     <FormField
                         label='Park Name'

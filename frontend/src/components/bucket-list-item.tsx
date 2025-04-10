@@ -1,9 +1,9 @@
+import { useUser } from '@/hooks/queries/useUser';
 import { a11yOnClick } from '@/lib/a11y';
 import DateHelper from '@/lib/date-helper';
 import type { BucketListCompletion, BucketListItem } from '@/types';
-import { GenericIcon } from './generic-icon';
 import { FaPen } from 'react-icons/fa6';
-import { useUser } from '@/hooks/queries/useUser';
+import { GenericIcon } from './generic-icon';
 
 const CompletedAtView = ({ updatedAt }: { updatedAt: Date }) => (
     <div className='w-fit rounded-lg bg-supporting_terracotta p-2 text-system_white'>
@@ -22,7 +22,14 @@ interface BucketListItemViewProps {
     handleEditItem: () => void;
 }
 
-export const BucketListItemView = ({ item, completion, handler, address, testId, handleEditItem }: BucketListItemViewProps) => {
+export const BucketListItemView = ({
+    item,
+    completion,
+    handler,
+    address,
+    testId,
+    handleEditItem,
+}: BucketListItemViewProps) => {
     const completed = completion !== undefined;
     const { data: user } = useUser();
 
@@ -43,18 +50,17 @@ export const BucketListItemView = ({ item, completion, handler, address, testId,
                 {address && <AddressView address={address} />}
                 {completed && <CompletedAtView updatedAt={completion.updatedAt} />}
             </div>
-            {user?.role === "admin" && (
+            {user?.role === 'admin' && (
                 <div className='my-auto ml-auto w-7 pl-2'>
-                <button
-                    className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
-                    onClick={handleEditItem}
-                    type='button'
-                >
-                    <FaPen size={15} />
-                </button>
-            </div>
+                    <button
+                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                        onClick={handleEditItem}
+                        type='button'
+                    >
+                        <FaPen size={15} />
+                    </button>
+                </div>
             )}
-            
         </div>
     );
 };

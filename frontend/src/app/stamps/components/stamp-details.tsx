@@ -55,7 +55,12 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                     <div className='space-y-3'>
                         <div className='flex justify-center'>
                             <img
-                                src={park.stampImage && (park.stampImage.startsWith("http://") || park.stampImage.startsWith("http://")) ? park.stampImage : `/stamps/${park.stampImage}`}
+                                src={
+                                    park.stampImage &&
+                                    (park.stampImage.startsWith('http://') || park.stampImage.startsWith('http://'))
+                                        ? park.stampImage
+                                        : `/stamps/${park.stampImage}`
+                                }
                                 alt={`${park.abbreviation} stamp`}
                                 className='h-32 w-32'
                             />
