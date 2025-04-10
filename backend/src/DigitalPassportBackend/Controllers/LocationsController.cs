@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Services;
 using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -34,7 +35,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         var icons = _locationsService.GetIconsByLocationId(location.id);
         var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
         var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
-        var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
+        var locationDataResponse = ParkDTO.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
         // return 200 ok
         return Ok(locationDataResponse);
     }
@@ -43,7 +44,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     public IActionResult GetAll()
     {
         // invoking the use case
-        List<LocationResponse> parks = new List<LocationResponse>();
+        List<ParkDTO> parks = new List<ParkDTO>();
         var locations = _locationsService.GetAll();
         foreach (var location in locations)
         {
@@ -51,7 +52,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
             var icons = _locationsService.GetIconsByLocationId(location.id);
             var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
             var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
-            var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
+            var locationDataResponse = ParkDTO.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
             parks.Add(locationDataResponse);
         }
         // return 200 ok
@@ -83,131 +84,6 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         _locationsService.GetAll().ForEach(x => locations.Add(LocationGeoDataResponse.FromDomain(x)));
         return Ok(locations);
     }
-
-    public record AddressResponse(string title, string addressLineOne, string? addressLineTwo, string city, string state, int zipcode)
-    {
-        public static AddressResponse FromDomain(ParkAddress address)
-        {
-            return new AddressResponse(
-                address.title,
-                address.addressLineOne,
-                address.addressLineTwo,
-                address.city,
-                address.state.GetDisplayName(),
-                address.zipcode
-            );
-        }
-    }
-
-    public record IconResponse(string iconName, string? tooltip)
-    {
-        public static IconResponse FromDomain(ParkIcon icon)
-        {
-            return new IconResponse(
-                icon.icon.GetDisplayName().Replace("_", "-"), 
-                icon.tooltip
-            );
-        }
-    }
-
-    public record BucketListItemResponse(int id,string task)
-    {
-        public static BucketListItemResponse FromDomain(BucketListItem bucketListItem)
-        {
-            return new BucketListItemResponse(bucketListItem.id, bucketListItem.task);
-        }
-    }
-
-    public record PhotosResponse(string photoPath, string alt)
-    {
-        public static PhotosResponse FromDomain(ParkPhoto photo)
-        {
-            return new PhotosResponse(
-                photo.photo,
-                photo.alt
-            );
-        }
-    }
-
-    public record LocationResponse(
-        int id,
-        string abbreviation,
-        string parkName,
-        object coordinates,
-        long? phone,
-        string? email,
-        string? establishedYear,
-        string? landmark,
-        string? youCanFind,
-        string? trails,
-        string website,
-        string stampImage,
-        string accesses,
-        AddressResponse[] addresses,
-        IconResponse[] icons,
-        BucketListItemResponse[] bucketListItems,
-        PhotosResponse[] photos)
-    {
-        public static LocationResponse FromDomain(
-            Park location,
-            List<ParkAddress> locationAddresses,
-            List<ParkIcon> locationIcons,
-            List<BucketListItem> locationBucketListItems,
-            List<ParkPhoto> locationPhotos
-        )
-        {
-            var addressesArray = new List<AddressResponse>();
-            foreach (ParkAddress addy in locationAddresses)
-            {
-                addressesArray.Add(AddressResponse.FromDomain(addy));
-            }
-
-            var iconsArray = new List<IconResponse>();
-            foreach (ParkIcon newIcon in locationIcons)
-            {
-                iconsArray.Add(IconResponse.FromDomain(newIcon));
-            }
-
-            var bucketListItemsArray = new List<BucketListItemResponse>();
-            foreach (BucketListItem newBLI in locationBucketListItems)
-            {
-                bucketListItemsArray.Add(BucketListItemResponse.FromDomain(newBLI));
-            }
-
-            var photosArray = new List<PhotosResponse>();
-            foreach (ParkPhoto newPhoto in locationPhotos)
-            {
-                photosArray.Add(PhotosResponse.FromDomain(newPhoto));
-            }
-
-            var lonLatObject = new
-            {
-                longitude = location.coordinates == null ? 0 : location.coordinates.X,
-                latitude = location.coordinates == null ? 0 : location.coordinates.Y
-            };
-
-            return new LocationResponse(
-                location.id,
-                location.parkAbbreviation,
-                location.parkName,
-                lonLatObject,
-                location.phone,
-                location.email,
-                location.establishedYear,
-                location.landmark,
-                location.youCanFind,
-                location.trails,
-                location.website,
-                string.IsNullOrEmpty(location.stampImage) ? "" : location.stampImage,
-                string.IsNullOrEmpty(location.accesses) ? "" : location.accesses,
-                addressesArray.ToArray(),
-                iconsArray.ToArray(),
-                bucketListItemsArray.ToArray(),
-                photosArray.ToArray()
-            );
-        }
-
-    };
 
     public record TrailResponse(
         int id,
