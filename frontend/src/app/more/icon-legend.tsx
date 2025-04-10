@@ -1,6 +1,8 @@
 import { LegendSections } from '@/app/more/components/legend-sections';
+import { dbg } from '@/lib/debug';
 
 export const IconLegend = () => {
+    dbg('RENDER', '/more/icon-legend');
     return (
         <div className='flex flex-col gap-4'>
             <h2 className='text-center'>Legend</h2>

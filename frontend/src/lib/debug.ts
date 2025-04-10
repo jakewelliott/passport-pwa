@@ -1,11 +1,8 @@
-import chalk from 'chalk';
-
 // switch this to true to mute all debug statements
 const MUTED = false;
 
-// variable to switch between production and development
-export const PRODUCTION = process.env.PROD === 'PROD';
-export const DEBUG = !PRODUCTION;
+export const PRODUCTION = import.meta.env.PROD; // special for vite, using process breaks service worker
+export const DEBUG = import.meta.env.DEV;
 
 // debugging utility function & types
 const DebugControl = {
@@ -32,27 +29,26 @@ const DebugControl = {
 
 type DebugType = keyof typeof DebugControl;
 
-// chalk is an esm module, so im commenting it out for now
-const MessageColors: Record<DebugType, (str: string) => string> = {
-    RENDER: chalk.gray,
-    LOADER: chalk.hex('#FFA500'), // orange
-    MISC: chalk.yellow,
-    HOOK: chalk.green,
-    FETCH: chalk.cyan.dim, // teal-like
-    QUERY: chalk.cyan,
-    SUBSCRIPTION: chalk.blue,
-    MUTATE: chalk.magenta,
-    AUTH: chalk.magentaBright,
-    EFFECT: chalk.blue.dim, // indigo-like
-    STORAGE: chalk.greenBright, // lime
-    LAYOUT: chalk.gray,
-    ENV: chalk.yellowBright, // gold
-    TEST: chalk.magenta.dim, // lavender-like
-    NOTIFICATIONS: chalk.redBright,
-    STORE: chalk.greenBright, // lime
-    ERROR: chalk.red,
-    CACHE: chalk.blue,
-    SW: chalk.green,
+const MessageStyles: Record<DebugType, string> = {
+    RENDER: 'color: gray',
+    LOADER: 'color: #FFA500', // orange
+    MISC: 'color: yellow',
+    HOOK: 'color: green',
+    FETCH: 'color: #00AAAA; opacity: 0.7', // teal-like
+    QUERY: 'color: cyan',
+    SUBSCRIPTION: 'color: blue',
+    MUTATE: 'color: magenta',
+    AUTH: 'color: #FF00FF', // magenta bright
+    EFFECT: 'color: #0000AA; opacity: 0.7', // indigo-like
+    STORAGE: 'color: #00FF00', // lime
+    LAYOUT: 'color: gray',
+    ENV: 'color: #FFFF00', // gold
+    TEST: 'color: #AA00AA; opacity: 0.7', // lavender-like
+    NOTIFICATIONS: 'color: #FF0000', // red bright
+    STORE: 'color: #00FF00', // lime
+    ERROR: 'color: red',
+    CACHE: 'color: blue',
+    SW: 'color: blue',
 };
 
 const padRight = (str: string, length: number): string => str.padEnd(length, ' ');
@@ -63,11 +59,7 @@ export const dbg = (t: DebugType, where: string, what?: unknown): void => {
         const logType = padRight(`[${t}]`, 10);
         const location = padRight(where, 20);
         const message = what ? sjason(what) : '';
-        const inlineMessage = message.length > 40 || message.includes('{') ? '(obj)' : message;
-        console.log(MessageColors[t](`${logType}\t${location}\t${inlineMessage}`));
-        if (inlineMessage === '(obj)') {
-            console.log(JSON.stringify(what, null, 2));
-        }
+        console.log(`%c${logType}\t${location}\t${message}`, MessageStyles[t]);
     }
 };
 

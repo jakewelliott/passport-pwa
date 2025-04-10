@@ -1,5 +1,6 @@
 import { useUser } from '@/hooks/queries/useUser';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { dbg } from '@/lib/debug';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
 import { HeaderMenuButton } from './header-menu-button';
@@ -16,6 +17,7 @@ export const BackButton = ({ hidden }: { hidden: boolean }) => {
 };
 
 const Header = () => {
+    dbg('RENDER', '<Header>');
     const { pageTitle, showBackButton } = usePageTitle();
     const { isLoggedIn } = useUser();
 

@@ -32,7 +32,7 @@ const Row = ({ park }: { park: Park }) => {
 };
 
 export default function LocationsScreen() {
-    dbg('RENDER', 'Locations');
+    dbg('RENDER', '/locations');
     const { data: parks, isLoading, isError, error, refetch: refetchParks } = useParks();
     const { data: stamps } = useStamps();
     const { data: visitHistory } = useVisitsHistory();

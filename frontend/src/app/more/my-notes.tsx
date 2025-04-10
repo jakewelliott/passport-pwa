@@ -56,7 +56,7 @@ const NoteRow = ({
 };
 
 export const MyNotes = () => {
-    dbg('RENDER', 'MyNotes');
+    dbg('RENDER', '/notes');
     const navigate = useNavigate();
     const { data, isLoading } = useNotes();
 
@@ -65,7 +65,8 @@ export const MyNotes = () => {
     const allNotes = [generalNote, ...restOfNotes];
 
     if (isLoading) return <LoadingPlaceholder what='notes' />;
-    dbg('RENDER', 'MyNotes', `allNotes: ${allNotes?.length}`);
+
+    dbg('RENDER', '/notes', `allNotes: ${allNotes?.length}`);
 
     return (
         <div className='space-y-4'>

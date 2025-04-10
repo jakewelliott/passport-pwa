@@ -1,4 +1,5 @@
 import ListRow from '@/components/list-row';
+import { dbg } from '@/lib/debug';
 import { Link } from 'react-router-dom';
 
 const LinkRow = ({ to, label }: { to: string; label: string }) => (
@@ -10,6 +11,7 @@ const LinkRow = ({ to, label }: { to: string; label: string }) => (
 );
 
 export default function More() {
+    dbg('RENDER', '/more');
     return (
         <div className='flex flex-col gap-3.5' data-testid='more-list'>
             <LinkRow to={'/more/trails'} label='Trails' />

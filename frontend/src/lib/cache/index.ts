@@ -1,44 +1,43 @@
-import { precachedFiles } from './precached-files';
-import { precachedRoutes } from './precached-routes';
+// import { precachedFiles } from '@/lib/cache/precached-files';
+// import { precachedRoutes } from '@/lib/cache/precached-routes';
+
+// import { dbg } from '@/lib/debug';
 
 const CACHE_VERSION = 'v0.1';
 export const CACHE_NAME = `nc-dpr-digital-passport-${CACHE_VERSION}`;
 
-const precachedResources = [...precachedFiles, ...precachedRoutes];
+// const precachedResources = [...precachedFiles, ...precachedRoutes];
 
-const workboxHelper = () => {
-    return precachedFiles.map((file) => {
-        return {
-            url: file,
-            revision: null,
-        };
-    });
-};
+// export const precache = async () => {
+//     const cache = await caches.open(CACHE_NAME);
+//     cache.addAll(precachedResources);
+// };
 
-export const staticAssets = workboxHelper();
+// // NOTE: i was using this to test different caching strategies
+// // on another branch (not pushed)
 
-export const precache = async () => {
-    const cache = await caches.open(CACHE_NAME);
-    cache.addAll(precachedResources);
-};
-
-// export const cacheFirst = async (request: Request) => {
-//     const cachedResponse = await caches.match(request);
-//     if (cachedResponse) {
-//         dbg('CACHE', 'cache hit', { request });
-//         return cachedResponse;
-//     }
-//     try {
-//         const networkResponse = await fetch(request);
-//         if (networkResponse.ok) {
-//             // update the cache
+// export const cacheFirst = async (event: any) => {
+//     event.respondWith(
+//         (async () => {
 //             const cache = await caches.open(CACHE_NAME);
-//             cache.put(request, networkResponse.clone());
-//         }
-//         return networkResponse;
-//     } catch (error) {
-//         return Response.error();
-//     }
+//             const cachedResponse = await cache.match(event.request);
+
+//             if (cachedResponse) {
+//                 dbg('CACHE', 'cache hit', event.request.url);
+//                 return cachedResponse;
+//             }
+//             try {
+//                 const networkResponse = await fetch(event.request);
+//                 if (networkResponse.ok) {
+//                     // update the cache
+//                     cache.put(event.request, networkResponse.clone());
+//                 }
+//                 return networkResponse;
+//             } catch (error) {
+//                 return Response.error();
+//             }
+//         })(),
+//     );
 // };
 
 // export const cacheFirstWithRefresh = async (request: Request) => {
@@ -72,3 +71,17 @@ export const precache = async () => {
 //         dbg('SW', 'service worker not supported');
 //     }
 // };
+
+// NOTE: this was when i was screwing around with workbox
+// on another branch (not pushed)
+
+// const workboxHelper = () => {
+//     return precachedFiles.map((file) => {
+//         return {
+//             url: file,
+//             revision: null,
+//         };
+//     });
+// };
+
+// export const staticAssets = workboxHelper();

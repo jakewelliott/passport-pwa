@@ -16,7 +16,7 @@ const AccountInfo = ({ user }: { user: UserProfile }) => {
 };
 
 export default function MyProfileScreen() {
-    dbg('RENDER', 'MyProfileScreen');
+    dbg('RENDER', '/more/my-profile');
 
     const { data: user, isLoading } = useUser();
     const navigate = useNavigate();

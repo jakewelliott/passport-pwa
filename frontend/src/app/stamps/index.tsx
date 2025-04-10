@@ -39,7 +39,7 @@ const StampView = ({ park, handleClick, greyed }: { park: Park; handleClick: () 
 // TODO: make this use a query instead of directly accessing dummy data
 // ADAM: BRUH
 export default function StampsScreen() {
-    dbg('RENDER', 'StampsScreen');
+    dbg('RENDER', '/stamps');
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const { data: parks, isLoading: parksLoading } = useParks();

@@ -9,21 +9,9 @@ export default defineConfig(({ command, mode }) => {
     const pemDirectory = isProduction ? '.' : '..';
     const env = loadEnv(mode, `${process.cwd()}/${pemDirectory}`, '');
     return {
-        plugins: [
-            react(),
-            {
-                name: 'terminal-logger',
-                configureServer(server) {
-                    // Expose terminal write function to client
-                    server.ws.on('terminal:log', (data) => {
-                        process.stdout.write(`${data.message}\n`);
-                    });
-                },
-            },
-        ],
+        plugins: [react()],
         define: {
             'process.env': env,
-            'process.env.PROD': JSON.stringify(isProduction ? 'PROD' : 'DEV'),
         },
         resolve: {
             alias: {

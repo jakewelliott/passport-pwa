@@ -32,7 +32,7 @@ const getInputStyles = (isError: boolean) =>
 // };
 
 export default function LoginPage() {
-    dbg('RENDER', 'LoginPage');
+    dbg('RENDER', '/login');
     const { isLoggedIn } = useUser();
     const [errors, setErrors] = useState({ username: false, password: false });
     const formRef = useRef<HTMLFormElement>(null);

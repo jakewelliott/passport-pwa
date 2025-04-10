@@ -28,9 +28,9 @@ const MiniTabs = ({ park }: { park: Park }) => (
 );
 
 export default function ParkInfoScreen() {
-    dbg('RENDER', 'Location DetailTabs');
     const { abbreviation } = useParams();
     const parkAbbreviation = abbreviation as Uppercase<string>;
+    dbg('RENDER', `/locations/${parkAbbreviation}`);
 
     const { data: park, isLoading: isParkLoading } = usePark(parkAbbreviation);
     const { data: stamp, isLoading: isStampLoading } = useStamp(park?.id);
