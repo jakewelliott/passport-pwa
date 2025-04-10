@@ -42,4 +42,16 @@ public class AdminController(IAdminService adminService) : ControllerBase
         _adminService.DeletePark(parkId);
         return Ok();
     }
+
+    //
+    // Bucket List Items
+    //
+
+    [HttpPost("activity/bucketlist")]
+    [Authorize(Roles = "admin")]
+    public IActionResult CreateBucketListItem(BucketListItemDTO item)
+    {
+        _adminService.CreateBucketListItem(item);
+        return Ok();
+    }
 }

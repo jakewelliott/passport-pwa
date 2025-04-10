@@ -1,4 +1,5 @@
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 
 namespace DigitalPassportBackend.Services;
 
@@ -20,8 +21,8 @@ public interface IAdminService
     void DeletePark(int id);
 
     // Bucket List Items
-    void CreateBucketListItem(BucketListItem item);
-    void UpdateBucketListItem(BucketListItem item);
+    void CreateBucketListItem(BucketListItemDTO item);
+    void UpdateBucketListItem(BucketListItemDTO item);
     void DeleteBucketListItem(int id);
 
     // Trails

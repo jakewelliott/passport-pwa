@@ -1,4 +1,5 @@
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 
@@ -115,19 +116,19 @@ public class AdminService : IAdminService
     // Bucket List Items
     //
 
-    public void CreateBucketListItem(BucketListItem item)
+    public void CreateBucketListItem(BucketListItemDTO item)
     {
-
+        _bucketList.Create(item.ToDomain(_locations.GetById(item.parkId)));
     }
     
-    public void UpdateBucketListItem(BucketListItem item)
+    public void UpdateBucketListItem(BucketListItemDTO item)
     {
-
+        _bucketList.Update(item.ToDomain(_locations.GetById(item.parkId)));
     }
 
     public void DeleteBucketListItem(int id)
     {
-
+        _bucketList.Delete(id);
     }
 
     //
