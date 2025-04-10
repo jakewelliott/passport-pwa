@@ -4,13 +4,15 @@ namespace DigitalPassportBackend.Domain.DTO;
 
 public record ParkIconDTO(
     string iconName,
-    string? tooltip)
+    string? tooltip,
+    int parkId)
 {
     public static ParkIconDTO FromDomain(ParkIcon icon)
     {
         return new ParkIconDTO(
             icon.icon.GetDisplayName().Replace("_", "-"), 
-            icon.tooltip
+            icon.tooltip,
+            icon.parkId
         );
     }
 
@@ -20,6 +22,7 @@ public record ParkIconDTO(
         {
             icon = Enum.Parse<ParkIconNames>(iconName),
             tooltip = tooltip,
+            parkId = parkId,
             park = park
         };
     }

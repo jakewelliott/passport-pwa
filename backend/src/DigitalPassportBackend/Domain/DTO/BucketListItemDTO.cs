@@ -2,11 +2,12 @@ namespace DigitalPassportBackend.Domain.DTO;
 
 public record BucketListItemDTO(
     int id,
-    string task)
+    string task,
+    int parkId)
 {
     public static BucketListItemDTO FromDomain(BucketListItem bucketListItem)
     {
-        return new BucketListItemDTO(bucketListItem.id, bucketListItem.task);
+        return new BucketListItemDTO(bucketListItem.id, bucketListItem.task, bucketListItem.parkId!.Value);
     }
 
     public BucketListItem ToDomain(Park park)
@@ -15,6 +16,7 @@ public record BucketListItemDTO(
         {
             id = id,
             task = task,
+            parkId = parkId,
             park = park
         };
     }

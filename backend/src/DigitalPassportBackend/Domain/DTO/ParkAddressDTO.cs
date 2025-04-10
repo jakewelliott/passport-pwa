@@ -8,7 +8,8 @@ public record ParkAddressDTO(
     string? addressLineTwo,
     string city,
     string state,
-    int zipcode)
+    int zipcode,
+    int parkId)
 {
     public static ParkAddressDTO FromDomain(ParkAddress address)
     {
@@ -18,8 +19,8 @@ public record ParkAddressDTO(
             address.addressLineTwo,
             address.city,
             address.state.GetDisplayName(),
-            address.zipcode
-        );
+            address.zipcode,
+            address.parkId);
     }
 
     public ParkAddress ToDomain(Park park)
@@ -32,6 +33,7 @@ public record ParkAddressDTO(
             city = city,
             state = Enum.Parse<State>(state),
             zipcode = zipcode,
+            parkId = parkId,
             park = park
         };
     }
