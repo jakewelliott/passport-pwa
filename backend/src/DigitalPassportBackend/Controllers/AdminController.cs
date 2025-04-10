@@ -54,4 +54,22 @@ public class AdminController(IAdminService adminService) : ControllerBase
         _adminService.CreateBucketListItem(item);
         return Ok();
     }
+<<<<<<< HEAD
+=======
+
+    [HttpPut("activity/bucketlist/{bucketListId}")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdateBucketListItem(BucketListItemDTO item)
+    {
+        _adminService.UpdateBucketListItem(item);
+        return Ok();
+    }
+
+    [HttpDelete("activity/bucketlist/{bucketListId}")]
+    public IActionResult DeleteBucketListItem(int bucketListId)
+    {
+        _adminService.DeleteBucketListItem(bucketListId);
+        return Ok();
+    }
+>>>>>>> 943d550 (Implement bucket list mutation endpoints)
 }
