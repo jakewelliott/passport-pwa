@@ -70,6 +70,10 @@ public class AdminService : IAdminService
                     // Update park.
                     _locations.Update(park);
                 }
+                else
+                {
+                    throw new ServiceException(409, $"Park with abbreviation '{park.parkAbbreviation}' already exists");
+                }
             }
             catch (NotFoundException)
             {
