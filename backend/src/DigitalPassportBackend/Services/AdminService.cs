@@ -52,14 +52,59 @@ public class AdminService : IAdminService
         }
     }
 
-    public void UpdatePark(Park park)
+    public void UpdatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos)
     {
+        // Check if the park needs to be updated.
+        if (_locations.GetById(park.id).Equals(park))
+        {
+            // Verify that there isn't an abbreviation collision.
+            try {
+                var existing = _locations.GetByAbbreviation(park.parkAbbreviation);
+                if (existing.id == park.id)
+                {
+                    // Update park.
+                    _locations.Update(park);
+                }
+            }
+            catch (NotFoundException)
+            {
+                // Update park.
+                _locations.Update(park);
+            }
+        }
 
+        // Update or create park data.
+        addrs.ForEach(a => UpdateOrCreate(a, _addresses));
+        icons.ForEach(i => UpdateOrCreate(i, _parkIcons));
+        blItems.ForEach(i => UpdateOrCreate(i, _bucketList));
+        photos.ForEach(p => UpdateOrCreate(p, _parkPhotos));
     }
 
     public void DeletePark(int id)
     {
+        // Park addresses.
+        _addresses.GetByLocationId(id)
+            .ForEach(a => _addresses.Delete(a.id));
+        
+        // Park icons.
+        _parkIcons.GetByLocationId(id)
+            .ForEach(i => _parkIcons.Delete(i.id));
 
+        // Bucket list items.
+        _bucketList.GetByLocationId(id)
+            .ForEach(i => _bucketList.Delete(i.id));
+
+        // Park photos.
+        _parkPhotos.GetByLocationId(id)
+            .ForEach(i => _parkPhotos.Delete(i.id));
+
+        // Park.
+        _locations.Delete(id);
     }
 
     //
@@ -112,5 +157,24 @@ public class AdminService : IAdminService
     public void UpdateRole(int userId, string role)
     {
 
+    }
+
+    //
+    // Helpers
+    //
+
+    private static void UpdateOrCreate<T>(T val, IRepository<T> repo) where T : IEntity
+    {
+        try
+        {
+            if (!repo.GetById(val.id).Equals(val))
+            {
+                repo.Update(val);
+            }
+        }
+        catch (NotFoundException)
+        {
+            repo.Create(val);
+        }
     }
 }

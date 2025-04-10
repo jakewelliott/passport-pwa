@@ -11,7 +11,12 @@ public interface IAdminService
         List<ParkIcon> icons,
         List<BucketListItem> blItems,
         List<ParkPhoto> photos);
-    void UpdatePark(Park park);
+    void UpdatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos);
     void DeletePark(int id);
 
     // Bucket List Items

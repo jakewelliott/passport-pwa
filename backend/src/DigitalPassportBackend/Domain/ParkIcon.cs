@@ -9,17 +9,28 @@ public class ParkIcon : IEntity
 {
     public int id { get; init; }
     public required ParkIconNames icon { get; set; }
+    public string? tooltip { get; set; }
     [Column("created_at")]
     public DateTime createdAt { get; set; } = DateTime.UtcNow;
     [Column("updated_at")]
     public DateTime updatedAt { get; set; } = DateTime.UtcNow;
-    public string? tooltip { get; set; }
 
     // References
     [ForeignKey("park")]
     [Column("park")]
     public int parkId { get; set; }
     public required Park park { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is ParkIcon o
+            && o.GetHashCode() == GetHashCode();
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(icon, tooltip, park);
+    }
 }
 
 public enum ParkIconNames

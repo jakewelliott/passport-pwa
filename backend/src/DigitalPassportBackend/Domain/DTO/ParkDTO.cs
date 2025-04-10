@@ -80,7 +80,7 @@ public record ParkDTO(
         );
     }
 
-    public Park ToDomain(
+    public Park ToDomain(int parkId,
         out List<ParkAddress> addrs,
         out List<ParkIcon> icons,
         out List<BucketListItem> blItems,
@@ -88,7 +88,7 @@ public record ParkDTO(
     {
         var p = new Park()
         {
-            id = id,
+            id = parkId,
             parkAbbreviation = abbreviation,
             parkName = parkName,
             parkType = Enum.Parse<ParkType>(parkType),
