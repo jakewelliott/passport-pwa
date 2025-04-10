@@ -40,7 +40,7 @@ public class AdminService : IAdminService
         try
         {
             _locations.GetByAbbreviation(park.parkAbbreviation);
-            throw new ServiceException(409, $"Park {park.parkAbbreviation} already exists.");
+            throw new ServiceException(409, $"Park with abbreviation '{park.parkAbbreviation}' already exists");
         }
         catch (NotFoundException)
         {
