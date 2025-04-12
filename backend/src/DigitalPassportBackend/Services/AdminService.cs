@@ -91,10 +91,10 @@ public class AdminService : IAdminService
         }
 
         // Update or create park data.
-        addrs.ForEach(a => UpdateOrCreate(a, _addresses));
-        icons.ForEach(i => UpdateOrCreate(i, _parkIcons));
-        blItems.ForEach(i => UpdateOrCreate(i, _bucketList));
-        photos.ForEach(p => UpdateOrCreate(p, _parkPhotos));
+        SetValues(_addresses.GetByLocationId(park.id), addrs, _addresses);
+        SetValues(_parkIcons.GetByLocationId(park.id), icons, _parkIcons);
+        SetValues(_bucketList.GetByLocationId(park.id), blItems, _bucketList);
+        SetValues(_parkPhotos.GetByLocationId(park.id), photos, _parkPhotos);
     }
 
     public void DeletePark(int id)
@@ -180,18 +180,26 @@ public class AdminService : IAdminService
     // Helpers
     //
 
-    private static void UpdateOrCreate<T>(T val, IRepository<T> repo) where T : IEntity
+    private void SetValues<T>(List<T> currentVals, List<T> newVals, IRepository<T> repo) where T : IEntity
     {
-        try
+        // Delete difference.
+        currentVals.Except(newVals)
+            .ToList()
+            .ForEach(v => repo.Delete(v.id));
+        
+        foreach (var val in newVals)
         {
-            if (!repo.GetById(val.id).Equals(val))
+            try
             {
-                repo.Update(val);
+                if (!repo.GetById(val.id).Equals(val))
+                {
+                    repo.Update(val);
+                }
             }
-        }
-        catch (NotFoundException)
-        {
-            repo.Create(val);
+            catch (NotFoundException)
+            {
+                repo.Create(val);
+            }
         }
     }
 }
