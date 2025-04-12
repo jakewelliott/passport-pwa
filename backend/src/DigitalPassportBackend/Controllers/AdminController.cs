@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace DigitalPassportBackend.Controllers;
 
 [ApiController]
-[Route("/api")]
+[Route("/api/admin")]
+[Authorize]
 public class AdminController(IAdminService adminService) : ControllerBase
 {
     private readonly IAdminService _adminService = adminService;
