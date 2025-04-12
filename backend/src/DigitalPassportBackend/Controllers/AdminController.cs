@@ -49,17 +49,15 @@ public class AdminController(IAdminService adminService) : ControllerBase
 
     [HttpPost("activity/bucketlist")]
     [Authorize(Roles = "admin")]
-    public IActionResult CreateBucketListItem(BucketListItemDTO item)
+    public IActionResult CreateBucketListItem([FromBody] BucketListItemDTO item)
     {
         _adminService.CreateBucketListItem(item);
         return Ok();
     }
-<<<<<<< HEAD
-=======
 
     [HttpPut("activity/bucketlist/{bucketListId}")]
     [Authorize(Roles = "admin")]
-    public IActionResult UpdateBucketListItem(BucketListItemDTO item)
+    public IActionResult UpdateBucketListItem([FromBody] BucketListItemDTO item)
     {
         _adminService.UpdateBucketListItem(item);
         return Ok();
@@ -71,5 +69,24 @@ public class AdminController(IAdminService adminService) : ControllerBase
         _adminService.DeleteBucketListItem(bucketListId);
         return Ok();
     }
->>>>>>> 943d550 (Implement bucket list mutation endpoints)
+
+    //
+    // Users
+    //
+
+    [HttpPut("auth/{userId}/password")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdatePassword(int userId, [FromBody] string password)
+    {
+        _adminService.UpdatePassword(userId, password);
+        return Ok();
+    }
+
+    [HttpPut("auth/{userId}/role")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdateRole(int userId, [FromBody] string role)
+    {
+        _adminService.UpdateRole(userId, role);
+        return Ok();
+    }
 }

@@ -2,6 +2,7 @@ using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
+using DigitalPassportBackend.Security;
 
 namespace DigitalPassportBackend.Services;
 
@@ -12,19 +13,25 @@ public class AdminService : IAdminService
     private readonly IBucketListItemRepository _bucketList;
     private readonly IParkIconRepository _parkIcons;
     private readonly IParkPhotoRepository _parkPhotos;
+    private readonly IUserRepository _users;
+    private readonly IPasswordHasher _hasher;
 
     public AdminService(
         ILocationsRepository locationsRepository,
         IParkAddressRepository addressRepository,
         IBucketListItemRepository bucketListItemRepository,
         IParkIconRepository parkIconRepository,
-        IParkPhotoRepository parkPhotoRepository)
+        IParkPhotoRepository parkPhotoRepository,
+        IUserRepository userRepository,
+        IPasswordHasher passwordHasher)
     {
         _locations = locationsRepository;
         _addresses = addressRepository;
         _bucketList = bucketListItemRepository;
         _parkIcons = parkIconRepository;
         _parkPhotos = parkPhotoRepository;
+        _users = userRepository;
+        _hasher = passwordHasher;
     }
 
     //
@@ -156,12 +163,17 @@ public class AdminService : IAdminService
 
     public void UpdatePassword(int userId, string password)
     {
-
+        var user = _users.GetById(userId);
+        user.password = _hasher.HashPassword(password);
+        _hasher.ValidatePassword(user);
+        _users.Update(user);
     }
     
     public void UpdateRole(int userId, string role)
     {
-
+        var user = _users.GetById(userId);
+        user.role = Enum.Parse<UserRole>(role);
+        _users.Update(user);
     }
 
     //
