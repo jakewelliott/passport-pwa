@@ -109,15 +109,8 @@ const EditParks = () => {
     };
 
     function handleSave(editedParks: Park[]): void {
-      // Create a new array with updated trails
-      const formattedParks = editedParks.map(park => ({
-          ...park,
-          trails: handleCleanLongText(park.trails)
-      }));
-  
-      console.log(formattedParks);
-  }
-  
+        console.log(editedParks);
+    }
 
     const getUnselectedIcons = (park: Park) => {
         const selectedIconNames = new Set(park.icons.map((icon) => icon.iconName));
