@@ -21,6 +21,7 @@ import { Trails } from './app/more/trails';
 import WelcomeMessage from './app/more/welcome-message';
 import Stamps from './app/stamps';
 import { BucketList } from './components/bucket-list';
+import EditTrails from './app/admin/edit-trails';
 
 const RoleBasedRedirect = () => {
     const { isLoggedIn, data: user, isLoading } = useUser();
@@ -72,6 +73,7 @@ export const routes: RouteObject[] = [
                 children: [
                     { index: true, element: <AdminPage /> },
                     { path: 'edit-parks', element: <EditParks /> },
+                    { path: 'edit-trails', element: <EditTrails /> },
                 ],
             },
             {

@@ -344,7 +344,7 @@ const EditParks = () => {
                 enableExpanding
                 enableKeyboardShortcuts={false}
                 renderDetailPanel={({ row }) => (
-                    <div className='ml-48 grid gap-6 p-4'>
+                    <div className='ml-14 grid gap-6 p-4'>
                         {/* Addresses Section */}
                         <div>
                             <h4>Addresses</h4>
