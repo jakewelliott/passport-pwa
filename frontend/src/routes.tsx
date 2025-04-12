@@ -4,6 +4,7 @@ import CollectStamp from '@/app/stamps/collect-stamp';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
 import { Navigate, Outlet, type RouteObject, createBrowserRouter } from 'react-router-dom';
+import EditParks from './app/admin/edit-parks';
 import LoginPage from './app/auth/login';
 import { LogoutScreen } from './app/auth/logout';
 import Locations from './app/locations';
@@ -38,7 +39,7 @@ const AdminRoutes = () => {
     if (!isLoading && user?.role !== 'admin') {
         return <Navigate to='/locations' replace />;
     }
-    return <AdminPage />;
+    return <Outlet />;
 };
 
 const LoggedInRoutes = () => {
@@ -68,6 +69,10 @@ export const routes: RouteObject[] = [
             {
                 path: 'admin',
                 element: <AdminRoutes />,
+                children: [
+                    { index: true, element: <AdminPage /> },
+                    { path: 'edit-parks', element: <EditParks /> },
+                ],
             },
             {
                 element: <ProtectedRoute />,

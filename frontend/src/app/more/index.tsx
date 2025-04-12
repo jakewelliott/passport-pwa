@@ -1,14 +1,5 @@
-import ListRow from '@/components/list-row';
 import { dbg } from '@/lib/debug';
-import { Link } from 'react-router-dom';
-
-const LinkRow = ({ to, label }: { to: string; label: string }) => (
-    <Link to={to} className='text-supporting_inactiveblue no-underline'>
-        <ListRow>
-            <h2 className='mx-4 my-6'>{label}</h2>
-        </ListRow>
-    </Link>
-);
+import { LinkRow } from '@/components/link-row';
 
 export default function More() {
     dbg('RENDER', '/more');
