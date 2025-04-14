@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Extensions;
 namespace DigitalPassportBackend.Domain.DTO;
 
 public record ParkIconDTO(
+    int id,
     string iconName,
     string? tooltip,
     int parkId)
@@ -10,6 +11,7 @@ public record ParkIconDTO(
     public static ParkIconDTO FromDomain(ParkIcon icon)
     {
         return new ParkIconDTO(
+            icon.id,
             icon.icon.GetDisplayName().Replace("_", "-"), 
             icon.tooltip,
             icon.parkId
@@ -20,7 +22,8 @@ public record ParkIconDTO(
     {
         return new()
         {
-            icon = Enum.Parse<ParkIconNames>(iconName),
+            id = id,
+            icon = Enum.Parse<ParkIconNames>(iconName.Replace("-", "_")),
             tooltip = tooltip,
             parkId = parkId,
             park = park

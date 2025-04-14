@@ -14,6 +14,8 @@ public class AdminService : IAdminService
     private readonly IParkIconRepository _parkIcons;
     private readonly IParkPhotoRepository _parkPhotos;
     private readonly IUserRepository _users;
+    private readonly ITrailRepository _trails;
+    private readonly ITrailIconRepository _trailIcons;
     private readonly IPasswordHasher _hasher;
 
     public AdminService(
@@ -23,6 +25,8 @@ public class AdminService : IAdminService
         IParkIconRepository parkIconRepository,
         IParkPhotoRepository parkPhotoRepository,
         IUserRepository userRepository,
+        ITrailRepository trailRepository,
+        ITrailIconRepository trailIconRepository,
         IPasswordHasher passwordHasher)
     {
         _locations = locationsRepository;
@@ -31,6 +35,8 @@ public class AdminService : IAdminService
         _parkIcons = parkIconRepository;
         _parkPhotos = parkPhotoRepository;
         _users = userRepository;
+        _trails = trailRepository;
+        _trailIcons = trailIconRepository;
         _hasher = passwordHasher;
     }
 
@@ -142,19 +148,33 @@ public class AdminService : IAdminService
     // Trails
     //
 
-    public void CreateTrail(Trail trail)
+    public void CreateTrail(Trail trail, List<TrailIcon> icons)
     {
+        if (_trails.GetByName(trail.trailName) is null)
+        {
+            throw new ServiceException(409, $"Trail with name '{trail.trailName}' already exists");
+        }
 
+        _trails.Create(trail);
+        icons.ForEach(i => _trailIcons.Create(i));
     }
 
-    public void UpdateTrail(Trail trail)
+    public void UpdateTrail(Trail trail, List<TrailIcon> icons)
     {
+        var t = _trails.GetByName(trail.trailName);
+        if (t is not null && t.id != trail.id)
+        {
+            throw new ServiceException(409, $"Trail with name '{trail.trailName}' already exists");
+        }
 
+        _trails.Update(trail);
+        SetValues(_trailIcons.GetByTrailId(trail.id), icons, _trailIcons);
     }
 
     public void DeleteTrail(int id)
     {
-
+        _trailIcons.GetByTrailId(id).ForEach(i => _trailIcons.Delete(i.id));
+        _trails.Delete(id);
     }
 
     //
@@ -180,13 +200,14 @@ public class AdminService : IAdminService
     // Helpers
     //
 
-    private void SetValues<T>(List<T> currentVals, List<T> newVals, IRepository<T> repo) where T : IEntity
+    private static void SetValues<T>(List<T> currentVals, List<T> newVals, IRepository<T> repo) where T : IEntity
     {
         // Delete difference.
         currentVals.Except(newVals)
             .ToList()
             .ForEach(v => repo.Delete(v.id));
         
+        // Create or update new values.
         foreach (var val in newVals)
         {
             try

@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Services;
-using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using DigitalPassportBackend.Errors;
 
@@ -63,7 +62,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     public IActionResult GetAllTrails()
     {
         return Ok(_locationsService.GetAllTrails()
-            .Select(t => TrailResponse.FromDomain(t, _locationsService.GetTrailIcons(t.id))));
+            .Select(t => TrailDTO.FromDomain(t, _locationsService.GetTrailIcons(t.id))));
     }
 
     [HttpPost("uploadGeoJson")]
@@ -84,29 +83,6 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         _locationsService.GetAll().ForEach(x => locations.Add(LocationGeoDataResponse.FromDomain(x)));
         return Ok(locations);
     }
-
-    public record TrailResponse(
-        int id,
-        string trailName,
-        string? distance,
-        string description,
-        List<TrailIconResponse> icons)
-    {
-        public static TrailResponse FromDomain(Trail trail, List<TrailIcon> icons)
-        {
-            return new(
-                trail.id,
-                trail.trailName,
-                distance: trail.length,
-                trail.description,
-                icons.Select(i => new TrailIconResponse(
-                    i.icon.GetDisplayName(),
-                    i.tooltip
-                )).ToList());
-        }
-    }
-
-    public record TrailIconResponse(string iconName, string? tooltip);
 
     public record LocationGeoDataResponse(
         int id,

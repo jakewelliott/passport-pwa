@@ -26,8 +26,8 @@ public interface IAdminService
     void DeleteBucketListItem(int id);
 
     // Trails
-    void CreateTrail(Trail trail);
-    void UpdateTrail(Trail trail);
+    void CreateTrail(Trail trail, List<TrailIcon> icons);
+    void UpdateTrail(Trail trail, List<TrailIcon> icons);
     void DeleteTrail(int id);
 
     // Users

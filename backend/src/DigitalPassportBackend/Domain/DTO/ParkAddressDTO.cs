@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Extensions;
 namespace DigitalPassportBackend.Domain.DTO;
 
 public record ParkAddressDTO(
+    int id,
     string title,
     string addressLineOne,
     string? addressLineTwo,
@@ -14,6 +15,7 @@ public record ParkAddressDTO(
     public static ParkAddressDTO FromDomain(ParkAddress address)
     {
         return new ParkAddressDTO(
+            address.id,
             address.title,
             address.addressLineOne,
             address.addressLineTwo,
@@ -27,6 +29,7 @@ public record ParkAddressDTO(
     {
         return new()
         {
+            id = id,
             title = title,
             addressLineOne = addressLineOne,
             addressLineTwo = addressLineTwo,

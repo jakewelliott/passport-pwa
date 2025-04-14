@@ -72,6 +72,33 @@ public class AdminController(IAdminService adminService) : ControllerBase
     }
 
     //
+    // Trails
+    //
+
+    [HttpPost("locations/trails")]
+    public IActionResult CreateTrail([FromBody] TrailDTO trail)
+    {
+        var t = trail.ToDomain(out var icons);
+        _adminService.CreateTrail(t, icons);
+        return Ok();
+    }
+
+    [HttpPut("locations/trails")]
+    public IActionResult UpdateTrail([FromBody] TrailDTO trail)
+    {
+        var t = trail.ToDomain(out var icons);
+        _adminService.UpdateTrail(t, icons);
+        return Ok();
+    }
+
+    [HttpDelete("locations/trails/{trailId}")]
+    public IActionResult DeleteTrail(int trailId)
+    {
+        _adminService.DeleteTrail(trailId);
+        return Ok();
+    }
+
+    //
     // Users
     //
 

@@ -1,6 +1,7 @@
 namespace DigitalPassportBackend.Domain.DTO;
 
 public record ParkPhotoDTO(
+    int id,
     string photoPath,
     string alt,
     int parkId)
@@ -8,6 +9,7 @@ public record ParkPhotoDTO(
     public static ParkPhotoDTO FromDomain(ParkPhoto photo)
     {
         return new ParkPhotoDTO(
+            photo.id,
             photo.photo,
             photo.alt,
             photo.parkId
@@ -18,6 +20,7 @@ public record ParkPhotoDTO(
     {
         return new()
         {
+            id = id,
             photo = photoPath,
             alt = alt,
             parkId = parkId,

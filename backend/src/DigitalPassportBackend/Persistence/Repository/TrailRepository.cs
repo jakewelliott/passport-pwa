@@ -49,4 +49,11 @@ public class TrailRepository(DigitalPassportDbContext digitalPassportDbContext) 
     {
         return [.. _digitalPassportDbContext.Trails];
     }
+
+    public Trail? GetByName(string name)
+    {
+        return _digitalPassportDbContext.Trails
+            .Where(t => t.trailName == name)
+            .FirstOrDefault();
+    }
 }
