@@ -13,6 +13,19 @@ public class AuthController(IAuthService authService) : ControllerBase
 
     private readonly IAuthService _authService = authService;
 
+    // Public Functionality
+    [HttpPost("register")]
+    public IActionResult Register([FromBody] LoginDto dto)
+    {
+        var user = new User
+        {
+            username = dto.username,
+            password = dto.password,
+            role = UserRole.visitor
+        };
+        return Ok(_authService.RegisterUser(user));
+    }
+
     [HttpGet]
     [Authorize]
     public IActionResult GetUserDetails()
@@ -29,34 +42,6 @@ public class AuthController(IAuthService authService) : ControllerBase
         return Ok(userDto);
     }
 
-    [HttpGet("{userId}")]
-    [Authorize(Roles = "admin")]
-    public IActionResult Get(int userId)
-    {
-        var user = _authService.GetUserById(userId);
-        var userDto = new UserDto
-        {
-            id = user.id,
-            username = user.username,
-            role = user.role.ToString(),
-            createdAt = user.createdAt.ToString(),
-            updatedAt = user.updatedAt.ToString()
-        };
-        return Ok(userDto);
-    }
-
-    [HttpPost("register")]
-    public IActionResult Register([FromBody] LoginDto dto)
-    {
-        var user = new User
-        {
-            username = dto.username,
-            password = dto.password,
-            role = UserRole.visitor
-        };
-        return Ok(_authService.RegisterUser(user));
-    }
-
     [HttpPost("login")]
     public IActionResult Login([FromBody] LoginDto dto)
     {
@@ -68,6 +53,8 @@ public class AuthController(IAuthService authService) : ControllerBase
         };
         return Ok(_authService.LoginUser(user));
     }
+
+    // Admin Functionality
 }
 
 public class LoginDto

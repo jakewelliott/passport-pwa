@@ -22,14 +22,6 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     // STAMPS
     //
 
-    [HttpGet("stamps/collected")]
-    [Authorize(Roles = "visitor")]
-    public IActionResult GetCollectedStamps()
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(_activityService.GetCollectedStamps(userId).Select(CollectedStampResponse.FromDomain).ToList());
-    }
-
     [HttpPost("stamps/{parkId}")]
     [Authorize(Roles = "visitor")]
     public IActionResult CollectStamp(
@@ -38,6 +30,92 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         return Ok(CollectStampResponse.FromDomain(_activityService.CollectStamp(parkId, userId, request.geopoint, request.method, request.dateTime)));
+    }
+
+    [HttpGet("stamps/collected")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult GetCollectedStamps()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(_activityService.GetCollectedStamps(userId).Select(CollectedStampResponse.FromDomain).ToList());
+    }
+
+    // 
+    // BUCKET LIST
+    //
+
+    [HttpPost("activity/bucketlist")]
+    [Authorize(Roles = "admin")]
+    public IActionResult CreateBucketListItem([FromBody] BucketListItemDTO item)
+    {
+        _activityService.CreateBucketListItem(item);
+        return Ok();
+    }
+
+    [HttpGet("bucketlist")]
+    public IActionResult GetBucketListItems()
+    {
+        var items = _activityService.GetBucketListItems();
+        return Ok(items.Select(BucketListItemResponse.FromDomain));
+    }
+
+    [HttpGet("bucketlist/completed")]
+    [Authorize(Roles = "visitor,admin")]
+    public IActionResult GetCompletedBucketListItems()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var items = _activityService.GetCompletedBucketListItems(userId);
+        return Ok(items.Select(CompletedBucketListItemResponse.FromDomain));
+    }
+
+    [HttpPost("bucketlist/{itemId}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.geopoint);
+        return Ok(CompletedBucketListItemResponse.FromDomain(result));
+    }
+
+    [HttpPut("activity/bucketlist/{bucketListId}")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdateBucketListItem([FromBody] BucketListItemDTO item)
+    {
+        _activityService.UpdateBucketListItem(item);
+        return Ok();
+    }
+
+    [HttpDelete("activity/bucketlist/{bucketListId}")]
+    public IActionResult DeleteBucketListItem(int bucketListId)
+    {
+        _activityService.DeleteBucketListItem(bucketListId);
+        return Ok();
+    }
+    
+    //
+    // PARK VISITS
+    //
+
+    [HttpPost("visit/{parkId}")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult VisitPark(int parkId, [FromBody] VisitParkRequest req)
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(ParkVisitResponse.FromDomain(_activityService.VisitPark(userId, parkId, req.geopoint)));
+    }
+
+    [HttpGet("visit")]
+    [Authorize(Roles = "visitor")]
+    public IActionResult GetVisitedParks()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        var result = _activityService.GetParkVisits(userId).Select(i => new
+        {
+            id = i.id,
+            createdAt = i.createdAt,
+            parkId = i.parkId,
+        });
+        return Ok(result);
     }
 
     //
@@ -68,95 +146,9 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(_activityService.GetNotes(userId).Select(PrivateNoteResponse.FromDomain).ToList());
     }
 
-    // 
-    // BUCKET LIST
-    //
-
-    [HttpPost("activity/bucketlist")]
-    [Authorize(Roles = "admin")]
-    public IActionResult CreateBucketListItem([FromBody] BucketListItemDTO item)
-    {
-        _activityService.CreateBucketListItem(item);
-        return Ok();
-    }
-
-    [HttpPut("activity/bucketlist/{bucketListId}")]
-    [Authorize(Roles = "admin")]
-    public IActionResult UpdateBucketListItem([FromBody] BucketListItemDTO item)
-    {
-        _activityService.UpdateBucketListItem(item);
-        return Ok();
-    }
-
-    [HttpDelete("activity/bucketlist/{bucketListId}")]
-    public IActionResult DeleteBucketListItem(int bucketListId)
-    {
-        _activityService.DeleteBucketListItem(bucketListId);
-        return Ok();
-    }
-
-    [HttpGet("bucketlist")]
-    public IActionResult GetBucketListItems()
-    {
-        var items = _activityService.GetBucketListItems();
-        return Ok(items.Select(BucketListItemResponse.FromDomain));
-    }
-
-    [HttpGet("bucketlist/completed")]
-    [Authorize(Roles = "visitor,admin")]
-    public IActionResult GetCompletedBucketListItems()
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var items = _activityService.GetCompletedBucketListItems(userId);
-        return Ok(items.Select(CompletedBucketListItemResponse.FromDomain));
-    }
-
-    [HttpPost("bucketlist/{itemId}")]
-    [Authorize(Roles = "visitor")]
-    public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.geopoint);
-        return Ok(CompletedBucketListItemResponse.FromDomain(result));
-    }
-
-    //
-    // PARK VISITS
-    //
-
-    [HttpGet("visit")]
-    [Authorize(Roles = "visitor")]
-    public IActionResult GetVisitedParks()
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        var result = _activityService.GetParkVisits(userId).Select(i => new
-        {
-            id = i.id,
-            createdAt = i.createdAt,
-            parkId = i.parkId,
-        });
-        return Ok(result);
-    }
-
-    [HttpPost("visit/{parkId}")]
-    [Authorize(Roles = "visitor")]
-    public IActionResult VisitPark(int parkId, [FromBody] VisitParkRequest req)
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(ParkVisitResponse.FromDomain(_activityService.VisitPark(userId, parkId, req.geopoint)));
-    }
-
     //
     // FAVORITE PARKS
     //
-
-    [HttpGet("parks/favorites")]
-    [Authorize(Roles = "visitor,admin")]
-    public IActionResult GetFavoriteParks()
-    {
-        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
-        return Ok(_activityService.GetFavoriteParks(userId));
-    }
 
     [HttpPost("parks/favorites/{parkId}")]
     [Authorize(Roles = "visitor,admin")]
@@ -165,6 +157,14 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         _activityService.AddFavoritePark(userId, parkId);
         return Ok();
+    }
+
+    [HttpGet("parks/favorites")]
+    [Authorize(Roles = "visitor,admin")]
+    public IActionResult GetFavoriteParks()
+    {
+        var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
+        return Ok(_activityService.GetFavoriteParks(userId));
     }
 
     [HttpDelete("parks/favorites/{parkId}")]
@@ -195,7 +195,6 @@ public class ActivityController(IActivityService activityService) : ControllerBa
             );
         }
     }
-
     
     public record ToggleBucketListItemCompletionRequest(Geopoint geopoint)
     {}
