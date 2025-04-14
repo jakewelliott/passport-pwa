@@ -35,6 +35,7 @@ export const API_FAVORITE_PARKS_URL = `${API_URL}/activity/parks/favorites`;
 export const API_PARKS_URL = `${API_URL}/locations`;
 export const API_TRAILS_URL = `${API_URL}/locations/trails`;
 export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
+export const API_UPLOADGEO_URL = `${API_URL}/locations/uploadGeoJson`
 
 // notes
 export const API_NOTES_URL = `${API_URL}/activity/notes`;
