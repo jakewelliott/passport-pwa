@@ -9,6 +9,15 @@ public class BucketListItemRepository(DigitalPassportDbContext digitalPassportDb
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public BucketListItem Create(BucketListItem entity)
+    {
+        _digitalPassportDbContext.BucketListItems.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public List<BucketListItem> GetByLocationId(int locationId)
     {
         return _digitalPassportDbContext.BucketListItems.Where(b => b.parkId.Equals(locationId)).ToList();
@@ -29,14 +38,12 @@ public class BucketListItemRepository(DigitalPassportDbContext digitalPassportDb
         return result;
     }
 
-    public BucketListItem Delete(int id)
+    public int Count()
     {
-        var result = GetById(id);
-        _digitalPassportDbContext.BucketListItems.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
+        return _digitalPassportDbContext.BucketListItems.Count();
     }
 
+    // UPDATE
     public BucketListItem Update(BucketListItem entity)
     {
         var existingItem = GetById(entity.id);
@@ -45,15 +52,12 @@ public class BucketListItemRepository(DigitalPassportDbContext digitalPassportDb
         return existingItem;
     }
 
-    public int Count()
+    // DELETE
+    public BucketListItem Delete(int id)
     {
-        return _digitalPassportDbContext.BucketListItems.Count();
-    }
-
-    public BucketListItem Create(BucketListItem entity)
-    {
-        _digitalPassportDbContext.BucketListItems.Add(entity);
+        var result = GetById(id);
+        _digitalPassportDbContext.BucketListItems.Remove(result);
         _digitalPassportDbContext.SaveChanges();
-        return entity;
+        return result;
     }
 }

@@ -7,6 +7,15 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public CompletedBucketListItem Create(CompletedBucketListItem entity)
+    {
+        _digitalPassportDbContext.CompletedBucketListItems.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public CompletedBucketListItem GetById(int id)
     {
         var result = _digitalPassportDbContext.CompletedBucketListItems.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -15,34 +24,6 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
             throw new NotFoundException($"Completed Bucket List Item not found with id {id}");
         }
         return result;
-    }
-
-    public CompletedBucketListItem Delete(int id)
-    {
-        var result = GetById(id);
-        _digitalPassportDbContext.CompletedBucketListItems.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
-    }
-
-    public CompletedBucketListItem Update(CompletedBucketListItem entity)
-    {
-        var existingItem = GetById(entity.id);
-        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return existingItem;
-    }
-
-    public int Count()
-    {
-        return _digitalPassportDbContext.CompletedBucketListItems.Count();
-    }
-
-    public CompletedBucketListItem Create(CompletedBucketListItem entity)
-    {
-        _digitalPassportDbContext.CompletedBucketListItems.Add(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return entity;
     }
 
     public List<CompletedBucketListItem> GetByParkAndUser(int locationId, int userId)
@@ -58,5 +39,28 @@ public class CompletedBucketListItemRepository(DigitalPassportDbContext digitalP
     public CompletedBucketListItem? GetByItemAndUser(int itemId, int userId)
     {
         return _digitalPassportDbContext.CompletedBucketListItems.Where(s => s.bucketListItemId == itemId && s.userId == userId).SingleOrDefault();
+    }
+
+    // UPDATE
+    public CompletedBucketListItem Update(CompletedBucketListItem entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.CompletedBucketListItems.Count();
+    }
+
+    // DELETE
+    public CompletedBucketListItem Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.CompletedBucketListItems.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
     }
 }

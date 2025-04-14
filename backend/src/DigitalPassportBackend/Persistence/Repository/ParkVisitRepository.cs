@@ -7,6 +7,15 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public ParkVisit Create(ParkVisit entity)
+    {
+        _digitalPassportDbContext.ParkVisits.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public ParkVisit GetById(int id)
     {
         var result = _digitalPassportDbContext.ParkVisits.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -15,34 +24,6 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
             throw new NotFoundException($"Park Visit not found with id {id}");
         }
         return result;
-    }
-
-    public ParkVisit Delete(int id)
-    {
-        var result = GetById(id);
-        _digitalPassportDbContext.ParkVisits.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
-    }
-
-    public ParkVisit Update(ParkVisit entity)
-    {
-        var existingItem = GetById(entity.id);
-        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return existingItem;
-    }
-
-    public int Count()
-    {
-        return _digitalPassportDbContext.ParkVisits.Count();
-    }
-
-    public ParkVisit Create(ParkVisit entity)
-    {
-        _digitalPassportDbContext.ParkVisits.Add(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return entity;
     }
 
     public List<ParkVisit> GetByParkAndUser(int locationId, int userId)
@@ -63,5 +44,28 @@ public class ParkVisitRepository(DigitalPassportDbContext digitalPassportDbConte
         return _digitalPassportDbContext.ParkVisits
             .Where(v => v.userId == userId && v.parkId == parkId && v.createdAt.Date == DateTime.Today)
             .FirstOrDefault();
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.ParkVisits.Count();
+    }
+
+    // UPDATE
+    public ParkVisit Update(ParkVisit entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+    
+    // DELETE
+    public ParkVisit Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.ParkVisits.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
     }
 }

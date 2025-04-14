@@ -7,6 +7,15 @@ public class ParkIconRepository(DigitalPassportDbContext digitalPassportDbContex
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public ParkIcon Create(ParkIcon entity)
+    {
+        _digitalPassportDbContext.ParkIcons.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public ParkIcon GetById(int id)
     {
         var result = _digitalPassportDbContext.ParkIcons.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -17,20 +26,17 @@ public class ParkIconRepository(DigitalPassportDbContext digitalPassportDbContex
         return result;
     }
 
-
     public List<ParkIcon> GetByLocationId(int locationId)
     {
         return _digitalPassportDbContext.ParkIcons.Where(a => a.parkId.Equals(locationId)).ToList();
     }
 
-    public ParkIcon Delete(int id)
+    public int Count()
     {
-        var result = GetById(id);
-        _digitalPassportDbContext.ParkIcons.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
+        return _digitalPassportDbContext.ParkIcons.Count();
     }
 
+    // UPDATE
     public ParkIcon Update(ParkIcon entity)
     {
         var existingItem = GetById(entity.id);
@@ -39,15 +45,12 @@ public class ParkIconRepository(DigitalPassportDbContext digitalPassportDbContex
         return existingItem;
     }
 
-    public int Count()
+    // DELETE
+    public ParkIcon Delete(int id)
     {
-        return _digitalPassportDbContext.ParkIcons.Count();
-    }
-
-    public ParkIcon Create(ParkIcon entity)
-    {
-        _digitalPassportDbContext.ParkIcons.Add(entity);
+        var result = GetById(id);
+        _digitalPassportDbContext.ParkIcons.Remove(result);
         _digitalPassportDbContext.SaveChanges();
-        return entity;
+        return result;
     }
 }

@@ -5,7 +5,13 @@ namespace DigitalPassportBackend.Persistence.Repository;
 
 public interface ILocationsRepository : IRepository<Park>
 {
-    List<Park> GetAll();
+    // CREATE
 
+    // READ
+    List<Park> GetAll();
     Park GetByAbbreviation(string abbreviation);
+
+    // UPDATE
+
+    // DELETE
 }

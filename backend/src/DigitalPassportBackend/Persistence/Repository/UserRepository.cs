@@ -7,6 +7,15 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public User Create(User entity)
+    {
+        _digitalPassportDbContext.Users.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public User GetById(int id)
     {
         var result = _digitalPassportDbContext.Users.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -27,14 +36,12 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
         return result;
     }
 
-    public User Delete(int id)
+    public int Count()
     {
-        var result = GetById(id);
-        _digitalPassportDbContext.Users.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
+        return _digitalPassportDbContext.Users.Count();
     }
 
+    // UPDATE
     public User Update(User entity)
     {
         var existingItem = GetById(entity.id);
@@ -43,16 +50,12 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
         return existingItem;
     }
 
-    public int Count()
+    // DELETE
+    public User Delete(int id)
     {
-        return _digitalPassportDbContext.Users.Count();
-    }
-
-    public User Create(User entity)
-    {
-        _digitalPassportDbContext.Users.Add(entity);
+        var result = GetById(id);
+        _digitalPassportDbContext.Users.Remove(result);
         _digitalPassportDbContext.SaveChanges();
-        return entity;
+        return result;
     }
-
 }
