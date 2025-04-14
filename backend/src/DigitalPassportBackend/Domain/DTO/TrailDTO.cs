@@ -31,7 +31,7 @@ public record TrailDTO(
         };
 
         icons = [.. this.icons
-            .Select(i => TrailIconDTO.ToDomain(trail))];
+            .Select(i => i.ToDomain(trail))];
         
         return trail;
     }
