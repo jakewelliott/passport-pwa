@@ -76,12 +76,61 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(_locationsService.UploadGeoJson(file));
     }
 
+    [HttpPost("locations")]
+    [Authorize(Roles = "admin")]
+    public IActionResult CreatePark([FromBody] ParkDTO park)
+    {
+        var p = park.ToDomain(0, out var addrs, out var icons, out var blItems, out var photos);
+        _locationsService.CreatePark(p, addrs, icons, blItems, photos);
+        return Ok();
+    }
+
+    [HttpPut("locations/{parkId}")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdatePark(int parkId, [FromBody] ParkDTO park)
+    {
+        var p = park.ToDomain(parkId, out var addrs, out var icons, out var blItems, out var photos);
+        _locationsService.UpdatePark(p, addrs, icons, blItems, photos);
+        return Ok();
+    }
+
+    [HttpDelete("locations/{parkId}")]
+    [Authorize(Roles = "admin")]
+    public IActionResult DeletePark(int parkId)
+    {
+        _locationsService.DeletePark(parkId);
+        return Ok();
+    }
+
     [HttpGet("geo")]
     public IActionResult GetGeoData()
     {
         List<LocationGeoDataResponse> locations = new List<LocationGeoDataResponse>();
         _locationsService.GetAll().ForEach(x => locations.Add(LocationGeoDataResponse.FromDomain(x)));
         return Ok(locations);
+    }
+
+    [HttpPost("locations/trails")]
+    public IActionResult CreateTrail([FromBody] TrailDTO trail)
+    {
+        var t = trail.ToDomain(out var icons);
+        _locationsService.CreateTrail(t, icons);
+        return Ok();
+    }
+
+    [HttpPut("locations/trails")]
+    public IActionResult UpdateTrail([FromBody] TrailDTO trail)
+    {
+        var t = trail.ToDomain(out var icons);
+        _locationsService.UpdateTrail(t, icons);
+        return Ok();
+    }
+
+    [HttpDelete("locations/trails/{trailId}")]
+    public IActionResult DeleteTrail(int trailId)
+    {
+        _locationsService.DeleteTrail(trailId);
+        return Ok();
     }
 
     public record LocationGeoDataResponse(

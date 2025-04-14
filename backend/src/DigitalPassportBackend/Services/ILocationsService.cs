@@ -1,20 +1,58 @@
 
 using DigitalPassportBackend.Domain;
 
-
 namespace DigitalPassportBackend.Services;
 
 public interface ILocationsService
 {
-    List<ParkAddress> GetAddressesByLocationId(int id);
-    List<Park> GetAll();
+    // Parks
+    public void CreatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos);
 
-    List<BucketListItem> GetBucketListItemsByLocationId(int id);
-    Park GetByAbbreviation(string locationAbbrev);
-    List<ParkIcon> GetIconsByLocationId(int id);
-    List<ParkPhoto> GetParkPhotosByLocationId(int id);
-    string UploadGeoJson(IFormFile file);
-    Park GetById(int id);
-    List<Trail> GetAllTrails();
-    List<TrailIcon> GetTrailIcons(int trailId);
+    public List<Park> GetAll();
+
+    public Park GetById(int id);
+
+    public Park GetByAbbreviation(string locationAbbrev);
+
+    public void UpdatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos);
+
+    public void DeletePark(int id);
+
+    // Park Addresses
+    public List<ParkAddress> GetAddressesByLocationId(int id);
+
+    // Park Icons
+    public List<ParkIcon> GetIconsByLocationId(int id);
+
+    // Park Photos
+    public List<ParkPhoto> GetParkPhotosByLocationId(int id);
+
+    // Trails
+    public void CreateTrail(Trail trail, List<TrailIcon> icons);
+
+    public List<Trail> GetAllTrails();
+
+    public void UpdateTrail(Trail trail, List<TrailIcon> icons);
+
+    public void DeleteTrail(int id);
+
+    // Trail Icons
+    public List<TrailIcon> GetTrailIcons(int trailId);
+
+    // Bucket List
+    public List<BucketListItem> GetBucketListItemsByLocationId(int id);
+
+    // General
+    public string UploadGeoJson(IFormFile file);
+
 }

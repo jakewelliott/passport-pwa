@@ -1,4 +1,5 @@
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 
@@ -29,6 +30,7 @@ public class ActivityService(
     private readonly ILocationsRepository _locationsRepository = locationsRepository;
     private readonly IUserRepository _userRepository = userRepository;
 
+    // Stamps
     public CollectedStamp CollectStamp(
         int parkId,
         int userId,
@@ -84,41 +86,6 @@ public class ActivityService(
         return _collectedStampRepository.GetByUser(userId);
     }
 
-    public PrivateNote CreateUpdatePrivateNote(int userId, int parkId, string note, DateTime updatedAt)
-    {
-        // Check if there is already a note in the database.
-        var locationId = parkId == 0 ? 0 : _locationsRepository.GetById(parkId).id;
-				// TODO: handle the case with an invalid parkId??
-        var privateNote = _privateNoteRepository.GetByParkAndUser(userId, locationId);
-        if (privateNote != null)
-        {
-            // Update it
-            privateNote.note = note;
-            privateNote.updatedAt = updatedAt;
-            return _privateNoteRepository.Update(privateNote);
-        }
-        else
-        {
-            // Create it
-            return _privateNoteRepository.Create(new()
-            {
-                note = note,
-                user = _userRepository.GetById(userId),
-                userId = userId,
-                park = locationId == 0 ? null : _locationsRepository.GetById(locationId),
-                parkId = locationId == 0 ? null : locationId,
-                createdAt = updatedAt,
-                updatedAt = updatedAt
-            });
-        }
-    }
-
-    public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
-    {
-        return [.. _completedBucketListItemRepository.GetByUser(userId)
-            .Where(i => !i.deleted)];
-    }
-
     private static CollectedStamp CreateStamp(
         Point location,
         StampCollectionMethod method,
@@ -136,9 +103,21 @@ public class ActivityService(
         };
     }
 
+    // Bucket List
+    public void CreateBucketListItem(BucketListItemDTO item)
+    {
+        _bucketListItemRepository.Create(item.ToDomain(_locationsRepository.GetById(item.parkId)));
+    }
+
     public List<BucketListItem> GetBucketListItems()
     {
         return _bucketListItemRepository.GetAll();
+    }
+
+    public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
+    {
+        return [.. _completedBucketListItemRepository.GetByUser(userId)
+            .Where(i => !i.deleted)];
     }
 
     public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, Geopoint geopoint)
@@ -169,7 +148,18 @@ public class ActivityService(
             });
         }
     }
+    
+    public void UpdateBucketListItem(BucketListItemDTO item)
+    {
+        _bucketListItemRepository.Update(item.ToDomain(_locationsRepository.GetById(item.parkId)));
+    }
 
+    public void DeleteBucketListItem(int id)
+    {
+        _bucketListItemRepository.Delete(id);
+    }
+
+    // Park Visit
     public ParkVisit VisitPark(int userId, int parkId, Geopoint geopoint)
     {
         var park = _locationsRepository.GetById(parkId);
@@ -194,6 +184,7 @@ public class ActivityService(
         return _parkVisitRepository.GetAllByUser(userId);
     }
 
+    // Private Notes
     public PrivateNote GetParkNote(int userId, int parkId)
     {
         var note = _privateNoteRepository.GetByParkAndUser(userId, parkId);
@@ -226,12 +217,36 @@ public class ActivityService(
             .ToList();
     }
 
-    public List<int> GetFavoriteParks(int userId)
+    public PrivateNote CreateUpdatePrivateNote(int userId, int parkId, string note, DateTime updatedAt)
     {
-        return [.. _favoriteParkRepository.GetByUser(userId)
-            .Select(f => (int)f.parkId!)];
+        // Check if there is already a note in the database.
+        var locationId = parkId == 0 ? 0 : _locationsRepository.GetById(parkId).id;
+				// TODO: handle the case with an invalid parkId??
+        var privateNote = _privateNoteRepository.GetByParkAndUser(userId, locationId);
+        if (privateNote != null)
+        {
+            // Update it
+            privateNote.note = note;
+            privateNote.updatedAt = updatedAt;
+            return _privateNoteRepository.Update(privateNote);
+        }
+        else
+        {
+            // Create it
+            return _privateNoteRepository.Create(new()
+            {
+                note = note,
+                user = _userRepository.GetById(userId),
+                userId = userId,
+                park = locationId == 0 ? null : _locationsRepository.GetById(locationId),
+                parkId = locationId == 0 ? null : locationId,
+                createdAt = updatedAt,
+                updatedAt = updatedAt
+            });
+        }
     }
 
+    // Favorite parks
     public void AddFavoritePark(int userId, int parkId)
     {
         if (_favoriteParkRepository.GetByUserAndPark(userId, parkId) is null)
@@ -244,6 +259,12 @@ public class ActivityService(
                 user = _userRepository.GetById(userId)
             });
         }
+    }
+
+    public List<int> GetFavoriteParks(int userId)
+    {
+        return [.. _favoriteParkRepository.GetByUser(userId)
+            .Select(f => (int)f.parkId!)];
     }
 
     public void DeleteFavoritePark(int userId, int parkId)

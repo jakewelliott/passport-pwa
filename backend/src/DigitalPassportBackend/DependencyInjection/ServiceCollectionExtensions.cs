@@ -23,7 +23,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<ILocationsService, LocationsService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IActivityService, ActivityService>();
-        services.AddScoped<IAdminService, AdminService>();
 
         return services;
     }

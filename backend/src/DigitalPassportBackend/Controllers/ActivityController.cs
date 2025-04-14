@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using NetTopologySuite.Geometries;
 using NetTopologySuite.Index.HPRtree;
+using DigitalPassportBackend.Domain.DTO;
 
 namespace DigitalPassportBackend.Controllers;
 
@@ -70,6 +71,29 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     // 
     // BUCKET LIST
     //
+
+    [HttpPost("activity/bucketlist")]
+    [Authorize(Roles = "admin")]
+    public IActionResult CreateBucketListItem([FromBody] BucketListItemDTO item)
+    {
+        _activityService.CreateBucketListItem(item);
+        return Ok();
+    }
+
+    [HttpPut("activity/bucketlist/{bucketListId}")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdateBucketListItem([FromBody] BucketListItemDTO item)
+    {
+        _activityService.UpdateBucketListItem(item);
+        return Ok();
+    }
+
+    [HttpDelete("activity/bucketlist/{bucketListId}")]
+    public IActionResult DeleteBucketListItem(int bucketListId)
+    {
+        _activityService.DeleteBucketListItem(bucketListId);
+        return Ok();
+    }
 
     [HttpGet("bucketlist")]
     public IActionResult GetBucketListItems()
