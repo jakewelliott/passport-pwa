@@ -3,6 +3,7 @@ using Moq;
 using DigitalPassportBackend.Controllers;
 using DigitalPassportBackend.Services;
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 using static DigitalPassportBackend.Controllers.LocationsController;
 using DigitalPassportBackend.Errors;
@@ -37,12 +38,12 @@ public class LocationsControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result0);
-        Assert.IsType<LocationResponse>(okResult.Value);
-        Assert.True(Response.Equal(TestData.Parks[0], (LocationResponse) okResult.Value));
+        Assert.IsType<ParkDTO>(okResult.Value);
+        Assert.True(Response.Equal(TestData.Parks[0], (ParkDTO) okResult.Value));
 
         okResult = Assert.IsType<OkObjectResult>(result1);
-        Assert.IsType<LocationResponse>(okResult.Value);
-        Assert.True(Response.Equal(TestData.Parks[1], (LocationResponse) okResult.Value));
+        Assert.IsType<ParkDTO>(okResult.Value);
+        Assert.True(Response.Equal(TestData.Parks[1], (ParkDTO) okResult.Value));
     }
 
     [Fact]
@@ -74,7 +75,7 @@ public class LocationsControllerTests
 
         // Assert.
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var list = Assert.IsType<List<LocationResponse>>(okResult.Value)!;
+        var list = Assert.IsType<List<ParkDTO>>(okResult.Value)!;
         Assert.Equal(2, list.Count);
         Assert.True(Response.Equal(TestData.Parks[0], list[0]));
         Assert.True(Response.Equal(TestData.Parks[1], list[1]));
@@ -92,7 +93,7 @@ public class LocationsControllerTests
 
         // Assert
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var returnedLocations = Assert.IsType<List<LocationResponse>>(okResult.Value);
+        var returnedLocations = Assert.IsType<List<ParkDTO>>(okResult.Value);
         Assert.Empty(returnedLocations);
     }
 
@@ -112,15 +113,19 @@ public class LocationsControllerTests
 
         // Assert.
         var okResult = Assert.IsType<OkObjectResult>(result);
-        var list = Assert.IsAssignableFrom<IEnumerable<TrailResponse>>(okResult.Value);
+        var list = Assert.IsAssignableFrom<IEnumerable<TrailDTO>>(okResult.Value);
 
         int counter = 0;
         foreach (var trail in list) {
-            List<TrailIconResponse> iconResponses = new List<TrailIconResponse> { 
-                new TrailIconResponse( TestData.TrailIcons[counter].icon.GetDisplayName(), null ) 
+            List<TrailIconDTO> iconDTOs = new List<TrailIconDTO> { 
+                new TrailIconDTO( 
+                    TestData.TrailIcons[counter].id, 
+                    TestData.TrailIcons[counter].icon.GetDisplayName(), 
+                    null 
+                ) 
              };
 
-            Assert.True(Response.Equal(iconResponses, TestData.Trails[counter], trail));
+            Assert.True(Response.Equal(iconDTOs, TestData.Trails[counter], trail));
             counter++;
         }
     }
