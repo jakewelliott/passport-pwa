@@ -11,13 +11,16 @@ namespace DigitalPassportBackend.Domain;
 public class ParkVisit : IEntity
 {
     public int id { get; init; }
-    public Point location { get; set; }
+    
     [Column("created_at")]
     public DateTime createdAt { get; set; } = DateTime.UtcNow;
     [Column("updated_at")]
     public DateTime updatedAt { get; set; } = DateTime.UtcNow;
 
-		[Required]
+    [Column("geopoint")]
+    public required Geopoint geopoint { get; set; }
+
+	[Required]
     [Column("park")]
     public int parkId { get; set; }
 
@@ -25,10 +28,10 @@ public class ParkVisit : IEntity
     [Column("user")]
     public int userId { get; set; }
 
-		[ForeignKey("userId")]
+	[ForeignKey("userId")]
     public User? user { get; set; }
 
-		[ForeignKey("parkId")]
+	[ForeignKey("parkId")]
     public Park? park { get; set; }
 
 }

@@ -254,7 +254,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new()
             {
                 id = 2,
-                location = new(-77.91170363932008, 34.049634772933764),
+                geopoint = new(-77.91170363932008, 34.049634772933764),
                 createdAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
                 updatedAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
                 parkId = Parks[0].id,
@@ -265,7 +265,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new() 
             {
                 id = 8,
-                location = new(-77.91337795281648, 34.048151829889015),
+                geopoint = new(-77.91337795281648, 34.048151829889015),
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
@@ -276,7 +276,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new()
             {
                 id = 10,
-                location = new(-77.91898744059975, 34.049526734928435),
+                geopoint = new(-77.91898744059975, 34.049526734928435),
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow,
                 parkId = Parks[0].id,
@@ -287,7 +287,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils
             new()
             {
                 id = 13,
-                location = new(-78.67421773821357, 35.772011241494404),
+                geopoint = new(-78.67421773821357, 35.772011241494404),
                 createdAt = DateTime.UtcNow,
                 updatedAt = DateTime.UtcNow,
                 parkId = Parks[1].id,

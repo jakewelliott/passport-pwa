@@ -653,7 +653,7 @@ namespace DigitalPassportBackend.UnitTests.Controllers
             var visit = new ParkVisit()
             {
                 id = 6,
-                location = new(req.geopoint.latitude, req.geopoint.longitude),
+                geopoint = new(req.geopoint.latitude, req.geopoint.longitude),
                 createdAt = DateTime.Now,
                 updatedAt = DateTime.Now,
                 parkId = park.id,

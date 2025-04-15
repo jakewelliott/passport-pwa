@@ -452,7 +452,7 @@ namespace DigitalPassportBackend.UnitTests.Services
                 new(-77.90287736056217, 34.04499810618092, 0.005));
 
             // Assert.
-            Assert.Equal(TestData.ParkVisits[1].location, result.location);
+            Assert.Equal(TestData.ParkVisits[1].geopoint, result.location);
             Assert.Equal(TestData.ParkVisits[1].createdAt, result.createdAt);
             Assert.Equal(TestData.ParkVisits[1].parkId, result.parkId);
             Assert.Equal(TestData.ParkVisits[1].park, result.park);

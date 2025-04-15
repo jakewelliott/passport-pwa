@@ -31,7 +31,7 @@ public class ParkVisitsService : IParkVisitsService
         return _parkVisitRepository.GetParkVisitToday(userId, park.id)
             ?? _parkVisitRepository.Create(new()
         {
-            location = userLocation,
+            geopoint = userLocation,
             createdAt = DateTime.Now,
             updatedAt = DateTime.Now,
             parkId = park.id,

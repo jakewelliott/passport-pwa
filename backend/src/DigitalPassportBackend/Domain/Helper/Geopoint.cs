@@ -1,0 +1,1 @@
+public record Geopoint(double latitude, double longitude, double inaccuracyRadius);

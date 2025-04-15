@@ -95,7 +95,7 @@ public class ParkVisitRepositoryTests
         ParkVisit newVisit = new ParkVisit()
         {
             id = 20,
-            location = new(-77.91170363932008, 34.049634772933764),
+            geopoint = new(-77.91170363932008, 34.049634772933764),
             createdAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
             updatedAt = DateTime.UtcNow - new TimeSpan(4, 0, 0, 0),
             parkId = TestData.Parks[0].id,
