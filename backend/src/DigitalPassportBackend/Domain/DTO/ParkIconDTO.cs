@@ -12,6 +12,7 @@ public record ParkIconDTO(
     {
         return new ParkIconDTO(
             icon.id,
+            // TODO: do we need to do this or can we just store the name with hyphens?
             icon.icon.GetDisplayName().Replace("_", "-"), 
             icon.tooltip,
             icon.parkId
@@ -23,6 +24,7 @@ public record ParkIconDTO(
         return new()
         {
             id = id,
+            // TODO: do we need to do this or can we just store the name with hyphens?
             icon = Enum.Parse<ParkIconNames>(iconName.Replace("-", "_")),
             tooltip = tooltip,
             parkId = parkId,

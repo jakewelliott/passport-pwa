@@ -7,7 +7,11 @@ public record BucketListItemDTO(
 {
     public static BucketListItemDTO FromDomain(BucketListItem bucketListItem)
     {
-        return new BucketListItemDTO(bucketListItem.id, bucketListItem.task, bucketListItem.parkId!.Value);
+        return new(
+            id: bucketListItem.id,
+            task: bucketListItem.task,
+            parkId: bucketListItem.parkId ?? 0
+        );
     }
 
     public BucketListItem ToDomain(Park park)

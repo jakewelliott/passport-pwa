@@ -9,16 +9,16 @@ public record ParkPhotoDTO(
     public static ParkPhotoDTO FromDomain(ParkPhoto photo)
     {
         return new ParkPhotoDTO(
-            photo.id,
-            photo.photo,
-            photo.alt,
-            photo.parkId
+            id: photo.id,
+            photoPath: photo.photo,
+            alt: photo.alt,
+            parkId: photo.parkId
         );
     }
 
     public ParkPhoto ToDomain(Park park)
     {
-        return new()
+        return new ParkPhoto()
         {
             id = id,
             photo = photoPath,

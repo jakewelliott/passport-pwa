@@ -11,13 +11,19 @@ public record TrailDTO(
 {
     public static TrailDTO FromDomain(Trail trail, List<TrailIcon> icons)
     {
+        var trailIcons = new List<TrailIconDTO>();
+        foreach (var icon in icons)
+        {
+            trailIcons.Add(TrailIconDTO.FromDomain(icon));
+        }
+
         return new(
-            trail.id,
-            trail.trailName,
+            id: trail.id,
+            trailName: trail.trailName,
             distance: trail.length,
-            trail.description,
-            [.. icons.Select(TrailIconDTO.FromDomain)]
-            );
+            description: trail.description,
+            icons: trailIcons
+        );
     }
 
     public Trail ToDomain(out List<TrailIcon> icons)
@@ -27,12 +33,19 @@ public record TrailDTO(
             id = id,
             trailName = trailName,
             length = distance,
-            description = description
+            description = description,
+            Icons = new List<TrailIcon>()
         };
 
-        icons = [.. this.icons
-            .Select(i => i.ToDomain(trail))];
-        
+        icons = [];
+        foreach (var icon in this.icons)
+        {
+            icons.Add(icon.ToDomain(trail));
+        }
+
+        // ADAM: gotta do this bc TrailIconDTO relies on Trail
+        trail.Icons = icons;
+
         return trail;
     }
 }
