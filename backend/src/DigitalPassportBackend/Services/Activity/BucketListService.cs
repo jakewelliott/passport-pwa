@@ -25,6 +25,11 @@ public class BucketListService
         return _bucketListItemRepository.GetAll();
     }
 
+    public List<BucketListItem> GetByParkId(int parkId)
+    {
+        return _bucketListItemRepository.GetByParkId(parkId);
+    }
+
     public List<CompletedBucketListItem> GetCompleted(int userId)
     {
         return [.. _completedBucketListItemRepository.GetByUser(userId)
