@@ -1,7 +1,9 @@
+import { useUser } from '@/hooks/queries/useUser';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { dbg } from '@/lib/debug';
 import { FaChevronLeft } from 'react-icons/fa6';
 import { useNavigate } from 'react-router-dom';
-import { ManualStampButton } from './header-menu-button';
+import { HeaderMenuButton } from './header-menu-button';
 
 export const BackButton = ({ hidden }: { hidden: boolean }) => {
     const navigate = useNavigate();
@@ -15,7 +17,9 @@ export const BackButton = ({ hidden }: { hidden: boolean }) => {
 };
 
 const Header = () => {
+    dbg('RENDER', '<Header>');
     const { pageTitle, showBackButton } = usePageTitle();
+    const { isLoggedIn } = useUser();
 
     return (
         <header
@@ -29,7 +33,7 @@ const Header = () => {
             )}
             <h4 className='text-system_white'>{pageTitle}</h4>
             <div className='absolute right-4' data-testid='balance-placeholder'>
-                {pageTitle === 'Park Details' && <ManualStampButton />}
+                {isLoggedIn && <HeaderMenuButton />}
             </div>
         </header>
     );

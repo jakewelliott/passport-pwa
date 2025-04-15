@@ -3,11 +3,12 @@
 exports[`SuperAdmin Button > matches snapshot 1`] = `
 <div>
   <button
-    class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
+    class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+    style="min-width: 128px;"
     type="button"
   >
     <p
-      class="button-text text-system_white"
+      class="text-system_white button-text"
     >
       SUPERADMIN
     </p>

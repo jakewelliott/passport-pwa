@@ -1,8 +1,11 @@
+import { LinkRow } from '@/components/link-row';
+import ListRow from '@/components/list-row';
 import { dbg } from '@/lib/debug';
 import { API_UPLOADGEO_URL, fetchPost } from '@/lib/fetch';
 
 export const AdminPage = () => {
     dbg('RENDER', 'AdminPage');
+
     return (
         <div>
             <div className='flex flex-col gap-3.5' data-testid='more-list'>

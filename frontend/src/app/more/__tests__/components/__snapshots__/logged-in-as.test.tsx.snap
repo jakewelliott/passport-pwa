@@ -5,7 +5,7 @@ exports[`LoggedInAs > matches snapshot 1`] = `
   <div
     class="text-center"
   >
-    You are currently logged in as 'superAdmin'
+    You are currently logged in as 'testUser'
     <br />
     <button
       class="link"

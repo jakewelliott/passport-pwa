@@ -6,17 +6,28 @@ import { Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ScrollToTop from './components/scroll-to-top';
+import { useUser } from './hooks/queries/useUser';
 
-const Content = () => (
-    <main className='mb-16 flex-1 overflow-y-scroll p-4'>
-        <Outlet />
-        <ScrollToTop />
-    </main>
-);
+const Content = () => {
+    dbg('RENDER', 'Content');
+    const { isLoggedIn } = useUser();
+
+    if (!isLoggedIn) return <Outlet />;
+
+    dbg('RENDER', 'Content', 'with borders');
+    return (
+        <main className='mb-16 flex-1 overflow-y-scroll p-4'>
+            <Outlet />
+            <ScrollToTop />
+        </main>
+    );
+};
 
 const App = () => {
     dbg('RENDER', 'App.tsx');
+
     const { SplashScreen } = useSplashScreen();
+
     return (
         <div className='fixed inset-0 flex flex-col'>
             <Header />

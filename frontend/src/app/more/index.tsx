@@ -1,16 +1,8 @@
-import ListRow from '@/components/list-row';
-import { Link } from 'react-router-dom';
-import { LoggedInAs } from './components/logged-in-as';
-
-const LinkRow = ({ to, label }: { to: string; label: string }) => (
-    <Link to={to} className='text-supporting_inactiveblue no-underline'>
-        <ListRow>
-            <h2 className='mx-4 my-6'>{label}</h2>
-        </ListRow>
-    </Link>
-);
+import { dbg } from '@/lib/debug';
+import { LinkRow } from '@/components/link-row';
 
 export default function More() {
+    dbg('RENDER', '/more');
     return (
         <div className='flex flex-col gap-3.5' data-testid='more-list'>
             <LinkRow to={'/more/trails'} label='Trails' />
@@ -20,8 +12,8 @@ export default function More() {
             <LinkRow to={'/more/staying-safe'} label='Staying Safe' />
             <LinkRow to={'/more/hiking-essentials'} label='Hiking Essentials' />
             <LinkRow to={'/more/icon-legend'} label='Icon Legend' />
+            <LinkRow to={'/more/my-profile'} label='My Profile' />
             <LinkRow to={'/more/app-info'} label='App Info' />
-            <LoggedInAs />
         </div>
     );
 }

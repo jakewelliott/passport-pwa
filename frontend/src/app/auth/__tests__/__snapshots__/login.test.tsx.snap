@@ -3,20 +3,20 @@
 exports[`LoginPage > matches snapshot 1`] = `
 <div>
   <div
-    class="flex min-h-screen w-full items-center justify-center bg-center bg-cover bg-no-repeat"
+    class="flex h-full items-center justify-center bg-center bg-cover bg-no-repeat p-12"
     style="background-image: url(/photos/SILA-BackCover.jpg);"
   >
     <form
-      class="m-auto flex max-w-96 flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8"
+      class="flex flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8"
     >
       <input
-        class="w-80 rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
+        class="w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
         name="username"
         placeholder="Username"
         type="text"
       />
       <input
-        class="w-80 rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
+        class="w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
         name="password"
         placeholder="Password"
         type="password"
@@ -39,32 +39,35 @@ exports[`LoginPage > matches snapshot 1`] = `
         class="flex flex-row gap-4"
       >
         <button
-          class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
+          class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+          style="min-width: 128px;"
           type="button"
         >
           <p
-            class="button-text text-system_white"
+            class="text-system_white button-text"
           >
             Register
           </p>
         </button>
         <button
-          class="bg-secondary_orange flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
+          class="bg-secondary_orange flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+          style="min-width: 128px;"
           type="submit"
         >
           <p
-            class="button-text text-system_white"
+            class="text-system_white button-text"
           >
             Login
           </p>
         </button>
       </div>
       <button
-        class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
+        class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+        style="min-width: 128px;"
         type="button"
       >
         <p
-          class="button-text text-system_white"
+          class="text-system_white button-text"
         >
           SUPERADMIN
         </p>

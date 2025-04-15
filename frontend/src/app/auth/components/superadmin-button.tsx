@@ -2,6 +2,7 @@ import RoundedButton from '@/components/rounded-button';
 import { useLogin } from '@/hooks/auth/useLogin';
 import { PRODUCTION, dbg } from '@/lib/debug';
 
+// TODO: make these use VITE_ env vars, see fetch.ts
 const username = process.env.ADMIN_USER || '';
 const password = process.env.ADMIN_PASS || '';
 

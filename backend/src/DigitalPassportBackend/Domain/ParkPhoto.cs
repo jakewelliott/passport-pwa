@@ -20,4 +20,15 @@ public class ParkPhoto : IEntity
     [Column("park")]
     public int parkId { get; set; }
     public required Park park { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is ParkPhoto o
+            && o.GetHashCode() == GetHashCode();
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(photo, alt, park);
+    }
 }

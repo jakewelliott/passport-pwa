@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Services;
-using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using DigitalPassportBackend.Errors;
 
@@ -11,8 +11,36 @@ namespace DigitalPassportBackend.Controllers;
 [Route("/api/locations")]
 public class LocationsController(ILocationsService locationsService) : ControllerBase
 {
-
     private readonly ILocationsService _locationsService = locationsService;
+
+    // Parks
+    [HttpPost()]
+    [Authorize(Roles = "admin")]
+    public IActionResult CreatePark([FromBody] ParkDTO park)
+    {
+        var p = park.ToDomain(0, out var addrs, out var icons, out var blItems, out var photos);
+        _locationsService.CreatePark(p, addrs, icons, blItems, photos);
+        return Ok();
+    }
+
+    [HttpGet()]
+    public IActionResult GetAll()
+    {
+        // invoking the use case
+        List<ParkDTO> parks = new List<ParkDTO>();
+        var locations = _locationsService.GetAll();
+        foreach (var location in locations)
+        {
+            var addresses = _locationsService.GetAddressesByLocationId(location.id);
+            var icons = _locationsService.GetIconsByLocationId(location.id);
+            var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
+            var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
+            var locationDataResponse = ParkDTO.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
+            parks.Add(locationDataResponse);
+        }
+        // return 200 ok
+        return Ok(parks);
+    }
 
     [HttpGet("{locationAbbrev}")]
     public IActionResult Get(string locationAbbrev)
@@ -35,46 +63,9 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         var icons = _locationsService.GetIconsByLocationId(location.id);
         var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
         var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
-        var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
+        var locationDataResponse = ParkDTO.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
         // return 200 ok
         return Ok(locationDataResponse);
-    }
-
-    [HttpGet()]
-    public IActionResult GetAll()
-    {
-        // invoking the use case
-        List<LocationResponse> parks = new List<LocationResponse>();
-        var locations = _locationsService.GetAll();
-        foreach (var location in locations)
-        {
-            var addresses = _locationsService.GetAddressesByLocationId(location.id);
-            var icons = _locationsService.GetIconsByLocationId(location.id);
-            var bucketListItems = _locationsService.GetBucketListItemsByLocationId(location.id);
-            var parkPhotos = _locationsService.GetParkPhotosByLocationId(location.id);
-            var locationDataResponse = LocationResponse.FromDomain(location, addresses, icons, bucketListItems, parkPhotos);
-            parks.Add(locationDataResponse);
-        }
-        // return 200 ok
-        return Ok(parks);
-    }
-
-    [HttpGet("trails")]
-    public IActionResult GetAllTrails()
-    {
-        return Ok(_locationsService.GetAllTrails()
-            .Select(t => TrailResponse.FromDomain(t, _locationsService.GetTrailIcons(t.id))));
-    }
-
-    [HttpPost("uploadGeoJson")]
-    [Authorize(Roles = "admin")]
-    public IActionResult UploadGeoJson(IFormFile file)
-    {
-        if (file == null || file.ContentType != "application/json")
-        {
-            throw new ServiceException(StatusCodes.Status415UnsupportedMediaType, "You must upload a GeoJson file (ends in .json).");
-        }
-        return Ok(_locationsService.UploadGeoJson(file));
     }
 
     [HttpGet("geo")]
@@ -85,153 +76,65 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(locations);
     }
 
-    public record AddressResponse(string title, string addressLineOne, string? addressLineTwo, string city, string state, int zipcode)
+    [HttpPut("{parkId}")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UpdatePark(int parkId, [FromBody] ParkDTO park)
     {
-        public static AddressResponse FromDomain(ParkAddress address)
-        {
-            return new AddressResponse(
-                address.title,
-                address.addressLineOne,
-                address.addressLineTwo,
-                address.city,
-                address.state.GetDisplayName(),
-                address.zipcode
-            );
-        }
+        var p = park.ToDomain(parkId, out var addrs, out var icons, out var blItems, out var photos);
+        _locationsService.UpdatePark(p, addrs, icons, blItems, photos);
+        return Ok();
     }
 
-    public record IconResponse(string iconName, string? tooltip)
+    [HttpDelete("{parkId}")]
+    [Authorize(Roles = "admin")]
+    public IActionResult DeletePark(int parkId)
     {
-        public static IconResponse FromDomain(ParkIcon icon)
-        {
-            return new IconResponse(
-                icon.icon.GetDisplayName().Replace("_", "-"), 
-                icon.tooltip
-            );
-        }
+        _locationsService.DeletePark(parkId);
+        return Ok();
     }
 
-    public record BucketListItemResponse(int id,string task)
+    // Trails
+    [HttpPost("trails")]
+    public IActionResult CreateTrail([FromBody] TrailDTO trail)
     {
-        public static BucketListItemResponse FromDomain(BucketListItem bucketListItem)
-        {
-            return new BucketListItemResponse(bucketListItem.id, bucketListItem.task);
-        }
+        var t = trail.ToDomain(out var icons);
+        _locationsService.CreateTrail(t, icons);
+        return Ok();
     }
 
-    public record PhotosResponse(string photoPath, string alt)
+    [HttpGet("trails")]
+    public IActionResult GetAllTrails()
     {
-        public static PhotosResponse FromDomain(ParkPhoto photo)
-        {
-            return new PhotosResponse(
-                photo.photo,
-                photo.alt
-            );
-        }
+        return Ok(_locationsService.GetAllTrails()
+            .Select(t => TrailDTO.FromDomain(t, _locationsService.GetTrailIcons(t.id))));
     }
 
-    public record LocationResponse(
-        int id,
-        string abbreviation,
-        string parkName,
-        object coordinates,
-        long? phone,
-        string? email,
-        string? establishedYear,
-        string? landmark,
-        string? youCanFind,
-        string? trails,
-        string website,
-        string stampImage,
-        string accesses,
-        AddressResponse[] addresses,
-        IconResponse[] icons,
-        BucketListItemResponse[] bucketListItems,
-        PhotosResponse[] photos)
+    [HttpPut("trails")]
+    public IActionResult UpdateTrail([FromBody] TrailDTO trail)
     {
-        public static LocationResponse FromDomain(
-            Park location,
-            List<ParkAddress> locationAddresses,
-            List<ParkIcon> locationIcons,
-            List<BucketListItem> locationBucketListItems,
-            List<ParkPhoto> locationPhotos
-        )
-        {
-            var addressesArray = new List<AddressResponse>();
-            foreach (ParkAddress addy in locationAddresses)
-            {
-                addressesArray.Add(AddressResponse.FromDomain(addy));
-            }
-
-            var iconsArray = new List<IconResponse>();
-            foreach (ParkIcon newIcon in locationIcons)
-            {
-                iconsArray.Add(IconResponse.FromDomain(newIcon));
-            }
-
-            var bucketListItemsArray = new List<BucketListItemResponse>();
-            foreach (BucketListItem newBLI in locationBucketListItems)
-            {
-                bucketListItemsArray.Add(BucketListItemResponse.FromDomain(newBLI));
-            }
-
-            var photosArray = new List<PhotosResponse>();
-            foreach (ParkPhoto newPhoto in locationPhotos)
-            {
-                photosArray.Add(PhotosResponse.FromDomain(newPhoto));
-            }
-
-            var lonLatObject = new
-            {
-                longitude = location.coordinates == null ? 0 : location.coordinates.X,
-                latitude = location.coordinates == null ? 0 : location.coordinates.Y
-            };
-
-            return new LocationResponse(
-                location.id,
-                location.parkAbbreviation,
-                location.parkName,
-                lonLatObject,
-                location.phone,
-                location.email,
-                location.establishedYear,
-                location.landmark,
-                location.youCanFind,
-                location.trails,
-                location.website,
-                string.IsNullOrEmpty(location.stampImage) ? "" : location.stampImage,
-                string.IsNullOrEmpty(location.accesses) ? "" : location.accesses,
-                addressesArray.ToArray(),
-                iconsArray.ToArray(),
-                bucketListItemsArray.ToArray(),
-                photosArray.ToArray()
-            );
-        }
-
-    };
-
-    public record TrailResponse(
-        int id,
-        string trailName,
-        string? distance,
-        string description,
-        List<TrailIconResponse> icons)
-    {
-        public static TrailResponse FromDomain(Trail trail, List<TrailIcon> icons)
-        {
-            return new(
-                trail.id,
-                trail.trailName,
-                distance: trail.length,
-                trail.description,
-                icons.Select(i => new TrailIconResponse(
-                    i.icon.GetDisplayName(),
-                    i.tooltip
-                )).ToList());
-        }
+        var t = trail.ToDomain(out var icons);
+        _locationsService.UpdateTrail(t, icons);
+        return Ok();
     }
 
-    public record TrailIconResponse(string iconName, string? tooltip);
+    [HttpDelete("trails/{trailId}")]
+    public IActionResult DeleteTrail(int trailId)
+    {
+        _locationsService.DeleteTrail(trailId);
+        return Ok();
+    }
+
+    // General
+    [HttpPost("uploadGeoJson")]
+    [Authorize(Roles = "admin")]
+    public IActionResult UploadGeoJson(IFormFile file)
+    {
+        if (file == null || file.ContentType != "application/json")
+        {
+            throw new ServiceException(StatusCodes.Status415UnsupportedMediaType, "You must upload a GeoJson file (ends in .json).");
+        }
+        return Ok(_locationsService.UploadGeoJson(file));
+    }
 
     public record LocationGeoDataResponse(
         int id,

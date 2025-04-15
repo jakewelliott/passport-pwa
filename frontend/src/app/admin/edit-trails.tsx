@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from 'react';
 
 const EditTrails = () => {
     const { data: trails } = useTrails();
-
     const [editedTrails, setEditedTrails] = useState<Trail[]>([]);
     const [allTrails, setAllTrails] = useState<Trail[]>(trails || []);
     const [selectedIcon, setSelectedIcon] = useState<{ icon: TrailIcon; trailId: number }[]>([]);

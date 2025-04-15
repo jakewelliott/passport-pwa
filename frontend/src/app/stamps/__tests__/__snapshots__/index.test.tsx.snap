@@ -3,41 +3,41 @@
 exports[`Stamps > matches snapshot 1`] = `
 <div>
   <div
-    class="relative mx-3 mt-3 flex gap-2"
+    class="flex flex-col gap-2"
   >
     <div
-      class="relative flex-1"
+      class="relative flex gap-2"
     >
-      <input
-        class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
-        placeholder="Search parks..."
-        type="text"
-        value=""
-      />
-    </div>
-    <button
-      class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
-      style="display: inline;"
-      type="button"
-    >
-      <svg
-        fill="currentColor"
-        height="1em"
-        stroke="currentColor"
-        stroke-width="0"
-        viewBox="0 0 512 512"
-        width="1em"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="relative flex-1"
       >
-        <path
-          d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+        <input
+          class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+          placeholder="Search parks..."
+          type="text"
+          value=""
         />
-      </svg>
-    </button>
-  </div>
-  <div
-    class="px-4 py-4"
-  >
+      </div>
+      <button
+        class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
+        style="display: inline;"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+          />
+        </svg>
+      </button>
+    </div>
     <div
       class="grid grid-cols-3 gap-4"
       data-testid="stamps-grid"

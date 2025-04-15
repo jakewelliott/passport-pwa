@@ -51,3 +51,15 @@ npm run database
 ```
 
 
+# FOR JAKE 4/9/2025
+
+i had to run these commmands to get docker to work:
+
+```bash
+docker system prune -a --volumes
+docker-compose build --no-cache frontend
+docker-compose up
+```
+
+also i was reading about pwas and sw and we should use this:
+https://www.webpagetest.org/

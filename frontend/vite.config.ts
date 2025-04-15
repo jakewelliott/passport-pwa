@@ -9,21 +9,9 @@ export default defineConfig(({ command, mode }) => {
     const pemDirectory = isProduction ? '.' : '..';
     const env = loadEnv(mode, `${process.cwd()}/${pemDirectory}`, '');
     return {
-        plugins: [
-            react(),
-            {
-                name: 'terminal-logger',
-                configureServer(server) {
-                    // Expose terminal write function to client
-                    server.ws.on('terminal:log', (data) => {
-                        process.stdout.write(`${data.message}\n`);
-                    });
-                },
-            },
-        ],
+        plugins: [react()],
         define: {
             'process.env': env,
-            'process.env.PROD': JSON.stringify(isProduction ? 'PROD' : 'DEV'),
         },
         resolve: {
             alias: {
@@ -52,9 +40,14 @@ export default defineConfig(({ command, mode }) => {
                     'src/App.tsx',
                     'src/main.tsx',
                     'src/routes.tsx',
-                    'src/lib/testing/',
-                    'src/lib/tanstack-local-storage.tsx',
-                    'src/lib/a11y.ts',
+                    'src/lib/**',
+                    'src/hooks/auth/**',
+                    'src/hooks/useLocation.ts',
+                    'src/components/edit-**',
+                    'src/components/bucket-**',
+                    'src/components/sort-filter.tsx',
+                    'src/components/form-field.tsx',
+                    'src/components/header-menu-button.tsx',
                 ],
             },
             include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],

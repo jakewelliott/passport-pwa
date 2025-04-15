@@ -60,7 +60,16 @@ describe('ImageModal', () => {
         render(<ImageModal photo={mockPhoto} onClose={mockOnClose} />);
 
         const modal = screen.getByTestId('transform-wrapper').parentElement;
-        expect(modal).toHaveClass('relative', 'flex', 'h-full', 'w-full', 'items-center', 'justify-center', 'bg-system_black', 'bg-opacity-0');
+        expect(modal).toHaveClass(
+            'relative',
+            'flex',
+            'h-full',
+            'w-full',
+            'items-center',
+            'justify-center',
+            'bg-system_black',
+            'bg-opacity-0',
+        );
 
         const closeButton = screen.getByText('×');
         expect(closeButton).toHaveClass(

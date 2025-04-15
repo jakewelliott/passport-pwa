@@ -3,10 +3,10 @@
 exports[`Component Snapshots > AppInfo renders correctly 1`] = `
 <div>
   <div
-    class="mx-auto max-w-[500px]"
+    class="flex flex-col gap-4"
   >
     <div
-      class="my-3.5"
+      class="mb-3.5"
     >
       <div
         class="flex h-2/4 flex-col items-center justify-center"
@@ -31,29 +31,20 @@ exports[`Component Snapshots > AppInfo renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="p-4"
+      class="flex-col"
     >
       <div
-        class="bg-supporting_inactiveblue p-2 text-center text-system_white"
+        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-supporting_inactiveblue"
       >
         <h3>
           CONTACT US
         </h3>
       </div>
       <div
-        class="space-y-2 bg-supporting_lightblue p-2.5 text-center"
+        class="p-4 bg-supporting_lightblue flex flex-col gap-3"
       >
-        <div>
-          <a
-            class="text-supporting_inactiveblue no-underline"
-            data-discover="true"
-            href="/www.ncparks.gov"
-          >
-            www.ncparks.gov
-          </a>
-        </div>
         <div
-          class="flex justify-center gap-3"
+          class="flex flex-row justify-center gap-3"
         >
           <a
             class="flex h-8 w-8 items-center justify-center rounded-full bg-supporting_inactiveblue"
@@ -113,6 +104,13 @@ exports[`Component Snapshots > AppInfo renders correctly 1`] = `
             </svg>
           </a>
         </div>
+        <a
+          class="text-center text-supporting_inactiveblue"
+          data-discover="true"
+          href="/www.ncparks.gov"
+        >
+          www.ncparks.gov
+        </a>
         <p
           class="space-y-1"
         >
@@ -139,20 +137,20 @@ exports[`Component Snapshots > AppInfo renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="p-4"
+      class="flex-col"
     >
       <div
-        class="bg-secondary_orange p-2 text-center text-system_white"
+        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-secondary_orange"
       >
         <h3>
           DOWNLOAD PARK MAPS
         </h3>
       </div>
       <div
-        class="flex items-center bg-supporting_lightorange p-2.5"
+        class="p-4 bg-supporting_lightorange"
       >
         <div
-          class="-ml-8 float-left"
+          class="-ml-6 float-left mt-6"
         >
           <svg
             fill="currentColor"
@@ -180,27 +178,30 @@ exports[`Component Snapshots > AppInfo renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="p-4"
+      class="flex-col"
     >
       <div
-        class="mb-3 flex items-center"
+        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-main_green"
       >
-        <img
-          alt=""
-          class="mr-2 h-[50px] w-[50px]"
-          src="/icons/misc/Camping.png"
-        />
+        <h3>
+          MAKE A RESERVATION
+        </h3>
+      </div>
+      <div
+        class="p-4 bg-supporting_green"
+      >
         <div
-          class="flex w-full flex-col justify-center"
+          class="flex flex-col items-center gap-2"
         >
-          <h4
-            class="pb-1 text-center text-main_green"
-          >
-            MAKE A RESERVATION
-          </h4>
           <div
-            class="flex flex-wrap items-center justify-between gap-2"
+            class="flex w-full flex-row items-center gap-2"
           >
+            <img
+              alt="picnic"
+              height="36px"
+              src="/icons/misc/Picnic.svg"
+              width="36px"
+            />
             <a
               class="p-mini"
               href="https://www.ncparks.gov/reservations"
@@ -213,21 +214,22 @@ exports[`Component Snapshots > AppInfo renders correctly 1`] = `
               1-877-722-6762
             </p>
           </div>
+          <div
+            class="flex w-full flex-row items-center gap-2"
+          >
+            <img
+              alt="campsite"
+              height="36px"
+              src="/icons/misc/Camping.svg"
+              width="36px"
+            />
+            <p
+              class="p-mini"
+            >
+              Reserve campsites, picnic shelters and other park facilities online or over the phone.
+            </p>
+          </div>
         </div>
-      </div>
-      <div
-        class="mt-3 flex items-center"
-      >
-        <img
-          alt=""
-          class="mr-2 h-[50px] w-[50px]"
-          src="/icons/misc/PicnicShelter.png"
-        />
-        <p
-          class="p-mini"
-        >
-          Reserve campsites, picnic shelters and other park facilities online or over the phone.
-        </p>
       </div>
     </div>
   </div>
@@ -236,24 +238,20 @@ exports[`Component Snapshots > AppInfo renders correctly 1`] = `
 
 exports[`Component Snapshots > Header renders correctly 1`] = `
 <div>
-  <div
-    class="fixed top-0 right-0 left-0 z-50"
+  <header
+    class="static top-0 flex w-full items-center justify-center bg-secondary_darkteal p-4"
+    style="height: 50px;"
   >
-    <header
-      class="relative flex items-center justify-center bg-secondary_darkteal p-4"
-      style="height: 50px;"
+    <h4
+      class="text-system_white"
     >
-      <h4
-        class="text-system_white"
-      >
-        NC Parks Passport
-      </h4>
-      <div
-        class="absolute right-4 w-[70px] bg-red-500"
-        data-testid="balance-placeholder"
-      />
-    </header>
-  </div>
+      NC Parks Passport
+    </h4>
+    <div
+      class="absolute right-4"
+      data-testid="balance-placeholder"
+    />
+  </header>
 </div>
 `;
 
@@ -337,11 +335,12 @@ exports[`Component Snapshots > LoadingPlaceholder renders correctly 1`] = `
 exports[`Component Snapshots > RoundedButton renders correctly 1`] = `
 <div>
   <button
-    class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center min-w-32 p-4 rounded-full"
+    class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+    style="min-width: 128px;"
     type="button"
   >
     <p
-      class="button-text text-system_white"
+      class="text-system_white button-text"
     >
       Test Button
     </p>
@@ -381,91 +380,6 @@ exports[`Component Snapshots > SplashScreen renders correctly 1`] = `
 </div>
 `;
 
-exports[`Component Snapshots > TabBar renders correctly 1`] = `
-<div>
-  <nav
-    class="fixed right-0 bottom-0 left-0 bg-secondary_darkteal"
-  >
-    <ul
-      class="flex h-16 items-center justify-around"
-    >
-      <li>
-        <a
-          data-discover="true"
-          href="/locations"
-          style="text-decoration: none;"
-        >
-          <div
-            class="flex flex-col items-center p-2 text-supporting_inactiveblue"
-          >
-            <svg
-              fill="none"
-              height="24px"
-              stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              width="24px"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M3 7l6 -3l6 3l6 -3v13l-6 3l-6 -3l-6 3v-13"
-              />
-              <path
-                d="M9 4v13"
-              />
-              <path
-                d="M15 7v13"
-              />
-            </svg>
-            <span
-              class="p-mini"
-            >
-              Locations
-            </span>
-          </div>
-        </a>
-      </li>
-      <li>
-        <a
-          data-discover="true"
-          href="/more"
-          style="text-decoration: none;"
-        >
-          <div
-            class="flex flex-col items-center p-2 text-supporting_inactiveblue"
-          >
-            <svg
-              fill="currentColor"
-              height="24px"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="24px"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
-              />
-            </svg>
-            <span
-              class="p-mini"
-            >
-              More
-            </span>
-          </div>
-        </a>
-      </li>
-    </ul>
-  </nav>
-</div>
-`;
-
 exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
 <div>
   <div
@@ -491,7 +405,6 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
       </div>
       <div
         class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
-        style="z-index: 9999;"
       >
         4WD Beach Access
       </div>
@@ -516,7 +429,6 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
       </div>
       <div
         class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
-        style="z-index: 9999;"
       >
         Accessible Facilities
       </div>
@@ -541,7 +453,6 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
       </div>
       <div
         class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
-        style="z-index: 9999;"
       >
         Amphitheater
       </div>
@@ -566,7 +477,6 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
       </div>
       <div
         class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
-        style="z-index: 9999;"
       >
         Backpack Camping
       </div>
@@ -591,7 +501,6 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
       </div>
       <div
         class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
-        style="z-index: 9999;"
       >
         Bathhouse
       </div>
@@ -603,16 +512,48 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
 exports[`Route Snapshots > /locations matches snapshot 1`] = `
 <div>
   <div
-    data-testid="locations-list"
+    class="relative flex flex-col gap-4"
   >
     <div
-      class="m-3"
+      class="relative flex gap-2"
+    >
+      <div
+        class="relative flex-1"
+      >
+        <input
+          class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+          placeholder="Search parks..."
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
+        style="display: inline;"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
       data-testid="park"
     >
       <a
         class="text-supporting_inactiveblue no-underline"
         data-discover="true"
-        href="/locations/CHRO"
+        href="/locations/CABE"
       >
         <div
           class="flex items-center bg-supporting_lightblue p-3 shadow-md"
@@ -622,17 +563,16 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
             class="flex flex-col gap-1"
           >
             <h3>
-              Chimney Rock State Park
+              Carolina Beach State Park
             </h3>
             <p>
-              Chimney Rock, NC
+              Carolina Beach, NC
             </p>
           </div>
         </div>
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -658,7 +598,31 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
+      data-testid="park"
+    >
+      <a
+        class="text-supporting_inactiveblue no-underline"
+        data-discover="true"
+        href="/locations/CHRO"
+      >
+        <div
+          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          style="border-radius: 15px;"
+        >
+          <div
+            class="flex flex-col gap-1"
+          >
+            <h3>
+              Chimney Rock State Park
+            </h3>
+            <p>
+              Chimney Rock, NC
+            </p>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div
       data-testid="park"
     >
       <a
@@ -684,7 +648,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -710,7 +673,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -736,7 +698,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -762,7 +723,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -788,7 +748,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -814,7 +773,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -840,7 +798,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -866,7 +823,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -892,7 +848,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -918,7 +873,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -944,7 +898,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -970,7 +923,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -996,7 +948,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1022,7 +973,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1048,7 +998,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1074,7 +1023,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1100,7 +1048,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1126,7 +1073,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1152,7 +1098,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1178,7 +1123,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1204,7 +1148,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1230,7 +1173,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1256,7 +1198,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1282,7 +1223,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1308,7 +1248,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1334,7 +1273,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1360,7 +1298,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1386,7 +1323,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1412,7 +1348,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1438,7 +1373,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1464,7 +1398,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1490,7 +1423,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1516,7 +1448,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1542,7 +1473,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1568,7 +1498,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1594,7 +1523,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1620,7 +1548,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1646,7 +1573,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       </a>
     </div>
     <div
-      class="m-3"
       data-testid="park"
     >
       <a
@@ -1671,32 +1597,6 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
         </div>
       </a>
     </div>
-    <div
-      class="m-3"
-      data-testid="park"
-    >
-      <a
-        class="text-supporting_inactiveblue no-underline"
-        data-discover="true"
-        href="/locations/CABE"
-      >
-        <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
-          style="border-radius: 15px;"
-        >
-          <div
-            class="flex flex-col gap-1"
-          >
-            <h3>
-              Carolina Beach State Park
-            </h3>
-            <p>
-              Carolina Beach, NC
-            </p>
-          </div>
-        </div>
-      </a>
-    </div>
   </div>
 </div>
 `;
@@ -1704,7 +1604,7 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
 exports[`Route Snapshots > /more matches snapshot 1`] = `
 <div>
   <div
-    class="mx-4 my-4 flex flex-col gap-3.5"
+    class="flex flex-col gap-3.5"
     data-testid="more-list"
   >
     <a
@@ -1838,7 +1738,7 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
     <div
       class="text-center"
     >
-      You are currently logged in as 'superAdmin'
+      You are currently logged in as 'testUser'
       <br />
       <button
         class="link"
@@ -1854,8 +1754,41 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
 exports[`Route Snapshots > /stamps matches snapshot 1`] = `
 <div>
   <div
-    class="px-4 py-4"
+    class="flex flex-col gap-2"
   >
+    <div
+      class="relative flex gap-2"
+    >
+      <div
+        class="relative flex-1"
+      >
+        <input
+          class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+          placeholder="Search parks..."
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
+        style="display: inline;"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+          />
+        </svg>
+      </button>
+    </div>
     <div
       class="grid grid-cols-3 gap-4"
       data-testid="stamps-grid"

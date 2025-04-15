@@ -7,6 +7,15 @@ public class TrailIconRepository(DigitalPassportDbContext digitalPassportDbConte
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public TrailIcon Create(TrailIcon entity)
+    {
+        _digitalPassportDbContext.TrailIcons.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public TrailIcon GetById(int id)
     {
         var result = _digitalPassportDbContext.TrailIcons.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -17,14 +26,18 @@ public class TrailIconRepository(DigitalPassportDbContext digitalPassportDbConte
         return result;
     }
 
-    public TrailIcon Delete(int id)
+    public List<TrailIcon> GetByTrailId(int trailId)
     {
-        var result = GetById(id);
-        _digitalPassportDbContext.TrailIcons.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
+        return [.. _digitalPassportDbContext.TrailIcons
+            .Where(i => i.trailId == trailId)];
     }
 
+    public int Count()
+    {
+        return _digitalPassportDbContext.TrailIcons.Count();
+    }
+
+    // UPDATE
     public TrailIcon Update(TrailIcon entity)
     {
         var existingItem = GetById(entity.id);
@@ -33,21 +46,12 @@ public class TrailIconRepository(DigitalPassportDbContext digitalPassportDbConte
         return existingItem;
     }
 
-    public int Count()
+    // DELETE
+    public TrailIcon Delete(int id)
     {
-        return _digitalPassportDbContext.TrailIcons.Count();
-    }
-
-    public TrailIcon Create(TrailIcon entity)
-    {
-        _digitalPassportDbContext.TrailIcons.Add(entity);
+        var result = GetById(id);
+        _digitalPassportDbContext.TrailIcons.Remove(result);
         _digitalPassportDbContext.SaveChanges();
-        return entity;
-    }
-
-    public List<TrailIcon> GetByTrailId(int trailId)
-    {
-        return [.. _digitalPassportDbContext.TrailIcons
-            .Where(i => i.trailId == trailId)];
+        return result;
     }
 }

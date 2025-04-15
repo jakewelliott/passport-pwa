@@ -2,7 +2,6 @@ import {
     BLAZE_ICONS,
     BLUE_ICONS,
     GREEN_ICONS,
-    type PARK_ICONS,
     type PassportIcon,
     RED_ICONS,
     TRAIL_ICONS,
@@ -18,12 +17,12 @@ interface IconSection {
     icons: IconWithExtraText[];
 }
 
-type IconName = (typeof PARK_ICONS)[number]['iconName'];
+// type IconName = (typeof PARK_ICONS)[number]['iconName'];
 
-const EXTRA_TEXT: Partial<Record<IconName, string>> = {
-    'RVCamping-Green':
-        '*has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups',
-};
+// const EXTRA_TEXT: Partial<Record<IconName, string>> = {
+//     'RVCamping-Green':
+//         '*has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups',
+// };
 
 const textHelper = (icon: PassportIcon) => ({
     ...icon,

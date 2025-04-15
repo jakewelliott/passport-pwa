@@ -30,1353 +30,1533 @@ exports[`Bucket List > matches snapshot 1`] = `
       </p>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Find a venus flytrap
+          </p>
         </div>
-        <p>
-          Find a venus flytrap
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Visit the Rockefeller House
+          </p>
         </div>
-        <p>
-          Visit the Rockefeller House
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike to the top
+          </p>
         </div>
-        <p>
-          Hike to the top
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Swim in the spring-fed lake
+          </p>
         </div>
-        <p>
-          Swim in the spring-fed lake
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Admire the view from the Pinnacle
+          </p>
         </div>
-        <p>
-          Admire the view from the Pinnacle
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike to the burn scar area
+          </p>
         </div>
-        <p>
-          Hike to the burn scar area
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike to the summit for an almost 360-degree view of up to 80 miles
+          </p>
         </div>
-        <p>
-          Hike to the summit for an almost 360-degree view of up to 80 miles
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Cross the cable-hung footbridge on the Cox Mountain Trail
+          </p>
         </div>
-        <p>
-          Cross the cable-hung footbridge on the Cox Mountain Trail
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Spot a bald eagle soaring and hunting along the shores
+          </p>
         </div>
-        <p>
-          Spot a bald eagle soaring and hunting along the shores
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Drive down the four-wheel-drive beach
+          </p>
         </div>
-        <p>
-          Drive down the four-wheel-drive beach
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            See a cannon firing demonstration
+          </p>
         </div>
-        <p>
-          See a cannon firing demonstration
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Walk the Live Oak Trail
+          </p>
         </div>
-        <p>
-          Walk the Live Oak Trail
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Observe the view at the Overlook
+          </p>
         </div>
-        <p>
-          Observe the view at the Overlook
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Find a Canadian hemlock tree
+          </p>
         </div>
-        <p>
-          Find a Canadian hemlock tree
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Paddle to Bear Island and explore the undeveloped island
+          </p>
         </div>
-        <p>
-          Paddle to Bear Island and explore the undeveloped island
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Visit the Lower Cascades Falls
+          </p>
         </div>
-        <p>
-          Visit the Lower Cascades Falls
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Stroll the wetlands at The Summit at dusk
+          </p>
         </div>
-        <p>
-          Stroll the wetlands at The Summit at dusk
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Fly a kite and watch the sunset from the ridge
+          </p>
         </div>
-        <p>
-          Fly a kite and watch the sunset from the ridge
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            See the American Indian dugout canoe in the visitor center
+          </p>
         </div>
-        <p>
-          See the American Indian dugout canoe in the visitor center
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Watch a sunset at the Ebenezer Church access
+          </p>
         </div>
-        <p>
-          Watch a sunset at the Ebenezer Church access
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Enjoy a campfire by the shores
+          </p>
         </div>
-        <p>
-          Enjoy a campfire by the shores
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Walk the award-winning Holly Discovery Trail
+          </p>
         </div>
-        <p>
-          Walk the award-winning Holly Discovery Trail
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Paddle the 33-acre Park Lake
+          </p>
         </div>
-        <p>
-          Paddle the 33-acre Park Lake
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Walk the Lakeshore Trail
+          </p>
         </div>
-        <p>
-          Walk the Lakeshore Trail
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike to Griffin's Whirl
+          </p>
         </div>
-        <p>
-          Hike to Griffin's Whirl
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Visit Fall Creek Falls
+          </p>
         </div>
-        <p>
-          Visit Fall Creek Falls
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Attend a night sky program
+          </p>
         </div>
-        <p>
-          Attend a night sky program
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Paddle the millpond
+          </p>
         </div>
-        <p>
-          Paddle the millpond
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Visit the Kron House
+          </p>
         </div>
-        <p>
-          Visit the Kron House
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike to Luther Rock
+          </p>
         </div>
-        <p>
-          Hike to Luther Rock
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Enjoy the summit overlook
+          </p>
         </div>
-        <p>
-          Enjoy the summit overlook
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Paddle the New River
+          </p>
         </div>
-        <p>
-          Paddle the New River
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            See the mountain laurel in bloom 
+          </p>
         </div>
-        <p>
-          See the mountain laurel in bloom 
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike the Lake Shore Trail boardwalk
+          </p>
         </div>
-        <p>
-          Hike the Lake Shore Trail boardwalk
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike around the base of Big Pinacle
+          </p>
         </div>
-        <p>
-          Hike around the base of Big Pinacle
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Take the Raven Rock Loop Trail an explore under Raven Rock
+          </p>
         </div>
-        <p>
-          Take the Raven Rock Loop Trail an explore under Raven Rock
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Walk the Amadhay Waterfall Trail
+          </p>
         </div>
-        <p>
-          Walk the Amadhay Waterfall Trail
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Watch a sunset from the pier
+          </p>
         </div>
-        <p>
-          Watch a sunset from the pier
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Visit High Shoals Falls
+          </p>
         </div>
-        <p>
-          Visit High Shoals Falls
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Hike the Stone Mountain Loop Trail
+          </p>
         </div>
-        <p>
-          Hike the Stone Mountain Loop Trail
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            See the oldest-known living longleaf pine tree
+          </p>
         </div>
-        <p>
-          See the oldest-known living longleaf pine tree
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Challenge yourself with the 7.2-mile Sycamore Trail
+          </p>
         </div>
-        <p>
-          Challenge yourself with the 7.2-mile Sycamore Trail
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Participate in a First Day Hike on New Years Day
+          </p>
         </div>
-        <p>
-          Participate in a First Day Hike on New Years Day
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Log your activity at nc100miles.org and earn digital badges
+          </p>
         </div>
-        <p>
-          Log your activity at nc100miles.org and earn digital badges
-        </p>
       </div>
     </div>
     <div
-      class="flex w-fit flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
-      data-testid="bucket-list-item"
+      class="flex"
     >
       <div
-        class="flex h-fit flex-row items-center gap-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        data-testid="bucket-list-item"
       >
         <div
-          class="aspect-square"
-          data-testid="unchecked-icon"
+          class="flex h-fit flex-row items-center gap-2 text-system_white"
         >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="3"
-            viewBox="0 0 448 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="aspect-square"
+            data-testid="unchecked-icon"
           >
-            <path
-              d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="3"
+              viewBox="0 0 448 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M400 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-6 400H54c-3.3 0-6-2.7-6-6V86c0-3.3 2.7-6 6-6h340c3.3 0 6 2.7 6 6v340c0 3.3-2.7 6-6 6z"
+              />
+            </svg>
+          </div>
+          <p>
+            Pick up and properly dispose of litter you find on the trail
+          </p>
         </div>
-        <p>
-          Pick up and properly dispose of litter you find on the trail
-        </p>
       </div>
     </div>
   </div>

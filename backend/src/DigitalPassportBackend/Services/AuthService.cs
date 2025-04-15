@@ -11,25 +11,7 @@ public class AuthService(
     IPasswordHasher passwordHasher,
     ITokenProvider tokenProvider) : IAuthService
 {
-
-    public User GetUserById(int id)
-    {
-        User user = userRepository.GetById(id)!;
-        user.password = "HIDDEN FOR USER PROTECTION";
-        return user;
-    }
-
-    public string LoginUser(User user)
-    {
-        User foundUser = userRepository.GetByUsername(user.username)!;
-        bool verified = passwordHasher.VerifyPassword(foundUser.password, user.password);
-        if (!verified)
-        {
-            throw new ServiceException(StatusCodes.Status401Unauthorized, "The password was not correct.");
-        }
-        return tokenProvider.Create(foundUser);
-    }
-
+    // Public Functionality
     public string RegisterUser(User user)
     {
         var restrictedKeywords = new[] { "admin", "anon", "guest", "visitor", "test" };
@@ -56,4 +38,39 @@ public class AuthService(
             return tokenProvider.Create(user);
         };
     }
+    
+    public User GetUserById(int id)
+    {
+        User user = userRepository.GetById(id)!;
+        user.password = "HIDDEN FOR USER PROTECTION";
+        return user;
+    }
+    
+    public string LoginUser(User user)
+    {
+        User foundUser = userRepository.GetByUsername(user.username)!;
+        bool verified = passwordHasher.VerifyPassword(foundUser.password, user.password);
+        if (!verified)
+        {
+            throw new ServiceException(StatusCodes.Status401Unauthorized, "The password was not correct.");
+        }
+        return tokenProvider.Create(foundUser);
+    }
+
+    // Admin Functionality
+    public void UpdatePassword(int userId, string password)
+    {
+        var user = userRepository.GetById(userId);
+        user.password = passwordHasher.HashPassword(password);
+        passwordHasher.ValidatePassword(user);
+        userRepository.Update(user);
+    }
+
+    public void UpdateRole(int userId, string role)
+    {
+        var user = userRepository.GetById(userId);
+        user.role = Enum.Parse<UserRole>(role);
+        userRepository.Update(user);
+    }
+
 }

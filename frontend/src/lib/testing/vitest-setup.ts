@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
+import { QueryCache } from '@tanstack/react-query';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import { cleanup } from '@testing-library/react';
 import { afterAll, afterEach, beforeAll, expect } from 'vitest';
 import { server } from './msw-server';
-import { QueryCache } from '@tanstack/react-query';
 
 // Extend Vitest's expect with jest-dom matchers since they're not included by default
 expect.extend(matchers);

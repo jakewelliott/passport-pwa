@@ -7,6 +7,15 @@ public class TrailRepository(DigitalPassportDbContext digitalPassportDbContext) 
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public Trail Create(Trail entity)
+    {
+        _digitalPassportDbContext.Trails.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public Trail GetById(int id)
     {
         var result = _digitalPassportDbContext.Trails.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -17,14 +26,24 @@ public class TrailRepository(DigitalPassportDbContext digitalPassportDbContext) 
         return result;
     }
 
-    public Trail Delete(int id)
+    public List<Trail> GetAll()
     {
-        var result = GetById(id);
-        _digitalPassportDbContext.Trails.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
+        return [.. _digitalPassportDbContext.Trails];
     }
 
+    public Trail? GetByName(string name)
+    {
+        return _digitalPassportDbContext.Trails
+            .Where(t => t.trailName == name)
+            .FirstOrDefault();
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.Trails.Count();
+    }
+
+    // UPDATE
     public Trail Update(Trail entity)
     {
         var existingItem = GetById(entity.id);
@@ -33,20 +52,12 @@ public class TrailRepository(DigitalPassportDbContext digitalPassportDbContext) 
         return existingItem;
     }
 
-    public int Count()
+    // DELETE
+    public Trail Delete(int id)
     {
-        return _digitalPassportDbContext.Trails.Count();
-    }
-
-    public Trail Create(Trail entity)
-    {
-        _digitalPassportDbContext.Trails.Add(entity);
+        var result = GetById(id);
+        _digitalPassportDbContext.Trails.Remove(result);
         _digitalPassportDbContext.SaveChanges();
-        return entity;
-    }
-
-    public List<Trail> GetAll()
-    {
-        return [.. _digitalPassportDbContext.Trails];
+        return result;
     }
 }

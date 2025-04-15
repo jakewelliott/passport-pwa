@@ -4,40 +4,41 @@ import { useRegister } from '@/hooks/auth/useRegister';
 import { useUser } from '@/hooks/queries/useUser';
 import { cn } from '@/lib/cn-helper';
 import { dbg } from '@/lib/debug';
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { SuperAdminButton } from './components/superadmin-button';
 
 const getInputStyles = (isError: boolean) =>
     cn(
-        'w-80 rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100',
+        'w-full rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100',
         isError
             ? 'border-system_red focus:border-system_red ring-system_red ring-1'
             : 'border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal',
     );
 
 // hook lives here since it's only used on this page
-const useRedirectIfLoggedIn = () => {
-    const navigate = useNavigate();
-    const { data: user } = useUser();
+// const useRedirectIfLoggedIn = () => {
+//     const navigate = useNavigate();
+//     const { isLoggedIn } = useUser();
 
-    useEffect(() => {
-        dbg('EFFECT', 'LoginPage', 'checking if user logged in');
-        if (user) {
-            dbg('EFFECT', 'LoginPage', 'User already logged in, redirecting...');
-            navigate('/');
-        }
-    }, [user, navigate]);
-};
+//     useEffect(() => {
+//         dbg('EFFECT', 'LoginPage', 'checking if user logged in');
+//         if (isLoggedIn) {
+//             dbg('EFFECT', 'LoginPage', 'User already logged in, redirecting...');
+//             navigate('/');
+//         }
+//     }, [isLoggedIn, navigate]);
+// };
 
 export default function LoginPage() {
-    dbg('RENDER', 'LoginPage');
+    dbg('RENDER', '/login');
+    const { isLoggedIn } = useUser();
     const [errors, setErrors] = useState({ username: false, password: false });
     const formRef = useRef<HTMLFormElement>(null);
     const loginMutation = useLogin();
     const registerMutation = useRegister();
-    useRedirectIfLoggedIn(); // redirect user if they are logged in
+    // useRedirectIfLoggedIn(); // redirect user if they are logged in
 
     const validateFields = (formData: FormData) => {
         const username = formData.get('username') as string;
@@ -81,13 +82,16 @@ export default function LoginPage() {
         );
     };
 
+    // if user is logged in, redirect to home page
+    if (isLoggedIn) return <Navigate to='/' />;
+
     return (
         <div
-            className='flex h-svh items-center justify-center bg-center bg-cover bg-no-repeat'
+            className='flex h-full items-center justify-center bg-center bg-cover bg-no-repeat p-12'
             style={{ backgroundImage: "url('/photos/SILA-BackCover.jpg')" }}
         >
             {!navigator.onLine && (
-                <div className='m-auto flex max-w-80 flex-col items-center rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8'>
+                <div className='flex max-w-80 flex-col items-center rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8'>
                     <p className='pl text-center'>
                         It appears as though your device is offline. In order to log in to the application, you must be
                         online.
@@ -97,7 +101,7 @@ export default function LoginPage() {
             {navigator.onLine && (
                 <form
                     ref={formRef}
-                    className='m-auto flex max-w-96 flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8'
+                    className='flex flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8'
                     onSubmit={handleAuth(true)}
                 >
                     <input

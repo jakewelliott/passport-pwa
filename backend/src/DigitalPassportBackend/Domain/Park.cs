@@ -40,13 +40,39 @@ public class Park : IEntity
     public DateTime createdAt { get; set; } = DateTime.UtcNow;
     [Column("updated_at")]
     public DateTime updatedAt { get; set; } = DateTime.UtcNow;
+
+    public override bool Equals(object? obj)
+    {
+        return obj is Park o
+			&& o.GetHashCode() == GetHashCode();
+    }
+
+    public override int GetHashCode()
+    {
+		var hash = new HashCode();
+		hash.Add(parkAbbreviation);
+		hash.Add(parkType);
+		hash.Add(parkName);
+		hash.Add(city);
+		hash.Add(coordinates);
+		hash.Add(phone);
+		hash.Add(email);
+		hash.Add(stampImage);
+		hash.Add(establishedYear);
+		hash.Add(landmark);
+		hash.Add(youCanFind);
+		hash.Add(trails);
+		hash.Add(accesses);
+		hash.Add(website);
+		return hash.ToHashCode();
+    }
 }
 
 public enum ParkType
 {
-  SL,
-  SNA,
-  SPA,
-  SRA,
-  ST
+	SL,
+	SNA,
+	SPA,
+	SRA,
+	ST
 }

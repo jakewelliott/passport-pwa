@@ -27,6 +27,24 @@ public class ParkAddress : IEntity
     [Column("park")]
     public int parkId { get; set; }
     public required Park park { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is ParkAddress o
+            && o.GetHashCode() == GetHashCode();
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(
+            title,
+            addressLineOne,
+            addressLineTwo,
+            city,
+            state,
+            zipcode,
+            park);
+    }
 }
 
 public enum State

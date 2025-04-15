@@ -1,13 +1,6 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
-
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
-
-using NetTopologySuite.IO;
-
-using Newtonsoft.Json;
 
 namespace DigitalPassportBackend.Services;
 
@@ -39,9 +32,27 @@ public class LocationsService : ILocationsService
         _trailIconRepository = trailIconRepository;
     }
 
-    public List<ParkAddress> GetAddressesByLocationId(int id)
+    // Parks
+    public void CreatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos)
     {
-        return _addressRepository.GetByLocationId(id);
+        try
+        {
+            _locationsRepository.GetByAbbreviation(park.parkAbbreviation);
+            throw new ServiceException(409, $"Park with abbreviation '{park.parkAbbreviation}' already exists");
+        }
+        catch (NotFoundException)
+        {
+            _locationsRepository.Create(park);
+            addrs.ForEach(a => _addressRepository.Create(a));
+            icons.ForEach(i => _parkIconRepository.Create(i));
+            blItems.ForEach(i => _bucketListItemRepository.Create(i));
+            photos.ForEach(p => _parkPhotoRepository.Create(p));
+        }
     }
 
     public List<Park> GetAll()
@@ -49,9 +60,9 @@ public class LocationsService : ILocationsService
         return _locationsRepository.GetAll();
     }
 
-    public List<BucketListItem> GetBucketListItemsByLocationId(int id)
+    public Park GetById(int id)
     {
-        return _bucketListItemRepository.GetByLocationId(id);
+        return _locationsRepository.GetById(id);
     }
 
     public Park GetByAbbreviation(string locationAbbrev)
@@ -59,14 +70,93 @@ public class LocationsService : ILocationsService
         return _locationsRepository.GetByAbbreviation(locationAbbrev);
     }
 
+    public void UpdatePark(
+        Park park,
+        List<ParkAddress> addrs,
+        List<ParkIcon> icons,
+        List<BucketListItem> blItems,
+        List<ParkPhoto> photos)
+    {
+        // Check if the park needs to be updated.
+        if (_locationsRepository.GetById(park.id).Equals(park))
+        {
+            // Verify that there isn't an abbreviation collision.
+            try {
+                var existing = _locationsRepository.GetByAbbreviation(park.parkAbbreviation);
+                if (existing.id == park.id)
+                {
+                    // Update park.
+                    _locationsRepository.Update(park);
+                }
+                else
+                {
+                    throw new ServiceException(409, $"Park with abbreviation '{park.parkAbbreviation}' already exists");
+                }
+            }
+            catch (NotFoundException)
+            {
+                // Update park.
+                _locationsRepository.Update(park);
+            }
+        }
+
+        // Update or create park data.
+        SetValues(_addressRepository.GetByLocationId(park.id), addrs, _addressRepository);
+        SetValues(_parkIconRepository.GetByLocationId(park.id), icons, _parkIconRepository);
+        SetValues(_bucketListItemRepository.GetByLocationId(park.id), blItems, _bucketListItemRepository);
+        SetValues(_parkPhotoRepository.GetByLocationId(park.id), photos, _parkPhotoRepository);
+    }
+
+    public void DeletePark(int id)
+    {
+        // Park addresses.
+        _addressRepository.GetByLocationId(id)
+            .ForEach(a => _addressRepository.Delete(a.id));
+        
+        // Park icons.
+        _parkIconRepository.GetByLocationId(id)
+            .ForEach(i => _parkIconRepository.Delete(i.id));
+
+        // Bucket list items.
+        _bucketListItemRepository.GetByLocationId(id)
+            .ForEach(i => _bucketListItemRepository.Delete(i.id));
+
+        // Park photos.
+        _parkPhotoRepository.GetByLocationId(id)
+            .ForEach(i => _parkPhotoRepository.Delete(i.id));
+
+        // Park.
+        _locationsRepository.Delete(id);
+    }
+
+    // Park Addresses
+    public List<ParkAddress> GetAddressesByLocationId(int id)
+    {
+        return _addressRepository.GetByLocationId(id);
+    }
+
+    // Park Icons
     public List<ParkIcon> GetIconsByLocationId(int id)
     {
         return _parkIconRepository.GetByLocationId(id);
     }
 
+    // Park Photos
     public List<ParkPhoto> GetParkPhotosByLocationId(int id)
     {
         return _parkPhotoRepository.GetByLocationId(id);
+    }
+
+    // Trails
+    public void CreateTrail(Trail trail, List<TrailIcon> icons)
+    {
+        if (_trailRepository.GetByName(trail.trailName) is null)
+        {
+            throw new ServiceException(409, $"Trail with name '{trail.trailName}' already exists");
+        }
+
+        _trailRepository.Create(trail);
+        icons.ForEach(i => _trailIconRepository.Create(i));
     }
 
     public List<Trail> GetAllTrails()
@@ -74,11 +164,37 @@ public class LocationsService : ILocationsService
         return _trailRepository.GetAll();
     }
 
+    public void UpdateTrail(Trail trail, List<TrailIcon> icons)
+    {
+        var t = _trailRepository.GetByName(trail.trailName);
+        if (t is not null && t.id != trail.id)
+        {
+            throw new ServiceException(409, $"Trail with name '{trail.trailName}' already exists");
+        }
+
+        _trailRepository.Update(trail);
+        SetValues(_trailIconRepository.GetByTrailId(trail.id), icons, _trailIconRepository);
+    }
+
+    public void DeleteTrail(int id)
+    {
+        _trailIconRepository.GetByTrailId(id).ForEach(i => _trailIconRepository.Delete(i.id));
+        _trailRepository.Delete(id);
+    }
+
+    // Trail Icons
     public List<TrailIcon> GetTrailIcons(int trailId)
     {
         return _trailIconRepository.GetByTrailId(trailId);
     }
 
+    // Bucket List
+    public List<BucketListItem> GetBucketListItemsByLocationId(int id)
+    {
+        return _bucketListItemRepository.GetByLocationId(id);
+    }
+
+    // General
     public string UploadGeoJson(IFormFile file)
     {
         // Read the file
@@ -140,9 +256,29 @@ public class LocationsService : ILocationsService
         return returnString;
     }
 
-    public Park GetById(int id)
+    // Helpers
+    private static void SetValues<T>(List<T> currentVals, List<T> newVals, IRepository<T> repo) where T : IEntity
     {
-        return _locationsRepository.GetById(id);
+        // Delete difference.
+        currentVals.Except(newVals)
+            .ToList()
+            .ForEach(v => repo.Delete(v.id));
+        
+        // Create or update new values.
+        foreach (var val in newVals)
+        {
+            try
+            {
+                if (!repo.GetById(val.id).Equals(val))
+                {
+                    repo.Update(val);
+                }
+            }
+            catch (NotFoundException)
+            {
+                repo.Create(val);
+            }
+        }
     }
 }
 

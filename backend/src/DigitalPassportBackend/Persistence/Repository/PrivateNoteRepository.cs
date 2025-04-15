@@ -7,6 +7,15 @@ public class PrivateNoteRepository(DigitalPassportDbContext digitalPassportDbCon
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public PrivateNote Create(PrivateNote entity)
+    {
+        _digitalPassportDbContext.PrivateNotes.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public PrivateNote GetById(int id)
     {
         var result = _digitalPassportDbContext.PrivateNotes.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -15,34 +24,6 @@ public class PrivateNoteRepository(DigitalPassportDbContext digitalPassportDbCon
             throw new NotFoundException($"Private Note not found with id {id}");
         }
         return result;
-    }
-
-    public PrivateNote Delete(int id)
-    {
-        var result = GetById(id);
-        _digitalPassportDbContext.PrivateNotes.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
-    }
-
-    public PrivateNote Update(PrivateNote entity)
-    {
-        var existingItem = GetById(entity.id);
-        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return existingItem;
-    }
-
-    public int Count()
-    {
-        return _digitalPassportDbContext.PrivateNotes.Count();
-    }
-
-    public PrivateNote Create(PrivateNote entity)
-    {
-        _digitalPassportDbContext.PrivateNotes.Add(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return entity;
     }
 
     public PrivateNote? GetByParkAndUser(int userId, int locationId)
@@ -57,4 +38,26 @@ public class PrivateNoteRepository(DigitalPassportDbContext digitalPassportDbCon
         return _digitalPassportDbContext.PrivateNotes.Where(s => s.userId == userId).ToList();
     }
 
+    public int Count()
+    {
+        return _digitalPassportDbContext.PrivateNotes.Count();
+    }
+
+    // UPDATE
+    public PrivateNote Update(PrivateNote entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    // DELETE
+    public PrivateNote Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.PrivateNotes.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
+    }
 }

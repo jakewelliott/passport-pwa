@@ -7,8 +7,8 @@ export const GetTrail = (id: number): Trail => {
     return park;
 };
 export const GetAllTrails = (): Trail[] => {
-    return trails.map(trail => ({
+    return trails.map((trail) => ({
         ...trail,
-        icons: trail.icons.map(iconId => iconId)
+        icons: trail.icons.map((iconId) => iconId),
     }));
 };

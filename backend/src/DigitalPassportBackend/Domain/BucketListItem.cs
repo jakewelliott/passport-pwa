@@ -19,4 +19,15 @@ public class BucketListItem : IEntity
     [Column("park")]
     public int? parkId { get; set; }
     public Park? park { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        return obj is BucketListItem o
+            && o.GetHashCode() == GetHashCode();
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(task, park);
+    }
 }

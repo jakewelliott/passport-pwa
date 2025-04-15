@@ -1,6 +1,8 @@
+import { useUser } from '@/hooks/queries/useUser';
 import { a11yOnClick } from '@/lib/a11y';
 import DateHelper from '@/lib/date-helper';
 import type { BucketListCompletion, BucketListItem } from '@/types';
+import { FaPen } from 'react-icons/fa6';
 import { GenericIcon } from './generic-icon';
 
 const CompletedAtView = ({ updatedAt }: { updatedAt: Date }) => (
@@ -17,25 +19,48 @@ interface BucketListItemViewProps {
     handler: () => void;
     address?: string;
     testId?: string;
+    handleEditItem: () => void;
 }
 
-export const BucketListItemView = ({ item, completion, handler, address, testId }: BucketListItemViewProps) => {
+export const BucketListItemView = ({
+    item,
+    completion,
+    handler,
+    address,
+    testId,
+    handleEditItem,
+}: BucketListItemViewProps) => {
     const completed = completion !== undefined;
+    const { data: user } = useUser();
+
     return (
-        <div
-            key={item.id}
-            className='flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white'
-            {...a11yOnClick(handler)}
-            data-testid={testId}
-        >
-            <GenericIcon
-                name={completed ? 'check' : 'uncheck'}
-                text={item.task}
-                color='system_white'
-                testId={completed ? 'checked-icon' : 'unchecked-icon'}
-            />
-            {address && <AddressView address={address} />}
-            {completed && <CompletedAtView updatedAt={completion.updatedAt} />}
+        <div className='flex'>
+            <div
+                key={item.id}
+                className='flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white'
+                {...a11yOnClick(handler)}
+                data-testid={testId}
+            >
+                <GenericIcon
+                    name={completed ? 'check' : 'uncheck'}
+                    text={item.task}
+                    color='system_white'
+                    testId={completed ? 'checked-icon' : 'unchecked-icon'}
+                />
+                {address && <AddressView address={address} />}
+                {completed && <CompletedAtView updatedAt={completion.updatedAt} />}
+            </div>
+            {user?.role === 'admin' && (
+                <div className='my-auto ml-auto w-7 pl-2'>
+                    <button
+                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                        onClick={handleEditItem}
+                        type='button'
+                    >
+                        <FaPen size={15} />
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

@@ -7,6 +7,15 @@ public class ParkPhotoRepository(DigitalPassportDbContext digitalPassportDbConte
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public ParkPhoto Create(ParkPhoto entity)
+    {
+        _digitalPassportDbContext.ParkPhotos.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public List<ParkPhoto> GetByLocationId(int locationId)
     {
         return _digitalPassportDbContext.ParkPhotos.Where(a => a.parkId.Equals(locationId)).ToList();
@@ -22,14 +31,12 @@ public class ParkPhotoRepository(DigitalPassportDbContext digitalPassportDbConte
         return result;
     }
 
-    public ParkPhoto Delete(int id)
+    public int Count()
     {
-        var result = GetById(id);
-        _digitalPassportDbContext.ParkPhotos.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
+        return _digitalPassportDbContext.ParkPhotos.Count();
     }
 
+    // UPDATE
     public ParkPhoto Update(ParkPhoto entity)
     {
         var existingItem = GetById(entity.id);
@@ -38,15 +45,12 @@ public class ParkPhotoRepository(DigitalPassportDbContext digitalPassportDbConte
         return existingItem;
     }
 
-    public int Count()
+    // DELETE
+    public ParkPhoto Delete(int id)
     {
-        return _digitalPassportDbContext.ParkPhotos.Count();
-    }
-
-    public ParkPhoto Create(ParkPhoto entity)
-    {
-        _digitalPassportDbContext.ParkPhotos.Add(entity);
+        var result = GetById(id);
+        _digitalPassportDbContext.ParkPhotos.Remove(result);
         _digitalPassportDbContext.SaveChanges();
-        return entity;
+        return result;
     }
 }

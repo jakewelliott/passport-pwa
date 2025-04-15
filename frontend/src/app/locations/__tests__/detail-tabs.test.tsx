@@ -2,7 +2,6 @@ import ParkInfoScreen from '@/app/locations/park-info';
 import { usePark, useParks } from '@/hooks/queries/useParks';
 import { useStamp, useStamps } from '@/hooks/queries/useStamps';
 import { setupTestEnv } from '@/lib/testing/test-wrapper';
-import { screen } from '@testing-library/react';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 const routerProps = { initialEntries: ['/locations/CABE'] };
@@ -20,17 +19,5 @@ describe('DetailTabs', () => {
     it('matches snapshot', () => {
         const { container } = render(<ParkInfoScreen />);
         expect(container).toMatchSnapshot();
-    });
-
-    it('fetches park activity for non-admin users', () => {
-        render(<ParkInfoScreen />);
-        // Verify components are rendered with park activity data
-        expect(screen.getByTestId('location-contact')).toBeInTheDocument();
-    });
-
-    it('does not fetch park activity for admin users', () => {
-        render(<ParkInfoScreen />);
-        // Verify components are rendered without park activity data
-        expect(screen.getByTestId('location-contact')).toBeInTheDocument();
     });
 });

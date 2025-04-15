@@ -7,6 +7,15 @@ public class FavoriteParkRepository(DigitalPassportDbContext digitalPassportDbCo
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public FavoritePark Create(FavoritePark entity)
+    {
+        _digitalPassportDbContext.FavoriteParks.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
     public FavoritePark GetById(int id)
     {
         var result = _digitalPassportDbContext.FavoriteParks.Where(a => a.id.Equals(id)).SingleOrDefault();
@@ -15,34 +24,6 @@ public class FavoriteParkRepository(DigitalPassportDbContext digitalPassportDbCo
             throw new NotFoundException($"Favorite Park not found with id {id}");
         }
         return result;
-    }
-
-    public FavoritePark Delete(int id)
-    {
-        var result = GetById(id);
-        _digitalPassportDbContext.FavoriteParks.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
-    }
-
-    public FavoritePark Update(FavoritePark entity)
-    {
-        var existingItem = GetById(entity.id);
-        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return existingItem;
-    }
-
-    public int Count()
-    {
-        return _digitalPassportDbContext.FavoriteParks.Count();
-    }
-
-    public FavoritePark Create(FavoritePark entity)
-    {
-        _digitalPassportDbContext.FavoriteParks.Add(entity);
-        _digitalPassportDbContext.SaveChanges();
-        return entity;
     }
 
     public List<FavoritePark> GetByUser(int userId)
@@ -57,5 +38,28 @@ public class FavoriteParkRepository(DigitalPassportDbContext digitalPassportDbCo
             .Where(p => p.userId == userId
                 && p.parkId == parkId)
             .FirstOrDefault();
+    }
+
+    public int Count()
+    {
+        return _digitalPassportDbContext.FavoriteParks.Count();
+    }
+
+    // UPDATE
+    public FavoritePark Update(FavoritePark entity)
+    {
+        var existingItem = GetById(entity.id);
+        _digitalPassportDbContext.Entry(existingItem).CurrentValues.SetValues(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return existingItem;
+    }
+
+    // DELETE
+    public FavoritePark Delete(int id)
+    {
+        var result = GetById(id);
+        _digitalPassportDbContext.FavoriteParks.Remove(result);
+        _digitalPassportDbContext.SaveChanges();
+        return result;
     }
 }

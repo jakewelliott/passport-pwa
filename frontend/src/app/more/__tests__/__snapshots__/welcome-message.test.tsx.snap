@@ -3,10 +3,10 @@
 exports[`WelcomeMessage Component > matches snapshot 1`] = `
 <div>
   <div
-    class="mx-auto max-w-3xl space-y-6 p-6"
+    class="space-y-6"
   >
     <h1
-      class="overflow-hidden whitespace-nowrap text-center text-[64px] text-main_green"
+      class="whitespace-nowrap text-center text-main_green text-xl"
     >
       <span
         class="inline-block w-full text-[length:min(64px,_calc(100vw_/_7))]"

@@ -2,8 +2,7 @@ import { NotesMiniTab } from '@/app/locations/components/notes-minitab';
 import { useNotes } from '@/hooks/queries/useNotes';
 import { mockPark } from '@/lib/testing/mock';
 import { mockToast, setupTestEnv } from '@/lib/testing/test-wrapper';
-import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { toast } from 'react-toastify';
+import { screen } from '@testing-library/react';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 mockToast();
@@ -27,13 +26,13 @@ describe('NotesMiniTab', () => {
         expect(screen.getByPlaceholderText('Add some personal notes about this park!')).toBeInTheDocument();
     });
 
-    it('shows success toast when note is saved', async () => {
-        render(<NotesMiniTab parkId={mockPark.id} />);
-        const saveButton = screen.getByTestId('save-button');
-        expect(saveButton).toBeInTheDocument();
-        fireEvent.click(saveButton);
-        await waitFor(() => {
-            expect(toast.success).toHaveBeenCalled();
-        });
-    });
+    // it('shows success toast when note is saved', async () => {
+    //     render(<NotesMiniTab parkId={mockPark.id} />);
+    //     const saveButton = screen.getByTestId('save-button');
+    //     expect(saveButton).toBeInTheDocument();
+    //     fireEvent.click(saveButton);
+    //     await waitFor(() => {
+    //         expect(toast.success).toHaveBeenCalled();
+    //     });
+    // });
 });

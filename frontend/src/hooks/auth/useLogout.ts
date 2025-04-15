@@ -11,18 +11,24 @@ import { toast } from 'react-toastify';
 export const useLogout = () => {
     const navigate = useNavigate();
     const queryClient = useQueryClient();
-    return () => {
+
+    const handleLogout = () => {
         dbg('AUTH', 'Logging out...');
+
         Cookies.remove('token');
+
         queryClient.invalidateQueries({
             queryKey: ['user'],
             refetchType: 'all',
         });
-        localStorage.removeItem('user');
+
+        // NOTE: this is going to get called twice because of the useEffect in the LogoutScreen
         setTimeout(() => {
-            navigate('/login');
             dbg('AUTH', 'Successfully logged out');
             toast.success('Successfully logged out');
-        }, 2000);
+            navigate('/login');
+        }, 500);
     };
+
+    return handleLogout;
 };

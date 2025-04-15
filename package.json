@@ -1,9 +1,10 @@
 {
     "scripts": {
-        "frontend": "cd frontend && ./cache-files.sh && npm run dev",
+        "frontend": "cd frontend && npm run dev",
         "backend": "dotnet run --project backend/src/DigitalPassportBackend dev",
         "database": "cd backend/src/DigitalPassportBackend && dotnet ef database update",
-        "docker": "./frontend/cache-files.sh && docker compose up --build",
+        "precache": "./scripts/update-precached-files.sh",
+        "docker": "docker compose up --build",
         "docker:clear": "docker system prune"
     },
     "devDependencies": {

@@ -1,3 +1,5 @@
+import { dbg } from '@/lib/debug';
+
 interface Item {
     imageSrc: string;
     altText: string;
@@ -85,6 +87,7 @@ const items: Item[] = [
     },
 ];
 export const HikingEssentials = () => {
+    dbg('RENDER', '/more/hiking-essentials');
     return (
         <>
             <h3 className='mb-5 bg-supporting_inactiveblue p-3 text-center text-system_white uppercase'>

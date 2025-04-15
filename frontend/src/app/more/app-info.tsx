@@ -1,3 +1,4 @@
+import { dbg } from '@/lib/debug';
 import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { RiMap2Line } from 'react-icons/ri';
 import { Link } from 'react-router-dom';
@@ -89,6 +90,7 @@ const ReservationsBox = () => {
 };
 
 export const AppInfo = () => {
+    dbg('RENDER', '/more/app-info');
     return (
         <div className='flex flex-col gap-4'>
             <div className='mb-3.5'>

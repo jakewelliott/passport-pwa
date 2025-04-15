@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using DigitalPassportBackend.Controllers;
 
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 
 using Microsoft.OpenApi.Extensions;
 
@@ -16,7 +17,7 @@ namespace DigitalPassportBackend.UnitTests.TestUtils;
 [ExcludeFromCodeCoverage]
 public static class Response
 {
-    public static bool Equal(List<String> expectedIcons, Trail expected, TrailResponse actual)
+    public static bool Equal(List<TrailIconDTO> expectedIcons, Trail expected, TrailDTO actual)
     {
         return expected.id == actual.id
             && expected.trailName == actual.trailName
@@ -80,7 +81,7 @@ public static class Response
         }
     }
 
-    public static bool Equal(Park park, LocationResponse resp)
+    public static bool Equal(Park park, ParkDTO resp)
     {
         return park.id == resp.id
             && park.parkName == resp.parkName
@@ -97,7 +98,7 @@ public static class Response
             && Equal(TestData.ParkPhotos.Where(i => i.parkId == park.id), resp.photos);
     }
 
-    public static bool Equal(IEnumerable<ParkAddress> addrs, AddressResponse[] resp)
+    public static bool Equal(IEnumerable<ParkAddress> addrs, ParkAddressDTO[] resp)
     {
         addrs = [.. addrs.OrderBy(i => i.title)];
         resp = [.. resp.OrderBy(i => i.title)];
@@ -110,7 +111,7 @@ public static class Response
             && FieldEqual(addrs, a => a.zipcode.ToString(), resp, r => r.zipcode.ToString());
     }
 
-    public static bool Equal(IEnumerable<ParkIcon> icons, IconResponse[] resp)
+    public static bool Equal(IEnumerable<ParkIcon> icons, ParkIconDTO[] resp)
     {
         icons = [.. icons.OrderBy(i => i.icon.GetDisplayName())];
         resp = [.. resp.OrderBy(i => i.iconName)];
@@ -118,7 +119,7 @@ public static class Response
             && FieldEqual(icons, i => i.icon.GetDisplayName().Replace("_", "-"), resp, r => r.iconName);
     }
 
-    public static bool Equal(IEnumerable<BucketListItem> bucketList, DigitalPassportBackend.Controllers.LocationsController.BucketListItemResponse[] resp)
+    public static bool Equal(IEnumerable<BucketListItem> bucketList, BucketListItemDTO[] resp)
     {
         bucketList = [.. bucketList.OrderBy(i => i.task)];
         resp = [.. resp.OrderBy(i => i.task)];
@@ -126,7 +127,7 @@ public static class Response
             && FieldEqual(bucketList, i => i.task, resp, r => r.task);
     }
 
-    public static bool Equal(IEnumerable<ParkPhoto> photos, PhotosResponse[] resp)
+    public static bool Equal(IEnumerable<ParkPhoto> photos, ParkPhotoDTO[] resp)
     {
         photos = [.. photos.OrderBy(i => i.photo)];
         resp = [.. resp.OrderBy(i => i.photoPath)];

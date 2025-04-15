@@ -8,6 +8,20 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
 {
     private readonly DigitalPassportDbContext _digitalPassportDbContext = digitalPassportDbContext;
 
+    // CREATE
+    public Park Create(Park entity)
+    {
+        _digitalPassportDbContext.Parks.Add(entity);
+        _digitalPassportDbContext.SaveChanges();
+        return entity;
+    }
+
+    // READ
+    public List<Park> GetAll()
+    {
+        return _digitalPassportDbContext.Parks.ToList();
+    }
+    
     public Park GetByAbbreviation(string abbreviation)
     {
         var result = _digitalPassportDbContext.Parks.Where(l => l.parkAbbreviation.Equals(abbreviation)).SingleOrDefault();
@@ -28,14 +42,12 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
         return result;
     }
 
-    public Park Delete(int id)
+    public int Count()
     {
-        var result = GetById(id);
-        _digitalPassportDbContext.Parks.Remove(result);
-        _digitalPassportDbContext.SaveChanges();
-        return result;
+        return _digitalPassportDbContext.Parks.Count();
     }
 
+    // UPDATE
     public Park Update(Park entity)
     {
         var existingItem = GetById(entity.id);
@@ -44,21 +56,12 @@ public class LocationsRepository(DigitalPassportDbContext digitalPassportDbConte
         return existingItem;
     }
 
-    public int Count()
+    // DELETE
+    public Park Delete(int id)
     {
-        return _digitalPassportDbContext.Parks.Count();
-    }
-
-    public Park Create(Park entity)
-    {
-        _digitalPassportDbContext.Parks.Add(entity);
+        var result = GetById(id);
+        _digitalPassportDbContext.Parks.Remove(result);
         _digitalPassportDbContext.SaveChanges();
-        return entity;
+        return result;
     }
-
-    public List<Park> GetAll()
-    {
-        return _digitalPassportDbContext.Parks.ToList();
-    }
-
 }
