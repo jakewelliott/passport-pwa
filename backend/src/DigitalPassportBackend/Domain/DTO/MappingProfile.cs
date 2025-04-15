@@ -46,5 +46,22 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.boundaries, opt => opt.Ignore())
             .ForMember(dest => dest.createdAt, opt => opt.Ignore())
             .ForMember(dest => dest.updatedAt, opt => opt.Ignore());
+
+        // Map Trail to TrailDTO (basic properties)
+        CreateMap<Trail, TrailDTO>()
+            .ForMember(dest => dest.distance, opt => opt.MapFrom(src => src.length))
+            .ForMember(dest => dest.icons, opt => opt.MapFrom(src => src.Icons));
+
+        // Map TrailDTO to Trail (basic properties)
+        CreateMap<TrailDTO, Trail>()
+            .ForMember(dest => dest.length, opt => opt.MapFrom(src => src.distance))
+            .ForMember(dest => dest.createdAt, opt => opt.Ignore())
+            .ForMember(dest => dest.updatedAt, opt => opt.Ignore());
+
+        CreateMap<TrailIcon, TrailIconDTO>()
+            .ForMember(dest => dest.iconName, opt => opt.MapFrom(src => src.icon.ToString()));
+
+        CreateMap<TrailIconDTO, TrailIcon>()
+            .ForMember(dest => dest.icon, opt => opt.MapFrom(src => Enum.Parse<TrailIconName>(src.iconName)));
     }
 }
