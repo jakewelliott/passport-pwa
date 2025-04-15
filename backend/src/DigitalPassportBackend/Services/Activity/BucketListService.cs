@@ -3,6 +3,8 @@ using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 
+using NetTopologySuite.Geometries;
+
 public class BucketListService
 {
     private readonly IBucketListItemRepository _bucketListItemRepository;

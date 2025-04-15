@@ -1,9 +1,9 @@
 using DigitalPassportBackend.Domain;
-using DigitalPassportBackend.Domain.DTO;
-using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 
-public class NotesService
+namespace DigitalPassportBackend.Services.Activity;
+
+public class NotesService : INotesService
 {
     private readonly ILocationsRepository _locationsRepository;
     private readonly IUserRepository _userRepository;
@@ -48,7 +48,7 @@ public class NotesService
         var note = _privateNoteRepository.GetByParkAndUser(userId, parkId);
         if (note == null)
         {
-            note = CreateUpdatePrivateNote(userId, parkId, "", DateTime.UtcNow);
+            note = CreateUpdate(userId, parkId, "", DateTime.UtcNow);
         }
         note.parkId = parkId;
         return note;

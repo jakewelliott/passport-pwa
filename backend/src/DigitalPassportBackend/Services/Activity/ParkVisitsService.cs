@@ -1,4 +1,11 @@
-public class ParkVisitsService
+using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Persistence.Repository;
+
+using NetTopologySuite.Geometries;
+
+namespace DigitalPassportBackend.Services.Activity;
+
+public class ParkVisitsService : IParkVisitsService
 {
     private readonly ILocationsRepository _locationsRepository;
     private readonly IUserRepository _userRepository;

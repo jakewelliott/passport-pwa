@@ -1,21 +1,18 @@
 
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Services;
-using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
 using System.Security.Claims;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Index.HPRtree;
-using DigitalPassportBackend.Domain.DTO;
 
 namespace DigitalPassportBackend.Controllers.Activity;
 
 [ApiController]
 [Route("/api/activity/favorites")]
 [Authorize]
-public class FavoritesController(IActivityService activityService) : ControllerBase
+public class FavoritesController(IFavoritesService favoritesService) : ControllerBase
 {
-
     //
     // PUBLIC ROUTES
     //

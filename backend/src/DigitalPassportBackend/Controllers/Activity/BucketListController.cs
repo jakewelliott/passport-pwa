@@ -1,14 +1,7 @@
-
-
-
 using Microsoft.AspNetCore.Mvc;
-using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Services;
-using Microsoft.OpenApi.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using NetTopologySuite.Geometries;
-using NetTopologySuite.Index.HPRtree;
 using DigitalPassportBackend.Domain.DTO;
 
 namespace DigitalPassportBackend.Controllers.Activity;
@@ -35,7 +28,7 @@ public class BucketListController : ControllerBase
     public IActionResult GetAll()
     {
         var items = _activityService.GetBucketListItems();
-        return Ok(items.Select(BucketListItemResponse.FromDomain));
+        return Ok(items.Select(BucketListItemDTO.FromDomain));
     }
 
     // GET COMPLETED

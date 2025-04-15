@@ -1,4 +1,14 @@
-public class ParkVisitsService
+using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Errors;
+using DigitalPassportBackend.Persistence.Repository;
+
+using Microsoft.OpenApi.Extensions;
+
+using NetTopologySuite.Geometries;
+
+namespace DigitalPassportBackend.Services.Activity;
+
+public class StampsService : IStampsService
 {
     private readonly ILocationsRepository _locationsRepository;
     private readonly IUserRepository _userRepository;
