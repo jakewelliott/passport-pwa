@@ -3,31 +3,35 @@ using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 
-
-// Bucket List
-public class BucketListService(
-    IBucketListItemRepository bucketListItemRepository,
-    ICompletedBucketListItemRepository completedBucketListItemRepository,
-    ILocationsRepository locationsRepository
-)
+public class BucketListService
 {
-    public void CreateBucketListItem(BucketListItemDTO item)
+    private readonly IBucketListItemRepository _bucketListItemRepository;
+    private readonly ICompletedBucketListItemRepository _completedBucketListItemRepository;
+    private readonly ILocationsRepository _locationsRepository;
+
+    public BucketListService(
+        IBucketListItemRepository bucketListItemRepository,
+        ICompletedBucketListItemRepository completedBucketListItemRepository,
+        ILocationsRepository locationsRepository
+    )
     {
-        _bucketListItemRepository.Create(item.ToDomain(_locationsRepository.GetById(item.parkId)));
+        _bucketListItemRepository = bucketListItemRepository;
+        _completedBucketListItemRepository = completedBucketListItemRepository;
+        _locationsRepository = locationsRepository;
     }
 
-    public List<BucketListItem> GetBucketListItems()
+    public List<BucketListItem> GetAll()
     {
         return _bucketListItemRepository.GetAll();
     }
 
-    public List<CompletedBucketListItem> GetCompletedBucketListItems(int userId)
+    public List<CompletedBucketListItem> GetCompleted(int userId)
     {
         return [.. _completedBucketListItemRepository.GetByUser(userId)
             .Where(i => !i.deleted)];
     }
 
-    public CompletedBucketListItem ToggleBucketListItemCompletion(int itemId, int userId, Geopoint geopoint)
+    public CompletedBucketListItem ToggleCompleted(int itemId, int userId, Geopoint geopoint)
     {
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.latitude, geopoint.longitude));
 
@@ -55,13 +59,22 @@ public class BucketListService(
             });
         }
     }
-    
-    public void UpdateBucketListItem(BucketListItemDTO item)
+
+    //
+    // ADMIN SERVICES
+    //
+
+    public void Create(BucketListItemDTO item)
+    {
+        _bucketListItemRepository.Create(item.ToDomain(_locationsRepository.GetById(item.parkId)));
+    }
+
+    public void Update(BucketListItemDTO item)
     {
         _bucketListItemRepository.Update(item.ToDomain(_locationsRepository.GetById(item.parkId)));
     }
 
-    public void DeleteBucketListItem(int id)
+    public void Delete(int id)
     {
         _bucketListItemRepository.Delete(id);
     }

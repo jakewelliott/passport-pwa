@@ -1,5 +1,21 @@
-// Park Visit
-    public ParkVisit VisitPark(int userId, int parkId, Geopoint geopoint)
+public class ParkVisitsService
+{
+    private readonly ILocationsRepository _locationsRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IParkVisitRepository _parkVisitRepository;
+
+    public ParkVisitsService(
+        ILocationsRepository locationsRepository,
+        IUserRepository userRepository,
+        IParkVisitRepository parkVisitRepository
+    )
+    {
+        _locationsRepository = locationsRepository;
+        _userRepository = userRepository;
+        _parkVisitRepository = parkVisitRepository;
+    }
+
+    public ParkVisit Create(int userId, int parkId, Geopoint geopoint)
     {
         var park = _locationsRepository.GetById(parkId);
         var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.latitude, geopoint.longitude));
@@ -18,7 +34,8 @@
         });
     }
 
-    public List<ParkVisit> GetParkVisits(int userId)
+    public List<ParkVisit> GetAll(int userId)
     {
         return _parkVisitRepository.GetAllByUser(userId);
     }
+}

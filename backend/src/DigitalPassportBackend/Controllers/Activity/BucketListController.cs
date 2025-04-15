@@ -32,7 +32,7 @@ public class BucketListController : ControllerBase
     // GET ALL
     [HttpGet("")]
     [Authorize(Roles = "visitor,admin")]
-    public IActionResult GetBucketListItems()
+    public IActionResult GetAll()
     {
         var items = _activityService.GetBucketListItems();
         return Ok(items.Select(BucketListItemResponse.FromDomain));
@@ -41,7 +41,7 @@ public class BucketListController : ControllerBase
     // GET COMPLETED
     [HttpGet("completed")]
     [Authorize(Roles = "visitor,admin")]
-    public IActionResult GetCompletedBucketListItems()
+    public IActionResult GetCompleted()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var items = _activityService.GetCompletedBucketListItems(userId);
@@ -51,7 +51,7 @@ public class BucketListController : ControllerBase
     // TOGGLE COMPLETION
     [HttpPost("{itemId}")]
     [Authorize(Roles = "visitor")]
-    public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
+    public IActionResult ToggleCompleted(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
         var result = _activityService.ToggleBucketListItemCompletion(itemId, userId, req.geopoint);
@@ -65,7 +65,7 @@ public class BucketListController : ControllerBase
     // CREATE
     [HttpPost("")]
     [Authorize(Roles = "admin")]
-    public IActionResult CreateBucketListItem([FromBody] BucketListItemDTO item)
+    public IActionResult Create([FromBody] BucketListItemDTO item)
     {
         _activityService.CreateBucketListItem(item);
         return Ok();
@@ -74,7 +74,7 @@ public class BucketListController : ControllerBase
     // UPDATE
     [HttpPut("{bucketListId}")]
     [Authorize(Roles = "admin")]
-    public IActionResult UpdateBucketListItem([FromBody] BucketListItemDTO item)
+    public IActionResult Update([FromBody] BucketListItemDTO item)
     {
         _activityService.UpdateBucketListItem(item);
         return Ok();
@@ -82,38 +82,10 @@ public class BucketListController : ControllerBase
 
     // DELETE
     [HttpDelete("{bucketListId}")]
-    public IActionResult DeleteBucketListItem(int bucketListId)
+    [Authorize(Roles = "admin")]
+    public IActionResult Delete(int bucketListId)
     {
         _activityService.DeleteBucketListItem(bucketListId);
         return Ok();
-    }
-
-    public record ToggleBucketListItemCompletionRequest(ActivityController.Geopoint geopoint)
-    {}
-
-    public record CompletedBucketListItemResponse(int id, int bucketListItemId, DateTime updatedAt)
-    {
-        public static CompletedBucketListItemResponse FromDomain(CompletedBucketListItem item)
-        {
-            return new CompletedBucketListItemResponse(
-                item.id,
-                item.bucketListItemId,
-                item.updatedAt
-            );
-        }
-    }
-
-    public record BucketListItemResponse(int id, string task, DateTime createdAt, int? parkId, string? parkName)
-    {
-        public static BucketListItemResponse FromDomain(BucketListItem item)
-        {
-            return new BucketListItemResponse(
-                item.id,
-                item.task,
-                item.createdAt,
-                item.parkId,
-                item.park?.parkName
-            );
-        }
     }
 } 

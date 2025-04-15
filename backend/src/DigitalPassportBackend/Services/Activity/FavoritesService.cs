@@ -1,26 +1,38 @@
+using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
+using DigitalPassportBackend.Errors;
+using DigitalPassportBackend.Persistence.Repository;
 
+public class FavoritesService
+{
+    private readonly IFavoriteParkRepository _favoriteParkRepository;
+    private readonly ILocationsRepository _locationsRepository;
+    private readonly IUserRepository _userRepository;
 
-    public List<int> GetFavoriteParks(int userId)
+    public FavoritesService(
+        IFavoriteParkRepository favoriteParkRepository,
+        ILocationsRepository locationsRepository,
+        IUserRepository userRepository
+    )
+    {
+        _favoriteParkRepository = favoriteParkRepository;
+        _locationsRepository = locationsRepository;
+        _userRepository = userRepository;
+    }
+
+    public List<int> Get(int userId)
     {
         return [.. _favoriteParkRepository.GetByUser(userId)
             .Select(f => (int)f.parkId!)];
     }
 
-    // ADAM: turn this into a toggle!
-
-    public void DeleteFavoritePark(int userId, int parkId)
+    public void Toggle(int userId, int parkId)
     {
         var fav = _favoriteParkRepository.GetByUserAndPark(userId, parkId);
         if (fav is not null)
         {
             _favoriteParkRepository.Delete(fav.id);
-        }
-    }
-
-    public void AddFavoritePark(int userId, int parkId)
-    {
-        if (_favoriteParkRepository.GetByUserAndPark(userId, parkId) is null)
-        {
+        } else {
             _favoriteParkRepository.Create(new()
             {
                 parkId = parkId,
@@ -30,3 +42,4 @@
             });
         }
     }
+}

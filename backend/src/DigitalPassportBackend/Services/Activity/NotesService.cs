@@ -1,16 +1,28 @@
-public PrivateNote GetParkNote(int userId, int parkId)
+using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
+using DigitalPassportBackend.Errors;
+using DigitalPassportBackend.Persistence.Repository;
+
+public class NotesService
+{
+    private readonly ILocationsRepository _locationsRepository;
+    private readonly IUserRepository _userRepository;
+    private readonly IPrivateNoteRepository _privateNoteRepository;
+
+    public NotesService(
+        ILocationsRepository locationsRepository,
+        IUserRepository userRepository,
+        IPrivateNoteRepository privateNoteRepository
+    )
     {
-        var note = _privateNoteRepository.GetByParkAndUser(userId, parkId);
-        if (note == null)
-        {
-            note = CreateUpdatePrivateNote(userId, parkId, "", DateTime.UtcNow);
-        }
-        note.parkId = parkId;
-        return note;
+        _locationsRepository = locationsRepository;
+        _userRepository = userRepository;
+        _privateNoteRepository = privateNoteRepository;
     }
 
-    public List<PrivateNote> GetNotes(int userId)
+    public List<PrivateNote> GetAll(int userId)
     {
+        // TODO: use the DTO
         return _privateNoteRepository.GetByUser(userId)
             .Select(x =>
             {
@@ -30,22 +42,35 @@ public PrivateNote GetParkNote(int userId, int parkId)
             .ToList();
     }
 
-    public PrivateNote CreateUpdatePrivateNote(int userId, int parkId, string note, DateTime updatedAt)
+    public PrivateNote Get(int userId, int parkId)
     {
-        // Check if there is already a note in the database.
+        // TODO: use the DTO
+        var note = _privateNoteRepository.GetByParkAndUser(userId, parkId);
+        if (note == null)
+        {
+            note = CreateUpdatePrivateNote(userId, parkId, "", DateTime.UtcNow);
+        }
+        note.parkId = parkId;
+        return note;
+    }
+
+    public PrivateNote CreateUpdate(int userId, int parkId, string note, DateTime updatedAt)
+    {
+        // ID 0 is used for general notes
         var locationId = parkId == 0 ? 0 : _locationsRepository.GetById(parkId).id;
-				// TODO: handle the case with an invalid parkId??
+
+        // Check if there is already a note in the database.
         var privateNote = _privateNoteRepository.GetByParkAndUser(userId, locationId);
         if (privateNote != null)
         {
-            // Update it
+            // If there is, update it
             privateNote.note = note;
             privateNote.updatedAt = updatedAt;
             return _privateNoteRepository.Update(privateNote);
         }
         else
         {
-            // Create it
+            // If there is no note, create it
             return _privateNoteRepository.Create(new()
             {
                 note = note,
@@ -58,3 +83,4 @@ public PrivateNote GetParkNote(int userId, int parkId)
             });
         }
     }
+};
