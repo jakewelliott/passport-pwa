@@ -1,3 +1,4 @@
+import { useCreateTrail } from '@/hooks/queries/useAdminTools';
 import { useTrails } from '@/hooks/queries/useTrails';
 import { TRAIL_ICONS, type TrailIcon } from '@/types/icons';
 import type { Trail } from '@/types/tables';
@@ -15,6 +16,9 @@ const EditTrails = () => {
             setAllTrails(() => trails.map((trail) => editedTrails.find((ep) => ep.id === trail.id) || trail));
         }
     }, [trails, editedTrails]);
+
+    // ADAM: using create park here because PUT vs POST
+    const { mutate } = useCreateTrail();
 
     const handleAddNewTrail = () => {
         // Create a blank trail object with default values
@@ -61,8 +65,11 @@ const EditTrails = () => {
         });
     };
 
-    function handleSave(editedTrails: Trail[]): void {
+    function handleSave(): void {
         console.log(editedTrails);
+        for (const trail of editedTrails) {
+            mutate(trail);
+        }
     }
 
     const getUnselectedIcons = (trail: Trail) => {
@@ -241,7 +248,7 @@ const EditTrails = () => {
                     <div className='w-8/12'>
                         <button
                             className='float-right rounded-lg bg-secondary_orange p-3 text-system_white'
-                            onClick={() => handleSave(editedTrails)}
+                            onClick={() => handleSave()}
                             disabled={editedTrails.length === 0}
                             type='button'
                         >

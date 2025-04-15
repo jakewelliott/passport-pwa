@@ -1,5 +1,3 @@
-// Misc utility types that aren't standalone records in a table
-
 export interface Geopoint {
     latitude: number;
     longitude: number;

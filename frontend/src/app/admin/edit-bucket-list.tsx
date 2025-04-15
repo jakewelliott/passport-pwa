@@ -1,20 +1,26 @@
+import {
+    useCreateBucketListItem,
+    useDeleteBucketListItem,
+    useUpdateBucketListItem,
+} from '@/hooks/queries/useAdminTools';
 import { useBucketListItems } from '@/hooks/queries/useBucketList';
 import { useParks } from '@/hooks/queries/useParks';
 import type { BucketListItem } from '@/types/tables';
 import { type MRT_ColumnDef, MaterialReactTable } from 'material-react-table';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 
 const EditBucketList = () => {
     const { data: items } = useBucketListItems();
     const { data: parks } = useParks();
     const [editedItems, setEditedItems] = useState<BucketListItem[]>([]);
-    const [allItems, setAllItems] = useState<BucketListItem[]>(items || []);
+    const [newItems, setNewItems] = useState<BucketListItem[]>([]);
+    const [deletedItems, setDeletedItems] = useState<BucketListItem[]>([]);
 
-    useEffect(() => {
-        if (items) {
-            setAllItems(() => items.map((item) => editedItems.find((ep) => ep.id === item.id) || item));
-        }
-    }, [items, editedItems]);
+    const allItems = [...(items ?? []), ...newItems];
+
+    const create = useCreateBucketListItem();
+    const update = useUpdateBucketListItem();
+    const deletee = useDeleteBucketListItem();
 
     const handleAddNewItem = () => {
         // Create a blank item object with default values
@@ -27,21 +33,21 @@ const EditBucketList = () => {
             deleted: false,
         };
 
-        // Add the new item to the beginning of the allItems array
-        setAllItems((prev) => [newItem, ...prev]);
+        // Add the new item to new items
+        setNewItems((prev) => [newItem, ...prev]);
     };
 
     const handleInputChange = (itemId: number, path: string, value: unknown) => {
-        setAllItems((prev) =>
-            prev.map((item) =>
-                item.id === itemId
-                    ? {
-                          ...item,
-                          [path]: value,
-                      }
-                    : item,
-            ),
-        );
+        // setAllItems((prev) =>
+        //     prev.map((item) =>
+        //         item.id === itemId
+        //             ? {
+        //                   ...item,
+        //                   [path]: value,
+        //               }
+        //             : item,
+        //     ),
+        // );
     };
 
     const handleInputBlur = (itemId: number, path: string, value: any) => {
@@ -59,9 +65,10 @@ const EditBucketList = () => {
         });
     };
 
-    function handleSave(editedItems: BucketListItem[]): void {
+    const handleSave = () => {
         console.log(editedItems);
-    }
+        for (const item of )
+    };
 
     const setDeepProperty = (obj: Record<string, any>, path: string, value: any): void => {
         const keys = path.split('.');
@@ -103,8 +110,7 @@ const EditBucketList = () => {
                 Cell: ({ cell, row }) => (
                     <select
                         defaultValue={
-                            parks?.find((x) => x.id === cell.getValue<number>())?.parkName ||
-                            'No park associated'
+                            parks?.find((x) => x.id === cell.getValue<number>())?.parkName || 'No park associated'
                         }
                         onChange={(e) =>
                             handleInputChange(
@@ -144,7 +150,7 @@ const EditBucketList = () => {
                     <div className='w-8/12'>
                         <button
                             className='float-right rounded-lg bg-secondary_orange p-3 text-system_white'
-                            onClick={() => handleSave(editedItems)}
+                            onClick={() => handleSave()}
                             disabled={editedItems.length === 0}
                             type='button'
                         >

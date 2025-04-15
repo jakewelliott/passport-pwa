@@ -1,3 +1,4 @@
+import { useCreatePark } from '@/hooks/queries/useAdminTools';
 import { useParks } from '@/hooks/queries/useParks';
 import { PARK_ICONS, type ParkIcon } from '@/types/icons';
 import type { Park } from '@/types/tables';
@@ -12,6 +13,9 @@ const EditParks = () => {
     const [editedParks, setEditedParks] = useState<Park[]>([]);
     const [allParks, setAllParks] = useState<Park[]>(parks || []);
     const [selectedIcon, setSelectedIcon] = useState<{ icon: ParkIcon; parkId: number }[]>([]);
+
+    // ADAM: using create park here because PUT vs POST
+    const { mutate } = useCreatePark();
 
     useEffect(() => {
         if (parks) {
@@ -108,16 +112,19 @@ const EditParks = () => {
         });
     };
 
-    function handleSave(editedParks: Park[]): void {
-      // Create a new array with updated trails
-      const formattedParks = editedParks.map(park => ({
-          ...park,
-          trails: handleCleanLongText(park.trails)
-      }));
-  
-      console.log(formattedParks);
-  }
-  
+    function handleSave(): void {
+        // Create a new array with updated trails
+        const formattedParks = editedParks.map((park) => ({
+            ...park,
+            trails: handleCleanLongText(park.trails),
+        }));
+
+        console.log(formattedParks);
+
+        for (const park of formattedParks) {
+            mutate(park);
+        }
+    }
 
     const getUnselectedIcons = (park: Park) => {
         const selectedIconNames = new Set(park.icons.map((icon) => icon.iconName));
@@ -666,7 +673,7 @@ const EditParks = () => {
                     <div className='w-8/12'>
                         <button
                             className='float-right rounded-lg bg-secondary_orange p-3 text-system_white'
-                            onClick={() => handleSave(editedParks)}
+                            onClick={() => handleSave()}
                             disabled={editedParks.length === 0}
                             type='button'
                         >

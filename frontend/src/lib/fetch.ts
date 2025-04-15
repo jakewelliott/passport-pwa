@@ -35,7 +35,7 @@ export const API_FAVORITE_PARKS_URL = `${API_URL}/activity/parks/favorites`;
 export const API_PARKS_URL = `${API_URL}/locations`;
 export const API_TRAILS_URL = `${API_URL}/locations/trails`;
 export const API_PARKGEO_URL = `${API_URL}/locations/geo`;
-export const API_UPLOADGEO_URL = `${API_URL}/locations/uploadGeoJson`
+export const API_UPLOADGEO_URL = `${API_URL}/locations/uploadGeoJson`;
 
 // notes
 export const API_NOTES_URL = `${API_URL}/activity/notes`;
@@ -88,28 +88,28 @@ export const fetchGet = async (url: string) => {
     return data;
 };
 
-// export const fetchPut = async (url: string, body: any) => {
-//     dbg('FETCH', 'PUT', { url, body });
-//     const headers: Record<string, string> = {
-//         'Content-Type': 'application/json',
-//         ...getAuthHeaders(),
-//     };
+export const fetchPut = async (url: string, body: any) => {
+    dbg('FETCH', 'PUT', { url, body });
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...getAuthHeaders(),
+    };
 
-//     const response = await fetch(url, {
-//         method: 'PUT',
-//         headers,
-//         credentials: 'include',
-//         body: JSON.stringify(body),
-//     });
+    const response = await fetch(url, {
+        method: 'PUT',
+        headers,
+        credentials: 'include',
+        body: JSON.stringify(body),
+    });
 
-//     if (!response.ok) await fetchError(response);
+    if (!response.ok) await fetchError(response);
 
-//     // dbg('FETCH', 'PUT RESPONSE', { response });
-//     return response;
-// };
+    dbg('FETCH', 'PUT RESPONSE', { response });
+    return response;
+};
 
-export const fetchDelete = async (url: string, body: any) => {
-    dbg('FETCH', 'DELETE', { url, body });
+export const fetchDelete = async (url: string) => {
+    dbg('FETCH', 'DELETE', { url });
     const headers: Record<string, string> = {
         'Content-Type': 'application/json',
         ...getAuthHeaders(),
@@ -119,7 +119,6 @@ export const fetchDelete = async (url: string, body: any) => {
         method: 'DELETE',
         headers,
         credentials: 'include',
-        body: JSON.stringify(body),
     });
 
     if (!response.ok) await fetchError(response);
