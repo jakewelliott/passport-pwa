@@ -1,9 +1,8 @@
-using DigitalPassportBackend.Domain;
-using DigitalPassportBackend.Domain.DTO;
-using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
 
-public class FavoritesService
+namespace DigitalPassportBackend.Services.Activity;
+
+public class FavoritesService : IFavoritesService
 {
     private readonly IFavoriteParkRepository _favoriteParkRepository;
     private readonly ILocationsRepository _locationsRepository;
