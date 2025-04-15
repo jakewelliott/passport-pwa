@@ -1,3 +1,4 @@
+import { useCreateBucketListItem, useUpdateBucketListItem } from '@/hooks/queries/useAdminTools';
 import { useBucketListItems } from '@/hooks/queries/useBucketList';
 import { useParks } from '@/hooks/queries/useParks';
 import type { BucketListItem } from '@/types/tables';
@@ -9,6 +10,8 @@ const EditBucketList = () => {
     const { data: parks } = useParks();
     const [editedItems, setEditedItems] = useState<BucketListItem[]>([]);
     const [allItems, setAllItems] = useState<BucketListItem[]>(items || []);
+    const { mutate: update } = useUpdateBucketListItem();
+    const { mutate: create } = useCreateBucketListItem();
 
     useEffect(() => {
         if (items) {
@@ -60,7 +63,13 @@ const EditBucketList = () => {
     };
 
     function handleSave(editedItems: BucketListItem[]): void {
-        console.log(editedItems);
+        for (const item of editedItems) {
+            if (item.id > 9999) {
+                create(item);
+            } else {
+                update(item);
+            }
+        }
     }
 
     const setDeepProperty = (obj: Record<string, any>, path: string, value: any): void => {
@@ -103,8 +112,7 @@ const EditBucketList = () => {
                 Cell: ({ cell, row }) => (
                     <select
                         defaultValue={
-                            parks?.find((x) => x.id === cell.getValue<number>())?.parkName ||
-                            'No park associated'
+                            parks?.find((x) => x.id === cell.getValue<number>())?.parkName || 'No park associated'
                         }
                         onChange={(e) =>
                             handleInputChange(

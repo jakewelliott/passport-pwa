@@ -67,7 +67,7 @@ export const useCreateTrail = () => {
 export const useUpdateTrail = () => {
     return useMutation({
         mutationKey: ['admin', 'trails', 'update'],
-        mutationFn: (trail: Trail) => fetchPut(`${API_TRAILS_URL}/${trail.id}`, trail),
+        mutationFn: (trail: Trail) => fetchPut(`${API_TRAILS_URL}`, trail),
     });
 };
 

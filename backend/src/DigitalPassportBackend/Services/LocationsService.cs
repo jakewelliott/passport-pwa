@@ -173,6 +173,7 @@ public class LocationsService : ILocationsService
         }
 
         _trailRepository.Update(trail);
+        // ADAM: this is making updating a trail error
         SetValues(_trailIconRepository.GetByTrailId(trail.id), icons, _trailIconRepository);
     }
 

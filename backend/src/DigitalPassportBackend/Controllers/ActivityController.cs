@@ -23,7 +23,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     //
 
     [HttpPost("stamps/{parkId}")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult CollectStamp(
         int parkId,
         [FromBody] CollectStampRequest request)
@@ -33,7 +33,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpGet("stamps/collected")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult GetCollectedStamps()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -69,7 +69,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpPost("bucketlist/{itemId}")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult ToggleBucketListItemCompletion(int itemId, [FromBody] ToggleBucketListItemCompletionRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -97,7 +97,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     //
 
     [HttpPost("visit/{parkId}")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult VisitPark(int parkId, [FromBody] VisitParkRequest req)
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);
@@ -105,7 +105,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     }
 
     [HttpGet("visit")]
-    [Authorize(Roles = "visitor")]
+    [Authorize(Roles = "visitor,admin")]
     public IActionResult GetVisitedParks()
     {
         var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!);

@@ -1,3 +1,4 @@
+import { useCreatePark, useUpdatePark } from '@/hooks/queries/useAdminTools';
 import { useParks } from '@/hooks/queries/useParks';
 import { PARK_ICONS, type ParkIcon } from '@/types/icons';
 import type { Park } from '@/types/tables';
@@ -12,6 +13,9 @@ const EditParks = () => {
     const [editedParks, setEditedParks] = useState<Park[]>([]);
     const [allParks, setAllParks] = useState<Park[]>(parks || []);
     const [selectedIcon, setSelectedIcon] = useState<{ icon: ParkIcon; parkId: number }[]>([]);
+
+    const { mutate: update } = useUpdatePark();
+    const { mutate: create } = useCreatePark();
 
     useEffect(() => {
         if (parks) {
@@ -109,15 +113,25 @@ const EditParks = () => {
     };
 
     function handleSave(editedParks: Park[]): void {
-      // Create a new array with updated trails
-      const formattedParks = editedParks.map(park => ({
-          ...park,
-          trails: handleCleanLongText(park.trails)
-      }));
-  
-      console.log(formattedParks);
-  }
-  
+        // Create a new array with updated trails
+        const formattedParks = editedParks.map((park) => ({
+            ...park,
+            trails: handleCleanLongText(park.trails),
+        }));
+
+        console.log(formattedParks);
+
+        for (const park of formattedParks) {
+            if (park.id > 9999) {
+                create(park);
+            } else {
+                update(park);
+            }
+        }
+
+        // TODO: validate on frontend before attempting mutation
+        // mutate(editedParks);
+    }
 
     const getUnselectedIcons = (park: Park) => {
         const selectedIconNames = new Set(park.icons.map((icon) => icon.iconName));

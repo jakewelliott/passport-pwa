@@ -22,6 +22,20 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         _locationsService.CreatePark(p, addrs, icons, blItems, photos);
         return Ok();
     }
+    // public IActionResult CreateUpdatePark([FromBody] List<ParkDTO> parks)
+    // {
+    //     foreach (var park in parks)
+    //     {
+    //         if (park.id == 0) {
+    //             var p = park.ToDomain(0, out var addrs, out var icons, out var blItems, out var photos);
+    //             _locationsService.CreatePark(p, addrs, icons, blItems, photos);
+    //         } else {
+    //             var p = park.ToDomain(park.id, out var addrs, out var icons, out var blItems, out var photos);
+    //             _locationsService.UpdatePark(p, addrs, icons, blItems, photos);
+    //         }
+    //     }
+    //     return Ok();
+    // }
 
     [HttpGet()]
     public IActionResult GetAll()

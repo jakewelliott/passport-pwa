@@ -1,3 +1,4 @@
+import { useCreateTrail, useUpdateTrail } from '@/hooks/queries/useAdminTools';
 import { useTrails } from '@/hooks/queries/useTrails';
 import { TRAIL_ICONS, type TrailIcon } from '@/types/icons';
 import type { Trail } from '@/types/tables';
@@ -9,6 +10,9 @@ const EditTrails = () => {
     const [editedTrails, setEditedTrails] = useState<Trail[]>([]);
     const [allTrails, setAllTrails] = useState<Trail[]>(trails || []);
     const [selectedIcon, setSelectedIcon] = useState<{ icon: TrailIcon; trailId: number }[]>([]);
+
+    const { mutate: update } = useUpdateTrail();
+    const { mutate: create } = useCreateTrail();
 
     useEffect(() => {
         if (trails) {
@@ -63,6 +67,13 @@ const EditTrails = () => {
 
     function handleSave(editedTrails: Trail[]): void {
         console.log(editedTrails);
+        for (const trail of editedTrails) {
+            if (trail.id > 9999) {
+                create(trail);
+            } else {
+                update(trail);
+            }
+        }
     }
 
     const getUnselectedIcons = (trail: Trail) => {
