@@ -28,6 +28,7 @@ var builder = WebApplication.CreateBuilder(args);
         .AddSecurity(builder.Configuration)
         .AddOrigins(builder.Configuration, corsPolicyName)
         .AddControllers();
+    builder.Services.AddAutoMapper(typeof(DigitalPassportBackend.Domain.DTO.MappingProfile).Assembly);
 
     // Add Swagger to the container
     builder.Services.AddEndpointsApiExplorer();
