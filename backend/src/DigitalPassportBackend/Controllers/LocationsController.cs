@@ -14,7 +14,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     private readonly ILocationsService _locationsService = locationsService;
 
     // Parks
-    [HttpPost("locations")]
+    [HttpPost()]
     [Authorize(Roles = "admin")]
     public IActionResult CreatePark([FromBody] ParkDTO park)
     {
@@ -76,7 +76,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok(locations);
     }
 
-    [HttpPut("locations/{parkId}")]
+    [HttpPut("{parkId}")]
     [Authorize(Roles = "admin")]
     public IActionResult UpdatePark(int parkId, [FromBody] ParkDTO park)
     {
@@ -85,7 +85,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok();
     }
 
-    [HttpDelete("locations/{parkId}")]
+    [HttpDelete("{parkId}")]
     [Authorize(Roles = "admin")]
     public IActionResult DeletePark(int parkId)
     {
@@ -94,7 +94,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     }
 
     // Trails
-    [HttpPost("locations/trails")]
+    [HttpPost("trails")]
     public IActionResult CreateTrail([FromBody] TrailDTO trail)
     {
         var t = trail.ToDomain(out var icons);
@@ -109,7 +109,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
             .Select(t => TrailDTO.FromDomain(t, _locationsService.GetTrailIcons(t.id))));
     }
 
-    [HttpPut("locations/trails")]
+    [HttpPut("trails")]
     public IActionResult UpdateTrail([FromBody] TrailDTO trail)
     {
         var t = trail.ToDomain(out var icons);
@@ -117,7 +117,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
         return Ok();
     }
 
-    [HttpDelete("locations/trails/{trailId}")]
+    [HttpDelete("trails/{trailId}")]
     public IActionResult DeleteTrail(int trailId)
     {
         _locationsService.DeleteTrail(trailId);

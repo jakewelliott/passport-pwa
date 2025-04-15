@@ -44,7 +44,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
     // BUCKET LIST
     //
 
-    [HttpPost("activity/bucketlist")]
+    [HttpPost("bucketlist")]
     [Authorize(Roles = "admin")]
     public IActionResult CreateBucketListItem([FromBody] BucketListItemDTO item)
     {
@@ -77,7 +77,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok(CompletedBucketListItemResponse.FromDomain(result));
     }
 
-    [HttpPut("activity/bucketlist/{bucketListId}")]
+    [HttpPut("bucketlist/{bucketListId}")]
     [Authorize(Roles = "admin")]
     public IActionResult UpdateBucketListItem([FromBody] BucketListItemDTO item)
     {
@@ -85,7 +85,7 @@ public class ActivityController(IActivityService activityService) : ControllerBa
         return Ok();
     }
 
-    [HttpDelete("activity/bucketlist/{bucketListId}")]
+    [HttpDelete("bucketlist/{bucketListId}")]
     public IActionResult DeleteBucketListItem(int bucketListId)
     {
         _activityService.DeleteBucketListItem(bucketListId);
