@@ -65,8 +65,6 @@ export const filterParks = (
             park.parkName.toLowerCase().includes(searchQuery.toLowerCase()) ||
             (park.addresses?.length > 0 && park.addresses[0].city.toLowerCase().includes(searchQuery.toLowerCase()));
 
-        const matchesAbbreviation = park.abbreviation.toLowerCase().includes(searchQuery.toLowerCase());
-
         const matchesIcons =
             selectedIcons.size === 0 ||
             Array.from(selectedIcons).every((selectedIcon) =>
@@ -75,7 +73,7 @@ export const filterParks = (
 
         const matchesFavorites = !showOnlyFavorites || favoritedParks?.includes(park.id);
 
-        return matchesAbbreviation || (matchesSearch && matchesIcons && matchesFavorites);
+        return matchesSearch && matchesIcons && matchesFavorites;
     });
 };
 
