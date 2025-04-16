@@ -40,6 +40,7 @@ export interface ParkPhoto {
 
 export interface Park extends DatabaseEntry {
     parkName: string;
+    city: string;
     coordinates: Geopoint;
     phone: number;
     email: string;
@@ -47,6 +48,7 @@ export interface Park extends DatabaseEntry {
     landmark: string;
     youCanFind: string;
     trails: string;
+    parkType: string;
     website: string;
     addresses: Address[];
     icons: ParkIcon[];
