@@ -1,4 +1,4 @@
-import { useLocation as usePathLocation } from 'react-router-dom';
+import { useLocation as usePathLocation } from 'react-router';
 
 const DEFAULT_TITLE = 'NC Parks Passport';
 

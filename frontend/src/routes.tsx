@@ -3,8 +3,10 @@ import { AdminPage } from '@/app/admin';
 import CollectStamp from '@/app/stamps/collect-stamp';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
-import { Navigate, Outlet, type RouteObject, createBrowserRouter } from 'react-router-dom';
+import { Navigate, Outlet, type RouteObject, createBrowserRouter } from 'react-router';
+import EditBucketList from './app/admin/edit-bucket-list';
 import EditParks from './app/admin/edit-parks';
+import EditTrails from './app/admin/edit-trails';
 import LoginPage from './app/auth/login';
 import { LogoutScreen } from './app/auth/logout';
 import Locations from './app/locations';
@@ -21,8 +23,6 @@ import { Trails } from './app/more/trails';
 import WelcomeMessage from './app/more/welcome-message';
 import Stamps from './app/stamps';
 import { BucketList } from './components/bucket-list';
-import EditTrails from './app/admin/edit-trails';
-import EditBucketList from './app/admin/edit-bucket-list';
 
 const RoleBasedRedirect = () => {
     const { isLoggedIn, data: user, isLoading } = useUser();

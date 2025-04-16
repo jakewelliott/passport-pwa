@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
-import ListRow from "./list-row";
+import { Link } from 'react-router';
+import ListRow from './list-row';
 
 export const LinkRow = ({ to, label }: { to: string; label: string }) => (
     <Link to={to} className='text-supporting_inactiveblue no-underline'>

@@ -1,5 +1,5 @@
 import { routes } from '@/routes';
-import type { RouteObject } from 'react-router-dom';
+import type { RouteObject } from 'react-router';
 
 // tells the service worker what routes to cache
 const cachedRouteHelper = (routes: RouteObject[]): string[] => {

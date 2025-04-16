@@ -5,7 +5,7 @@ import { useUser } from '@/hooks/queries/useUser';
 import { cn } from '@/lib/cn-helper';
 import { dbg } from '@/lib/debug';
 import { useRef, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { SuperAdminButton } from './components/superadmin-button';
 

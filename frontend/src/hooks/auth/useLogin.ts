@@ -5,7 +5,7 @@ import { decodeToken } from '@/lib/token-helper';
 import type { LoginCredentials } from '@/types';
 import { useMutation } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router';
 import { toast } from 'react-toastify';
 
 /**

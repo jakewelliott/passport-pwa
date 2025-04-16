@@ -13,7 +13,7 @@ import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
 import { dbg } from '@/lib/debug';
 import type { Park } from '@/types';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 // TODO: styling here needs to be fixed
 const MiniTabs = ({ park }: { park: Park }) => (

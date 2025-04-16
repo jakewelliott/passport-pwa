@@ -8,7 +8,7 @@ import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { Park, ParkIcon } from '@/types';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { FilterMenu } from './components/filter-menu';
 
 const LoadingPlaceholder = () => {

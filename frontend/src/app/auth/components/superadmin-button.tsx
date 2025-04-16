@@ -3,8 +3,10 @@ import { useLogin } from '@/hooks/auth/useLogin';
 import { PRODUCTION, dbg } from '@/lib/debug';
 
 // TODO: make these use VITE_ env vars, see fetch.ts
-const username = process.env.ADMIN_USER || '';
-const password = process.env.ADMIN_PASS || '';
+// const username = process.env.ADMIN_USER || '';
+// const password = process.env.ADMIN_PASS || '';
+const username = '';
+const password = '';
 
 if (!username || !password) {
     dbg('MISC', 'SuperAdminButton', 'ADMIN_USER or ADMIN_PASS env var not set');

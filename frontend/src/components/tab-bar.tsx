@@ -3,7 +3,7 @@ import { cn } from '@/lib/cn-helper';
 import { FaStamp, FaUserShield } from 'react-icons/fa';
 import { MdMoreHoriz } from 'react-icons/md';
 import { TbMap } from 'react-icons/tb';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 
 interface TabProps {
     name: string;

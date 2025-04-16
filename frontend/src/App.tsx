@@ -1,12 +1,13 @@
-import Header from '@/components/header';
-import TabBar from '@/components/tab-bar';
-import { useSplashScreen } from '@/hooks/useSplashScreen';
-import { dbg } from '@/lib/debug';
-import { Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import PWABadge from './PWABadge';
+import Header from './components/header';
 import ScrollToTop from './components/scroll-to-top';
+import TabBar from './components/tab-bar';
 import { useUser } from './hooks/queries/useUser';
+import { useSplashScreen } from './hooks/useSplashScreen';
+import { dbg } from './lib/debug';
 
 const Content = () => {
     dbg('RENDER', 'Content');
@@ -35,6 +36,7 @@ const App = () => {
             <TabBar />
             <Content />
             {isLoggedIn && <SplashScreen />}
+            <PWABadge />
             <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
         </div>
     );

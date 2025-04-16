@@ -3,7 +3,7 @@ import RoundedButton from '@/components/rounded-button';
 import { useUser } from '@/hooks/queries/useUser';
 import { dbg } from '@/lib/debug';
 import type { UserProfile } from '@/types';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const AccountInfo = ({ user }: { user: UserProfile }) => {
     return (

@@ -2,7 +2,7 @@ import { useUser } from '@/hooks/queries/useUser';
 import { usePageTitle } from '@/hooks/usePageTitle';
 import { dbg } from '@/lib/debug';
 import { FaChevronLeft } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { HeaderMenuButton } from './header-menu-button';
 
 export const BackButton = ({ hidden }: { hidden: boolean }) => {

@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { render, renderHook, waitFor } from '@testing-library/react';
-import { BrowserRouter, MemoryRouter, type MemoryRouterProps } from 'react-router-dom';
+import { BrowserRouter, MemoryRouter, type MemoryRouterProps } from 'react-router';
 import { expect, vi } from 'vitest';
 import { dbg } from '../debug';
 
@@ -111,7 +111,7 @@ export const mockToast = () => {
 };
 
 // export const mockUseBlocker = () => {
-//     vi.mock('react-router-dom', () => ({
+//     vi.mock('react-router', () => ({
 //         useBlocker: vi.fn().mockReturnValue({
 //             state: 'blocked',
 //             proceed: vi.fn(),

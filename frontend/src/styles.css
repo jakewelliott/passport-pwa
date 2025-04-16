@@ -1,8 +1,10 @@
 /* TAILWIND */
 
-@tailwind base;
+@import 'tailwindcss';
+
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 /* FONTS */
 
@@ -41,6 +43,7 @@
 
 /* COLORS */
 
+
 :root {
   --custom-background: #a9ceeb;
   --custom-foreground: #1b365d;
@@ -60,16 +63,20 @@ body {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+
+
 .icon-scroll-container {
-  -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none; 
+  scrollbar-width: none; 
 }
 
 .icon-scroll-container::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+  display: none; 
 }
 
+
+/*
 @layer base {
   h1 {
     @apply text-h1 font-h1 leading-h1;
@@ -141,3 +148,4 @@ body {
     scrollbar-width: none;
   }
 }
+*/

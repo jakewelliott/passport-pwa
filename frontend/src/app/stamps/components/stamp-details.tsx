@@ -5,7 +5,7 @@ import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
 import type { CollectedStamp, Park } from '@/types';
 import { FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 interface StampsDetailProps {
     park: Park;

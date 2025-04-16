@@ -9,7 +9,7 @@ import { dbg } from '@/lib/debug';
 import type { CollectStampRequest } from '@/types/api';
 import { useEffect, useRef, useState } from 'react';
 import { FaEllipsisV } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { toast } from 'react-toastify';
 
 export const HeaderMenuButton = () => {

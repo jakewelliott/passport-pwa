@@ -1,7 +1,7 @@
 import { dbg } from '@/lib/debug';
 import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { RiMap2Line } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { Box } from './components/box';
 
 import { PassportHeader } from '@/components/passport-header';

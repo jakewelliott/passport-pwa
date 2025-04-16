@@ -4,7 +4,7 @@ import { a11yOnClick } from '@/lib/a11y';
 import { dbg, dbgif } from '@/lib/debug';
 // components/NotesMiniTab.tsx
 import { useEffect, useState } from 'react';
-import { useBeforeUnload } from 'react-router-dom';
+import { useBeforeUnload } from 'react-router';
 import { toast } from 'react-toastify';
 
 export const NotesMiniTab = ({
