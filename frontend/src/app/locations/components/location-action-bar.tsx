@@ -5,30 +5,30 @@ export const LocationActionBar = ({ park }: { park: Park }) => {
     // TODO: styling here needs to be fixed
     return (
         <div
-            className='flex flex-row items-center justify-evenly bg-secondary_darkteal p-2.5'
+            className='relative right-4 flex w-svw flex-row items-center justify-evenly bg-secondary_darkteal py-2.5'
             data-testid='location-action-bar'
         >
             {park.coordinates?.latitude && park.coordinates.longitude && (
                 <a
                     href={`https://www.google.com/maps/place/${park.coordinates.latitude},${park.coordinates.longitude}`}
-                    className='text-supporting_inactiveblue'
+                    className='text-system_white'
                 >
-                    <FiNavigation size={24} strokeWidth={4} />
+                    <FiNavigation size={24} strokeWidth={2} />
                 </a>
             )}
             {park.phone && (
-                <a href={`tel://${park.phone}`} className='text-supporting_inactiveblue'>
-                    <FiPhone size={24} strokeWidth={4} />
+                <a href={`tel://${park.phone}`} className='text-system_white'>
+                    <FiPhone size={24} strokeWidth={2} />
                 </a>
             )}
             {park.website && (
-                <a href={park.website} className='text-supporting_inactiveblue'>
-                    <FiGlobe size={24} strokeWidth={3} />
+                <a href={park.website} className='text-system_white'>
+                    <FiGlobe size={24} strokeWidth={2} />
                 </a>
             )}
             {park.email && (
-                <a href={`mailto:${park.email}`} className='text-supporting_inactiveblue'>
-                    <FiMail size={24} strokeWidth={4} />
+                <a href={`mailto:${park.email}`} className='text-system_white'>
+                    <FiMail size={24} strokeWidth={2} />
                 </a>
             )}
         </div>
