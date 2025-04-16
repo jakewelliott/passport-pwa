@@ -54,6 +54,7 @@ const EditParks = () => {
         const newPark: Park = {
             id: Date.now(), // Use timestamp as unique ID
             abbreviation: '',
+            city: '',
             parkName: '',
             coordinates: { latitude: 0, longitude: 0, inaccuracyRadius: 0 },
             phone: 0,
@@ -64,6 +65,7 @@ const EditParks = () => {
             youCanFind: '',
             accesses: '',
             trails: '',
+            parkType: '',
             stampImage: '',
             addresses: [],
             icons: [],
@@ -222,6 +224,30 @@ const EditParks = () => {
                         defaultValue={cell.getValue<string>()}
                         onChange={(e) => handleInputChange(row.original.id, 'parkName', e.target.value)}
                         onBlur={(e) => handleInputBlur(row.original.id, 'parkName', e.target.value)}
+                    />
+                ),
+            },
+            {
+                accessorKey: 'parkType',
+                header: 'Park Type',
+                size: 150,
+                Cell: ({ cell, row }) => (
+                    <input
+                        defaultValue={cell.getValue<string>()}
+                        onChange={(e) => handleInputChange(row.original.id, 'parkType', e.target.value)}
+                        onBlur={(e) => handleInputBlur(row.original.id, 'parkType', e.target.value)}
+                    />
+                ),
+            },
+            {
+                accessorKey: 'city',
+                header: 'City',
+                size: 150,
+                Cell: ({ cell, row }) => (
+                    <input
+                        defaultValue={cell.getValue<string>()}
+                        onChange={(e) => handleInputChange(row.original.id, 'city', e.target.value)}
+                        onBlur={(e) => handleInputBlur(row.original.id, 'city', e.target.value)}
                     />
                 ),
             },

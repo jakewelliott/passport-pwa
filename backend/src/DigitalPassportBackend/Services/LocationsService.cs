@@ -78,7 +78,7 @@ public class LocationsService : ILocationsService
         List<ParkPhoto> photos)
     {
         // Check if the park needs to be updated.
-        if (_locationsRepository.GetById(park.id).Equals(park))
+        if (!_locationsRepository.GetById(park.id).Equals(park))
         {
             // Verify that there isn't an abbreviation collision.
             try {
