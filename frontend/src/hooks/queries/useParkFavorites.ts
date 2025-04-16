@@ -45,7 +45,7 @@ const useRemoveParkFavorite = () => {
         if (!data?.some((x) => x === parkId)) {
             toast.error('Park is not a favorite');
         }
-        return fetchDelete(`${API_FAVORITE_PARKS_URL}/${parkId}`, '');
+        return fetchDelete(`${API_FAVORITE_PARKS_URL}/${parkId}`);
     };
 
     return useMutation({
