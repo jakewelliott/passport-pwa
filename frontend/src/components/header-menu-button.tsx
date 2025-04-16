@@ -21,7 +21,7 @@ export const HeaderMenuButton = () => {
     const { mutate } = useStampMutation();
     const { geopoint } = useLocationHook();
     const { data, markFavorite, removeFavorite } = useFavoriteParks();
-    const { data: user } = useUser();
+    const { isAdmin } = useUser();
 
     // get the park from the pathname
     const { pathname } = useLocation();
@@ -40,8 +40,11 @@ export const HeaderMenuButton = () => {
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
+    const showForAdmin = isAdmin && pageTitle === 'Locations';
+    const showForParkDetails = park && pageTitle === 'Park Details';
+
     // if we can't find the park, return null
-    if (!park && pageTitle === 'Park Details') return null;
+    if (!showForParkDetails && !showForAdmin) return null;
 
     const handleCollectStampPress = () => {
         if (!geopoint) {
@@ -125,7 +128,7 @@ export const HeaderMenuButton = () => {
                                     </button>
                                 </>
                             )}
-                            {user?.role === 'admin' && (
+                            {isAdmin && (
                                 <button
                                     className='block w-full px-4 py-2 text-left'
                                     type='button'
