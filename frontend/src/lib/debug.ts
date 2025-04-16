@@ -32,7 +32,7 @@ type DebugType = keyof typeof DebugControl;
 const MessageStyles: Record<DebugType, string> = {
     RENDER: 'color: gray',
     LOADER: 'color: #FFA500', // orange
-    MISC: 'color: yellow',
+    MISC: 'color: orange',
     HOOK: 'color: green',
     FETCH: 'color: #00AAAA; opacity: 0.7', // teal-like
     QUERY: 'color: cyan',
