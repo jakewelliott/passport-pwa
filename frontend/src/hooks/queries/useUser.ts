@@ -15,7 +15,7 @@ export const useUser = () => {
 
     const token = Cookies.get('token');
     const user = query.data;
-    const isLoggedIn = token !== undefined;
+    const isLoggedIn = !!token;
     const isAdmin = isLoggedIn && user?.role === 'admin';
     return { ...query, isLoggedIn, isAdmin };
 };

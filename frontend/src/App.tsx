@@ -27,13 +27,14 @@ const App = () => {
     dbg('RENDER', 'App.tsx');
 
     const { SplashScreen } = useSplashScreen();
+    const { isLoggedIn } = useUser();
 
     return (
         <div className='fixed inset-0 flex flex-col'>
             <Header />
             <TabBar />
             <Content />
-            <SplashScreen />
+            {isLoggedIn && <SplashScreen />}
             <ToastContainer position='bottom-right' theme='colored' closeOnClick draggable style={{ zIndex: 9999 }} />
         </div>
     );

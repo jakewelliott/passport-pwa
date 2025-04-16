@@ -9,7 +9,6 @@ import { useNotes } from './queries/useNotes';
 import { useFavoriteParks } from './queries/useParkFavorites';
 import { useParks } from './queries/useParks';
 import { useTrails } from './queries/useTrails';
-import { useUser } from './queries/useUser';
 
 const DEFAULT_DELAY = 100;
 
@@ -117,8 +116,7 @@ const APP_LOADERS: Loader[] = [
 ];
 
 export const useSplashScreen = () => {
-    const { isLoggedIn } = useUser();
-    const [finished, setFinished] = useState(isLoggedIn);
+    const [finished, setFinished] = useState(false);
 
     const allDone = <AllDone mark={() => setFinished(true)} />;
     const loaders = nestLoaders(APP_LOADERS, allDone);
