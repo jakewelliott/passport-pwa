@@ -73,7 +73,7 @@ const WelcomeMessage: React.FC = () => {
                     ))}
                 </div>
 
-                <p className='p-mini ' style={{ marginTop: '12px' }}>
+                <p className='text-xs ' style={{ marginTop: '12px' }}>
                     From left to right - photo courtesy of: Laura Meeks; The Everett Family; Katie Griswold
                 </p>
             </div>

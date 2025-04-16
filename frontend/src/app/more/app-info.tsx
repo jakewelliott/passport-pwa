@@ -72,15 +72,15 @@ const ReservationsBox = () => {
             <div className='flex flex-col items-center gap-2'>
                 <Row>
                     <img src={'/icons/misc/Picnic.svg'} alt={'picnic'} width={'36px'} height={'36px'} />
-                    <Link to={'https://www.ncparks.gov/reservations'} className='p-mini'>
+                    <Link to={'https://www.ncparks.gov/reservations'} className='text-xs'>
                         ncparks.gov/reservations
                     </Link>
-                    <p className='p-mini'>1-877-722-6762</p>
+                    <p className='text-xs'>1-877-722-6762</p>
                 </Row>
                 <Row>
                     {/* @ts-ignore */}
                     <img src={'/icons/misc/Camping.svg'} alt={'campsite'} width={'36px'} height={'36px'} />
-                    <p className='p-mini'>
+                    <p className='text-xs'>
                         Reserve campsites, picnic shelters and other park facilities online or over the phone.
                     </p>
                 </Row>

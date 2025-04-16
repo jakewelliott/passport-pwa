@@ -7,11 +7,9 @@ import { GenericIcon } from './generic-icon';
 
 const CompletedAtView = ({ updatedAt }: { updatedAt: Date }) => (
     <div className='w-fit rounded-lg bg-supporting-terracotta p-2 text-system-white'>
-        <p className='p-mini'>Completed on {DateHelper.toStringLong(new Date(updatedAt))}</p>
+        <p className='text-xs'>Completed on {DateHelper.toStringLong(new Date(updatedAt))}</p>
     </div>
 );
-
-const AddressView = ({ address }: { address: string }) => <p className='p-mini'>{address}</p>;
 
 interface BucketListItemViewProps {
     item: BucketListItem;
@@ -47,7 +45,7 @@ export const BucketListItemView = ({
                     color='system-white'
                     testId={completed ? 'checked-icon' : 'unchecked-icon'}
                 />
-                {address && <AddressView address={address} />}
+                {address && <p className='font-SSPR text-sm'>{address}</p>}
                 {completed && <CompletedAtView updatedAt={completion.updatedAt} />}
             </div>
             {user?.role === 'admin' && (

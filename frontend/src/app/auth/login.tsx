@@ -132,7 +132,7 @@ export default function LoginPage() {
                         <RoundedButton
                             type='submit'
                             title='Login'
-                            color='secondary-orange'
+                            color='bg-secondary-orange'
                             onClick={handleAuth(true)}
                         />
                     </div>

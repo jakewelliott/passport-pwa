@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import PWABadge from './PWABadge';
+import PWABadge from './components/PWABadge';
 import Header from './components/header';
 import ScrollToTop from './components/scroll-to-top';
 import TabBar from './components/tab-bar';

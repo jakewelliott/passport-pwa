@@ -1,5 +1,4 @@
-import { GenericIcon } from '@/components/generic-icon';
-import { stampCollectedOn } from '@/components/stamp-collected-on';
+import { StampCollectedOn } from '@/components/stamp-collected-on';
 import { useStamp } from '@/hooks/queries/useStamps';
 import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
@@ -13,7 +12,7 @@ interface StampsDetailProps {
 }
 
 const CollectedManually = ({ stamp }: { stamp?: CollectedStamp }) =>
-    stamp?.method !== 'manual' ? null : <p className='warning'>Stamp collected manually</p>;
+    stamp?.method === 'manual' ? <p className='font-italic text-system-red'>Stamp collected manually</p> : null;
 
 export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
     const { data: stamp } = useStamp(park.id);
@@ -67,8 +66,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                         </div>
                         <div className='space-y-2'>
                             <p className='text-supporting-inactiveblue'>{parkCityState}</p>
-                            <GenericIcon name='stamp' text={stampCollectedOn(stamp)} testId='stamp-collected-on' />
-                            <CollectedManually stamp={stamp} />
+                            <StampCollectedOn stamp={stamp} />
                             <Link to={`/locations/${park.abbreviation}`} className='link inline-block'>
                                 View Park Details <span aria-hidden='true'>&gt;</span>
                             </Link>

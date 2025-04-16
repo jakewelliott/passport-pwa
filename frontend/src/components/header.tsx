@@ -23,7 +23,7 @@ const Header = () => {
 
     return (
         <header
-            className='static top-0 flex w-full items-center justify-center bg-secondary-darkteal p-4'
+            className='static top-0 flex w-full flex-row items-center justify-center bg-secondary-darkteal p-4'
             style={{ height: '50px' }}
         >
             {showBackButton && (
@@ -31,7 +31,7 @@ const Header = () => {
                     <BackButton hidden={false} />
                 </div>
             )}
-            <h4 className='text-system-white'>{pageTitle}</h4>
+            <h4 className='font-SSPS text-system-white'>{pageTitle}</h4>
             <div className='absolute right-4' data-testid='balance-placeholder'>
                 {isLoggedIn && <HeaderMenuButton />}
             </div>

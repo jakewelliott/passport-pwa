@@ -24,7 +24,7 @@ export const FilterMenu = ({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsTypingSearch(true)}
                 onBlur={() => setIsTypingSearch(false)}
-                className='w-full rounded-lg border border-system-gray p-3 pr-7 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100'
+                className='w-full rounded-lg border border-system-gray bg-supporting-lightblue p-3 pr-7 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100'
             />
             {searchQuery && (
                 <button

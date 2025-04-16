@@ -21,7 +21,7 @@ export const ItemView = ({ imageSrc, altText, title, description }: Item) => {
                 <h4 className='min-h-[20px] w-full hyphens-auto break-words bg-supporting-inactiveblue p-1.5 text-center text-[clamp(11px,calc(24/550*100vw),24px)] text-system-white leading-[clamp(8px,calc(20/550*100vw),20px)]'>
                     {title}
                 </h4>
-                <p className='w-full bg-supporting-lightblue p-mini py-3 text-center text-[clamp(12px,calc(18/550*100vw),18px)] leading-[clamp(16px,calc(22/550*100vw),22px)]'>
+                <p className='w-full bg-supporting-lightblue py-3 text-center text-[clamp(12px,calc(18/550*100vw),18px)] text-xs leading-[clamp(16px,calc(22/550*100vw),22px)]'>
                     {description}
                 </p>
             </div>

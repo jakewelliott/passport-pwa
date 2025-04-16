@@ -21,7 +21,7 @@ export const SplashScreenView = ({ children }: { children?: React.ReactNode }) =
                     height='103'
                 />
                 <h3>North Carolina State Parks</h3>
-                <p className='script' style={{ paddingTop: 30 }}>
+                <p className='font-Norican text-8xl' style={{ paddingTop: 30 }}>
                     Passport
                 </p>
                 <div className='mt-20 rounded-xl bg-secondary-lightblue bg-opacity-70 p-3'>{children}</div>

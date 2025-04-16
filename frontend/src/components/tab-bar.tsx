@@ -22,7 +22,7 @@ const Tab = ({ tab, selected }: { tab: TabProps; selected: boolean }) => {
                     )}
                 >
                     {tab.icon}
-                    <span className='p-mini'>{tab.name}</span>
+                    <span className='font-SSPS text-sm'>{tab.name}</span>
                 </div>
             </Link>
         </li>

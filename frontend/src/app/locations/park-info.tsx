@@ -6,9 +6,8 @@ import { LocationMiniTabBar } from '@/app/locations/components/minitab-bar';
 import { NotesMiniTab } from '@/app/locations/components/notes-minitab';
 import { PhotoGalleryMiniTab } from '@/app/locations/components/photos-minitab';
 import { BucketList } from '@/components/bucket-list';
-import { GenericIcon } from '@/components/generic-icon';
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
-import { stampCollectedOn } from '@/components/stamp-collected-on';
+import { StampCollectedOn } from '@/components/stamp-collected-on';
 import { usePark } from '@/hooks/queries/useParks';
 import { useStamp } from '@/hooks/queries/useStamps';
 import { dbg } from '@/lib/debug';
@@ -46,7 +45,8 @@ export default function ParkInfoScreen() {
                 </div>
                 <AddressView park={park} />
                 <ContactView park={park} />
-                <GenericIcon name='stamp' text={stampCollectedOn(stamp)} />
+                <StampCollectedOn stamp={stamp} />
+
                 <BucketList parkId={park.id} />
             </div>
 
