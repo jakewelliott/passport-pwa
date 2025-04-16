@@ -32,7 +32,7 @@ export const GenericIcon = ({
     name,
     props = { strokeWidth: 3 },
     // size = 4,
-    color = 'supporting_inactiveblue',
+    color = 'supporting-inactiveblue',
     text,
     textClassName,
     testId,

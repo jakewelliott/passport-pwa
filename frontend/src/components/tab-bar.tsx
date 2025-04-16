@@ -18,7 +18,7 @@ const Tab = ({ tab, selected }: { tab: TabProps; selected: boolean }) => {
                 <div
                     className={cn(
                         'flex flex-col items-center p-2',
-                        selected ? 'text-system_white' : 'text-supporting_inactiveblue',
+                        selected ? 'text-system-white' : 'text-supporting-inactiveblue',
                     )}
                 >
                     {tab.icon}
@@ -44,7 +44,7 @@ const TabBar = () => {
     if (!isLoggedIn || !user) return null;
 
     return (
-        <nav className='fixed bottom-0 h-16 w-full bg-secondary_darkteal'>
+        <nav className='fixed bottom-0 h-16 w-full bg-secondary-darkteal'>
             <ul className='flex h-full items-center justify-around'>
                 {tabs.map(
                     (tab) =>

@@ -24,7 +24,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
         <>
             {/* Dark overlay */}
             <div
-                className='fixed inset-0 bg-system_black opacity-65'
+                className='fixed inset-0 bg-system-black opacity-65'
                 style={{ zIndex: 40 }}
                 {...a11yOnClick(handleClose)}
             />
@@ -35,7 +35,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                 {...a11yOnClick(handleClose)}
             >
                 <article
-                    className='relative mx-4 w-full max-w-sm rounded-lg bg-supporting_lightblue p-4 shadow-xl'
+                    className='relative mx-4 w-full max-w-sm rounded-lg bg-supporting-lightblue p-4 shadow-xl'
                     onClick={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                 >
@@ -48,7 +48,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                                 type='button'
                                 aria-label='Close park details'
                             >
-                                <FaTimes className='text-system_gray' />
+                                <FaTimes className='text-system-gray' />
                             </button>
                         </div>
                     </header>
@@ -66,7 +66,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                             />
                         </div>
                         <div className='space-y-2'>
-                            <p className='text-supporting_inactiveblue'>{parkCityState}</p>
+                            <p className='text-supporting-inactiveblue'>{parkCityState}</p>
                             <GenericIcon name='stamp' text={stampCollectedOn(stamp)} testId='stamp-collected-on' />
                             <CollectedManually stamp={stamp} />
                             <Link to={`/locations/${park.abbreviation}`} className='link inline-block'>

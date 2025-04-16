@@ -6,7 +6,7 @@ import { FaPen } from 'react-icons/fa6';
 import { GenericIcon } from './generic-icon';
 
 const CompletedAtView = ({ updatedAt }: { updatedAt: Date }) => (
-    <div className='w-fit rounded-lg bg-supporting_terracotta p-2 text-system_white'>
+    <div className='w-fit rounded-lg bg-supporting-terracotta p-2 text-system-white'>
         <p className='p-mini'>Completed on {DateHelper.toStringLong(new Date(updatedAt))}</p>
     </div>
 );
@@ -37,14 +37,14 @@ export const BucketListItemView = ({
         <div className='flex'>
             <div
                 key={item.id}
-                className='flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white'
+                className='flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white'
                 {...a11yOnClick(handler)}
                 data-testid={testId}
             >
                 <GenericIcon
                     name={completed ? 'check' : 'uncheck'}
                     text={item.task}
-                    color='system_white'
+                    color='system-white'
                     testId={completed ? 'checked-icon' : 'unchecked-icon'}
                 />
                 {address && <AddressView address={address} />}
@@ -53,7 +53,7 @@ export const BucketListItemView = ({
             {user?.role === 'admin' && (
                 <div className='my-auto ml-auto w-7 pl-2'>
                     <button
-                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                         onClick={handleEditItem}
                         type='button'
                     >

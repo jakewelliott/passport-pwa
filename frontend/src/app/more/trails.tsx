@@ -15,7 +15,7 @@ const LogoAndLink = () => {
             <img src='/TrailsLogo.svg' alt='Trails Logo' />
             <p className='text-center'>
                 For maps and additional information on these state trails, please visit{' '}
-                <a href='https://trails.nc.gov/state-trails' className='text-main_blue'>
+                <a href='https://trails.nc.gov/state-trails' className='text-main-blue'>
                     trails.nc.gov/state-trails
                 </a>
             </p>

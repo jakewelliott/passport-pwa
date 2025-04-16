@@ -12,7 +12,7 @@ export const Box = ({ title, headerClass, bodyClass, children }: BoxProps) => {
         <div className='flex-col'>
             <div
                 className={cn(
-                    'flex w-full items-center justify-center p-2 pt-3 text-center text-system_white',
+                    'flex w-full items-center justify-center p-2 pt-3 text-center text-system-white',
                     headerClass,
                 )}
             >

@@ -371,7 +371,7 @@ const EditParks = () => {
                             {row.original.addresses?.map((address, index) => (
                                 <div
                                     key={address.title}
-                                    className='m-4 ml-0 flex w-[523px] items-center rounded-lg bg-secondary_lightblue p-4'
+                                    className='m-4 ml-0 flex w-[523px] items-center rounded-lg bg-secondary-lightblue p-4'
                                 >
                                     <div>
                                         <div className='mb-2 flex'>
@@ -380,7 +380,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='title'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={address.title}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -404,7 +404,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='addressLineOne'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={address.addressLineOne}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -428,7 +428,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='addressLineTwo'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={address.addressLineTwo}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -452,7 +452,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='city'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={address.city}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -476,7 +476,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='state'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={address.state}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -500,7 +500,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='zip'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={address.zipcode}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -520,7 +520,7 @@ const EditParks = () => {
                                         </div>
                                     </div>
                                     <button
-                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         type='button'
                                         onClick={() =>
                                             handleNestedArrayChange(row.original.id, 'addresses', 'remove', index)
@@ -538,12 +538,12 @@ const EditParks = () => {
                             {row.original.icons?.map((icon, index) => (
                                 <div
                                     key={icon.iconName}
-                                    className='m-4 ml-0 block w-[523px] rounded-lg bg-secondary_lightblue p-4'
+                                    className='m-4 ml-0 block w-[523px] rounded-lg bg-secondary-lightblue p-4'
                                 >
                                     <span>{icon.tooltip}</span>
 
                                     <button
-                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         type='button'
                                         onClick={() =>
                                             handleNestedArrayChange(row.original.id, 'icons', 'remove', index)
@@ -553,9 +553,9 @@ const EditParks = () => {
                                     </button>
                                 </div>
                             ))}
-                            <div className='m-4 ml-0 flex w-[523px] rounded-lg bg-secondary_lightblue p-4'>
+                            <div className='m-4 ml-0 flex w-[523px] rounded-lg bg-secondary-lightblue p-4'>
                                 <select
-                                    className='w-full rounded-lg bg-system_white p-1 outline'
+                                    className='w-full rounded-lg bg-system-white p-1 outline'
                                     onChange={(e) => {
                                         const icon = PARK_ICONS.find((icon) => icon.tooltip === e.target.value);
                                         const updatedSelectedIcons = selectedIcon.filter(
@@ -577,7 +577,7 @@ const EditParks = () => {
                                 {selectedIcon &&
                                     selectedIcon.find((x) => x.parkId === row.original.id) !== undefined && (
                                         <button
-                                            className='ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                            className='ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                             type='button'
                                             onClick={() => {
                                                 handleNestedArrayChange(
@@ -610,7 +610,7 @@ const EditParks = () => {
                             {row.original.photos?.map((photo, index) => (
                                 <div
                                     key={photo.photoPath}
-                                    className='m-4 ml-0 flex w-[523px] items-center rounded-lg bg-secondary_lightblue p-4'
+                                    className='m-4 ml-0 flex w-[523px] items-center rounded-lg bg-secondary-lightblue p-4'
                                 >
                                     <div>
                                         <div className='mb-2 flex'>
@@ -619,7 +619,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='zip'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={photo.photoPath}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -643,7 +643,7 @@ const EditParks = () => {
                                             </label>
                                             <input
                                                 id='zip'
-                                                className='w-72 rounded-lg bg-system_white p-1 outline'
+                                                className='w-72 rounded-lg bg-system-white p-1 outline'
                                                 defaultValue={photo.alt}
                                                 onChange={(e) =>
                                                     handleInputChange(
@@ -663,7 +663,7 @@ const EditParks = () => {
                                         </div>
                                     </div>
                                     <button
-                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         type='button'
                                         onClick={() =>
                                             handleNestedArrayChange(row.original.id, 'photos', 'remove', index)
@@ -679,7 +679,7 @@ const EditParks = () => {
                 renderBottomToolbarCustomActions={() => (
                     <div className='w-8/12'>
                         <button
-                            className='float-right rounded-lg bg-secondary_orange p-3 text-system_white'
+                            className='float-right rounded-lg bg-secondary-orange p-3 text-system-white'
                             onClick={() => handleSave(editedParks)}
                             disabled={editedParks.length === 0}
                             type='button'
@@ -687,7 +687,7 @@ const EditParks = () => {
                             Save Changes
                         </button>
                         <button
-                            className='float-left rounded-lg bg-secondary_orange p-3 text-system_white'
+                            className='float-left rounded-lg bg-secondary-orange p-3 text-system-white'
                             onClick={() => handleAddNewPark}
                             type='button'
                         >

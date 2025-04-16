@@ -123,7 +123,7 @@ export default function LocationsScreen() {
                     <div key={park.id} data-testid={'park'}>
                         <Link
                             to={`/locations/${park.abbreviation}`}
-                            className='text-supporting_inactiveblue no-underline'
+                            className='text-supporting-inactiveblue no-underline'
                         >
                             <Row park={park} />
                         </Link>

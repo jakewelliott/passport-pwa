@@ -55,8 +55,8 @@ export function FormField({
                     className={cn(
                         'mt-1 w-full rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100',
                         error
-                            ? 'border-system_red ring-1 ring-system_red focus:border-system_red'
-                            : 'border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal',
+                            ? 'border-system-red ring-1 ring-system-red focus:border-system-red'
+                            : 'border-system-gray focus:border-secondary-darkteal focus:ring-secondary-darkteal',
                     )}
                 />
             )}
@@ -69,8 +69,8 @@ export function FormField({
                     className={cn(
                         'mt-1 w-full overflow-hidden rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100',
                         error
-                            ? 'border-system_red ring-1 ring-system_red focus:border-system_red'
-                            : 'border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal',
+                            ? 'border-system-red ring-1 ring-system-red focus:border-system-red'
+                            : 'border-system-gray focus:border-secondary-darkteal focus:ring-secondary-darkteal',
                     )}
                 />
             )}

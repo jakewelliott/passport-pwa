@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 const Tooltip = ({ text, position }: { text: string; position: { top: number; left: number } }) => {
     return ReactDOM.createPortal(
         <div
-            className='pointer-events-none absolute rounded-md bg-supporting_lightgray bg-opacity-70 p-1'
+            className='pointer-events-none absolute rounded-md bg-supporting-lightgray bg-opacity-70 p-1'
             style={{
                 top: position.top,
                 left: position.left,
@@ -23,7 +23,7 @@ const Tooltip = ({ text, position }: { text: string; position: { top: number; le
 const Highlight = ({ title, children }: { title: string; children?: React.ReactNode }) => {
     return (
         <p>
-            <span className='green-text'>{title}:</span>&nbsp;&nbsp;{children}
+            <span className='text-main-green'>{title}:</span>&nbsp;&nbsp;{children}
         </p>
     );
 };

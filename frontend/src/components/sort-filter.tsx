@@ -187,8 +187,8 @@ export const FilterModal = ({
     const sortedIcons = [...allIcons].sort((a, b) => a.tooltip.localeCompare(b.tooltip));
 
     return (
-        <div className='fixed inset-0 z-50 flex items-center justify-center bg-system_black bg-opacity-50 px-4'>
-            <div className='flex max-h-[80vh] w-full flex-col gap-2 overflow-y-scroll rounded-lg bg-system_white p-4'>
+        <div className='fixed inset-0 z-50 flex items-center justify-center bg-system-black bg-opacity-50 px-4'>
+            <div className='flex max-h-[80vh] w-full flex-col gap-2 overflow-y-scroll rounded-lg bg-system-white p-4'>
                 <Header handlePress={handleCloseFilterModal} />
                 <SortBy
                     sortOption={sortOption}

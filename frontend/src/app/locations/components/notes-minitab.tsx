@@ -97,7 +97,7 @@ export const NotesMiniTab = ({
     return (
         <div className='flex h-full flex-col'>
             <textarea
-                className='h-72 w-full flex-grow resize-none border border-secondary_darkteal p-4 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'
+                className='h-72 w-full flex-grow resize-none border border-secondary-darkteal p-4 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100'
                 value={noteState}
                 onChange={handleChange}
                 placeholder={placeholder}

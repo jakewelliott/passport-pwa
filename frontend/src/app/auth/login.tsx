@@ -13,8 +13,8 @@ const getInputStyles = (isError: boolean) =>
     cn(
         'w-full rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100',
         isError
-            ? 'border-system_red focus:border-system_red ring-system_red ring-1'
-            : 'border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal',
+            ? 'border-system-red focus:border-system-red ring-system-red ring-1'
+            : 'border-system-gray focus:border-secondary-darkteal focus:ring-secondary-darkteal',
     );
 
 // hook lives here since it's only used on this page
@@ -91,7 +91,7 @@ export default function LoginPage() {
             style={{ backgroundImage: "url('/photos/SILA-BackCover.jpg')" }}
         >
             {!navigator.onLine && (
-                <div className='flex max-w-80 flex-col items-center rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8'>
+                <div className='flex max-w-80 flex-col items-center rounded-3xl bg-supporting-lightblue bg-opacity-75 p-8'>
                     <p className='pl text-center'>
                         It appears as though your device is offline. In order to log in to the application, you must be
                         online.
@@ -101,7 +101,7 @@ export default function LoginPage() {
             {navigator.onLine && (
                 <form
                     ref={formRef}
-                    className='flex flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8'
+                    className='flex flex-col items-center gap-3 rounded-3xl bg-supporting-lightblue bg-opacity-75 p-8'
                     onSubmit={handleAuth(true)}
                 >
                     <input
@@ -122,7 +122,7 @@ export default function LoginPage() {
                             href='https://www.nc.gov/privacy'
                             target='_blank'
                             rel='noopener noreferrer'
-                            className='text-secondary_darkteal hover:underline'
+                            className='text-secondary-darkteal hover:underline'
                         >
                             Privacy Policy
                         </a>
@@ -132,7 +132,7 @@ export default function LoginPage() {
                         <RoundedButton
                             type='submit'
                             title='Login'
-                            color='secondary_orange'
+                            color='secondary-orange'
                             onClick={handleAuth(true)}
                         />
                     </div>

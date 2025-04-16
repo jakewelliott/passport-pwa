@@ -55,7 +55,7 @@ const WelcomeMessage: React.FC = () => {
     return (
         <>
             <div className='space-y-6'>
-                <h1 className='whitespace-nowrap text-center text-main_green text-xl'>
+                <h1 className='whitespace-nowrap text-center text-main-green text-xl'>
                     <span className='inline-block w-full text-[length:min(64px,_calc(100vw_/_7))]'>WELCOME!</span>
                 </h1>
 

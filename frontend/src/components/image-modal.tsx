@@ -24,13 +24,13 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
 
     return (
         <div className='fixed inset-0 flex items-center justify-center' style={{ zIndex: 9999 }}>
-            <div className='absolute inset-0 bg-system_black bg-opacity-70 backdrop-blur-md backdrop-filter' />
+            <div className='absolute inset-0 bg-system-black bg-opacity-70 backdrop-blur-md backdrop-filter' />
             <dialog
                 aria-modal='true'
-                className='relative flex h-full w-full items-center justify-center bg-system_black bg-opacity-0'
+                className='relative flex h-full w-full items-center justify-center bg-system-black bg-opacity-0'
             >
                 <span
-                    className='absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system_white'
+                    className='absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system-white'
                     style={{ textShadow: '0 0 4px #444444' }}
                     {...a11yOnClick(onClose)}
                 >
@@ -61,7 +61,7 @@ export const ImageModal: React.FC<ImageModalProps> = ({ photo, onClose }) => {
                 {photo.alt && (
                     <div
                         data-testid='caption-container'
-                        className='absolute right-0 bottom-4 left-0 bg-system_black bg-opacity-50 p-2 text-center text-system_white'
+                        className='absolute right-0 bottom-4 left-0 bg-system-black bg-opacity-50 p-2 text-center text-system-white'
                     >
                         {photo.alt}
                     </div>

@@ -26,7 +26,7 @@ export default function StayingSafe() {
 
     return (
         <>
-            <h4 className='mb-6 w-full bg-supporting_inactiveblue p-3 text-center text-system_white uppercase'>
+            <h4 className='mb-6 w-full bg-supporting-inactiveblue p-3 text-center text-system-white uppercase'>
                 How to Stay Safe While Visiting NC State Parks
             </h4>
 

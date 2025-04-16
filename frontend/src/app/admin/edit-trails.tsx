@@ -187,12 +187,12 @@ const EditTrails = () => {
                             {row.original.icons?.map((icon, index) => (
                                 <div
                                     key={icon.iconName}
-                                    className='m-4 ml-0 block w-[523px] rounded-lg bg-secondary_lightblue p-4'
+                                    className='m-4 ml-0 block w-[523px] rounded-lg bg-secondary-lightblue p-4'
                                 >
                                     <span>{icon.tooltip}</span>
 
                                     <button
-                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='-my-1 float-right ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         type='button'
                                         onClick={() =>
                                             handleNestedArrayChange(row.original.id, 'icons', 'remove', index)
@@ -202,9 +202,9 @@ const EditTrails = () => {
                                     </button>
                                 </div>
                             ))}
-                            <div className='m-4 ml-0 flex w-[523px] rounded-lg bg-secondary_lightblue p-4'>
+                            <div className='m-4 ml-0 flex w-[523px] rounded-lg bg-secondary-lightblue p-4'>
                                 <select
-                                    className='w-full rounded-lg bg-system_white p-1 outline'
+                                    className='w-full rounded-lg bg-system-white p-1 outline'
                                     onChange={(e) => {
                                         const icon = TRAIL_ICONS.find((icon) => icon.tooltip === e.target.value);
                                         const updatedSelectedIcons = selectedIcon.filter(
@@ -226,7 +226,7 @@ const EditTrails = () => {
                                 {selectedIcon &&
                                     selectedIcon.find((x) => x.trailId === row.original.id) !== undefined && (
                                         <button
-                                            className='ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                            className='ml-4 flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                             type='button'
                                             onClick={() => {
                                                 handleNestedArrayChange(
@@ -251,7 +251,7 @@ const EditTrails = () => {
                 renderBottomToolbarCustomActions={() => (
                     <div className='w-8/12'>
                         <button
-                            className='float-right rounded-lg bg-secondary_orange p-3 text-system_white'
+                            className='float-right rounded-lg bg-secondary-orange p-3 text-system-white'
                             onClick={() => handleSave(editedTrails)}
                             disabled={editedTrails.length === 0}
                             type='button'
@@ -259,7 +259,7 @@ const EditTrails = () => {
                             Save Changes
                         </button>
                         <button
-                            className='float-left rounded-lg bg-secondary_orange p-3 text-system_white'
+                            className='float-left rounded-lg bg-secondary-orange p-3 text-system-white'
                             onClick={() => handleAddNewTrail}
                             type='button'
                         >

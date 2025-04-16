@@ -6,15 +6,15 @@ export const TrailDetailView = ({ trail, handleEditTrail }: { trail: Trail; hand
     return (
         <div className='flex'>
             <div className='mb-2 gap-2'>
-                <span className='text-secondary_orange'>{trail.trailName}:</span>
+                <span className='text-secondary-orange'>{trail.trailName}:</span>
                 <TrailIcons data-testid='trail-icons' icons={trail.icons} size='xs' />
-                <span className='text-secondary_orange'>▪</span>
-                {` ${trail.distance}`} <span className='text-secondary_orange'>▪</span>
+                <span className='text-secondary-orange'>▪</span>
+                {` ${trail.distance}`} <span className='text-secondary-orange'>▪</span>
                 {` ${trail.description}`}
             </div>
             <div className='ml-auto w-7'>
                 <button
-                    className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                    className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                     onClick={handleEditTrail}
                     type='button'
                 >
