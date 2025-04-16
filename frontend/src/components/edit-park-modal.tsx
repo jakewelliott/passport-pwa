@@ -19,6 +19,8 @@ const defaultPark: Park = {
     trails: '',
     website: '',
     addresses: [],
+    city: '',
+    parkType: '',
     icons: [],
     photos: [],
     abbreviation: '',
