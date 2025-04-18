@@ -7,7 +7,6 @@ import { dbg } from '@/lib/debug';
 import { useRef, useState } from 'react';
 import { Navigate } from 'react-router';
 import { toast } from 'react-toastify';
-import { SuperAdminButton } from './components/superadmin-button';
 
 const getInputStyles = (isError: boolean) =>
     cn(
@@ -136,7 +135,6 @@ export default function LoginPage() {
                             onClick={handleAuth(true)}
                         />
                     </div>
-                    <SuperAdminButton />
                 </form>
             )}
         </div>
