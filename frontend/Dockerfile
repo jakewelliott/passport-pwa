@@ -10,7 +10,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the .env file from the parent directory
-COPY --from=root .env .
+# COPY --from=root .env .
 
 # Copy the rest of the application code
 COPY . .
