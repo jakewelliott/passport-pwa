@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Trails Component - User Stories > matches snapshot 1`] = `
-<div>
-  <div>
-    Loading
-  </div>
-</div>
-`;
