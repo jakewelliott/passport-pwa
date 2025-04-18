@@ -1,3 +1,21 @@
+# Stage 1: Build the frontend
+FROM node:20-alpine AS frontend-build
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY frontend/package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
+COPY frontend/ ./
+
+# Build the application
+RUN npm run build
+
+# Stage 2: Set up Nginx with the frontend build
 FROM nginx:alpine
 
 # Copy the nginx.conf file
@@ -12,6 +30,9 @@ RUN mkdir -p /etc/nginx/certs/localhost
 # Copy the ssl certificates
 COPY nginx/certs/localhost/localhost+2.pem /etc/nginx/certs/localhost/localhost+2.pem
 COPY nginx/certs/localhost/localhost+2-key.pem /etc/nginx/certs/localhost/localhost+2-key.pem
+
+# Copy the built frontend files from the frontend-build stage
+COPY --from=frontend-build /app/dist /usr/share/nginx/html
 
 EXPOSE 80 443
 
