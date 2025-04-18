@@ -29,7 +29,6 @@ const RoundedButton: React.FC<ButtonProps> = ({
         e.preventDefault();
     },
     type = 'button',
-    width = '128',
     textColor = 'system-white',
     textSize = 'text-2xl',
     variant = 'default',
@@ -42,11 +41,11 @@ const RoundedButton: React.FC<ButtonProps> = ({
 
     // Variant-specific styles
     const variantStyles = {
-        default: 'p-4',
-        outline: 'p-4 border-2',
-        small: 'p-2 text-sm',
-        large: 'p-6',
-        icon: 'p-3',
+        default: 'p-2 w-48',
+        outline: 'p-4 border-2 w-64',
+        small: 'p-2 text-sm w-32',
+        large: 'p-6 w-64',
+        icon: 'p-3 w-auto text-system-white',
     };
 
     // Compose the className based on variant
@@ -60,9 +59,6 @@ const RoundedButton: React.FC<ButtonProps> = ({
     // Adjust text color for outline variant
     const finalTextColor = variant === 'outline' ? color.replace('bg-', '') : textColor;
 
-    // Adjust width based on variant
-    const buttonWidth = variant === 'icon' ? 'auto' : `${width}px`;
-
     // Adjust text size based on variant
     const finalTextSize = variant === 'small' ? 'text-sm' : variant === 'large' ? 'text-3xl' : textSize;
 
@@ -70,14 +66,8 @@ const RoundedButton: React.FC<ButtonProps> = ({
     const iconMargin = variant === 'icon' ? 'mx-2' : 'mr-2';
 
     return (
-        <button
-            type={type}
-            className={className}
-            onClick={disabled ? undefined : onClick}
-            style={{ minWidth: buttonWidth }}
-            disabled={disabled}
-        >
-            {icon && <span className={iconMargin}>{icon}</span>}
+        <button type={type} className={className} onClick={disabled ? undefined : onClick} disabled={disabled}>
+            {icon && <span className={cn(iconMargin, `text-${finalTextColor}`)}>{icon}</span>}
             <p className={cn(`text-${finalTextColor}`, finalTextSize)}>{title}</p>
         </button>
     );
