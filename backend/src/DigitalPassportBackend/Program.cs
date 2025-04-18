@@ -35,7 +35,11 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.WebHost.ConfigureKestrel(serverOptions =>
     {
-        serverOptions.Listen(System.Net.IPAddress.Any, int.Parse(builder.Configuration[$"API_{(builder.Environment.IsDevelopment() ? "DEV_" : "")}PORT"]!)); // Listen on all network interfaces on port 5000
+        int port = builder.Environment.IsDevelopment() 
+            ? int.Parse(builder.Configuration["API_DEV_PORT"]!) 
+            : 5001; // this is hardcoded since we can't dynamically set port in nginx
+        // that's technically a lie but i dont feel like using templates :)
+        serverOptions.Listen(System.Net.IPAddress.Any, port);
     });
 }
 var app = builder.Build();

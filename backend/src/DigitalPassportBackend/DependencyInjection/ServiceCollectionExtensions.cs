@@ -100,12 +100,16 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IFavoriteParkRepository, FavoriteParkRepository>();
 
-        var envAddendum = isDevelopment ? "DEV_" : "";
-        var connectionString = $"host={configuration[$"DB_{envAddendum}HOST"]};" +
-                               $"port={configuration[$"DB_{envAddendum}PORT"]};" +
+        string host = isDevelopment ? configuration["DB_DEV_HOST"]! : "db"; // hardcoded in nginx
+        string port = isDevelopment ? configuration["DB_DEV_PORT"]! : configuration["DB_PORT"]!;
+        string password = isDevelopment ? configuration["DB_DEV_PASSWORD"]! : configuration["DB_PASSWORD"]!;
+        string database = isDevelopment ? configuration["DB_DEV_DATABASE"]! : configuration["DB_DATABASE"]!;
+        
+        var connectionString = $"host={host};" +
+                               $"port={port};" +
                                $"user id=root;" +
-                               $"password={configuration[$"DB_{envAddendum}PASSWORD"]};" +
-                               $"database={configuration[$"DB_{envAddendum}DATABASE"]};";
+                               $"password={password};" +
+                               $"database={database};";
         services.AddDbContext<DigitalPassportDbContext>((serviceProvider, options) =>
 {
     options.UseMySql(
