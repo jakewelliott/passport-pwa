@@ -55,13 +55,12 @@ export default function MyProfileScreen() {
                 <h2>My Profile</h2>
                 {user && <AccountInfo user={user} />}
                 <RoundedButton onClick={handlePasswordChange} title='Change Password' />
-                <RoundedButton onClick={handleLogout} title='Logout' />
+                <RoundedButton color='bg-secondary-orange' onClick={handleLogout} title='Logout' />
             </div>
             <div className='flex flex-col items-center gap-4'>
                 <h2>App Info</h2>
                 <ClientInfo />
             </div>
-            {/* <ButtonVariantsDemo /> */}
             {isModalOpen && <PasswordChangeModal onClose={handleCloseModal} />}
         </div>
     );
@@ -73,42 +72,40 @@ function PasswordChangeModal({ onClose }: { onClose: () => void }) {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     return (
-        <div className='fixed top-0 left-0 flex h-screen w-screen items-center justify-center bg-system_black bg-opacity-50'>
-            <div className='flex w-auto flex-col gap-4 rounded-lg bg-system_white p-5'>
-                <h2>Change Password</h2>
-                <div className='between flex w-full items-center justify-between'>
+        <div className='absolute top-0 left-0 flex h-svh w-svw items-center justify-center'>
+            <div className='-z-10 absolute top-0 left-0 h-svh w-svw bg-black opacity-50' />
+            <div className='p-2'>
+                <div className='flex w-full flex-col gap-4 rounded-lg bg-system-white p-6 '>
+                    <h2>Change Password</h2>
                     <label htmlFor='currentPassword'>Current Password:</label>
                     <input
                         type='password'
                         id='currentPassword'
                         value={currentPassword}
                         onChange={(e) => setCurrentPassword(e.target.value)}
-                        className='float-right ml-2 rounded-lg p-2 outline'
+                        className='h-8 w-64 rounded-lg outline'
                     />
-                </div>
-                <div className='between flex w-full items-center justify-between'>
+
                     <label htmlFor='newPassword'>New Password:</label>
                     <input
                         id='newPassword'
                         type='password'
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        className='float-right ml-2 rounded-lg p-2 outline'
+                        className='h-8 w-64 rounded-lg outline'
                     />
-                </div>
-                <div className='between flex w-full items-center justify-between'>
                     <label htmlFor='confirmPassword'>Confirm New Password:</label>
                     <input
                         type='password'
                         id='confirmPassword'
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className='float-right ml-2 rounded-lg p-2 outline'
+                        className='h-8 w-64 rounded-lg outline'
                     />
-                </div>
-                <div className='flex w-full justify-between'>
-                    <RoundedButton title={'Cancel'} onClick={onClose} />
-                    <RoundedButton width='96' title={'Save'} onClick={() => {}} color='secondary_orange' />
+                    <div className='mt-2 flex w-full justify-evenly'>
+                        <RoundedButton color='bg-secondary-orange' variant='small' title={'Cancel'} onClick={onClose} />
+                        <RoundedButton variant='small' title={'Save'} onClick={() => {}} />
+                    </div>
                 </div>
             </div>
         </div>
