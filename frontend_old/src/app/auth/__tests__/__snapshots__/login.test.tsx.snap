@@ -1,0 +1,78 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LoginPage > matches snapshot 1`] = `
+<div>
+  <div
+    class="flex h-full items-center justify-center bg-center bg-cover bg-no-repeat p-12"
+    style="background-image: url(/photos/SILA-BackCover.jpg);"
+  >
+    <form
+      class="flex flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8"
+    >
+      <input
+        class="w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
+        name="username"
+        placeholder="Username"
+        type="text"
+      />
+      <input
+        class="w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
+        name="password"
+        placeholder="Password"
+        type="password"
+      />
+      <p
+        class="text-center"
+      >
+        By using this application, you agree to the State of NC's
+         
+        <a
+          class="text-secondary_darkteal hover:underline"
+          href="https://www.nc.gov/privacy"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Privacy Policy
+        </a>
+      </p>
+      <div
+        class="flex flex-row gap-4"
+      >
+        <button
+          class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+          style="min-width: 128px;"
+          type="button"
+        >
+          <p
+            class="text-system_white button-text"
+          >
+            Register
+          </p>
+        </button>
+        <button
+          class="bg-secondary_orange flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+          style="min-width: 128px;"
+          type="submit"
+        >
+          <p
+            class="text-system_white button-text"
+          >
+            Login
+          </p>
+        </button>
+      </div>
+      <button
+        class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
+        style="min-width: 128px;"
+        type="button"
+      >
+        <p
+          class="text-system_white button-text"
+        >
+          SUPERADMIN
+        </p>
+      </button>
+    </form>
+  </div>
+</div>
+`;

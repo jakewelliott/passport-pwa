@@ -1,0 +1,106 @@
+import type { ParkIcon, TrailIcon } from './icons';
+import type { Address, Geopoint } from './misc';
+
+export interface DatabaseEntry {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    deleted: boolean;
+}
+
+//
+// Types for tables in the database
+//
+
+export interface UserProfile extends DatabaseEntry {
+    username: string;
+    role: string;
+    token?: string;
+}
+
+// anything a user can POST, the database auto fills these fields
+interface UserContent extends DatabaseEntry {
+    userId: number;
+}
+
+interface ParkContent extends UserContent {
+    parkId: number;
+}
+
+// This is defined in icons.ts
+// export interface ParkIcon extends DatabaseEntry {
+//     iconName: string;
+//     tooltip: string;
+// }
+
+export interface ParkPhoto {
+    photoPath: string;
+    alt: string;
+}
+
+export interface Park extends DatabaseEntry {
+    parkName: string;
+    city: string;
+    coordinates: Geopoint;
+    phone: number;
+    email: string;
+    establishedYear: string;
+    landmark: string;
+    youCanFind: string;
+    trails: string;
+    parkType: string;
+    website: string;
+    addresses: Address[];
+    icons: ParkIcon[];
+    photos: ParkPhoto[];
+    abbreviation: string;
+    stampImage: string;
+    accesses: string;
+}
+
+export interface Trail extends DatabaseEntry {
+    trailName: string;
+    icons: TrailIcon[];
+    distance: string;
+    description: string;
+}
+
+export interface ParkGeoData extends DatabaseEntry {
+    id: number; // parkId
+    abbreviation: string;
+    parkName: string;
+    coordinates: Geopoint;
+    boundaries: string;
+}
+
+export interface BucketListItem extends DatabaseEntry {
+    parkId: number | null;
+    task: string;
+}
+
+export interface ParkVisit extends ParkContent {
+    geopoint: Geopoint;
+}
+
+export interface CollectedStamp extends ParkVisit {
+    // TODO: this should really just be a string for the method
+    // since we can always associate the stamp with the visit
+    // even if the stamp is collected manually, you have to be at a park to collect it
+    // or should it? what happens if we are offline and CollectedStamp is created before ParkVisit?
+    method: string;
+    dateTime: Date;
+    parkId: number;
+    parkAbbreviation: string;
+    createdAt: Date;
+}
+
+export interface ParkNote extends ParkContent {
+    note: string;
+    updatedAt: Date;
+}
+
+export interface BucketListCompletion extends UserContent {
+    geopoint: Geopoint;
+    bucketListItemId: number;
+    timestamp: Date; // this is a field because if we are offline we want to save the date time
+}

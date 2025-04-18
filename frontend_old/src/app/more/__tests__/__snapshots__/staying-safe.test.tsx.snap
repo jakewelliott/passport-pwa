@@ -1,0 +1,236 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StayingSafe Component > matches snapshot 1`] = `
+<div>
+  <h4
+    class="mb-6 w-full bg-supporting_inactiveblue p-3 text-center text-system_white uppercase"
+  >
+    How to Stay Safe While Visiting NC State Parks
+  </h4>
+  <p
+    class="mb-6"
+  >
+    To keep everyone safe and protect our parks, please follow these rules and safety guidelines while you're here!
+  </p>
+  <ul
+    class="space-y-1"
+  >
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Alcohol is not allowed except on individual campsites.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Follow the rules for boating and fishing from the NC Wildlife Resources Commission. Make sure you have a fishing license if you are fishing.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Do not fly drones in the park.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Only have fires in grills and fire rings, and keep an eye on them.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Do not bring firewood from far away; get it locally or make sure it is treated.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        No fireworks or weapons. Handguns are allowed with a concealed carry permit in outdoor areas only.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Watch out for snakes, poison ivy, and ticks. Check for ticks after you've been hiking.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Bring enough water for you and your pets.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Stick to the trails, and don't go near steep edges. Be careful on wet trails, rocks, and bridges.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Plan your hikes ahead of time so you don't get caught by darkness.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Always wear a life jacket when you are paddling, boating, or swimming, especially if you're not a strong swimmer. Kids under 13 years old are required to wear one.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Do not go paddling alone.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Keep your pets on a leash all the time.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        You can only climb in certain spots and must get a permit first.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Swim only in designated areas. Be careful if there are no lifeguards.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Keep the park clean by using the trash and recycling bins.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Hunting or trapping animals is not allowed.
+      </span>
+    </li>
+    <li
+      class="flex items-start"
+    >
+      <span
+        class="mr-2"
+      >
+        •
+      </span>
+      <span>
+        Do not feed or try to touch the animals. Tell the park staff if you see any sick ones.
+      </span>
+    </li>
+  </ul>
+</div>
+`;

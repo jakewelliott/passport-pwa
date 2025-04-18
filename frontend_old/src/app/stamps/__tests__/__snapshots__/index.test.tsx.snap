@@ -1,0 +1,552 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Stamps > matches snapshot 1`] = `
+<div>
+  <div
+    class="flex flex-col gap-2"
+  >
+    <div
+      class="relative flex gap-2"
+    >
+      <div
+        class="relative flex-1"
+      >
+        <input
+          class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+          placeholder="Search parks..."
+          type="text"
+          value=""
+        />
+      </div>
+      <button
+        class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
+        style="display: inline;"
+        type="button"
+      >
+        <svg
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+          />
+        </svg>
+      </button>
+    </div>
+    <div
+      class="grid grid-cols-3 gap-4"
+      data-testid="stamps-grid"
+    >
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-CABE"
+        type="button"
+      >
+        <img
+          alt="CABE - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-CABE"
+          src="/stamps/CABE.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-CACR"
+        type="button"
+      >
+        <img
+          alt="CACR - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-CACR"
+          src="/stamps/CACR.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-CHRO"
+        type="button"
+      >
+        <img
+          alt="CHRO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-CHRO"
+          src="/stamps/CHRO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-CLNE"
+        type="button"
+      >
+        <img
+          alt="CLNE - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-CLNE"
+          src="/stamps/CLNE.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-CRMO"
+        type="button"
+      >
+        <img
+          alt="CRMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-CRMO"
+          src="/stamps/CRMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-DISW"
+        type="button"
+      >
+        <img
+          alt="DISW - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-DISW"
+          src="/stamps/DISW.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-ELKN"
+        type="button"
+      >
+        <img
+          alt="ELKN - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-ELKN"
+          src="/stamps/ELKN.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-ENRI"
+        type="button"
+      >
+        <img
+          alt="ENRI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-ENRI"
+          src="/stamps/ENRI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-FALA"
+        type="button"
+      >
+        <img
+          alt="FALA - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-FALA"
+          src="/stamps/FALA.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-FOFI"
+        type="button"
+      >
+        <img
+          alt="FOFI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-FOFI"
+          src="/stamps/FOFI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-FOMA"
+        type="button"
+      >
+        <img
+          alt="FOMA - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-FOMA"
+          src="/stamps/FOMA.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-GOCR"
+        type="button"
+      >
+        <img
+          alt="GOCR - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-GOCR"
+          src="/stamps/GOCR.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-GORG"
+        type="button"
+      >
+        <img
+          alt="GORG - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-GORG"
+          src="/stamps/GORG.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-GRMO"
+        type="button"
+      >
+        <img
+          alt="GRMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-GRMO"
+          src="/stamps/GRMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-HABE"
+        type="button"
+      >
+        <img
+          alt="HABE - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-HABE"
+          src="/stamps/HABE.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-HARO"
+        type="button"
+      >
+        <img
+          alt="HARO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-HARO"
+          src="/stamps/HARO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-HARI"
+        type="button"
+      >
+        <img
+          alt="HARI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-HARI"
+          src="/stamps/HARI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-JORI"
+        type="button"
+      >
+        <img
+          alt="JORI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-JORI"
+          src="/stamps/JORI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-JONE"
+        type="button"
+      >
+        <img
+          alt="JONE - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-JONE"
+          src="/stamps/JONE.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-JORD"
+        type="button"
+      >
+        <img
+          alt="JORD - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-JORD"
+          src="/stamps/JORD.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-KELA"
+        type="button"
+      >
+        <img
+          alt="KELA - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-KELA"
+          src="/stamps/KELA.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-LAJA"
+        type="button"
+      >
+        <img
+          alt="LAJA - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-LAJA"
+          src="/stamps/LAJA.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-LANO"
+        type="button"
+      >
+        <img
+          alt="LANO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-LANO"
+          src="/stamps/LANO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-LAWA"
+        type="button"
+      >
+        <img
+          alt="LAWA - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-LAWA"
+          src="/stamps/LAWA.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-LURI"
+        type="button"
+      >
+        <img
+          alt="LURI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-LURI"
+          src="/stamps/LURI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-MARI"
+        type="button"
+      >
+        <img
+          alt="MARI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-MARI"
+          src="/stamps/MARI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-MEMO"
+        type="button"
+      >
+        <img
+          alt="MEMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-MEMO"
+          src="/stamps/MEMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-MEMI"
+        type="button"
+      >
+        <img
+          alt="MEMI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-MEMI"
+          src="/stamps/MEMI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-MOMO"
+        type="button"
+      >
+        <img
+          alt="MOMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-MOMO"
+          src="/stamps/MOMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-MOJE"
+        type="button"
+      >
+        <img
+          alt="MOJE - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-MOJE"
+          src="/stamps/MOJE.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-MOMI"
+        type="button"
+      >
+        <img
+          alt="MOMI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-MOMI"
+          src="/stamps/MOMI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-NERI"
+        type="button"
+      >
+        <img
+          alt="NERI - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-NERI"
+          src="/stamps/NERI.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-OCMO"
+        type="button"
+      >
+        <img
+          alt="OCMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-OCMO"
+          src="/stamps/OCMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-PETT"
+        type="button"
+      >
+        <img
+          alt="PETT - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-PETT"
+          src="/stamps/PETT.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-PIMO"
+        type="button"
+      >
+        <img
+          alt="PIMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-PIMO"
+          src="/stamps/PIMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-RARO"
+        type="button"
+      >
+        <img
+          alt="RARO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-RARO"
+          src="/stamps/RARO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-REMO"
+        type="button"
+      >
+        <img
+          alt="REMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-REMO"
+          src="/stamps/REMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-SILA"
+        type="button"
+      >
+        <img
+          alt="SILA - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-SILA"
+          src="/stamps/SILA.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-SOMO"
+        type="button"
+      >
+        <img
+          alt="SOMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-SOMO"
+          src="/stamps/SOMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-STMO"
+        type="button"
+      >
+        <img
+          alt="STMO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-STMO"
+          src="/stamps/STMO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-WEWO"
+        type="button"
+      >
+        <img
+          alt="WEWO - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-WEWO"
+          src="/stamps/WEWO.svg"
+        />
+      </button>
+      <button
+        class="flex items-center justify-center p-2"
+        data-testid="stamp-button-WIUM"
+        type="button"
+      >
+        <img
+          alt="WIUM - greyed out"
+          class="opacity-50 grayscale"
+          data-testid="stamp-image-WIUM"
+          src="/stamps/WIUM.svg"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;

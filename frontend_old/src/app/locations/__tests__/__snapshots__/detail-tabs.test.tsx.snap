@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DetailTabs > matches snapshot 1`] = `
+<div>
+  <div
+    class="animate-pulse"
+    data-testid="loading-placeholder"
+  >
+    <p
+      class="text-center text-gray-500 text-sm"
+    >
+       Loading park...
+    </p>
+  </div>
+</div>
+`;

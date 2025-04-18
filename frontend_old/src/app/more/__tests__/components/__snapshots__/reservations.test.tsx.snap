@@ -1,0 +1,57 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Reservations > matches snapshot 1`] = `
+<div>
+  <div
+    class="p-4"
+  >
+    <div
+      class="mb-3 flex items-center"
+    >
+      <img
+        alt=""
+        class="mr-2 h-[50px] w-[50px]"
+        src="/icons/misc/Camping.png"
+      />
+      <div
+        class="flex w-full flex-col justify-center"
+      >
+        <h4
+          class="pb-1 text-center text-main_green"
+        >
+          MAKE A RESERVATION
+        </h4>
+        <div
+          class="flex flex-wrap items-center justify-between gap-2"
+        >
+          <a
+            class="p-mini"
+            href="https://www.ncparks.gov/reservations"
+          >
+            ncparks.gov/reservations
+          </a>
+          <p
+            class="p-mini"
+          >
+            1-877-722-6762
+          </p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="mt-3 flex items-center"
+    >
+      <img
+        alt=""
+        class="mr-2 h-[50px] w-[50px]"
+        src="/icons/misc/PicnicShelter.png"
+      />
+      <p
+        class="p-mini"
+      >
+        Reserve campsites, picnic shelters and other park facilities online or over the phone.
+      </p>
+    </div>
+  </div>
+</div>
+`;
