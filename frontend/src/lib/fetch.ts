@@ -1,16 +1,8 @@
-import { DEBUG, dbg } from '@/lib/debug';
+import { dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
+import { ENV } from './env';
 
-const MOCK_PORT = 6969;
-
-// TODO: make these use VITE_ env vars
-// we should probably move all env vars to @/lib/env and log them all at once
-const API_PORT = (DEBUG ? process.env.API_DEV_PORT : process.env.NGINX_PORT) ?? MOCK_PORT;
-const PROTOCOL = DEBUG ? 'http' : 'https';
-const USE_PORT = process.env.USE_PORT === 'true' ? `:${API_PORT}` : '';
-const HOST = process.env.HOST ?? 'localhost';
-
-export const API_URL = `${PROTOCOL}://${HOST}${USE_PORT}/api`;
+export const API_URL = ENV.API_URL;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;

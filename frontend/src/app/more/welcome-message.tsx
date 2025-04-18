@@ -55,7 +55,7 @@ const WelcomeMessage: React.FC = () => {
     return (
         <>
             <div className='space-y-6'>
-                <h1 className='whitespace-nowrap text-center text-main_green text-xl'>
+                <h1 className='whitespace-nowrap text-center text-main-green text-xl'>
                     <span className='inline-block w-full text-[length:min(64px,_calc(100vw_/_7))]'>WELCOME!</span>
                 </h1>
 
@@ -73,7 +73,7 @@ const WelcomeMessage: React.FC = () => {
                     ))}
                 </div>
 
-                <p className='p-mini ' style={{ marginTop: '12px' }}>
+                <p className='text-xs ' style={{ marginTop: '12px' }}>
                     From left to right - photo courtesy of: Laura Meeks; The Everett Family; Katie Griswold
                 </p>
             </div>

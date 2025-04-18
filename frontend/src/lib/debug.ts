@@ -1,8 +1,7 @@
 // switch this to true to mute all debug statements
 const MUTED = false;
-
-export const PRODUCTION = import.meta.env.PROD; // special for vite, using process breaks service worker
-export const DEBUG = import.meta.env.DEV;
+// we have to use import.meta.env here to avoid circular dependency
+const isDev = import.meta.env.DEV;
 
 // debugging utility function & types
 const DebugControl = {
@@ -55,7 +54,7 @@ const padRight = (str: string, length: number): string => str.padEnd(length, ' '
 
 export const dbg = (t: DebugType, where: string, what?: unknown): void => {
     if (MUTED) return;
-    if (DEBUG && DebugControl[t]) {
+    if (isDev && DebugControl[t]) {
         const logType = padRight(`[${t}]`, 10);
         const location = padRight(where, 20);
         const message = what ? sjason(what) : '';
@@ -79,5 +78,3 @@ export const sjason = (p: unknown): string => {
     }
     return JSON.stringify(p, null, 2);
 };
-
-dbg('ENV', 'DEBUG', DEBUG.toString());

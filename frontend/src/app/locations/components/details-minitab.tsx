@@ -7,7 +7,7 @@ import ReactDOM from 'react-dom';
 const Tooltip = ({ text, position }: { text: string; position: { top: number; left: number } }) => {
     return ReactDOM.createPortal(
         <div
-            className='pointer-events-none absolute rounded-md bg-supporting_lightgray bg-opacity-70 p-1'
+            className='pointer-events-none absolute rounded-md bg-supporting-lightgray bg-opacity-70 p-1'
             style={{
                 top: position.top,
                 left: position.left,
@@ -23,22 +23,8 @@ const Tooltip = ({ text, position }: { text: string; position: { top: number; le
 const Highlight = ({ title, children }: { title: string; children?: React.ReactNode }) => {
     return (
         <p>
-            <span className='green-text'>{title}:</span>&nbsp;&nbsp;{children}
+            <span className='text-main-green'>{title}:</span>&nbsp;&nbsp;{children}
         </p>
-    );
-};
-
-const renderTrails = (trails: string) => {
-    const trailLines = trails.split('\n').filter((line) => line.trim() !== '');
-
-    return (
-        <div className='flex flex-col gap-1 py-2'>
-            {trailLines.map((line) => (
-                <div className={line.charAt(0) !== '■' ? 'pl-5' : ''} key={line}>
-                    {line}
-                </div>
-            ))}
-        </div>
     );
 };
 
@@ -88,18 +74,22 @@ const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
 };
 
 export const DetailsMiniTab = ({ park }: { park: Park }) => {
+    const trailLines = park.trails.split('\n').filter((line) => line.trim() !== '');
+
     return (
-        <div className='mt-4 ml-4 flex flex-col'>
-            <div className='gap-2'>
+        <>
+            <div className='flex flex-col gap-2 p-4'>
                 <Highlight title='Established'>{park.establishedYear}</Highlight>
                 <Highlight title='Landmark'>{park.landmark}</Highlight>
                 <Highlight title='You can find'>{park.youCanFind}</Highlight>
-                <div className='flex flex-col gap-1'>
-                    <Highlight title='Park trails' />
-                    {renderTrails(park.trails)}
-                </div>
+                <Highlight title='Park trails' />
+                {trailLines.map((line) => (
+                    <div className={line.charAt(0) !== '■' ? 'pl-5' : ''} key={line}>
+                        {line}
+                    </div>
+                ))}
             </div>
             <ParkIcons icons={park.icons} />
-        </div>
+        </>
     );
 };

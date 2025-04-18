@@ -15,7 +15,7 @@ const LogoAndLink = () => {
             <img src='/TrailsLogo.svg' alt='Trails Logo' />
             <p className='text-center'>
                 For maps and additional information on these state trails, please visit{' '}
-                <a href='https://trails.nc.gov/state-trails' className='text-main_blue'>
+                <a href='https://trails.nc.gov/state-trails' className='text-main-blue'>
                     trails.nc.gov/state-trails
                 </a>
             </p>
@@ -25,9 +25,8 @@ const LogoAndLink = () => {
 
 export const Trails = () => {
     dbg('RENDER', '/more/trails');
-    // TODO: make a hook for this
     const { data: trailDetails, isLoading } = useTrails();
-    const { data: user } = useUser();
+    const { isAdmin } = useUser();
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [trailToEdit, setTrailToEdit] = useState<Trail | undefined>();
 
@@ -47,9 +46,13 @@ export const Trails = () => {
         <>
             <div className='flex flex-col gap-4'>
                 {trailDetails?.map((trail) => (
-                    <TrailDetailView trail={trail} key={trail.id} handleEditTrail={() => handleEditTrailPress(trail)} />
+                    <TrailDetailView
+                        trail={trail}
+                        key={trail.id}
+                        handleEditTrail={isAdmin ? () => handleEditTrailPress(trail) : undefined}
+                    />
                 ))}
-                {user?.role === 'admin' && (
+                {isAdmin && (
                     <div className='w-60'>
                         <RoundedButton
                             type='button'
@@ -63,7 +66,7 @@ export const Trails = () => {
                 <LogoAndLink />
                 <TrailMap />
             </div>
-            {isEditModalOpen && (
+            {isEditModalOpen && isAdmin && (
                 <EditTrailModal
                     isOpen={isEditModalOpen}
                     onClose={handleCloseEditModal}

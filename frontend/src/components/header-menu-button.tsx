@@ -9,7 +9,7 @@ import { dbg } from '@/lib/debug';
 import type { CollectStampRequest } from '@/types/api';
 import { useEffect, useRef, useState } from 'react';
 import { FaEllipsisV } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 import { toast } from 'react-toastify';
 
 export const HeaderMenuButton = () => {
@@ -96,7 +96,7 @@ export const HeaderMenuButton = () => {
                 {(pageTitle === 'Locations' || pageTitle === 'Park Details') && (
                     <button
                         onClick={() => setIsOpen(!isOpen)}
-                        className='flex items-center p-2 text-system_white'
+                        className='flex items-center p-2 text-system-white'
                         type='button'
                         aria-label='Open menu'
                     >
@@ -106,7 +106,7 @@ export const HeaderMenuButton = () => {
 
                 {isOpen && (
                     <div
-                        className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system_white shadow-lg ring-1 ring-black ring-opacity-5'
+                        className='absolute top-full right-0 mt-2 w-48 rounded-md bg-system-white shadow-lg ring-1 ring-black ring-opacity-5'
                         style={{ zIndex: 9999 }}
                     >
                         <div className='py-1'>

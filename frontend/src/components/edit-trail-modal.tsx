@@ -93,10 +93,10 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
 
     return (
         <div
-            className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-system_black transition-opacity duration-300 ${isOpen ? 'bg-opacity-40' : 'bg-opacity-0'}`}
+            className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-system-black transition-opacity duration-300 ${isOpen ? 'bg-opacity-40' : 'bg-opacity-0'}`}
         >
             <div
-                className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+                className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting-lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
             >
                 <h2>{isNew ? 'New Trail' : 'Edit Trail'}</h2>
                 <div
@@ -158,7 +158,7 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
                                             <span>{trailIcon?.tooltip || icon.tooltip}</span>
                                         </div>
                                         <button
-                                            className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                            className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                             onClick={() => handleRemoveIcon(index)}
                                             type='button'
                                         >
@@ -175,7 +175,7 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
                                             const icon = TRAIL_ICONS.find((i) => i.iconName === e.target.value);
                                             setSelectedIcon(icon || null);
                                         }}
-                                        className='w-full rounded-lg border border-system_gray bg-system_white px-3 py-2 focus:border-secondary_darkteal focus:ring-secondary_darkteal'
+                                        className='w-full rounded-lg border border-system-gray bg-system-white px-3 py-2 focus:border-secondary-darkteal focus:ring-secondary-darkteal'
                                     >
                                         <option value=''>Select an icon</option>
                                         {getUnselectedIcons().map((icon) => (
@@ -187,7 +187,7 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
                                 </div>
                                 {selectedIcon && (
                                     <button
-                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         onClick={() => handleAddIcon()}
                                         type='button'
                                     >
@@ -202,7 +202,7 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
                         <RoundedButton
                             type='submit'
                             title='Save Changes'
-                            color='secondary_orange'
+                            color='secondary-orange'
                             onClick={handleSubmit}
                         />
                     </div>

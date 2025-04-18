@@ -68,8 +68,8 @@ export const BucketList = ({ parkId, showAddress: showParkName = false }: Bucket
                 <div className={`flex pl-5 ${parkId === undefined ? 'mt-4 items-center justify-center' : '-mt-5'}`}>
                     <RoundedButton
                         title='+ New Bucket List Item'
-                        color={parkId === undefined ? 'secondary_orange' : ''}
-                        textColor={parkId === undefined ? 'system_white' : 'system_black'}
+                        color={parkId === undefined ? 'secondary-orange' : ''}
+                        textColor={parkId === undefined ? 'system-white' : 'system-black'}
                         textSize={''}
                         onClick={() => {
                             setIsEditModalOpen(true);

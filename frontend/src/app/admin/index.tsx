@@ -13,7 +13,7 @@ export const AdminPage = () => {
                 <LinkRow to={'/admin/edit-trails'} label='Edit Trails' />
                 <LinkRow to={'/admin/edit-bucket-list'} label='Edit Bucket List' />
                 <LinkRow to={'/admin/edit-users'} label='Edit Users' />
-                <label className='cursor-pointer text-supporting_inactiveblue no-underline'>
+                <label className='cursor-pointer text-supporting-inactiveblue no-underline'>
                     <ListRow>
                         <h2 className='mx-4 my-6'>Upload GeoJson Data</h2>
                     </ListRow>

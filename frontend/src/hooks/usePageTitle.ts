@@ -1,4 +1,4 @@
-import { useLocation as usePathLocation } from 'react-router-dom';
+import { useLocation as usePathLocation } from 'react-router';
 
 const DEFAULT_TITLE = 'NC Parks Passport';
 
@@ -17,6 +17,7 @@ const routeTitles: Record<string, string> = {
     '/more/hiking-essentials': 'Hiking Essentials',
     '/more/my-notes': 'My Notes',
     '/more/my-notes/general-notes': 'General Notes',
+    '/more/my-profile': 'My Profile',
 };
 
 const topLevelCheck = (path: string) => path.split('/').length - 1 > 1; // /stamps will split into ['', 'stamps']

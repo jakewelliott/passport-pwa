@@ -6,7 +6,7 @@ import dateHelper from '@/lib/date-helper';
 import { dbg } from '@/lib/debug';
 import type { ParkNote } from '@/types';
 import { useMemo } from 'react';
-import { type NavigateFunction, useNavigate } from 'react-router-dom';
+import { type NavigateFunction, useNavigate } from 'react-router';
 import ListRow from '../../components/list-row';
 
 const isGeneralNote = (note: ParkNote) => {

@@ -1,56 +1,48 @@
+import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import fs from 'node:fs';
 import path from 'node:path';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ command, mode }) => {
-    const isProduction = command === 'build';
-    const pemDirectory = isProduction ? '.' : '..';
-    const env = loadEnv(mode, `${process.cwd()}/${pemDirectory}`, '');
-    return {
-        plugins: [react()],
-        define: {
-            'process.env': env,
-        },
-        resolve: {
-            alias: {
-                '@': path.resolve(__dirname, './src'),
+export default defineConfig({
+    plugins: [
+        tailwindcss(),
+        react(),
+        VitePWA({
+            registerType: 'autoUpdate',
+            injectRegister: 'auto',
+
+            pwaAssets: {
+                disabled: false,
+                config: true,
             },
-        },
-        server: {
-            host: '0.0.0.0',
-            port: 5174,
-            https: {
-                key: fs.readFileSync(path.join(pemDirectory, 'localhost+2-key.pem')),
-                cert: fs.readFileSync(path.join(pemDirectory, 'localhost+2.pem')),
+
+            manifest: {
+                name: 'passport-pwa',
+                short_name: 'passport-pwa',
+                description: 'Digital Passport',
+                theme_color: '#ffffff',
             },
-            cors: true,
-            strictPort: true,
-        },
-        test: {
-            globals: true,
-            environment: 'jsdom',
-            setupFiles: ['./src/lib/testing/vitest-setup.ts'],
-            coverage: {
-                provider: 'v8',
-                reporter: ['text', 'json', 'html'],
-                exclude: [
-                    'node_modules/',
-                    'src/App.tsx',
-                    'src/main.tsx',
-                    'src/routes.tsx',
-                    'src/lib/**',
-                    'src/hooks/auth/**',
-                    'src/hooks/useLocation.ts',
-                    'src/components/edit-**',
-                    'src/components/bucket-**',
-                    'src/components/sort-filter.tsx',
-                    'src/components/form-field.tsx',
-                    'src/components/header-menu-button.tsx',
-                ],
+
+            workbox: {
+                globPatterns: ['**/*.{js,css,html,svg,png,ico,jpg,jpeg}'],
+                cleanupOutdatedCaches: true,
+                clientsClaim: true,
+                maximumFileSizeToCacheInBytes: 10 * 1024 * 1024,
             },
-            include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+
+            devOptions: {
+                enabled: false,
+                navigateFallback: 'index.html',
+                suppressWarnings: true,
+                type: 'module',
+            },
+        }),
+    ],
+    resolve: {
+        alias: {
+            '@': path.resolve(__dirname, './src'),
         },
-    };
+    },
 });

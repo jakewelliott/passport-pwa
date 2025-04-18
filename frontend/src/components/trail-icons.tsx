@@ -46,7 +46,7 @@ export const TrailIconView = ({
                 <img src={getIconPath(icon)} alt={icon.tooltip} />
             </div>
             {showText && <div className={cn(sizeMap[size].text, 'text-center')}>{icon.tooltip}</div>}
-            <div className='absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block'>
+            <div className='absolute bottom-full mb-1 hidden rounded bg-supporting-lightgray px-2 py-1 text-white text-xs group-hover:block'>
                 {icon.tooltip}
             </div>
         </div>

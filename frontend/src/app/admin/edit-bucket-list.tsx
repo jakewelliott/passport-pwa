@@ -151,7 +151,7 @@ const EditBucketList = () => {
                 renderBottomToolbarCustomActions={() => (
                     <div className='w-8/12'>
                         <button
-                            className='float-right rounded-lg bg-secondary_orange p-3 text-system_white'
+                            className='float-right rounded-lg bg-secondary-orange p-3 text-system-white'
                             onClick={() => handleSave(editedItems)}
                             disabled={editedItems.length === 0}
                             type='button'
@@ -159,7 +159,7 @@ const EditBucketList = () => {
                             Save Changes
                         </button>
                         <button
-                            className='float-left rounded-lg bg-secondary_orange p-3 text-system_white'
+                            className='float-left rounded-lg bg-secondary-orange p-3 text-system-white'
                             onClick={() => handleAddNewItem}
                             type='button'
                         >

@@ -77,10 +77,10 @@ export function EditBucketListItemModal({
 
     return (
         <div
-            className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-system_black transition-opacity duration-300 ${isOpen ? 'bg-opacity-40' : 'bg-opacity-0'}`}
+            className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-system-black transition-opacity duration-300 ${isOpen ? 'bg-opacity-40' : 'bg-opacity-0'}`}
         >
             <div
-                className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+                className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting-lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
             >
                 <h2>{isNew ? 'New Bucket List Item' : 'Edit Bucket List Item'}</h2>
                 <div
@@ -115,7 +115,7 @@ export function EditBucketListItemModal({
                                 handleSelectedPark();
                             }}
                             id='park'
-                            className='mt-1 w-full rounded-lg border border-system_gray p-3 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'
+                            className='mt-1 w-full rounded-lg border border-system-gray p-3 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100'
                         >
                             <option value=''>No Park Selected</option>
                             {parks?.map((park) => (
@@ -130,7 +130,7 @@ export function EditBucketListItemModal({
                         <RoundedButton
                             type='submit'
                             title='Save Changes'
-                            color='secondary_orange'
+                            color='secondary-orange'
                             onClick={handleSubmit}
                         />
                     </div>

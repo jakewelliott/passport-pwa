@@ -170,10 +170,10 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
 
     return (
         <div
-            className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-system_black transition-opacity duration-300 ${isOpen ? 'bg-opacity-40' : 'bg-opacity-0'}`}
+            className={`fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-system-black transition-opacity duration-300 ${isOpen ? 'bg-opacity-40' : 'bg-opacity-0'}`}
         >
             <div
-                className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
+                className={`m-auto flex max-w-96 transform flex-col items-center gap-3 rounded-3xl bg-supporting-lightblue bg-opacity-100 p-8 shadow-xl transition-all duration-300 ${isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0'}`}
             >
                 <h2>{isNew ? 'New Park' : 'Edit Park'}</h2>
                 <div className='absolute top-4 right-4 text-h2' onClick={onClose}>
@@ -347,7 +347,7 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                                         />
                                     </div>
                                     <button
-                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         onClick={() => handleRemovePhoto(index)}
                                         type='button'
                                     >
@@ -446,7 +446,7 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                                         />
                                     </div>
                                     <button
-                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         onClick={() => handleRemoveAddress(index)}
                                         type='button'
                                     >
@@ -478,7 +478,7 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                                             )}
                                         </div>
                                         <button
-                                            className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                            className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                             onClick={() => handleRemoveIcon(index)}
                                             type='button'
                                         >
@@ -495,7 +495,7 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                                             const icon = PARK_ICONS.find((i) => i.iconName === e.target.value);
                                             setSelectedIcon(icon || null);
                                         }}
-                                        className='w-full rounded-lg border border-system_gray bg-system_white px-3 py-2 focus:border-secondary_darkteal focus:ring-secondary_darkteal'
+                                        className='w-full rounded-lg border border-system-gray bg-system-white px-3 py-2 focus:border-secondary-darkteal focus:ring-secondary-darkteal'
                                     >
                                         <option value=''>Select an icon</option>
                                         {getUnselectedIcons().map((icon) => (
@@ -507,7 +507,7 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                                 </div>
                                 {selectedIcon && (
                                     <button
-                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system_black p-1'
+                                        className='flex h-7 w-7 items-center justify-center rounded-full border border-system-black p-1'
                                         onClick={() => handleAddIcon()}
                                         type='button'
                                     >
@@ -522,7 +522,7 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                         <RoundedButton
                             type='submit'
                             title='Save Changes'
-                            color='secondary_orange'
+                            color='secondary-orange'
                             onClick={handleSubmit}
                         />
                     </div>

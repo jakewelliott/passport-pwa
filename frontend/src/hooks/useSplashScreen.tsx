@@ -3,7 +3,7 @@ import { SplashScreenView } from '@/components/splash-screen-view';
 import { dbg } from '@/lib/debug';
 import type { UseQueryResult } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { type To, useNavigate } from 'react-router-dom';
+import { type To, useNavigate } from 'react-router';
 import { useBucketList } from './queries/useBucketList';
 import { useNotes } from './queries/useNotes';
 import { useFavoriteParks } from './queries/useParkFavorites';

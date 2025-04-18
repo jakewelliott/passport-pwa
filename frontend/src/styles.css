@@ -1,143 +1,207 @@
 /* TAILWIND */
 
-@tailwind base;
+@import 'tailwindcss';
+
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 /* FONTS */
 
 @font-face {
-  font-family: "Norican";
-  src: url("/fonts/Norican-Regular.ttf") format("truetype");
+    font-family: "Norican";
+    src: url("/fonts/Norican-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: "NaturallyWonderful-bold";
-  src: url("/fonts/NaturallyWonderful-bold.otf") format("opentype");
+    font-family: "NaturallyWonderful-bold";
+    src: url("/fonts/NaturallyWonderful-bold.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "NaturallyWonderful-heavy";
-  src: url("/fonts/NaturallyWonderful-heavy.otf") format("opentype");
+    font-family: "NaturallyWonderful-heavy";
+    src: url("/fonts/NaturallyWonderful-heavy.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "SourceSansPro-Regular";
-  src: url("/fonts/SourceSansPro-Regular.otf") format("opentype");
+    font-family: "SourceSansPro-Regular";
+    src: url("/fonts/SourceSansPro-Regular.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "SourceSansPro-Semibold";
-  src: url("/fonts/SourceSansPro-Semibold.otf") format("opentype");
+    font-family: "SourceSansPro-Semibold";
+    src: url("/fonts/SourceSansPro-Semibold.otf") format("opentype");
 }
 
-:root {
-  --font-NWB: "NaturallyWonderful-bold", sans-serif;
-  --font-NWH: "NaturallyWonderful-heavy", sans-serif;
-  --font-SSPR: "SourceSansPro-Regular", sans-serif;
-  --font-SSPS: "SourceSansPro-Semibold", sans-serif;
-  --font-Norican: "Norican", sans-serif;
-}
+@theme {
+    /* Font Families */
+    --font-NWB: "NaturallyWonderful-bold", sans-serif;
+    --font-NWH: "NaturallyWonderful-heavy", sans-serif;
+    --font-SSPR: "SourceSansPro-Regular", sans-serif;
+    --font-SSPS: "SourceSansPro-Semibold", sans-serif;
+    --font-Norican: "Norican", sans-serif;
 
-/* COLORS */
+    /* Colors */
+    /* Main colors */
+    --color-main-green: #48763C;
+    --color-main-blue: #153E79;
 
-:root {
-  --custom-background: #a9ceeb;
-  --custom-foreground: #1b365d;
+    /* Secondary colors */
+    --color-secondary-lime: #B9D547;
+    --color-secondary-darkteal: #006779;
+    --color-secondary-teal: #3EB0C8;
+    --color-secondary-orange: #DE7D3B;
+    --color-secondary-lightgreen: #CDD6CF;
+    --color-secondary-lightblue: #A9CEEB;
+
+    /* Icon colors */
+    --color-icon-camping: #2DA649;
+    --color-icon-activities: #EE2347;
+    --color-icon-amenities: #2C439B;
+
+    /* Trail colors */
+    --color-trail-equine: #C17D12;
+    --color-trail-roanokeriver: #726D82;
+    --color-trail-hawriver: #55848F;
+    --color-trail-danriver: #FFCF01;
+    --color-trail-overmountainvictory: #D92B2F;
+    --color-trail-wildernessgateway: #0078AF;
+    --color-trail-hickorynutgorge: #A1946E;
+    --color-trail-northernpeaks: #6A3935;
+    --color-trail-eastcoastgreenway: #9ACA3C;
+    --color-trail-fontaflora: #853E86;
+    --color-trail-mountainstosea: #EE7624;
+    --color-trail-deepriver: #E11F8F;
+    --color-trail-yadkinriver: #007579;
+    --color-trail-frenchbroadriver: #00A851;
+
+    /* Supporting colors */
+    --color-supporting-inactiveblue: #1B365D;
+    --color-supporting-lightblue: #D3E1EF;
+    --color-supporting-darkgray: #49454F;
+    --color-supporting-bluegray: #94B2B7;
+    --color-supporting-lightgray: #D9D9D9;
+    --color-supporting-lightorange: #E3C7B4;
+    --color-supporting-terracotta: #C15728;
+    --color-supporting-green: #C1D6C2;
+
+    /* System colors */
+    --color-system-black: #000000;
+    --color-system-white: #FFFFFF;
+    --color-system-gray: #8E8E93;
+    --color-system-red: #FF3B30;
+    --color-system-blue: #007AFF;
+
+    /* Typography - Font Sizes */
+    /* --font-size-h1: 64px;
+  --font-size-h2: 36px;
+  --font-size-h3: 24px;
+  --font-size-h4: 24px;
+  --font-size-h5: 14px;
+  --font-size-script: 96px;
+  --font-size-p: 18px;
+  --font-size-pm: 14px;
+  --font-size-pl: 40px;
+  --font-size-b: 24px; */
+
+    /* Typography - Line Heights */
+    --line-height-h1: 55px;
+    --line-height-h2: 32px;
+    --line-height-h3: 32px;
+    --line-height-h4: 20px;
+    --line-height-h5: 22px;
+    --line-height-script: 32px;
+    --line-height-p: 22px;
+    --line-height-pm: 12px;
+    --line-height-pl: 45px;
+    --line-height-b: 22px;
+
+    /* Typography - Font Weights */
+    --font-weight-h1: var(--font-NWH);
+    --font-weight-h2: var(--font-NWB);
+    --font-weight-h3: var(--font-NWB);
+    --font-weight-h4: var(--font-SSPS);
+    --font-weight-h5: var(--font-NWB);
+    --font-weight-script: var(--font-Norican);
+    --font-weight-p: var(--font-SSPS);
+    --font-weight-pm: var(--font-SSPR);
+    --font-weight-pl: var(--font-SSPS);
+    --font-weight-b: var(--font-SSPS);
+
+    /* Background and Foreground colors */
+    --custom-background: var(--color-secondary-lightblue);
+    --custom-foreground: var(--color-supporting-inactiveblue);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --custom-background: #a9ceeb;
-    --custom-foreground: #1b365d;
-  }
-}
-
-body {
-  color: var(--custom-foreground);
-  background: var(--custom-background);
-
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-.icon-scroll-container {
-  -webkit-overflow-scrolling: touch; /* for smooth scrolling on iOS */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-
-.icon-scroll-container::-webkit-scrollbar {
-  display: none; /* Hide scrollbar for Chrome, Safari and Opera */
+    :root {
+        --custom-background: var(--color-secondary-lightblue);
+        --custom-foreground: var(--color-supporting-inactiveblue);
+    }
 }
 
 @layer base {
-  h1 {
-    @apply text-h1 font-h1 leading-h1;
-  }
+    body {
+        color: var(--custom-foreground);
+        background: var(--custom-background);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
 
-  h2 {
-    @apply text-h2 font-h2 leading-h2;
-  }
+    h1 {
+        font-family: var(--font-NWH);
+        font-size: var(--text-8xl);
+        line-height: var(--text-8xl--line-height);
+    }
 
-  h3 {
-    @apply text-h3 font-h3 leading-h3;
-  }
+    h2 {
+        font-family: var(--font-NWB);
+        font-size: var(--text-4xl);
+        line-height: var(--text-8xl--line-height);
+    }
 
-  h4 {
-    @apply text-h4 font-h4 leading-h4;
-  }
+    h3 {
+        font-family: var(--font-NWB);
+        font-size: var(--text-2xl);
+        line-height: var(--text-4xl--line-height);
+    }
 
-  h5 {
-    @apply text-h5 font-h5 leading-h5;
-  }
+    h4 {
+        font-family: var(--font-NWB);
+        font-size: var(--text-2xl);
+        line-height: var(--text-4xl--line-height);
+    }
 
-  .script {
-    @apply text-script font-script leading-script;
-  }
+    h5 {
+        font-family: var(--font-NWB);
+        font-size: var(--text-xl);
+        line-height: var(--text-xl--line-height);
+    }
 
-  p,
-  div,
-  ul,
-  li,
-  a {
-    @apply text-p font-p leading-p;
-  }
+    p,
+    div {
+        font-family: var(--font-SSPS);
+        font-size: var(--text-md);
+        line-height: var(--text-md--line-height);
+    }
+}
 
-  .p-mini {
-    @apply text-pm font-pm leading-pm;
-  }
+/* TODO: turn these into tailwind classes */
 
-  .p-large {
-    @apply text-pl font-pl leading-pl;
-  }
-
-  .button-text {
-    @apply text-b font-b leading-b;
-  }
-
-  a,
-  .link {
-    @apply text-system_blue underline;
-  }
-
-  .link-mini {
-    @apply text-pm font-pm leading-pm text-system_blue underline;
-  }
-
-  .warning {
-    @apply text-system_red italic;
-  }
-
-  .green-text {
-    @apply text-main_green;
-  }
-
-  .no-scrolbar::-webkit-scrollbar {
-    display: none;
-  }
-
-  .no-scrollbar {
+.icon-scroll-container {
+    -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none;
     scrollbar-width: none;
-  }
+}
+
+.icon-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }

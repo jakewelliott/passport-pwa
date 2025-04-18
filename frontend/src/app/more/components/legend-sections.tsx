@@ -58,7 +58,7 @@ export const LegendIconView = ({ icon }: { icon: IconSection['icons'][number] })
             <img src={getIconPath(icon)} alt={icon.tooltip} width={'36px'} height={'36px'} />
             <div className='ml-2 flex w-full flex-col justify-center'>
                 <p>{icon.tooltip}</p>
-                {icon.extraText && <p className='p-mini'>*{icon.extraText}</p>}
+                {icon.extraText && <p className='text-xs'>*{icon.extraText}</p>}
             </div>
         </div>
     );

@@ -3,6 +3,7 @@ import { API_AUTH_URL, fetchGet } from '@/lib/fetch';
 import type { UserProfile } from '@/types';
 import { useQuery } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
+
 // React Query hook for fetching user data
 export const useUser = () => {
     dbg('HOOK', 'useUser');

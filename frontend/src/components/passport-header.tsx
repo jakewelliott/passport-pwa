@@ -8,7 +8,7 @@ export const PassportHeader = () => {
                 height='103'
             />
             <h3 className='text-center'>North Carolina State Parks</h3>
-            <p className='script h-20' style={{ paddingTop: 30 }}>
+            <p className='font-Norican text-8xl' style={{ paddingTop: 30 }}>
                 Passport
             </p>
         </div>

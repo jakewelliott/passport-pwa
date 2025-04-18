@@ -8,7 +8,7 @@ import { useLocation } from '@/hooks/useLocation';
 import { dbg } from '@/lib/debug';
 import type { Park, ParkIcon } from '@/types';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { FilterMenu } from './components/filter-menu';
 
 const LoadingPlaceholder = () => {
@@ -123,7 +123,7 @@ export default function LocationsScreen() {
                     <div key={park.id} data-testid={'park'}>
                         <Link
                             to={`/locations/${park.abbreviation}`}
-                            className='text-supporting_inactiveblue no-underline'
+                            className='text-supporting-inactiveblue no-underline'
                         >
                             <Row park={park} />
                         </Link>

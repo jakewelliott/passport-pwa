@@ -1,10 +1,9 @@
 import RoundedButton from '@/components/rounded-button';
 import { useNote, useUpdateNote } from '@/hooks/queries/useNotes';
-import { a11yOnClick } from '@/lib/a11y';
 import { dbg, dbgif } from '@/lib/debug';
 // components/NotesMiniTab.tsx
 import { useEffect, useState } from 'react';
-import { useBeforeUnload } from 'react-router-dom';
+import { useBeforeUnload } from 'react-router';
 import { toast } from 'react-toastify';
 
 export const NotesMiniTab = ({
@@ -95,16 +94,14 @@ export const NotesMiniTab = ({
     const placeholder = parkId === 0 ? 'Add some general notes!' : 'Add some personal notes about this park!';
 
     return (
-        <div className='flex h-full flex-col'>
+        <div className='flex flex-col items-center gap-4 px-4 pt-4'>
             <textarea
-                className='h-72 w-full flex-grow resize-none border border-secondary_darkteal p-4 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100'
+                className='h-72 w-full flex-grow resize-none border border-secondary-darkteal p-4 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100'
                 value={noteState}
                 onChange={handleChange}
                 placeholder={placeholder}
             />
-            <div className='flex justify-center p-3' {...a11yOnClick(handleClick)} data-testid='save-button'>
-                <RoundedButton title={'Save'} />
-            </div>
+            <RoundedButton title={'Save'} onClick={handleClick} />
         </div>
     );
 };

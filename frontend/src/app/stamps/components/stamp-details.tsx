@@ -1,19 +1,15 @@
-import { GenericIcon } from '@/components/generic-icon';
-import { stampCollectedOn } from '@/components/stamp-collected-on';
+import { StampCollectedOn } from '@/components/stamp-collected-on';
 import { useStamp } from '@/hooks/queries/useStamps';
 import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
-import type { CollectedStamp, Park } from '@/types';
+import type { Park } from '@/types';
 import { FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 interface StampsDetailProps {
     park: Park;
     handleClose: () => void;
 }
-
-const CollectedManually = ({ stamp }: { stamp?: CollectedStamp }) =>
-    stamp?.method !== 'manual' ? null : <p className='warning'>Stamp collected manually</p>;
 
 export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
     const { data: stamp } = useStamp(park.id);
@@ -24,7 +20,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
         <>
             {/* Dark overlay */}
             <div
-                className='fixed inset-0 bg-system_black opacity-65'
+                className='fixed inset-0 bg-system-black opacity-65'
                 style={{ zIndex: 40 }}
                 {...a11yOnClick(handleClose)}
             />
@@ -35,7 +31,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                 {...a11yOnClick(handleClose)}
             >
                 <article
-                    className='relative mx-4 w-full max-w-sm rounded-lg bg-supporting_lightblue p-4 shadow-xl'
+                    className='relative mx-4 w-full max-w-sm rounded-lg bg-supporting-lightblue p-4 shadow-xl'
                     onClick={(e) => e.stopPropagation()}
                     onKeyDown={(e) => e.stopPropagation()}
                 >
@@ -48,7 +44,7 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                                 type='button'
                                 aria-label='Close park details'
                             >
-                                <FaTimes className='text-system_gray' />
+                                <FaTimes className='text-system-gray' />
                             </button>
                         </div>
                     </header>
@@ -66,9 +62,8 @@ export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
                             />
                         </div>
                         <div className='space-y-2'>
-                            <p className='text-supporting_inactiveblue'>{parkCityState}</p>
-                            <GenericIcon name='stamp' text={stampCollectedOn(stamp)} testId='stamp-collected-on' />
-                            <CollectedManually stamp={stamp} />
+                            <p className='text-supporting-inactiveblue'>{parkCityState}</p>
+                            <StampCollectedOn stamp={stamp} />
                             <Link to={`/locations/${park.abbreviation}`} className='link inline-block'>
                                 View Park Details <span aria-hidden='true'>&gt;</span>
                             </Link>

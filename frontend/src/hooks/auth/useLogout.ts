@@ -1,7 +1,7 @@
 import { dbg } from '@/lib/debug';
 import { useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 /**
