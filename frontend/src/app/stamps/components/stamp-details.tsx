@@ -2,7 +2,7 @@ import { StampCollectedOn } from '@/components/stamp-collected-on';
 import { useStamp } from '@/hooks/queries/useStamps';
 import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
-import type { CollectedStamp, Park } from '@/types';
+import type { Park } from '@/types';
 import { FaTimes } from 'react-icons/fa';
 import { Link } from 'react-router';
 
@@ -10,9 +10,6 @@ interface StampsDetailProps {
     park: Park;
     handleClose: () => void;
 }
-
-const CollectedManually = ({ stamp }: { stamp?: CollectedStamp }) =>
-    stamp?.method === 'manual' ? <p className='font-italic text-system-red'>Stamp collected manually</p> : null;
 
 export const StampDetails = ({ park, handleClose }: StampsDetailProps) => {
     const { data: stamp } = useStamp(park.id);
