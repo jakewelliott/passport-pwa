@@ -89,8 +89,8 @@ const ReservationsBox = () => {
     );
 };
 
-export const AppInfo = () => {
-    dbg('RENDER', '/more/app-info');
+export const NCDPRInfo = () => {
+    dbg('RENDER', '/more/ncdpr-info');
     return (
         <div className='flex flex-col gap-4'>
             <div className='mb-3.5'>

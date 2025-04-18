@@ -12,12 +12,12 @@ import { LogoutScreen } from './app/auth/logout';
 import Locations from './app/locations';
 import LocationDetail from './app/locations/park-info';
 import More from './app/more';
-import { AppInfo } from './app/more/app-info';
 import { EditGeneralNotes } from './app/more/general-notes';
 import { HikingEssentials } from './app/more/hiking-essentials';
 import { IconLegend } from './app/more/icon-legend';
 import { MyNotes } from './app/more/my-notes';
 import MyProfileScreen from './app/more/my-profile';
+import { NCDPRInfo } from './app/more/ncdpr-info';
 import StayingSafe from './app/more/staying-safe';
 import { Trails } from './app/more/trails';
 import WelcomeMessage from './app/more/welcome-message';
@@ -96,7 +96,7 @@ export const routes: RouteObject[] = [
                                 path: 'more',
                                 children: [
                                     { index: true, element: <More /> },
-                                    { path: 'app-info', element: <AppInfo /> },
+                                    { path: 'ncdpr-info', element: <NCDPRInfo /> },
                                     { path: 'icon-legend', element: <IconLegend /> },
                                     { path: 'welcome-message', element: <WelcomeMessage /> },
                                     { path: 'trails', element: <Trails /> },

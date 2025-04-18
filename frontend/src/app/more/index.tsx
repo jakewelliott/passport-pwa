@@ -1,5 +1,5 @@
-import { dbg } from '@/lib/debug';
 import { LinkRow } from '@/components/link-row';
+import { dbg } from '@/lib/debug';
 
 export default function More() {
     dbg('RENDER', '/more');
@@ -12,8 +12,8 @@ export default function More() {
             <LinkRow to={'/more/staying-safe'} label='Staying Safe' />
             <LinkRow to={'/more/hiking-essentials'} label='Hiking Essentials' />
             <LinkRow to={'/more/icon-legend'} label='Icon Legend' />
+            <LinkRow to={'/more/ncdpr-info'} label='NCDPR Info' />
             <LinkRow to={'/more/my-profile'} label='My Profile' />
-            <LinkRow to={'/more/app-info'} label='App Info' />
         </div>
     );
 }
