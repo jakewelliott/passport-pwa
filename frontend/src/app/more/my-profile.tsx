@@ -1,17 +1,26 @@
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import RoundedButton from '@/components/rounded-button';
 import { useUser } from '@/hooks/queries/useUser';
+import DateHelper from '@/lib/date-helper';
 import { dbg } from '@/lib/debug';
 import type { UserProfile } from '@/types';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
-
+import { ClientInfo } from './components/client-info';
+const InfoSection = ({ title, text }: { title: string; text: string }) => {
+    return (
+        <div className='grid w-full grid-cols-2'>
+            <p className='text-left'>{title}:</p>
+            <p className='text-right'>{text}</p>
+        </div>
+    );
+};
 const AccountInfo = ({ user }: { user: UserProfile }) => {
     return (
-        <div>
-            <p>Username: {user.username}</p>
-            <p>Role: {user.role}</p>
-            {/* <p>Account created on: {DateHelper.toStringLong(user.createdAt)}</p> */}
+        <div className='w-full rounded-lg bg-main-blue p-4 text-system-white'>
+            <InfoSection title='Username' text={user.username} />
+            {user.role === 'admin' && <InfoSection title='Admin Account' text='Yes' />}
+            <InfoSection title='Account Created' text={DateHelper.toStringShort(new Date())} />
         </div>
     );
 };
@@ -41,12 +50,18 @@ export default function MyProfileScreen() {
     if (isLoading) return <LoadingPlaceholder what='your profile' />;
 
     return (
-        <div className='flex flex-col gap-4'>
-            <h2>My Profile</h2>
-            {user && <AccountInfo user={user} />}
-            <RoundedButton onClick={handlePasswordChange} title='Change Password' />
-            <RoundedButton onClick={handleLogout} title='Logout' />
-
+        <div className='flex h-full flex-col items-center justify-evenly gap-4'>
+            <div className='flex flex-col items-center gap-4'>
+                <h2>My Profile</h2>
+                {user && <AccountInfo user={user} />}
+                <RoundedButton onClick={handlePasswordChange} title='Change Password' />
+                <RoundedButton onClick={handleLogout} title='Logout' />
+            </div>
+            <div className='flex flex-col items-center gap-4'>
+                <h2>App Info</h2>
+                <ClientInfo />
+            </div>
+            {/* <ButtonVariantsDemo /> */}
             {isModalOpen && <PasswordChangeModal onClose={handleCloseModal} />}
         </div>
     );
@@ -93,7 +108,7 @@ function PasswordChangeModal({ onClose }: { onClose: () => void }) {
                 </div>
                 <div className='flex w-full justify-between'>
                     <RoundedButton title={'Cancel'} onClick={onClose} />
-                    <RoundedButton title={'Save'} onClick={() => {}} color='secondary_orange' />
+                    <RoundedButton width='96' title={'Save'} onClick={() => {}} color='secondary_orange' />
                 </div>
             </div>
         </div>
