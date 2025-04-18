@@ -16,7 +16,7 @@ import { useParams } from 'react-router';
 
 // TODO: styling here needs to be fixed
 const MiniTabs = ({ park }: { park: Park }) => (
-    <div className='flex flex-col'>
+    <div className='relative right-4 flex w-svw flex-col'>
         <LocationActionBar park={park} />
         <LocationMiniTabBar>
             <DetailsMiniTab park={park} />

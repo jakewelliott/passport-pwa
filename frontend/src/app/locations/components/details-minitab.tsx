@@ -28,20 +28,6 @@ const Highlight = ({ title, children }: { title: string; children?: React.ReactN
     );
 };
 
-const renderTrails = (trails: string) => {
-    const trailLines = trails.split('\n').filter((line) => line.trim() !== '');
-
-    return (
-        <div className='flex flex-col gap-1 py-2'>
-            {trailLines.map((line) => (
-                <div className={line.charAt(0) !== '■' ? 'pl-5' : ''} key={line}>
-                    {line}
-                </div>
-            ))}
-        </div>
-    );
-};
-
 const IconView = ({ icon }: { icon: ParkIcon }) => {
     const [tooltipVisible, setTooltipVisible] = useState(false);
     const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
@@ -88,18 +74,22 @@ const ParkIcons = ({ icons }: { icons: ParkIcon[] }) => {
 };
 
 export const DetailsMiniTab = ({ park }: { park: Park }) => {
+    const trailLines = park.trails.split('\n').filter((line) => line.trim() !== '');
+
     return (
-        <div className='mt-4 ml-4 flex flex-col'>
-            <div className='gap-2'>
+        <>
+            <div className='flex flex-col gap-2 p-4'>
                 <Highlight title='Established'>{park.establishedYear}</Highlight>
                 <Highlight title='Landmark'>{park.landmark}</Highlight>
                 <Highlight title='You can find'>{park.youCanFind}</Highlight>
-                <div className='flex flex-col gap-1'>
-                    <Highlight title='Park trails' />
-                    {renderTrails(park.trails)}
-                </div>
+                <Highlight title='Park trails' />
+                {trailLines.map((line) => (
+                    <div className={line.charAt(0) !== '■' ? 'pl-5' : ''} key={line}>
+                        {line}
+                    </div>
+                ))}
             </div>
             <ParkIcons icons={park.icons} />
-        </div>
+        </>
     );
 };

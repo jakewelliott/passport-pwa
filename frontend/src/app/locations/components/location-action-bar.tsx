@@ -5,7 +5,7 @@ export const LocationActionBar = ({ park }: { park: Park }) => {
     // TODO: styling here needs to be fixed
     return (
         <div
-            className='relative right-4 flex w-svw flex-row items-center justify-evenly bg-secondary-darkteal py-2.5'
+            className='flex flex-row items-center justify-evenly bg-secondary-darkteal py-2.5'
             data-testid='location-action-bar'
         >
             {park.coordinates?.latitude && park.coordinates.longitude && (
