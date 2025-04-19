@@ -58,8 +58,10 @@ mkcert -install
 echo "📜 Generating certificates for localhost and $IP..."
 mkcert localhost 127.0.0.1 $IP
 
-cp ./localhost+2.pem ./frontend/localhost+2.pem
-cp ./localhost+2-key.pem ./frontend/localhost+2-key.pem
+mkdir ../nginx/certs
+mkdir ../nginx/certs/localhost
+mv ./localhost+2.pem ../nginx/certs/localhost/localhost+2.pem
+mv ./localhost+2-key.pem ../nginx/certs/localhost/localhost+2-key.pem
 
 echo "✅ Setup complete! Certificates have been generated:"
 echo "   - Certificate: ./localhost+2.pem"
