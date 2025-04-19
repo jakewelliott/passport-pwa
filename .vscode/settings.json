@@ -8,7 +8,7 @@
     "files.exclude": {
         "**/node_modules": true,
         "**/coverage": true,
-        // "**.pem": true,
+        "**.pem": true,
         "**/package-lock.json": true,
         "senior-design/**": true,
         "frontend/dist": true,

@@ -30,7 +30,7 @@ export const FilterMenu = ({
                 <button
                     type='button'
                     onClick={() => setSearchQuery('')}
-                    className='-translate-y-1/2 absolute top-1/2 right-3 transform text-system-gray hover:text-secondary-darkteal'
+                    className='-translate-y-1/2 absolute top-1/2 right-3 transform bg-supporting-lightblue text-system-gray hover:text-secondary-darkteal'
                     aria-label='Clear search'
                 >
                     &times;

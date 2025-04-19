@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 
 const getInputStyles = (isError: boolean) =>
     cn(
-        'w-full rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100',
+        'bg-system-white w-full rounded-lg border p-3 focus:outline-none focus:ring-1 focus:ring-opacity-100',
         isError
             ? 'border-system-red focus:border-system-red ring-system-red ring-1'
             : 'border-system-gray focus:border-secondary-darkteal focus:ring-secondary-darkteal',
