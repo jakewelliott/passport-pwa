@@ -13,22 +13,22 @@ export const LocationActionBar = ({ park }: { park: Park }) => {
                     href={`https://www.google.com/maps/place/${park.coordinates.latitude},${park.coordinates.longitude}`}
                     className='text-supporting-inactiveblue'
                 >
-                    <FiNavigation size={24} strokeWidth={2} />
+                    <FiNavigation size={24} strokeWidth={3} />
                 </a>
             )}
             {park.phone && (
                 <a href={`tel://${park.phone}`} className='text-supporting-inactiveblue'>
-                    <FiPhone size={24} strokeWidth={2} />
+                    <FiPhone size={24} strokeWidth={3} />
                 </a>
             )}
             {park.website && (
                 <a href={park.website} className='text-supporting-inactiveblue'>
-                    <FiGlobe size={24} strokeWidth={2} />
+                    <FiGlobe size={24} strokeWidth={3} />
                 </a>
             )}
             {park.email && (
                 <a href={`mailto:${park.email}`} className='text-supporting-inactiveblue'>
-                    <FiMail size={24} strokeWidth={2} />
+                    <FiMail size={24} strokeWidth={3} />
                 </a>
             )}
         </div>

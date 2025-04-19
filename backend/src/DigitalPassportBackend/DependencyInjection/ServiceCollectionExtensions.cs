@@ -49,9 +49,10 @@ public static class ServiceCollectionExtensions
         services.AddCors(options => {
             options.AddPolicy(corsPolicyName, builder => {
                 builder
-                    .AllowAnyOrigin()
+                    .SetIsOriginAllowed(origin => true) // Allow any origin
                     .AllowAnyHeader()
-                    .AllowAnyMethod();
+                    .AllowAnyMethod()
+                    .AllowCredentials(); // Allow credentials
             });
         });
 
