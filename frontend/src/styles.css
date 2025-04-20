@@ -208,3 +208,9 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+.text-pmini {
+    font-size: var(--font-size-pm);
+    line-height: var(--line-height-pm);
+    font-weight: var(--font-weight-pm);
+}

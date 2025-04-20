@@ -9,6 +9,7 @@ const DownloadBox = () => (
     <Box title='DOWNLOAD PARK MAPS' headerClass='bg-secondary-orange' bodyClass='bg-supporting-lightorange'>
         <div className='-ml-6 float-left mt-6'>
             {/* TODO: add filling into the map cuz it goes over the side of the box */}
+            {/* This is intended behavior. Copied look from paper passport shows it going outside the box */}
             <RiMap2Line size={90} style={{ transform: 'rotate(-25deg)' }} />
         </div>
         <p className='text-center'>
@@ -24,7 +25,7 @@ const ContactUsBox = () => (
     <Box
         title='CONTACT US'
         headerClass='bg-supporting-inactiveblue'
-        bodyClass='bg-supporting-lightblue flex flex-col gap-3'
+        bodyClass='bg-supporting-lightblue flex flex-col gap-3 items-center'
     >
         <div className='flex flex-row justify-center gap-3'>
             <Link
@@ -49,7 +50,7 @@ const ContactUsBox = () => (
         <Link to={'www.ncparks.gov'} className='text-center text-supporting-inactiveblue'>
             www.ncparks.gov
         </Link>
-        <p className='space-y-1'>
+        <p className='space-y-1 text-center'>
             <span>NC Division of Parks and Recreation</span>
             <br />
             <span>Dept. of Natural and Cultural Resources</span>
@@ -71,16 +72,17 @@ const ReservationsBox = () => {
         <Box title='MAKE A RESERVATION' headerClass='bg-main-green' bodyClass='bg-supporting-green'>
             <div className='flex flex-col items-center gap-2'>
                 <Row>
-                    <img src={'/icons/misc/Picnic.svg'} alt={'picnic'} width={'36px'} height={'36px'} />
-                    <Link to={'https://www.ncparks.gov/reservations'} className='text-xs'>
-                        ncparks.gov/reservations
-                    </Link>
-                    <p className='text-xs'>1-877-722-6762</p>
+                    <img src={'/icons/park/PicnicShelter-Black.svg'} alt={'picnic'} width={'36px'} height={'36px'} />
+                    <div className=''>
+                        <a href={'https://www.ncparks.gov/reservations'} className='text-pmini'>
+                            ncparks.gov/reservations
+                        </a>
+                        <p className='text-pmini'>1-877-722-6762</p>
+                    </div>
                 </Row>
                 <Row>
-                    {/* @ts-ignore */}
-                    <img src={'/icons/misc/Camping.svg'} alt={'campsite'} width={'36px'} height={'36px'} />
-                    <p className='text-xs'>
+                    <img src={'/icons/park/Camping-Black.svg'} alt={'campsite'} width={'36px'} height={'36px'} />
+                    <p className='text-pmini'>
                         Reserve campsites, picnic shelters and other park facilities online or over the phone.
                     </p>
                 </Row>
