@@ -3,6 +3,9 @@ FROM node:20-alpine AS frontend-build
 
 WORKDIR /app
 
+# Copy the .env file
+COPY [".env", ".env"]
+
 # Copy package.json and package-lock.json
 COPY frontend/package*.json ./
 

@@ -4,7 +4,7 @@
         "backend": "dotnet run --project backend/src/DigitalPassportBackend dev",
         "database": "cd backend/src/DigitalPassportBackend && dotnet ef database update",
         "precache": "./scripts/update-precached-files.sh",
-        "docker": "docker-compose down && docker volume rm 2025spring-team21-ncparks-2_frontend_build && docker-compose up --build",
+        "docker": "docker-compose up --build",
         "docker:clear": "docker system prune"
     },
     "devDependencies": {

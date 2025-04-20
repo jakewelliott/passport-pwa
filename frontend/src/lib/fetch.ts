@@ -1,8 +1,19 @@
 import { dbg } from '@/lib/debug';
 import Cookies from 'js-cookie';
-import { ENV } from './env';
 
-export const API_URL = ENV.API_URL;
+const env = import.meta.env;
+
+// since env vars suck we have to do this
+const determineBaseUrl = () => {
+    // when running outside of docker, we need to use HTTP port
+    if (env.DEV) return `http://${env.VITE_API_HOSTNAME}:${env.VITE_API_HTTP_PORT}`;
+    // if HTTPS port is set to 443, then don't include it
+    if (env.VITE_API_HTTPS_PORT === '443') return `https://${env.VITE_API_HOSTNAME}`;
+    // otherwise, include the port
+    return `https://${env.VITE_API_HOSTNAME}:${env.VITE_API_HTTPS_PORT}`;
+};
+
+export const API_URL = `${determineBaseUrl()}/api`;
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
