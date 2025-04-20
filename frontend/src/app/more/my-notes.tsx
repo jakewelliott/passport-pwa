@@ -9,6 +9,16 @@ import { useMemo } from 'react';
 import { type NavigateFunction, useNavigate } from 'react-router';
 import ListRow from '../../components/list-row';
 
+const DEFAULT_GENERAL_NOTE: ParkNote = {
+    parkId: 0,
+    note: 'Use this note to store your general notes.',
+    updatedAt: new Date(),
+    userId: 0,
+    id: -1,
+    createdAt: new Date(),
+    deleted: false,
+};
+
 const isGeneralNote = (note: ParkNote) => {
     return note.parkId === 0;
 };
@@ -34,15 +44,19 @@ const NoteRow = ({
         return isGeneralNote(note) ? 'General Notes' : parks?.find((x) => x.id === note.parkId)?.parkName;
     }, [note, parks]);
 
+    const isDefaultGeneralNote = note.id === DEFAULT_GENERAL_NOTE.id;
+
     return (
         <div key={note.parkId} {...a11yOnClick(() => navigate(navigateTo))} className={`cursor-pointer ${note.parkId}`}>
             <ListRow>
                 <div className='flex flex-col gap-1'>
                     <h3>{title}</h3>
-                    <p className='mb-2 text-gray-500 text-sm'>
-                        Last updated:{' '}
-                        {note.updatedAt ? dateHelper.toStringLong(new Date(note.updatedAt)) : 'Not Available'}
-                    </p>
+                    {!isDefaultGeneralNote && (
+                        <p className='mb-2 text-gray-500 text-sm'>
+                            Last updated:{' '}
+                            {note.updatedAt ? dateHelper.toStringLong(new Date(note.updatedAt)) : 'Not Available'}
+                        </p>
+                    )}
                     <p
                         className='overflow-wrap-anywhere line-clamp-3 max-w-full hyphens-auto break-words'
                         style={{ hyphens: 'auto' }}
@@ -60,7 +74,7 @@ export const MyNotes = () => {
     const navigate = useNavigate();
     const { data, isLoading } = useNotes();
 
-    const generalNote = data?.find((note) => isGeneralNote(note));
+    const generalNote = data?.find((note) => isGeneralNote(note)) ?? DEFAULT_GENERAL_NOTE;
     const restOfNotes = data?.filter((note) => !isGeneralNote(note)) ?? [];
     const allNotes = [generalNote, ...restOfNotes];
 
