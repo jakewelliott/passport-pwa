@@ -3,18 +3,10 @@ import { FaFilter } from 'react-icons/fa';
 interface FilterMenuProps {
     searchQuery: string;
     setSearchQuery: (value: string) => void;
-    isTypingSearch: boolean;
-    setIsTypingSearch: (value: boolean) => void;
     setIsFilterModalOpen: (value: boolean) => void;
 }
 
-export const FilterMenu = ({
-    searchQuery,
-    setSearchQuery,
-    isTypingSearch,
-    setIsTypingSearch,
-    setIsFilterModalOpen,
-}: FilterMenuProps) => (
+export const FilterMenu = ({ searchQuery, setSearchQuery, setIsFilterModalOpen }: FilterMenuProps) => (
     <div className='relative flex gap-2'>
         <div className='relative flex-1'>
             <input
@@ -22,8 +14,6 @@ export const FilterMenu = ({
                 placeholder='Search parks...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onFocus={() => setIsTypingSearch(true)}
-                onBlur={() => setIsTypingSearch(false)}
                 className='w-full rounded-lg border border-system-gray bg-supporting-lightblue p-3 pr-7 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100'
             />
             {searchQuery && (
@@ -43,7 +33,6 @@ export const FilterMenu = ({
             className={
                 'w-auto rounded-lg border border-system-gray bg-system-white px-3 py-2 transition-all duration-200'
             }
-            style={{ display: isTypingSearch ? 'none' : 'inline' }}
         >
             <FaFilter />
         </button>

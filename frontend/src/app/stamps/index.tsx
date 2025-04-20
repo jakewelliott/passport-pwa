@@ -74,7 +74,6 @@ export default function StampsScreen() {
         const saved = localStorage.getItem('showOnlyFavorites');
         return saved === 'true';
     });
-    const [isTypingSearch, setIsTypingSearch] = useState(false);
 
     // Save settings to localStorage whenever they change
     const handleSortOptionChange = (option: SortOption) => {
@@ -125,8 +124,6 @@ export default function StampsScreen() {
                 <FilterMenu
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
-                    isTypingSearch={isTypingSearch}
-                    setIsTypingSearch={setIsTypingSearch}
                     setIsFilterModalOpen={setIsFilterModalOpen}
                 />
                 <div className='grid grid-cols-3 gap-4' data-testid='stamps-grid'>
