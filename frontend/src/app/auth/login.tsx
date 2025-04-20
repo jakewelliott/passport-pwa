@@ -4,6 +4,7 @@ import { useRegister } from '@/hooks/auth/useRegister';
 import { useUser } from '@/hooks/queries/useUser';
 import { cn } from '@/lib/cn-helper';
 import { dbg } from '@/lib/debug';
+import { hashPassword } from '@/lib/hashing';
 import { useRef, useState } from 'react';
 import { Navigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -53,6 +54,7 @@ export default function LoginPage() {
             toast.error(`${missingFields.join(' and ')} ${missingFields.length > 1 ? 'are' : 'is'} required.`);
             return false;
         }
+
         return { username, password };
     };
 
@@ -63,6 +65,12 @@ export default function LoginPage() {
         const formData = new FormData(formRef.current);
         const validatedData = validateFields(formData);
         if (!validatedData) return;
+
+        // ADAM: this is hacky but i couldn't get past the salts on backend
+        // TODO: update stored hashes in migrations
+        if (validatedData.password !== 'password') {
+            validatedData.password = await hashPassword(validatedData.password);
+        }
 
         const mutation = isLogin ? loginMutation : registerMutation;
         mutation.mutate(
