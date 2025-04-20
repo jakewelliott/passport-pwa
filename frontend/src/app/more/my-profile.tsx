@@ -50,16 +50,16 @@ export default function MyProfileScreen() {
     if (isLoading) return <LoadingPlaceholder what='your profile' />;
 
     return (
-        <div className='flex h-full flex-col items-center justify-evenly gap-4'>
-            <div className='flex flex-col items-center gap-4'>
+        <div className='flex h-full w-full flex-col items-center'>
+            <div className='flex flex-grow flex-col items-center gap-3'>
                 <h2>My Profile</h2>
-                {user && <AccountInfo user={user} />}
-                <RoundedButton onClick={handlePasswordChange} title='Change Password' />
-                <RoundedButton color='bg-secondary-orange' onClick={handleLogout} title='Logout' />
+                <div className='w-1/2 min-w-[300px] max-w-[450px]'>{user && <AccountInfo user={user} />}</div>
+                <RoundedButton onClick={handlePasswordChange} title='Change Password' variant='wide' />
             </div>
-            <div className='flex flex-col items-center gap-4'>
+            <div className='flex w-full max-w-[500px] flex-col items-center gap-4'>
                 <h2>App Info</h2>
                 <ClientInfo />
+                <RoundedButton color='bg-secondary-orange' onClick={handleLogout} title='Logout' variant='wide' />
             </div>
             {isModalOpen && <PasswordChangeModal onClose={handleCloseModal} />}
         </div>
@@ -73,8 +73,8 @@ function PasswordChangeModal({ onClose }: { onClose: () => void }) {
 
     return (
         <div className='absolute top-0 left-0 flex h-svh w-svw items-center justify-center'>
-            <div className='-z-10 absolute top-0 left-0 h-svh w-svw bg-black opacity-50' />
-            <div className='p-2'>
+            <div className='absolute top-0 left-0 h-svh w-svw bg-black opacity-50' />
+            <div className='z-50 p-2'>
                 <div className='flex w-full flex-col gap-4 rounded-lg bg-system-white p-6 '>
                     <h2>Change Password</h2>
                     <label htmlFor='currentPassword'>Current Password:</label>

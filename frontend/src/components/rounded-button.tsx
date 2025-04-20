@@ -7,7 +7,7 @@
 import { cn } from '@/lib/cn-helper';
 
 // Button variant types
-type ButtonVariant = 'default' | 'outline' | 'small' | 'large' | 'icon';
+type ButtonVariant = 'default' | 'outline' | 'small' | 'large' | 'icon' | 'wide';
 
 interface ButtonProps {
     title: string;
@@ -46,6 +46,7 @@ const RoundedButton: React.FC<ButtonProps> = ({
         small: 'p-2 text-sm w-32',
         large: 'p-6 w-64',
         icon: 'p-3 w-auto text-system-white',
+        wide: 'p-2 w-64'
     };
 
     // Compose the className based on variant
