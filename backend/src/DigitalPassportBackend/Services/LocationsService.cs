@@ -85,6 +85,12 @@ public class LocationsService : ILocationsService
                 var existing = _locationsRepository.GetByAbbreviation(park.parkAbbreviation);
                 if (existing.id == park.id)
                 {
+                    // Migrate geo data.
+                    park.boundaries = existing.boundaries;
+
+                    // Migrate createdAt field.
+                    park.createdAt = existing.createdAt;
+
                     // Update park.
                     _locationsRepository.Update(park);
                 }
@@ -270,8 +276,13 @@ public class LocationsService : ILocationsService
         {
             try
             {
-                if (!repo.GetById(val.id).Equals(val))
+                var existing = repo.GetById(val.id);
+                if (!existing.Equals(val))
                 {
+                    // Migrate createdAt field.
+                    val.createdAt = existing.createdAt;
+
+                    // Save changes.
                     repo.Update(val);
                 }
             }
