@@ -1,3 +1,4 @@
+using DigitalPassportBackend.UnitTests.TestUtils;
 using System.Security.Claims;
 using DigitalPassportBackend.Controllers;
 using DigitalPassportBackend.Domain;
@@ -24,28 +25,30 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         public void Get_AdminRoleValidUserId_ReturnsOkResult()
         {
             // Arrange
-            SetupUser(1, "admin");
             var user = new User { id = 2, username = "user2", password = "password", role = UserRole.visitor };
+            SetupUser(2, "visitor");
+
             _mockAuthService.Setup(s => s.GetUserById(2)).Returns(user);
 
             // Act
-            var result = _controller.Get(2);
+            var result = _controller.GetUserDetails();
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedUser = Assert.IsType<UserDto>(okResult.Value);
-            Assert.Equal(2, returnedUser.id);
+            var returnedUser = Assert.IsType<CurrentUserDto>(okResult.Value);
+            Assert.Equal("user2", returnedUser.username);
+            Assert.Equal("visitor", returnedUser.role);
         }
 
         [Fact]
         public void Get_AdminRoleInvalidUserId_ThrowsNotFoundException()
         {
             // Arrange
-            SetupUser(1, "admin");
+            SetupUser(0, "visitor");
             _mockAuthService.Setup(s => s.GetUserById(0)).Throws(new NotFoundException("User not found"));
 
             // Act & Assert
-            Assert.Throws<NotFoundException>(() => _controller.Get(0));
+            Assert.Throws<NotFoundException>(() => _controller.GetUserDetails());
         }
 
         [Fact]
@@ -53,16 +56,16 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         {
             // Arrange
             SetupUser(1, "admin");
-            var user = new User { id = 1, username = "admin", password = "password", role = UserRole.admin };
-            _mockAuthService.Setup(s => s.GetUserById(1)).Returns(user);
+            _mockAuthService.Setup(s => s.GetUserById(1)).Returns(TestData.Users[0]);
 
             // Act
-            var result = _controller.Get(1);
+            var result = _controller.GetUserDetails();
 
             // Assert
             var okResult = Assert.IsType<OkObjectResult>(result);
-            var returnedUser = Assert.IsType<UserDto>(okResult.Value);
-            Assert.Equal(1, returnedUser.id);
+            var returnedUser = Assert.IsType<CurrentUserDto>(okResult.Value);
+            Assert.Equal("superAdmin", returnedUser.username);
+            Assert.Equal("admin", returnedUser.role);
         }
 
         [Fact]
