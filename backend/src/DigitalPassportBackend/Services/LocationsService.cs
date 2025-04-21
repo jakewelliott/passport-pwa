@@ -178,6 +178,9 @@ public class LocationsService : ILocationsService
             throw new ServiceException(409, $"Trail with name '{trail.trailName}' already exists");
         }
 
+        // Migrate createdAt field.
+        trail.createdAt = t!.createdAt;
+
         _trailRepository.Update(trail);
         // ADAM: this is making updating a trail error
         SetValues(_trailIconRepository.GetByTrailId(trail.id), icons, _trailIconRepository);
