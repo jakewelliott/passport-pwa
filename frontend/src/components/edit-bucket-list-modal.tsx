@@ -59,6 +59,11 @@ export function EditBucketListItemModal({
         onClose();
     };
 
+    const handleDelete = () => {
+        // handle deleting a bucket list item
+        onClose();
+    };
+
     const handleSelectedPark = () => {
         if (selectedPark) {
             setEditedItem((prev) => ({
@@ -127,10 +132,13 @@ export function EditBucketListItemModal({
                     </div>
                     <div className='mt-6 flex justify-end space-x-3'>
                         <RoundedButton title={'Cancel'} onClick={onClose} />
+                        <RoundedButton title='Delete' color='bg-system-red' onClick={handleSubmit} />
+                    </div>
+                    <div className='mt-6 flex justify-center space-x-3'>
                         <RoundedButton
                             type='submit'
                             title='Save Changes'
-                            color='secondary-orange'
+                            color='bg-secondary-orange'
                             onClick={handleSubmit}
                         />
                     </div>

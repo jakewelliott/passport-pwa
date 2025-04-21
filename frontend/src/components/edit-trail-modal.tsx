@@ -58,6 +58,11 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
         onClose();
     };
 
+    const handleDelete = () => {
+        // Handle deleting a trail
+        onClose();
+    }
+
     const handleAddIcon = () => {
         if (selectedIcon) {
             setEditedTrail((prev) => ({
@@ -200,9 +205,16 @@ export function EditTrailModal({ isOpen, onClose, trailProp = defaultTrail, isNe
                     <div className='mt-6 flex justify-end space-x-3'>
                         <RoundedButton title={'Cancel'} onClick={onClose} />
                         <RoundedButton
+                            title='Delete'
+                            color='bg-system-red'
+                            onClick={handleDelete}
+                        />
+                    </div>
+                    <div className='mt-6 flex justify-center space-x-3'>
+                    <RoundedButton
                             type='submit'
                             title='Save Changes'
-                            color='secondary-orange'
+                            color='bg-secondary-orange'
                             onClick={handleSubmit}
                         />
                     </div>

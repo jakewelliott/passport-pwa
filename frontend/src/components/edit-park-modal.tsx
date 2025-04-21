@@ -79,6 +79,11 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
         onClose();
     };
 
+    const handleDelete = () => {
+        // handle deleting a park
+        onClose();
+    };
+
     const handleAddPhoto = () => {
         setEditedPark((prev) => ({
             ...prev,
@@ -519,10 +524,13 @@ export function EditParkModal({ isOpen, onClose, parkProp = defaultPark, isNew =
                     </div>
                     <div className='mt-6 flex justify-end space-x-3'>
                         <RoundedButton title={'Cancel'} onClick={onClose} />
+                        <RoundedButton title='Delete' color='bg-system-red' onClick={handleDelete} />
+                    </div>
+                    <div className='mt-6 flex justify-center space-x-3'>
                         <RoundedButton
                             type='submit'
                             title='Save Changes'
-                            color='secondary-orange'
+                            color='bg-secondary-orange'
                             onClick={handleSubmit}
                         />
                     </div>
