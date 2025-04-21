@@ -62,7 +62,6 @@ export default function LocationsScreen() {
         const saved = localStorage.getItem('showOnlyFavorites');
         return saved === 'true';
     });
-    const [isTypingSearch, setIsTypingSearch] = useState(false);
 
     // Save settings to localStorage whenever they change
     const handleSortOptionChange = (option: SortOption) => {
@@ -115,8 +114,6 @@ export default function LocationsScreen() {
                 <FilterMenu
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
-                    isTypingSearch={isTypingSearch}
-                    setIsTypingSearch={setIsTypingSearch}
                     setIsFilterModalOpen={setIsFilterModalOpen}
                 />
                 {filteredParks.map((park) => (
