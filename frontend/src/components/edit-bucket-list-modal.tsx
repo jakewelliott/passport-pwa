@@ -132,7 +132,7 @@ export function EditBucketListItemModal({
                     </div>
                     <div className='mt-6 flex justify-end space-x-3'>
                         <RoundedButton title={'Cancel'} onClick={onClose} />
-                        <RoundedButton title='Delete' color='bg-system-red' onClick={handleSubmit} />
+                        <RoundedButton title='Delete' color='bg-system-red' onClick={handleDelete} />
                     </div>
                     <div className='mt-6 flex justify-center space-x-3'>
                         <RoundedButton
