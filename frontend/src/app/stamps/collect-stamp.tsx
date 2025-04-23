@@ -78,7 +78,7 @@ export default function CollectStamp() {
                             park.stampImage &&
                             (park.stampImage.startsWith('http://') || park.stampImage.startsWith('https://'))
                                 ? park.stampImage
-                                : `/stamps/${park.abbreviation}.svg`
+                                : `/stamps/${park.abbreviation}`
                         }
                         alt={`${park.abbreviation} stamp`}
                     />
