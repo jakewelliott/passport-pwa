@@ -11,6 +11,7 @@ interface ImportMetaEnv {
     readonly VITE_API_HOSTNAME: string;
     readonly VITE_API_HTTP_PORT: string;
     readonly VITE_API_HTTPS_PORT: string;
+    readonly VITE_API_USE_PORT: boolean;
 }
 
 interface ImportMeta {

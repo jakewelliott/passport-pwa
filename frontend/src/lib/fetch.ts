@@ -9,6 +9,7 @@ const determineBaseUrl = () => {
     if (env.DEV) return `http://${env.VITE_API_HOSTNAME}:${env.VITE_API_HTTP_PORT}`;
     // if HTTPS port is set to 443, then don't include it
     if (env.VITE_API_HTTPS_PORT === '443') return `https://${env.VITE_API_HOSTNAME}`;
+    if (!env.VITE_API_USE_PORT) return `https://${env.VITE_API_HOSTNAME}`;
     // otherwise, include the port
     return `https://${env.VITE_API_HOSTNAME}:${env.VITE_API_HTTPS_PORT}`;
 };
