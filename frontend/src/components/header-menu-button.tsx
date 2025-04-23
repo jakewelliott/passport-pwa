@@ -5,6 +5,7 @@ import { useStampMutation } from '@/hooks/queries/useStamps';
 import { useUser } from '@/hooks/queries/useUser';
 import { useLocation as useLocationHook } from '@/hooks/useLocation';
 import { usePageTitle } from '@/hooks/usePageTitle';
+import { useParkCheck } from '@/hooks/useParkCheck';
 import { dbg } from '@/lib/debug';
 import type { CollectStampRequest } from '@/types/api';
 import { useEffect, useRef, useState } from 'react';
@@ -27,6 +28,7 @@ export const HeaderMenuButton = () => {
     const { pathname } = useLocation();
     const { pageTitle } = usePageTitle();
     const { data: parks } = useParks();
+    const { park: parkCheck, isLoading: parkCheckLoading } = useParkCheck();
     const park = parks?.find((p) => p.abbreviation === pathname.split('/').pop());
     const [isFavorite, setIsFavorite] = useState(park ? data?.includes(park?.id) : false);
 
@@ -46,15 +48,19 @@ export const HeaderMenuButton = () => {
     // if we can't find the park, return null
     if (!showForParkDetails && !showForAdmin) return null;
 
+    let method = 'manual';
+
     const handleCollectStampPress = () => {
         if (!geopoint) {
             toast.error('Unable to see your current location.');
             return;
         }
 
+        if (!parkCheckLoading && parkCheck === park?.id) method = 'location';
+
         const update: CollectStampRequest = {
             geopoint,
-            method: 'manual',
+            method: method,
             dateTime: new Date(),
             parkId: park?.id || 0,
             parkAbbreviation: park?.abbreviation || '',
