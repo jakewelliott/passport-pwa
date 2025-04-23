@@ -25,7 +25,7 @@ const castGeopoint = (geopoint: Geopoint): GeoJSON.Feature<GeoJSON.Point> => {
         type: 'Feature',
         geometry: {
             type: 'Point',
-            coordinates: [geopoint.latitude, geopoint.longitude],
+            coordinates: [geopoint.longitude, geopoint.latitude],
         },
         properties: {},
     };
@@ -40,15 +40,20 @@ const parkCheck = (
         try {
             const boundaries = wkt.parse(parkGeo.boundaries || '');
             if (boundaries?.type === 'GeometryCollection') {
+                if (parkGeo.id === 100) console.log('Check 1');
                 for (const geometry of boundaries?.geometries ?? []) {
                     if (geometry.type === 'Polygon' || geometry.type === 'MultiPolygon') {
+                        if (parkGeo.id === 100) console.log('check 2');
+                        if (parkGeo.id === 100) console.log(geometry);
+                        if (parkGeo.id === 100) console.log(point);
                         // If point is within polygon, find and return matching park
                         if (booleanPointInPolygon(point, geometry)) {
+                            if (parkGeo.id === 100) console.log('check 3');
                             return parkGeo.id;
                         }
                         // Create buffered point using accuracy radius
                         const bufferedPoint = buffer(point, accuracy, {
-                            units: 'degrees',
+                            units: 'meters',
                         }) as GeoJSON.Feature<GeoJSON.Polygon>;
 
                         // Check if either the point is in the polygon or the buffer intersects it
@@ -86,6 +91,7 @@ export const useParkCheck = (): ParkCheckResult => {
         }
 
         const point = castGeopoint(geopoint);
+
         const currentParkId = parkCheck(point, geopoint.inaccuracyRadius, parksGeo);
 
         dbgif(!currentParkId, 'ERROR', 'useParkCheck', 'park not found');

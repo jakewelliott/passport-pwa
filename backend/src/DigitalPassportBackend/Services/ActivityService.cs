@@ -55,10 +55,14 @@ public class ActivityService(
         }
 
         // collect the stamp
-        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.latitude, geopoint.longitude));
+        var userLocation = GeometryFactory.Default.CreatePoint(new Coordinate(geopoint.longitude, geopoint.latitude));
+
         if (method == StampCollectionMethod.location.GetDisplayName())
         {
-            var locationWithInaccuracy = userLocation.Buffer(geopoint.inaccuracyRadius);
+            double metersToDegrees = geopoint.inaccuracyRadius / 111000.0;
+            var locationWithInaccuracy = userLocation.Buffer(metersToDegrees);
+            Console.WriteLine(locationWithInaccuracy);
+            Console.WriteLine(park.boundaries);
             if (park.boundaries!.Intersects(locationWithInaccuracy))
             {
                 var collectedStamp = CreateStamp(userLocation, methodEnum, _userRepository.GetById(userId), park, dateTime);

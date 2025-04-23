@@ -48,15 +48,14 @@ export const HeaderMenuButton = () => {
     // if we can't find the park, return null
     if (!showForParkDetails && !showForAdmin) return null;
 
-    let method = 'manual';
-
     const handleCollectStampPress = () => {
         if (!geopoint) {
             toast.error('Unable to see your current location.');
             return;
         }
 
-        if (!parkCheckLoading && parkCheck === park?.id) method = 'location';
+        let method = 'manual';
+        if (!parkCheckLoading && parkCheck?.id === park?.id) method = 'location';
 
         const update: CollectStampRequest = {
             geopoint,
