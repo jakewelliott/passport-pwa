@@ -109,6 +109,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
 
     // Trails
     [HttpPost("trails")]
+    [Authorize(Roles = "admin")]
     public IActionResult CreateTrail([FromBody] TrailDTO trail)
     {
         var t = trail.ToDomain(out var icons);
@@ -124,6 +125,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     }
 
     [HttpPut("trails")]
+    [Authorize(Roles = "admin")]
     public IActionResult UpdateTrail([FromBody] TrailDTO trail)
     {
         var t = trail.ToDomain(out var icons);
@@ -132,6 +134,7 @@ public class LocationsController(ILocationsService locationsService) : Controlle
     }
 
     [HttpDelete("trails/{trailId}")]
+    [Authorize(Roles = "admin")]
     public IActionResult DeleteTrail(int trailId)
     {
         _locationsService.DeleteTrail(trailId);
