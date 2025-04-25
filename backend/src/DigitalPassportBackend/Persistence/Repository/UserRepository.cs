@@ -36,6 +36,11 @@ public class UserRepository(DigitalPassportDbContext digitalPassportDbContext) :
         return result;
     }
 
+    public List<User> GetAll()
+    {
+        return _digitalPassportDbContext.Users.ToList();
+    }
+
     public int Count()
     {
         return _digitalPassportDbContext.Users.Count();

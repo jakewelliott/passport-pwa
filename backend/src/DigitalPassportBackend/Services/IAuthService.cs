@@ -12,4 +12,5 @@ public interface IAuthService
     // Admin Functionality
     public void UpdatePassword(int userId, string password);
     public void UpdateRole(int userId, string role);
+    public List<User> GetAllUsers();
 }

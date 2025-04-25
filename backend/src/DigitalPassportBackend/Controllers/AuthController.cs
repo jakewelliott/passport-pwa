@@ -55,6 +55,21 @@ public class AuthController(IAuthService authService) : ControllerBase
     }
 
     // Admin Functionality
+    [HttpGet("all")]
+    [Authorize(Roles = "admin")]
+    public IActionResult GetAllUsers() {
+        var users = new List<UserDto>();
+        _authService.GetAllUsers().ForEach(user => 
+            users.Add(new UserDto {
+                username = user.username,
+                id= user.id,
+                role = user.role.ToString(),
+                createdAt = user.createdAt.ToString(),
+                updatedAt = user.updatedAt.ToString(),
+            })
+        );
+        return Ok(users);
+    }
 }
 
 public class LoginDto

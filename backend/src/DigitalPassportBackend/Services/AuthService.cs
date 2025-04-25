@@ -73,4 +73,9 @@ public class AuthService(
         userRepository.Update(user);
     }
 
+    public List<User> GetAllUsers()
+    {
+        return userRepository.GetAll();
+    }
+
 }

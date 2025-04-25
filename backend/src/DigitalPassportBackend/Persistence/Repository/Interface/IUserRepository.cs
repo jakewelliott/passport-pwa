@@ -9,6 +9,7 @@ public interface IUserRepository : IRepository<User>
 
     // READ
     User? GetByUsername(string username);
+    List<User> GetAll();
 
     // UPDATE
 
