@@ -154,7 +154,7 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
               RV Camping
             </p>
             <p
-              class="p-mini"
+              class="text-xs"
             >
               *
               has electric, water, AND/OR sewer hookups. Check with reservations website for available hookups
@@ -1232,7 +1232,7 @@ exports[`IconLegend Component - User Stories > matches snapshot 1`] = `
       class="min-w-[200px]"
     >
       <span
-        class="text-icon_amenities"
+        class="text-icon-amenities"
       >
         Kids TRACK Trail: 
       </span>

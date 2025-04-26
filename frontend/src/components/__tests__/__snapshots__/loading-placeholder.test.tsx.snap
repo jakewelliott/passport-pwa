@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`MyProfile Component > matches snapshot 1`] = `
+exports[`LoadingPlaceholder > matches snapshot 1`] = `
 <div>
   <div
     class="animate-pulse"
@@ -9,7 +9,7 @@ exports[`MyProfile Component > matches snapshot 1`] = `
     <p
       class="text-center text-gray-500 text-sm"
     >
-       Loading your profile...
+      Loading...
     </p>
   </div>
 </div>

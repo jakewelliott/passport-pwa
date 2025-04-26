@@ -5,6 +5,9 @@ const env = import.meta.env;
 
 // since env vars suck we have to do this
 const determineBaseUrl = () => {
+    // When running tests (MSW intercepts requests at any URL), use a consistent base URL
+    if (import.meta.env.MODE === 'test') return '';
+
     // when running outside of docker, we need to use HTTP port
     if (env.DEV) return `http://${env.VITE_API_HOSTNAME}:${env.VITE_API_HTTP_PORT}`;
     // if HTTPS port is set to 443, then don't include it

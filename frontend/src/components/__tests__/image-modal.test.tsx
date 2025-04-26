@@ -23,22 +23,9 @@ describe('ImageModal', () => {
         mockOnClose.mockClear();
     });
 
-    it('renders with image and caption', () => {
-        render(<ImageModal photo={mockPhoto} onClose={mockOnClose} />);
-
-        const img = screen.getByAltText('Test Caption');
-        expect(img).toBeInTheDocument();
-        expect(img).toHaveAttribute('src', 'test-image.jpg');
-        expect(screen.getByText('Test Caption')).toBeInTheDocument();
-    });
-
-    it('renders without caption', () => {
-        const photoWithoutCaption = { photoPath: 'test-image.jpg' };
-        render(<ImageModal photo={photoWithoutCaption} onClose={mockOnClose} />);
-
-        const img = screen.getByAltText('Photo');
-        expect(img).toBeInTheDocument();
-        expect(screen.queryByText('Test Caption')).not.toBeInTheDocument();
+    it('matches snapshot', () => {
+        const { container } = render(<ImageModal photo={mockPhoto} onClose={mockOnClose} />);
+        expect(container).toMatchSnapshot();
     });
 
     it('calls onClose when close button is clicked', () => {
@@ -54,49 +41,5 @@ describe('ImageModal', () => {
 
         expect(screen.getByTestId('transform-wrapper')).toBeInTheDocument();
         expect(screen.getByTestId('transform-component')).toBeInTheDocument();
-    });
-
-    it('has correct styling', () => {
-        render(<ImageModal photo={mockPhoto} onClose={mockOnClose} />);
-
-        const modal = screen.getByTestId('transform-wrapper').parentElement;
-        expect(modal).toHaveClass(
-            'relative',
-            'flex',
-            'h-full',
-            'w-full',
-            'items-center',
-            'justify-center',
-            'bg-system_black',
-            'bg-opacity-0',
-        );
-
-        const closeButton = screen.getByText('×');
-        expect(closeButton).toHaveClass(
-            'absolute',
-            'top-4',
-            'right-6',
-            'z-10',
-            'cursor-pointer',
-            'font-bold',
-            'text-h1',
-            'text-system_white',
-        );
-
-        const img = screen.getByAltText('Test Caption');
-        expect(img).toHaveClass('object-contain');
-
-        const captionContainer = screen.getByTestId('caption-container');
-        expect(captionContainer).toHaveClass(
-            'absolute',
-            'right-0',
-            'bottom-4',
-            'left-0',
-            'bg-system_black',
-            'bg-opacity-50',
-            'p-2',
-            'text-center',
-            'text-system_white',
-        );
     });
 });

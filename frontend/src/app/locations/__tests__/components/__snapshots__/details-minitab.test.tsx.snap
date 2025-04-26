@@ -3,136 +3,124 @@
 exports[`DetailsMiniTab > matches snapshot 1`] = `
 <div>
   <div
-    class="mt-4 ml-4 flex flex-col"
+    class="flex flex-col gap-2 p-4"
   >
-    <div
-      class="gap-2"
-    >
-      <p>
-        <span
-          class="green-text"
-        >
-          Established
-          :
-        </span>
-          
-        2005
-      </p>
-      <p>
-        <span
-          class="green-text"
-        >
-          Landmark
-          :
-        </span>
-          
-        Chimney Rock, a 315-foot rock that looks like a chimney and has views of Hickory Nut Gorge and Lake Lure
-      </p>
-      <p>
-        <span
-          class="green-text"
-        >
-          You can find
-          :
-        </span>
-          
-        the magnificent peregrine falcon and the white irisette, an endangered herb with small white flowers.
-      </p>
-      <div
-        class="flex flex-col gap-1"
+    <p>
+      <span
+        class="text-main-green"
       >
-        <p>
-          <span
-            class="green-text"
-          >
-            Park trails
-            :
-          </span>
-            
-        </p>
-        <div
-          class="flex flex-col gap-1 py-2"
-        >
-          <div
-            class=""
-          >
-            ■ 10 trails
-          </div>
-          <div
-            class=""
-          >
-            ■ 2 Kids TRACK trails (Great Woodland Adventure Trail and Rumbling Bald Loop Trail)
-          </div>
-          <div
-            class=""
-          >
-            ■ 6 miles of hiking
-          </div>
-          <div
-            class="pl-5"
-          >
-             ■ 1 mile of biking
-          </div>
-        </div>
-      </div>
+        Established
+        :
+      </span>
+        
+      2005
+    </p>
+    <p>
+      <span
+        class="text-main-green"
+      >
+        Landmark
+        :
+      </span>
+        
+      Chimney Rock, a 315-foot rock that looks like a chimney and has views of Hickory Nut Gorge and Lake Lure
+    </p>
+    <p>
+      <span
+        class="text-main-green"
+      >
+        You can find
+        :
+      </span>
+        
+      the magnificent peregrine falcon and the white irisette, an endangered herb with small white flowers.
+    </p>
+    <p>
+      <span
+        class="text-main-green"
+      >
+        Park trails
+        :
+      </span>
+        
+    </p>
+    <div
+      class=""
+    >
+      ■ 10 trails
     </div>
     <div
-      class="icon-scroll-container overflow-x-auto"
-      data-testid="icon-scroll-container"
+      class=""
+    >
+      ■ 2 Kids TRACK trails (Great Woodland Adventure Trail and Rumbling Bald Loop Trail)
+    </div>
+    <div
+      class=""
+    >
+      ■ 6 miles of hiking
+    </div>
+    <div
+      class="pl-5"
+    >
+       ■ 1 mile of biking
+    </div>
+  </div>
+  <div
+    class="icon-scroll-container overflow-x-auto"
+    data-testid="icon-scroll-container"
+  >
+    <div
+      class="inline-flex gap-6 px-6"
     >
       <div
-        class="inline-flex gap-6 px-6"
+        style="position: relative; width: 55px; height: 55px;"
       >
-        <div
-          style="position: relative; width: 55px; height: 55px;"
-        >
-          <img
-            height="55"
-            src="/icons/park/undefined.svg"
-            width="55"
-          />
-        </div>
-        <div
-          style="position: relative; width: 55px; height: 55px;"
-        >
-          <img
-            height="55"
-            src="/icons/park/undefined.svg"
-            width="55"
-          />
-        </div>
-        <div
-          style="position: relative; width: 55px; height: 55px;"
-        >
-          <img
-            height="55"
-            src="/icons/park/undefined.svg"
-            width="55"
-          />
-        </div>
-        <div
-          style="position: relative; width: 55px; height: 55px;"
-        >
-          <img
-            height="55"
-            src="/icons/park/undefined.svg"
-            width="55"
-          />
-        </div>
-        <div
-          style="position: relative; width: 55px; height: 55px;"
-        >
-          <img
-            height="55"
-            src="/icons/park/undefined.svg"
-            width="55"
-          />
-        </div>
-        <div
-          class="w-px flex-shrink-0"
+        <img
+          height="55"
+          src="/icons/park/undefined.svg"
+          width="55"
         />
-         
       </div>
+      <div
+        style="position: relative; width: 55px; height: 55px;"
+      >
+        <img
+          height="55"
+          src="/icons/park/undefined.svg"
+          width="55"
+        />
+      </div>
+      <div
+        style="position: relative; width: 55px; height: 55px;"
+      >
+        <img
+          height="55"
+          src="/icons/park/undefined.svg"
+          width="55"
+        />
+      </div>
+      <div
+        style="position: relative; width: 55px; height: 55px;"
+      >
+        <img
+          height="55"
+          src="/icons/park/undefined.svg"
+          width="55"
+        />
+      </div>
+      <div
+        style="position: relative; width: 55px; height: 55px;"
+      >
+        <img
+          height="55"
+          src="/icons/park/undefined.svg"
+          width="55"
+        />
+      </div>
+      <div
+        class="w-px flex-shrink-0"
+      />
+       
     </div>
   </div>
 </div>

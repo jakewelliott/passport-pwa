@@ -12,15 +12,14 @@ exports[`Stamps > matches snapshot 1`] = `
         class="relative flex-1"
       >
         <input
-          class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+          class="w-full rounded-lg border border-system-gray bg-supporting-lightblue p-3 pr-7 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100"
           placeholder="Search parks..."
           type="text"
           value=""
         />
       </div>
       <button
-        class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
-        style="display: inline;"
+        class="w-auto rounded-lg border border-system-gray bg-system-white px-3 py-2 transition-all duration-200"
         type="button"
       >
         <svg

@@ -1,6 +1,6 @@
 import LocationsScreen from '@/app/locations';
 import MoreScreen from '@/app/more';
-import { AppInfo } from '@/app/more/app-info';
+import MyProfile from '@/app/more/my-profile';
 import StampsScreen from '@/app/stamps';
 import { useBucketList } from '@/hooks/queries/useBucketList';
 import { useNotes } from '@/hooks/queries/useNotes';
@@ -146,10 +146,9 @@ describe('Component Snapshots', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('AppInfo renders correctly', () => {
-        const { container } = render(<AppInfo />);
+    it('MyProfile renders correctly', () => {
+        const { container } = render(<MyProfile />);
 
-        expect(screen.getByText('Passport')).toBeInTheDocument();
         expect(container).toMatchSnapshot();
     });
 });

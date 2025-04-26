@@ -4,19 +4,19 @@ exports[`LoginPage > matches snapshot 1`] = `
 <div>
   <div
     class="flex h-full items-center justify-center bg-center bg-cover bg-no-repeat p-12"
-    style="background-image: url(/photos/SILA-BackCover.jpg);"
+    style="background-image: url("/photos/SILA-BackCover.jpg");"
   >
     <form
-      class="flex flex-col items-center gap-3 rounded-3xl bg-supporting_lightblue bg-opacity-75 p-8"
+      class="flex flex-col items-center gap-3 rounded-3xl bg-supporting-lightblue bg-opacity-75 p-8"
     >
       <input
-        class="w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
+        class="bg-system-white w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system-gray focus:border-secondary-darkteal focus:ring-secondary-darkteal"
         name="username"
         placeholder="Username"
         type="text"
       />
       <input
-        class="w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system_gray focus:border-secondary_darkteal focus:ring-secondary_darkteal"
+        class="bg-system-white w-full rounded-lg border p-3 focus:outline-none focus:ring-1 border-system-gray focus:border-secondary-darkteal focus:ring-secondary-darkteal"
         name="password"
         placeholder="Password"
         type="password"
@@ -27,7 +27,7 @@ exports[`LoginPage > matches snapshot 1`] = `
         By using this application, you agree to the State of NC's
          
         <a
-          class="text-secondary_darkteal hover:underline"
+          class="text-secondary-darkteal hover:underline"
           href="https://www.nc.gov/privacy"
           rel="noopener noreferrer"
           target="_blank"
@@ -39,39 +39,26 @@ exports[`LoginPage > matches snapshot 1`] = `
         class="flex flex-row gap-4"
       >
         <button
-          class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
-          style="min-width: 128px;"
+          class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-48 bg-secondary-darkteal"
           type="button"
         >
           <p
-            class="text-system_white button-text"
+            class="text-system-white text-2xl"
           >
             Register
           </p>
         </button>
         <button
-          class="bg-secondary_orange flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
-          style="min-width: 128px;"
+          class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-48 bg-secondary-orange"
           type="submit"
         >
           <p
-            class="text-system_white button-text"
+            class="text-system-white text-2xl"
           >
             Login
           </p>
         </button>
       </div>
-      <button
-        class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
-        style="min-width: 128px;"
-        type="button"
-      >
-        <p
-          class="text-system_white button-text"
-        >
-          SUPERADMIN
-        </p>
-      </button>
     </form>
   </div>
 </div>

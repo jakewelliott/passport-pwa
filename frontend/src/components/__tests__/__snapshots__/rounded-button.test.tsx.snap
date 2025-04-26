@@ -1,0 +1,16 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`RoundedButton > matches snapshot 1`] = `
+<div>
+  <button
+    class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-48 bg-secondary-darkteal"
+    type="button"
+  >
+    <p
+      class="text-system-white text-2xl"
+    >
+      Test
+    </p>
+  </button>
+</div>
+`;

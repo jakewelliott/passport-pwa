@@ -6,7 +6,7 @@ exports[`WelcomeMessage Component > matches snapshot 1`] = `
     class="space-y-6"
   >
     <h1
-      class="whitespace-nowrap text-center text-main_green text-xl"
+      class="whitespace-nowrap text-center text-main-green text-xl"
     >
       <span
         class="inline-block w-full text-[length:min(64px,_calc(100vw_/_7))]"
@@ -57,7 +57,7 @@ exports[`WelcomeMessage Component > matches snapshot 1`] = `
       </div>
     </div>
     <p
-      class="p-mini "
+      class="text-xs "
       style="margin-top: 12px;"
     >
       From left to right - photo courtesy of: Laura Meeks; The Everett Family; Katie Griswold

@@ -14,74 +14,74 @@ exports[`TrailMap > matches snapshot 1`] = `
     >
       <div>
         <p
-          class="text-trail_danriver"
+          class="text-trail-danriver"
         >
           Dan River
         </p>
         <p
-          class="text-trail_deepriver"
+          class="text-trail-deepriver"
         >
           Deep River
         </p>
         <p
-          class="text-trail_eastcoastgreenway"
+          class="text-trail-eastcoastgreenway"
         >
           East Coast Greenway
         </p>
         <p
-          class="text-trail_equine"
+          class="text-trail-equine"
         >
           Equine
         </p>
         <p
-          class="text-trail_fontaflora"
+          class="text-trail-fontaflora"
         >
           Fonta Flora
         </p>
         <p
-          class="text-trail_frenchbroadriver"
+          class="text-trail-frenchbroadriver"
         >
           French Broad River
         </p>
         <p
-          class="text-trail_hawriver"
+          class="text-trail-hawriver"
         >
           Haw River
         </p>
       </div>
       <div>
         <p
-          class="text-trail_hickorynutgorge"
+          class="text-trail-hickorynutgorge"
         >
           Hickory Nut Gorge
         </p>
         <p
-          class="text-trail_mountainstosea"
+          class="text-trail-mountainstosea"
         >
           Mountains-to-Sea
         </p>
         <p
-          class="text-trail_northernpeaks"
+          class="text-trail-northernpeaks"
         >
           Northern Peaks
         </p>
         <p
-          class="text-trail_overmountainvictory"
+          class="text-trail-overmountainvictory"
         >
           Overmountain Victory
         </p>
         <p
-          class="text-trail_roanokeriver"
+          class="text-trail-roanokeriver"
         >
           Roanoke River
         </p>
         <p
-          class="text-trail_wildernessgateway"
+          class="text-trail-wildernessgateway"
         >
           Wilderness Gateway
         </p>
         <p
-          class="text-trail_yadkinriver"
+          class="text-trail-yadkinriver"
         >
           Yadkin River
         </p>

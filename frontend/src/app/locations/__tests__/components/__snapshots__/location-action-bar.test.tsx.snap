@@ -3,11 +3,11 @@
 exports[`LocationActionBar > matches snapshot 1`] = `
 <div>
   <div
-    class="flex flex-row items-center justify-evenly bg-secondary_darkteal p-2.5"
+    class="flex flex-row items-center justify-evenly bg-secondary-darkteal py-2.5"
     data-testid="location-action-bar"
   >
     <a
-      class="text-supporting_inactiveblue"
+      class="text-supporting-inactiveblue"
       href="https://www.google.com/maps/place/35.4313688073643,-82.2417344940023"
     >
       <svg
@@ -16,7 +16,7 @@ exports[`LocationActionBar > matches snapshot 1`] = `
         stroke="currentColor"
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="4"
+        stroke-width="3"
         viewBox="0 0 24 24"
         width="24"
         xmlns="http://www.w3.org/2000/svg"
@@ -27,7 +27,7 @@ exports[`LocationActionBar > matches snapshot 1`] = `
       </svg>
     </a>
     <a
-      class="text-supporting_inactiveblue"
+      class="text-supporting-inactiveblue"
       href="tel://8286251823"
     >
       <svg
@@ -36,7 +36,7 @@ exports[`LocationActionBar > matches snapshot 1`] = `
         stroke="currentColor"
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="4"
+        stroke-width="3"
         viewBox="0 0 24 24"
         width="24"
         xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ exports[`LocationActionBar > matches snapshot 1`] = `
       </svg>
     </a>
     <a
-      class="text-supporting_inactiveblue"
+      class="text-supporting-inactiveblue"
       href="https://www.ncparks.gov/state-parks/chimney-rock-state-park"
     >
       <svg
@@ -78,7 +78,7 @@ exports[`LocationActionBar > matches snapshot 1`] = `
       </svg>
     </a>
     <a
-      class="text-supporting_inactiveblue"
+      class="text-supporting-inactiveblue"
       href="mailto:chimney.rock@ncparks.gov"
     >
       <svg
@@ -87,7 +87,7 @@ exports[`LocationActionBar > matches snapshot 1`] = `
         stroke="currentColor"
         stroke-linecap="round"
         stroke-linejoin="round"
-        stroke-width="4"
+        stroke-width="3"
         viewBox="0 0 24 24"
         width="24"
         xmlns="http://www.w3.org/2000/svg"

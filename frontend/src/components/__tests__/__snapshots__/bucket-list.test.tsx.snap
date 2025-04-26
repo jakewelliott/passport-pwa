@@ -6,7 +6,7 @@ exports[`Bucket List > matches snapshot 1`] = `
     class="flex flex-col gap-2"
   >
     <div
-      class="flex h-fit flex-row items-center gap-2 text-supporting_inactiveblue"
+      class="flex h-fit flex-row items-center gap-2 text-supporting-inactiveblue"
     >
       <div
         class="aspect-square"
@@ -33,11 +33,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -67,11 +67,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -101,11 +101,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -135,11 +135,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -169,11 +169,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -203,11 +203,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -237,11 +237,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -271,11 +271,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -305,11 +305,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -339,11 +339,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -373,11 +373,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -407,11 +407,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -441,11 +441,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -475,11 +475,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -509,11 +509,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -543,11 +543,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -577,11 +577,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -611,11 +611,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -645,11 +645,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -679,11 +679,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -713,11 +713,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -747,11 +747,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -781,11 +781,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -815,11 +815,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -849,11 +849,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -883,11 +883,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -917,11 +917,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -951,11 +951,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -985,11 +985,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1019,11 +1019,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1053,11 +1053,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1087,11 +1087,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1121,11 +1121,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1155,11 +1155,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1189,11 +1189,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1223,11 +1223,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1257,11 +1257,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1291,11 +1291,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1325,11 +1325,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1359,11 +1359,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1393,11 +1393,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1427,11 +1427,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1461,11 +1461,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1495,11 +1495,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"
@@ -1529,11 +1529,11 @@ exports[`Bucket List > matches snapshot 1`] = `
       class="flex"
     >
       <div
-        class="flex w-full flex-col gap-2 rounded-md bg-trail_wildernessgateway p-2 text-system_white"
+        class="flex w-full flex-col gap-2 rounded-md bg-trail-wildernessgateway p-2 text-system-white"
         data-testid="bucket-list-item"
       >
         <div
-          class="flex h-fit flex-row items-center gap-2 text-system_white"
+          class="flex h-fit flex-row items-center gap-2 text-system-white"
         >
           <div
             class="aspect-square"

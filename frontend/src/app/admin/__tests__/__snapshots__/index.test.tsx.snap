@@ -1,0 +1,95 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AdminPage > matches snapshot 1`] = `
+<div>
+  <div>
+    <div
+      class="flex flex-col gap-3.5"
+      data-testid="more-list"
+    >
+      <a
+        class="text-supporting-inactiveblue no-underline"
+        data-discover="true"
+        href="/admin/edit-parks"
+      >
+        <div
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+          style="border-radius: 15px;"
+        >
+          <h2
+            class="mx-4 my-6"
+          >
+            Edit Parks
+          </h2>
+        </div>
+      </a>
+      <a
+        class="text-supporting-inactiveblue no-underline"
+        data-discover="true"
+        href="/admin/edit-trails"
+      >
+        <div
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+          style="border-radius: 15px;"
+        >
+          <h2
+            class="mx-4 my-6"
+          >
+            Edit Trails
+          </h2>
+        </div>
+      </a>
+      <a
+        class="text-supporting-inactiveblue no-underline"
+        data-discover="true"
+        href="/admin/edit-bucket-list"
+      >
+        <div
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+          style="border-radius: 15px;"
+        >
+          <h2
+            class="mx-4 my-6"
+          >
+            Edit Bucket List
+          </h2>
+        </div>
+      </a>
+      <a
+        class="text-supporting-inactiveblue no-underline"
+        data-discover="true"
+        href="/admin/edit-users"
+      >
+        <div
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+          style="border-radius: 15px;"
+        >
+          <h2
+            class="mx-4 my-6"
+          >
+            Edit Users
+          </h2>
+        </div>
+      </a>
+      <label
+        class="cursor-pointer text-supporting-inactiveblue no-underline"
+      >
+        <div
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+          style="border-radius: 15px;"
+        >
+          <h2
+            class="mx-4 my-6"
+          >
+            Upload GeoJson Data
+          </h2>
+        </div>
+        <input
+          class="hidden"
+          type="file"
+        />
+      </label>
+    </div>
+  </div>
+</div>
+`;

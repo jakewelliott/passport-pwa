@@ -7,12 +7,12 @@ exports[`More Page > matches snapshot 1`] = `
     data-testid="more-list"
   >
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/trails"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -23,12 +23,12 @@ exports[`More Page > matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/bucket-list"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -39,12 +39,12 @@ exports[`More Page > matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/my-notes"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -55,12 +55,12 @@ exports[`More Page > matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/welcome-message"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -71,12 +71,12 @@ exports[`More Page > matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/staying-safe"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -87,12 +87,12 @@ exports[`More Page > matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/hiking-essentials"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -103,12 +103,12 @@ exports[`More Page > matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/icon-legend"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -119,33 +119,37 @@ exports[`More Page > matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
-      href="/more/app-info"
+      href="/more/ncdpr-info"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
           class="mx-4 my-6"
         >
-          App Info
+          NCDPR Info
         </h2>
       </div>
     </a>
-    <div
-      class="text-center"
+    <a
+      class="text-supporting-inactiveblue no-underline"
+      data-discover="true"
+      href="/more/my-profile"
     >
-      You are not logged in
-      <br />
-      <button
-        class="link"
-        type="button"
+      <div
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
       >
-        Log out
-      </button>
-    </div>
+        <h2
+          class="mx-4 my-6"
+        >
+          My Profile
+        </h2>
+      </div>
+    </a>
   </div>
 </div>
 `;

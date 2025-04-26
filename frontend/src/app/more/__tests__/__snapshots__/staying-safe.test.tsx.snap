@@ -3,7 +3,7 @@
 exports[`StayingSafe Component > matches snapshot 1`] = `
 <div>
   <h4
-    class="mb-6 w-full bg-supporting_inactiveblue p-3 text-center text-system_white uppercase"
+    class="mb-6 w-full bg-supporting-inactiveblue p-3 text-center text-system-white uppercase"
   >
     How to Stay Safe While Visiting NC State Parks
   </h4>

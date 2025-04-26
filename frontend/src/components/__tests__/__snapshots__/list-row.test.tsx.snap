@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ListRow > matches snapshot 1`] = `
+<div>
+  <div
+    class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+    style="border-radius: 15px;"
+  >
+    <div>
+      Test Content
+    </div>
+  </div>
+</div>
+`;

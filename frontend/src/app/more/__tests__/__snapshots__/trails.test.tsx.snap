@@ -2,8 +2,15 @@
 
 exports[`Trails Component - User Stories > matches snapshot 1`] = `
 <div>
-  <div>
-    Loading
+  <div
+    class="animate-pulse"
+    data-testid="loading-placeholder"
+  >
+    <p
+      class="text-center text-gray-500 text-sm"
+    >
+       Loading trails...
+    </p>
   </div>
 </div>
 `;

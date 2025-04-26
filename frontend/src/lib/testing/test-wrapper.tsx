@@ -86,6 +86,7 @@ export const setupTestEnv = (options?: TestEnvOptions) => {
         dbg('TEST', `CHECKING ${name}`, params);
         const { result } = renderHook(() => hook(params), { wrapper });
         await waitFor(() => {
+            console.log('result', result.current.error);
             expect(result.current.data).toBeDefined();
             expect(result.current.isLoading).toBe(false);
         });

@@ -3,7 +3,7 @@
 exports[`ContactView > matches snapshot 1`] = `
 <div>
   <div
-    class="flex h-fit flex-row items-center gap-2 text-supporting_inactiveblue"
+    class="flex h-fit flex-row items-center gap-2 text-supporting-inactiveblue"
   >
     <div
       class="aspect-square"
@@ -29,7 +29,7 @@ exports[`ContactView > matches snapshot 1`] = `
     </p>
   </div>
   <div
-    class="flex h-fit flex-row items-center gap-2 text-supporting_inactiveblue"
+    class="flex h-fit flex-row items-center gap-2 text-supporting-inactiveblue"
   >
     <div
       class="aspect-square"
@@ -55,7 +55,7 @@ exports[`ContactView > matches snapshot 1`] = `
     </p>
   </div>
   <div
-    class="flex h-fit flex-row items-center gap-2 text-supporting_inactiveblue"
+    class="flex h-fit flex-row items-center gap-2 text-supporting-inactiveblue"
   >
     <div
       class="aspect-square"

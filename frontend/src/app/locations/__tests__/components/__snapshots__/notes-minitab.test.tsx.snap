@@ -3,28 +3,22 @@
 exports[`NotesMiniTab > matches snapshot 1`] = `
 <div>
   <div
-    class="flex h-full flex-col"
+    class="flex flex-col items-center gap-4 px-4 pt-4"
   >
     <textarea
-      class="h-72 w-full flex-grow resize-none border border-secondary_darkteal p-4 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+      class="h-72 w-full flex-grow resize-none border border-secondary-darkteal bg-supporting-lightblue p-4 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100"
       placeholder="Add some personal notes about this park!"
     />
-    <div
-      class="flex justify-center p-3"
-      data-testid="save-button"
+    <button
+      class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-48 bg-secondary-darkteal"
+      type="button"
     >
-      <button
-        class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
-        style="min-width: 128px;"
-        type="button"
+      <p
+        class="text-system-white text-2xl"
       >
-        <p
-          class="text-system_white button-text"
-        >
-          Save
-        </p>
-      </button>
-    </div>
+        Save
+      </p>
+    </button>
   </div>
 </div>
 `;

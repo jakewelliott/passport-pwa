@@ -1,249 +1,13 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Component Snapshots > AppInfo renders correctly 1`] = `
-<div>
-  <div
-    class="flex flex-col gap-4"
-  >
-    <div
-      class="mb-3.5"
-    >
-      <div
-        class="flex h-2/4 flex-col items-center justify-center"
-      >
-        <img
-          alt="North Carolina Department of Parks and Rec White Logo"
-          height="103"
-          src="/DPRLogoWhite.svg"
-          width="136"
-        />
-        <h3
-          class="text-center"
-        >
-          North Carolina State Parks
-        </h3>
-        <p
-          class="script h-20"
-          style="padding-top: 30px;"
-        >
-          Passport
-        </p>
-      </div>
-    </div>
-    <div
-      class="flex-col"
-    >
-      <div
-        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-supporting_inactiveblue"
-      >
-        <h3>
-          CONTACT US
-        </h3>
-      </div>
-      <div
-        class="p-4 bg-supporting_lightblue flex flex-col gap-3"
-      >
-        <div
-          class="flex flex-row justify-center gap-3"
-        >
-          <a
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-supporting_inactiveblue"
-            href="https://www.facebook.com/NorthCarolinaStateParks/"
-          >
-            <svg
-              class="text-supporting_lightblue"
-              fill="currentColor"
-              height="20"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 320 512"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"
-              />
-            </svg>
-          </a>
-          <a
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-supporting_inactiveblue"
-            href="https://www.instagram.com/ncstateparks/"
-          >
-            <svg
-              class="text-supporting_lightblue"
-              fill="currentColor"
-              height="20"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 448 512"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M224.1 141c-63.6 0-114.9 51.3-114.9 114.9s51.3 114.9 114.9 114.9S339 319.5 339 255.9 287.7 141 224.1 141zm0 189.6c-41.1 0-74.7-33.5-74.7-74.7s33.5-74.7 74.7-74.7 74.7 33.5 74.7 74.7-33.6 74.7-74.7 74.7zm146.4-194.3c0 14.9-12 26.8-26.8 26.8-14.9 0-26.8-12-26.8-26.8s12-26.8 26.8-26.8 26.8 12 26.8 26.8zm76.1 27.2c-1.7-35.9-9.9-67.7-36.2-93.9-26.2-26.2-58-34.4-93.9-36.2-37-2.1-147.9-2.1-184.9 0-35.8 1.7-67.6 9.9-93.9 36.1s-34.4 58-36.2 93.9c-2.1 37-2.1 147.9 0 184.9 1.7 35.9 9.9 67.7 36.2 93.9s58 34.4 93.9 36.2c37 2.1 147.9 2.1 184.9 0 35.9-1.7 67.7-9.9 93.9-36.2 26.2-26.2 34.4-58 36.2-93.9 2.1-37 2.1-147.8 0-184.8zM398.8 388c-7.8 19.6-22.9 34.7-42.6 42.6-29.5 11.7-99.5 9-132.1 9s-102.7 2.6-132.1-9c-19.6-7.8-34.7-22.9-42.6-42.6-11.7-29.5-9-99.5-9-132.1s-2.6-102.7 9-132.1c7.8-19.6 22.9-34.7 42.6-42.6 29.5-11.7 99.5-9 132.1-9s102.7-2.6 132.1 9c19.6 7.8 34.7 22.9 42.6 42.6 11.7 29.5 9 99.5 9 132.1s2.7 102.7-9 132.1z"
-              />
-            </svg>
-          </a>
-          <a
-            class="flex h-8 w-8 items-center justify-center rounded-full bg-supporting_inactiveblue"
-            href="https://www.youtube.com/@parksNC"
-          >
-            <svg
-              class="text-supporting_lightblue"
-              fill="currentColor"
-              height="20"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 576 512"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M549.655 124.083c-6.281-23.65-24.787-42.276-48.284-48.597C458.781 64 288 64 288 64S117.22 64 74.629 75.486c-23.497 6.322-42.003 24.947-48.284 48.597-11.412 42.867-11.412 132.305-11.412 132.305s0 89.438 11.412 132.305c6.281 23.65 24.787 41.5 48.284 47.821C117.22 448 288 448 288 448s170.78 0 213.371-11.486c23.497-6.321 42.003-24.171 48.284-47.821 11.412-42.867 11.412-132.305 11.412-132.305s0-89.438-11.412-132.305zm-317.51 213.508V175.185l142.739 81.205-142.739 81.201z"
-              />
-            </svg>
-          </a>
-        </div>
-        <a
-          class="text-center text-supporting_inactiveblue"
-          data-discover="true"
-          href="/www.ncparks.gov"
-        >
-          www.ncparks.gov
-        </a>
-        <p
-          class="space-y-1"
-        >
-          <span>
-            NC Division of Parks and Recreation
-          </span>
-          <br />
-          <span>
-            Dept. of Natural and Cultural Resources
-          </span>
-          <br />
-          <span>
-            1615 Mail Service Center
-          </span>
-          <br />
-          <span>
-            Raleigh, NC 27699
-          </span>
-          <br />
-          <span>
-            (919) 707-9300
-          </span>
-        </p>
-      </div>
-    </div>
-    <div
-      class="flex-col"
-    >
-      <div
-        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-secondary_orange"
-      >
-        <h3>
-          DOWNLOAD PARK MAPS
-        </h3>
-      </div>
-      <div
-        class="p-4 bg-supporting_lightorange"
-      >
-        <div
-          class="-ml-6 float-left mt-6"
-        >
-          <svg
-            fill="currentColor"
-            height="90"
-            stroke="currentColor"
-            stroke-width="0"
-            style="transform: rotate(-25deg);"
-            viewBox="0 0 24 24"
-            width="90"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M2 5L9 2L15 5L21.303 2.2987C21.5569 2.18992 21.8508 2.30749 21.9596 2.56131C21.9862 2.62355 22 2.69056 22 2.75827V19L15 22L9 19L2.69696 21.7013C2.44314 21.8101 2.14921 21.6925 2.04043 21.4387C2.01375 21.3765 2 21.3094 2 21.2417V5ZM16 19.3955L20 17.6812V5.03308L16 6.74736V19.3955ZM14 19.2639V6.73607L10 4.73607V17.2639L14 19.2639ZM8 17.2526V4.60451L4 6.31879V18.9669L8 17.2526Z"
-            />
-          </svg>
-        </div>
-        <p
-          class="text-center"
-        >
-          Save paper and save trees by getting a digital map of the park before you visit!
-          <br />
-          <br />
-          Go to ncparks.gov, pick a park, and download the map or get more information.
-        </p>
-      </div>
-    </div>
-    <div
-      class="flex-col"
-    >
-      <div
-        class="flex w-full items-center justify-center p-2 pt-3 text-center text-system_white bg-main_green"
-      >
-        <h3>
-          MAKE A RESERVATION
-        </h3>
-      </div>
-      <div
-        class="p-4 bg-supporting_green"
-      >
-        <div
-          class="flex flex-col items-center gap-2"
-        >
-          <div
-            class="flex w-full flex-row items-center gap-2"
-          >
-            <img
-              alt="picnic"
-              height="36px"
-              src="/icons/misc/Picnic.svg"
-              width="36px"
-            />
-            <a
-              class="p-mini"
-              href="https://www.ncparks.gov/reservations"
-            >
-              ncparks.gov/reservations
-            </a>
-            <p
-              class="p-mini"
-            >
-              1-877-722-6762
-            </p>
-          </div>
-          <div
-            class="flex w-full flex-row items-center gap-2"
-          >
-            <img
-              alt="campsite"
-              height="36px"
-              src="/icons/misc/Camping.svg"
-              width="36px"
-            />
-            <p
-              class="p-mini"
-            >
-              Reserve campsites, picnic shelters and other park facilities online or over the phone.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-`;
-
 exports[`Component Snapshots > Header renders correctly 1`] = `
 <div>
   <header
-    class="static top-0 flex w-full items-center justify-center bg-secondary_darkteal p-4"
+    class="static top-0 flex w-full flex-row items-center justify-center bg-secondary-darkteal p-4"
     style="height: 50px;"
   >
     <h4
-      class="text-system_white"
+      class="font-SSPS text-system-white"
     >
       NC Parks Passport
     </h4>
@@ -262,14 +26,14 @@ exports[`Component Snapshots > ImageModal renders correctly 1`] = `
     style="z-index: 9999;"
   >
     <div
-      class="absolute inset-0 bg-system_black bg-opacity-70 backdrop-blur-md backdrop-filter"
+      class="absolute inset-0 bg-system-black bg-opacity-70 backdrop-blur-md backdrop-filter"
     />
     <dialog
       aria-modal="true"
-      class="relative flex h-full w-full items-center justify-center bg-system_black bg-opacity-0"
+      class="relative flex h-full w-full items-center justify-center bg-system-black bg-opacity-0"
     >
       <span
-        class="absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system_white"
+        class="absolute top-4 right-6 z-10 cursor-pointer font-bold text-h1 text-system-white"
         style="text-shadow: 0 0 4px #444444;"
       >
         ×
@@ -294,7 +58,7 @@ exports[`Component Snapshots > ImageModal renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="absolute right-0 bottom-4 left-0 bg-system_black bg-opacity-50 p-2 text-center text-system_white"
+        class="absolute right-0 bottom-4 left-0 bg-system-black bg-opacity-50 p-2 text-center text-system-white"
         data-testid="caption-container"
       >
         Test Image
@@ -307,7 +71,7 @@ exports[`Component Snapshots > ImageModal renders correctly 1`] = `
 exports[`Component Snapshots > ListRow renders correctly 1`] = `
 <div>
   <div
-    class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+    class="flex items-center bg-supporting-lightblue p-3 shadow-md"
     style="border-radius: 15px;"
   >
     <div>
@@ -332,15 +96,108 @@ exports[`Component Snapshots > LoadingPlaceholder renders correctly 1`] = `
 </div>
 `;
 
+exports[`Component Snapshots > MyProfile renders correctly 1`] = `
+<div>
+  <div
+    class="flex h-full w-full flex-col items-center"
+  >
+    <div
+      class="flex flex-grow flex-col items-center gap-3"
+    >
+      <h2>
+        My Profile
+      </h2>
+      <div
+        class="w-1/2 min-w-[300px] max-w-[450px]"
+      >
+        <div
+          class="w-full rounded-lg bg-main-blue p-4 text-system-white"
+        >
+          <div
+            class="grid w-full grid-cols-2"
+          >
+            <p
+              class="text-left"
+            >
+              Username
+              :
+            </p>
+            <p
+              class="text-right"
+            >
+              testUser
+            </p>
+          </div>
+        </div>
+      </div>
+      <button
+        class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-64 bg-secondary-darkteal"
+        type="button"
+      >
+        <p
+          class="text-system-white text-2xl"
+        >
+          Change Password
+        </p>
+      </button>
+    </div>
+    <div
+      class="flex w-full max-w-[500px] flex-col items-center gap-4"
+    >
+      <h2>
+        App Info
+      </h2>
+      <div
+        class="grid w-full grid-cols-2"
+      >
+        <p>
+          App Version:
+        </p>
+        <p
+          class="text-right"
+        >
+          1.0.0
+        </p>
+        <p>
+          Connection Status:
+        </p>
+        <p
+          class="text-right"
+        >
+          Online
+        </p>
+        <p>
+          Last Cached:
+        </p>
+        <p
+          class="text-right"
+        >
+          4/26/25 at 1:22 PM
+        </p>
+      </div>
+      <button
+        class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-64 bg-secondary-orange"
+        type="button"
+      >
+        <p
+          class="text-system-white text-2xl"
+        >
+          Logout
+        </p>
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`Component Snapshots > RoundedButton renders correctly 1`] = `
 <div>
   <button
-    class="bg-secondary_darkteal flex cursor-pointer select-none items-center justify-center text-center p-4 rounded-full"
-    style="min-width: 128px;"
+    class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-48 secondary_darkteal"
     type="button"
   >
     <p
-      class="text-system_white button-text"
+      class="text-system-white text-2xl"
     >
       Test Button
     </p>
@@ -352,7 +209,7 @@ exports[`Component Snapshots > SplashScreen renders correctly 1`] = `
 <div>
   <div
     class="fixed inset-0 flex flex-col items-center bg-no-repeat"
-    style="background-image: url(/photos/CRMO_FrontCover.jpg); background-size: 150%; z-index: 9999;"
+    style="background-image: url("/photos/CRMO_FrontCover.jpg"); background-size: 150%; z-index: 9999;"
   >
     <div
       class="flex h-2/4 flex-col items-center justify-center"
@@ -367,13 +224,13 @@ exports[`Component Snapshots > SplashScreen renders correctly 1`] = `
         North Carolina State Parks
       </h3>
       <p
-        class="script"
+        class="font-Norican text-8xl"
         style="padding-top: 30px;"
       >
         Passport
       </p>
       <div
-        class="mt-20 rounded-xl bg-secondary_lightblue bg-opacity-70 p-3"
+        class="mt-20 rounded-xl bg-secondary-lightblue bg-opacity-70 p-3"
       />
     </div>
   </div>
@@ -404,7 +261,7 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
         4WD Beach Access
       </div>
       <div
-        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting-lightgray px-2 py-1 text-white text-xs group-hover:block"
       >
         4WD Beach Access
       </div>
@@ -428,7 +285,7 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
         Accessible Facilities
       </div>
       <div
-        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting-lightgray px-2 py-1 text-white text-xs group-hover:block"
       >
         Accessible Facilities
       </div>
@@ -452,7 +309,7 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
         Amphitheater
       </div>
       <div
-        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting-lightgray px-2 py-1 text-white text-xs group-hover:block"
       >
         Amphitheater
       </div>
@@ -476,7 +333,7 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
         Backpack Camping
       </div>
       <div
-        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting-lightgray px-2 py-1 text-white text-xs group-hover:block"
       >
         Backpack Camping
       </div>
@@ -500,7 +357,7 @@ exports[`Component Snapshots > TrailIcons renders correctly 1`] = `
         Bathhouse
       </div>
       <div
-        class="absolute bottom-full mb-1 hidden rounded bg-supporting_lightgray px-2 py-1 text-white text-xs group-hover:block"
+        class="absolute bottom-full mb-1 hidden rounded bg-supporting-lightgray px-2 py-1 text-white text-xs group-hover:block"
       >
         Bathhouse
       </div>
@@ -521,15 +378,14 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
         class="relative flex-1"
       >
         <input
-          class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+          class="w-full rounded-lg border border-system-gray bg-supporting-lightblue p-3 pr-7 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100"
           placeholder="Search parks..."
           type="text"
           value=""
         />
       </div>
       <button
-        class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
-        style="display: inline;"
+        class="w-auto rounded-lg border border-system-gray bg-system-white px-3 py-2 transition-all duration-200"
         type="button"
       >
         <svg
@@ -551,12 +407,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/CABE"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -576,12 +432,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/CACR"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -601,12 +457,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/CHRO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -626,12 +482,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/CLNE"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -651,12 +507,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/CRMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -676,12 +532,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/DISW"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -701,12 +557,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/ELKN"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -726,12 +582,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/ENRI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -751,12 +607,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/FALA"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -776,12 +632,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/FOFI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -801,12 +657,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/FOMA"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -826,12 +682,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/GOCR"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -851,12 +707,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/GORG"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -876,12 +732,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/GRMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -901,12 +757,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/HABE"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -926,12 +782,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/HARO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -951,12 +807,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/HARI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -976,12 +832,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/JORI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1001,12 +857,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/JONE"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1026,12 +882,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/JORD"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1051,12 +907,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/KELA"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1076,12 +932,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/LAJA"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1101,12 +957,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/LANO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1126,12 +982,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/LAWA"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1151,12 +1007,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/LURI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1176,12 +1032,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/MARI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1201,12 +1057,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/MEMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1226,12 +1082,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/MEMI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1251,12 +1107,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/MOMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1276,12 +1132,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/MOJE"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1301,12 +1157,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/MOMI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1326,12 +1182,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/NERI"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1351,12 +1207,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/OCMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1376,12 +1232,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/PETT"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1401,12 +1257,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/PIMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1426,12 +1282,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/RARO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1451,12 +1307,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/REMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1476,12 +1332,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/SILA"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1501,12 +1357,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/SOMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1526,12 +1382,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/STMO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1551,12 +1407,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/WEWO"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1576,12 +1432,12 @@ exports[`Route Snapshots > /locations matches snapshot 1`] = `
       data-testid="park"
     >
       <a
-        class="text-supporting_inactiveblue no-underline"
+        class="text-supporting-inactiveblue no-underline"
         data-discover="true"
         href="/locations/WIUM"
       >
         <div
-          class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+          class="flex items-center bg-supporting-lightblue p-3 shadow-md"
           style="border-radius: 15px;"
         >
           <div
@@ -1608,12 +1464,12 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
     data-testid="more-list"
   >
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/trails"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -1624,12 +1480,12 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/bucket-list"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -1640,12 +1496,12 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/my-notes"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -1656,12 +1512,12 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/welcome-message"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -1672,12 +1528,12 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/staying-safe"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -1688,12 +1544,12 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/hiking-essentials"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -1704,12 +1560,12 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
       href="/more/icon-legend"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
@@ -1720,33 +1576,37 @@ exports[`Route Snapshots > /more matches snapshot 1`] = `
       </div>
     </a>
     <a
-      class="text-supporting_inactiveblue no-underline"
+      class="text-supporting-inactiveblue no-underline"
       data-discover="true"
-      href="/more/app-info"
+      href="/more/ncdpr-info"
     >
       <div
-        class="flex items-center bg-supporting_lightblue p-3 shadow-md"
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
         style="border-radius: 15px;"
       >
         <h2
           class="mx-4 my-6"
         >
-          App Info
+          NCDPR Info
         </h2>
       </div>
     </a>
-    <div
-      class="text-center"
+    <a
+      class="text-supporting-inactiveblue no-underline"
+      data-discover="true"
+      href="/more/my-profile"
     >
-      You are currently logged in as 'testUser'
-      <br />
-      <button
-        class="link"
-        type="button"
+      <div
+        class="flex items-center bg-supporting-lightblue p-3 shadow-md"
+        style="border-radius: 15px;"
       >
-        Log out
-      </button>
-    </div>
+        <h2
+          class="mx-4 my-6"
+        >
+          My Profile
+        </h2>
+      </div>
+    </a>
   </div>
 </div>
 `;
@@ -1763,15 +1623,14 @@ exports[`Route Snapshots > /stamps matches snapshot 1`] = `
         class="relative flex-1"
       >
         <input
-          class="w-full rounded-lg border border-system_gray p-3 pr-7 focus:border-secondary_darkteal focus:outline-none focus:ring-1 focus:ring-secondary_darkteal focus:ring-opacity-100"
+          class="w-full rounded-lg border border-system-gray bg-supporting-lightblue p-3 pr-7 focus:border-secondary-darkteal focus:outline-none focus:ring-1 focus:ring-secondary-darkteal focus:ring-opacity-100"
           placeholder="Search parks..."
           type="text"
           value=""
         />
       </div>
       <button
-        class="w-auto rounded-lg border border-system_gray bg-system_white px-3 py-2 transition-all duration-200"
-        style="display: inline;"
+        class="w-auto rounded-lg border border-system-gray bg-system-white px-3 py-2 transition-all duration-200"
         type="button"
       >
         <svg

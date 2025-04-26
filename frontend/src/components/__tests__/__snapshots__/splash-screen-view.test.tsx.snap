@@ -4,7 +4,7 @@ exports[`SplashScreenView > matches snapshot 1`] = `
 <div>
   <div
     class="fixed inset-0 flex flex-col items-center bg-no-repeat"
-    style="background-image: url(/photos/CRMO_FrontCover.jpg); background-size: 150%; z-index: 9999;"
+    style="background-image: url("/photos/CRMO_FrontCover.jpg"); background-size: 150%; z-index: 9999;"
   >
     <div
       class="flex h-2/4 flex-col items-center justify-center"
@@ -19,13 +19,13 @@ exports[`SplashScreenView > matches snapshot 1`] = `
         North Carolina State Parks
       </h3>
       <p
-        class="script"
+        class="font-Norican text-8xl"
         style="padding-top: 30px;"
       >
         Passport
       </p>
       <div
-        class="mt-20 rounded-xl bg-secondary_lightblue bg-opacity-70 p-3"
+        class="mt-20 rounded-xl bg-secondary-lightblue bg-opacity-70 p-3"
       />
     </div>
   </div>

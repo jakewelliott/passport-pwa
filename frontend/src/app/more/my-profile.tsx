@@ -1,7 +1,6 @@
 import { LoadingPlaceholder } from '@/components/loading-placeholder';
 import RoundedButton from '@/components/rounded-button';
 import { useUser } from '@/hooks/queries/useUser';
-import DateHelper from '@/lib/date-helper';
 import { dbg } from '@/lib/debug';
 import type { UserProfile } from '@/types';
 import { useState } from 'react';
@@ -20,7 +19,7 @@ const AccountInfo = ({ user }: { user: UserProfile }) => {
         <div className='w-full rounded-lg bg-main-blue p-4 text-system-white'>
             <InfoSection title='Username' text={user.username} />
             {user.role === 'admin' && <InfoSection title='Admin Account' text='Yes' />}
-            <InfoSection title='Account Created' text={DateHelper.toStringShort(new Date())} />
+            {/* <InfoSection title='Account Created' text={DateHelper.toStringShort(new Date())} /> */}
         </div>
     );
 };
