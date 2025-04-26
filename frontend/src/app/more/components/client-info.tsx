@@ -14,8 +14,8 @@ export const ClientInfo = () => {
             <p className='text-right'>{appVersion}</p>
             <p>Connection Status:</p>
             <p className='text-right'>{connectionStatus}</p>
-            <p>Last Cached:</p>
-            <p className='text-right'>{lastCached}</p>
+            {/* <p>Last Cached:</p>
+            <p className='text-right'>{lastCached}</p> */}
         </div>
     );
 };

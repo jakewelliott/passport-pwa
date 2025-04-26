@@ -166,14 +166,6 @@ exports[`Component Snapshots > MyProfile renders correctly 1`] = `
         >
           Online
         </p>
-        <p>
-          Last Cached:
-        </p>
-        <p
-          class="text-right"
-        >
-          4/26/25 at 1:22 PM
-        </p>
       </div>
       <button
         class="flex cursor-pointer select-none items-center justify-center text-center rounded-full transition-all duration-200 p-2 w-64 bg-secondary-orange"
