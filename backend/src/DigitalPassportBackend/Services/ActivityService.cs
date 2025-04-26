@@ -225,7 +225,6 @@ public class ActivityService(
     {
         // Check if there is already a note in the database.
         var locationId = parkId == 0 ? 0 : _locationsRepository.GetById(parkId).id;
-				// TODO: handle the case with an invalid parkId??
         var privateNote = _privateNoteRepository.GetByParkAndUser(userId, locationId);
         if (privateNote != null)
         {
