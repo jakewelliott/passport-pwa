@@ -1,12 +1,10 @@
-import DateHelper from '@/lib/date-helper';
-
 export const ClientInfo = () => {
     // TODO: there's definitely a better way to do this
     const appVersion = '1.0.0';
     // TODO: this doesn't work for some reason
     const connectionStatus = window.navigator.onLine ? 'Online' : 'Offline';
     // TODO: implement this
-    const lastCached = DateHelper.toStringLong(new Date());
+    // const lastCached = DateHelper.toStringLong(new Date());
 
     return (
         <div className='grid w-full grid-cols-2'>
