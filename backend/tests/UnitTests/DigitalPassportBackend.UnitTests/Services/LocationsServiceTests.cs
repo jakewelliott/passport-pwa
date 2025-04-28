@@ -3,11 +3,15 @@ using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Services;
 using DigitalPassportBackend.UnitTests.TestUtils;
 using DigitalPassportBackend.Domain;
+using NetTopologySuite.Geometries;
 
 using Moq;
 using Microsoft.AspNetCore.Http;
+using System.Net.Sockets;
 
 namespace DigitalPassportBackend.UnitTests.Services;
+
+[Collection("NonParallelCollection")]
 public class LocationsServiceTests
 {
     private readonly Mock<IBucketListItemRepository> _mockBucketList;
@@ -51,6 +55,166 @@ public class LocationsServiceTests
             _mockParkPhotos.Object,
             _mockTrails.Object,
             _mockTrailIcons.Object);
+    }
+
+    [Fact]
+    public void CreatePark_SuccessfullyCreatesPark_WhenAbbreviationUnique()
+    {
+        // Arrange
+        var park = TestData.Parks[0];
+        var addrs = new List<ParkAddress> { TestData.ParkAddresses[1] };
+        var icons = new List<ParkIcon> { TestData.ParkIcons[0], TestData.ParkIcons[1] };
+        var blItems = new List<BucketListItem> { TestData.BucketList[0], TestData.BucketList[2] };
+        var photos = new List<ParkPhoto> { };
+
+        _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation))
+            .Throws(new NotFoundException("not found"));
+        _mockLocations.Setup(s => s.Create(park));
+        _mockParkAddresses.Setup(s => s.Create(It.IsAny<ParkAddress>()));
+        _mockParkIcons.Setup(s => s.Create(It.IsAny<ParkIcon>()));
+        _mockBucketList.Setup(s => s.Create(It.IsAny<BucketListItem>()));
+        _mockParkPhotos.Setup(s => s.Create(It.IsAny<ParkPhoto>()));
+
+        // Act
+        _locations.CreatePark(park, addrs, icons, blItems, photos);
+
+        // Assert
+        _mockLocations.Verify(s => s.Create(park), Times.Once());
+        _mockParkAddresses.Verify(s => s.Create(addrs[0]), Times.Once());
+        _mockParkIcons.Verify(s => s.Create(icons[0]), Times.Once());
+        _mockParkIcons.Verify(s => s.Create(icons[1]), Times.Once());
+        _mockBucketList.Verify(s => s.Create(blItems[0]), Times.Once());
+        _mockBucketList.Verify(s => s.Create(blItems[1]), Times.Once());
+    }
+
+    [Fact]
+    public void CreatePark_ThrowsException_WhenAbbreviationExists()
+    {
+        // Arrange
+        var park = TestData.Parks[0];
+        _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation)).Returns(park);
+
+        // Act & Assert
+        var ex = Assert.Throws<ServiceException>(() =>
+            _locations.CreatePark(park, new List<ParkAddress>(), new List<ParkIcon>(), new List<BucketListItem>(), new List<ParkPhoto>())
+        );
+        Assert.Equal(409, ex.StatusCode);
+    }
+
+    [Fact]
+    public void UpdatePark_UpdatesParkAndRelatedData_WhenNoAbbreviationConflict()
+    {
+        // Arrange
+        var park = TestData.Parks[0];
+        var addrs = new List<ParkAddress> { TestData.ParkAddresses[1] };
+        var icons = new List<ParkIcon> { TestData.ParkIcons[0] };
+        var blItems = new List<BucketListItem> { TestData.BucketList[0] };
+        var photos = new List<ParkPhoto> { };
+
+        var updatedPark = new Park { 
+                id = 45,
+                parkName = "Carolina State Park",
+                parkAbbreviation = "CABE",
+                parkType = ParkType.SPA,
+                city = "Apex",
+                coordinates = new(-77.9066, 34.0472),
+                phone = 9104588206,
+                email = "new email",
+                stampImage = "",
+                establishedYear = "1996",
+                landmark = "Sugarloaf Dune, which has helped people find their way since 1663 and offers a great view of the Cape Fear River",
+                youCanFind = "the Venus flytrap, one of the rarest species of plants that eats bugs.",
+                trails = "■ 9 trails\n\n■ 1 wheelchair-accessible trail\n\n■ Kids TRACK Trail (follows Snow’s Cut Trail)\n\n■ 8.75 miles of hiking\n\n■ 1 mile of biking",
+                boundaries = new([new Polygon(new([ // Approximated off of Google Maps.
+                    new(34.055119779529406, -77.90104594653654),
+                    new(34.04649888776697, -77.90350265943654),
+                    new(34.0451418156539, -77.900443811041),
+                    new(34.04075113953932, -77.90147948415252),
+                    new(34.04224798642799, -77.90487552883268),
+                    new(34.04125009141853, -77.90916273366837),
+                    new(34.04248747948313, -77.91246243626662),
+                    new(34.03991289369798, -77.91075237141644),
+                    new(34.03779728400115, -77.9167496413892),
+                    new(34.03280742969894, -77.91431701389152),
+                    new(34.03067012766215, -77.91847743839043),
+                    new(34.050917086671674, -77.9279460007207),
+                    new(34.055119779529406, -77.90104594653654)
+                ]))]),
+                accesses = null,
+                website = "https://www.ncparks.gov/state-parks/carolina-beach-state-park"
+         };
+
+        _mockLocations.Setup(s => s.GetById(park.id)).Returns(park);
+        _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation)).Returns(park);
+        _mockLocations.Setup(s => s.Update(It.IsAny<Park>()));
+
+        _mockParkAddresses.Setup(s => s.GetByLocationId(park.id)).Returns(new List<ParkAddress>());
+        _mockParkAddresses.Setup(s => s.GetById(addrs[0].id)).Returns(addrs[0]);
+
+        _mockParkIcons.Setup(s => s.GetByLocationId(park.id)).Returns(new List<ParkIcon>());
+        _mockParkIcons.Setup(s => s.GetById(icons[0].id)).Returns(icons[0]);
+
+        _mockBucketList.Setup(s => s.GetByLocationId(park.id)).Returns(new List<BucketListItem>());
+        _mockBucketList.Setup(s => s.GetById(blItems[0].id)).Returns(blItems[0]);
+
+        _mockParkPhotos.Setup(s => s.GetByLocationId(park.id)).Returns(new List<ParkPhoto>());
+
+        // Act
+        _locations.UpdatePark(updatedPark, addrs, icons, blItems, photos);
+
+        // Assert
+        _mockLocations.Verify(s => s.Update(It.IsAny<Park>()), Times.Once());
+        _mockParkAddresses.Verify(s => s.GetByLocationId(park.id), Times.Once());
+        _mockParkIcons.Verify(s => s.GetByLocationId(park.id), Times.Once());
+        _mockBucketList.Verify(s => s.GetByLocationId(park.id), Times.Once());
+        _mockParkPhotos.Verify(s => s.GetByLocationId(park.id), Times.Once());
+    }
+
+    [Fact]
+    public void UpdatePark_ThrowsException_WhenAbbreviationCollision()
+    {
+        // Arrange
+        var park = TestData.Parks[0];
+        var conflictingPark = new Park { 
+                id = 17,
+                parkName = "Carolina State Park",
+                parkAbbreviation = "CABE",
+                parkType = ParkType.SPA,
+                city = "Apex",
+                coordinates = new(-77.9066, 34.0472),
+                phone = 9104588206,
+                email = "new",
+                stampImage = "",
+                establishedYear = "1996",
+                landmark = "Sugarloaf Dune, which has helped people find their way since 1663 and offers a great view of the Cape Fear River",
+                youCanFind = "the Venus flytrap, one of the rarest species of plants that eats bugs.",
+                trails = "■ 9 trails\n\n■ 1 wheelchair-accessible trail\n\n■ Kids TRACK Trail (follows Snow’s Cut Trail)\n\n■ 8.75 miles of hiking\n\n■ 1 mile of biking",
+                boundaries = new([new Polygon(new([ // Approximated off of Google Maps.
+                    new(34.055119779529406, -77.90104594653654),
+                    new(34.04649888776697, -77.90350265943654),
+                    new(34.0451418156539, -77.900443811041),
+                    new(34.04075113953932, -77.90147948415252),
+                    new(34.04224798642799, -77.90487552883268),
+                    new(34.04125009141853, -77.90916273366837),
+                    new(34.04248747948313, -77.91246243626662),
+                    new(34.03991289369798, -77.91075237141644),
+                    new(34.03779728400115, -77.9167496413892),
+                    new(34.03280742969894, -77.91431701389152),
+                    new(34.03067012766215, -77.91847743839043),
+                    new(34.050917086671674, -77.9279460007207),
+                    new(34.055119779529406, -77.90104594653654)
+                ]))]),
+                accesses = null,
+                website = "https://www.ncparks.gov/state-parks/carolina-beach-state-park"
+         };
+        _mockLocations.Setup(s => s.GetById(conflictingPark.id)).Returns(park);
+        _mockLocations.Setup(s => s.GetByAbbreviation(park.parkAbbreviation)).Returns(park);
+
+        // Act & Assert
+        var ex = Assert.Throws<ServiceException>(() =>
+            _locations.UpdatePark(conflictingPark, new List<ParkAddress>(), new List<ParkIcon>(), new List<BucketListItem>(), new List<ParkPhoto>())
+        );
+        Assert.Equal(409, ex.StatusCode);
     }
 
     [Fact]

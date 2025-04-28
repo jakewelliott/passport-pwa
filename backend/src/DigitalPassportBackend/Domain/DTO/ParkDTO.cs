@@ -6,6 +6,8 @@ using static DigitalPassportBackend.Domain.DTO.ParkDTO;
 
 namespace DigitalPassportBackend.Domain.DTO;
 
+using System.Diagnostics.CodeAnalysis;
+[ExcludeFromCodeCoverage]
 public record ParkDTO(
     int id,
     string abbreviation,

@@ -22,6 +22,47 @@ namespace DigitalPassportBackend.UnitTests.Controllers
         }
 
         [Fact]
+        public void GetAllUsers_AdminRole_ReturnsOkResultWithUserList()
+        {
+            // Arrange
+            SetupUser(1, "admin");
+
+            var users = new List<User>
+            {
+                new User { id = 1, username = "user1", password = "password1", role = UserRole.admin },
+                new User { id = 2, username = "user2", password = "password2", role = UserRole.visitor }
+            };
+
+            _mockAuthService.Setup(s => s.GetAllUsers()).Returns(users);
+
+            // Act
+            var result = _controller.GetAllUsers();
+
+            // Assert
+            var okResult = Assert.IsType<OkObjectResult>(result);
+            var returnedUsers = Assert.IsType<List<UserDto>>(okResult.Value);
+
+            Assert.Equal(2, returnedUsers.Count);
+
+            Assert.Equal("user1", returnedUsers[0].username);
+            Assert.Equal("admin", returnedUsers[0].role);
+
+            Assert.Equal("user2", returnedUsers[1].username);
+            Assert.Equal("visitor", returnedUsers[1].role);
+        }
+
+        [Fact]
+        public void GetAllUsers_NonAdminRole_ThrowsException()
+        {
+            // Arrange
+            SetupUser(2, "visitor");
+
+            // Act & Assert
+            Assert.ThrowsAny<Exception>(() => _controller.GetAllUsers());
+        }
+
+
+        [Fact]
         public void Get_AdminRoleValidUserId_ReturnsOkResult()
         {
             // Arrange

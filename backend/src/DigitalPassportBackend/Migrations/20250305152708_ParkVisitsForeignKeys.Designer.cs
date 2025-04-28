@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
+using System.Diagnostics.CodeAnalysis;
 
 #nullable disable
 
@@ -14,6 +15,7 @@ namespace DigitalPassportBackend.Migrations
 {
     [DbContext(typeof(DigitalPassportDbContext))]
     [Migration("20250305152708_ParkVisitsForeignKeys")]
+    [ExcludeFromCodeCoverage]
     partial class ParkVisitsForeignKeys
     {
         /// <inheritdoc />

@@ -2,6 +2,8 @@ using Microsoft.OpenApi.Extensions;
 
 namespace DigitalPassportBackend.Domain.DTO;
 
+using System.Diagnostics.CodeAnalysis;
+[ExcludeFromCodeCoverage]
 public record TrailIconDTO(
     int id,
     string iconName,

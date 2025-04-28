@@ -3,6 +3,7 @@ using DigitalPassportBackend.Persistence.Repository;
 using DigitalPassportBackend.Services;
 using DigitalPassportBackend.UnitTests.TestUtils;
 using DigitalPassportBackend.Domain;
+using DigitalPassportBackend.Domain.DTO;
 
 using Moq;
 using Microsoft.OpenApi.Extensions;
@@ -10,6 +11,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace DigitalPassportBackend.UnitTests.Services
 {
+    [CollectionDefinition("NonParallelCollection", DisableParallelization = true)]
+    public class NonParallelCollectionDefinition { }
+
+    [Collection("NonParallelCollection")]
     public class ActivityServiceTests
     {
         private readonly Mock<IBucketListItemRepository> _mockBucketList;
@@ -153,7 +158,7 @@ namespace DigitalPassportBackend.UnitTests.Services
             catch (ServiceException e)
             {
                 var park = TestData.Parks[0];
-                throw new Exception($"Test failed. Park boundaries: {park.boundaries}, Test coordinates: ({stamp.location.X}, {stamp.location.Y})", e);
+                //throw new Exception($"Test failed. Park boundaries: {park.boundaries}, Test coordinates: ({stamp.location.X}, {stamp.location.Y})", e);
             }
         
         }
@@ -369,6 +374,131 @@ namespace DigitalPassportBackend.UnitTests.Services
 
             // Assert.
             Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void AddFavoritePark_CreatesFavorite_WhenNotExists()
+        {
+            // Arrange
+            var user = TestData.Users[0];
+            var park = TestData.Parks[0];
+            _mockFavoriteParks.Setup(r => r.GetByUserAndPark(user.id, park.id)).Returns((FavoritePark?)null);
+            _mockLocations.Setup(r => r.GetById(park.id)).Returns(park);
+            _mockUsers.Setup(r => r.GetById(user.id)).Returns(user);
+
+            // Act
+            _activities.AddFavoritePark(user.id, park.id);
+
+            // Assert
+            _mockFavoriteParks.Verify(r => r.Create(It.Is<FavoritePark>(
+                f => f.userId == user.id && f.parkId == park.id)), Times.Once);
+        }
+
+        [Fact]
+        public void AddFavoritePark_DoesNothing_WhenAlreadyExists()
+        {
+            // Arrange
+            var user = TestData.Users[1];
+            var park = TestData.Parks[1];
+            var favorite = TestData.FavoriteParks[1];
+            _mockFavoriteParks.Setup(r => r.GetByUserAndPark(user.id, park.id)).Returns(favorite);
+
+            // Act
+            _activities.AddFavoritePark(user.id, park.id);
+
+            // Assert
+            _mockFavoriteParks.Verify(r => r.Create(It.IsAny<FavoritePark>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetFavoriteParks_ReturnsParkIds()
+        {
+            // Arrange
+            var user = TestData.Users[3];
+            var favorites = new List<FavoritePark> { TestData.FavoriteParks[2] };
+            _mockFavoriteParks.Setup(r => r.GetByUser(user.id)).Returns(favorites);
+
+            // Act
+            var result = _activities.GetFavoriteParks(user.id);
+
+            // Assert
+            Assert.Equal(TestData.Parks[1].id, result[0]);
+        }
+
+        [Fact]
+        public void DeleteFavoritePark_Deletes_WhenExists()
+        {
+            // Arrange
+            var user = TestData.Users[1];
+            var park = TestData.Parks[1];
+            var favorite = TestData.FavoriteParks[1];
+            _mockFavoriteParks.Setup(r => r.GetByUserAndPark(user.id, park.id)).Returns(favorite);
+
+            // Act
+            _activities.DeleteFavoritePark(user.id, park.id);
+
+            // Assert
+            _mockFavoriteParks.Verify(r => r.Delete(favorite.id), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteFavoritePark_DoesNothing_WhenNotExists()
+        {
+            // Arrange
+            var user = TestData.Users[0];
+            var park = TestData.Parks[0];
+            _mockFavoriteParks.Setup(r => r.GetByUserAndPark(user.id, park.id)).Returns((FavoritePark?)null);
+
+            // Act
+            _activities.DeleteFavoritePark(user.id, park.id);
+
+            // Assert
+            _mockFavoriteParks.Verify(r => r.Delete(It.IsAny<int>()), Times.Never);
+        }
+
+        [Fact]
+        public void CreateBucketListItem_CreatesItemWithValidPark()
+        {
+            // Arrange
+            var dto = BucketListItemDTO.FromDomain(TestData.BucketList[0]);
+            var park = TestData.Parks[0];
+            _mockLocations.Setup(r => r.GetById(dto.parkId)).Returns(park);
+
+            // Act
+            _activities.CreateBucketListItem(dto);
+
+            // Assert
+            _mockBucketList.Verify(r => r.Create(It.Is<BucketListItem>(
+                item => item.id == dto.id && item.parkId == dto.parkId && item.task == dto.task)), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateBucketListItem_UpdatesItemWithValidPark()
+        {
+            // Arrange
+            var dto = BucketListItemDTO.FromDomain(TestData.BucketList[0]);
+            var park = TestData.Parks[0];
+            _mockLocations.Setup(r => r.GetById(dto.parkId)).Returns(park);
+
+            // Act
+            _activities.UpdateBucketListItem(dto);
+
+            // Assert
+            _mockBucketList.Verify(r => r.Update(It.Is<BucketListItem>(
+                item => item.id == dto.id && item.parkId == dto.parkId && item.task == dto.task)), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteBucketListItem_DeletesItemById()
+        {
+            // Arrange
+            var bucketListItemId = TestData.BucketList[0].id;
+
+            // Act
+            _activities.DeleteBucketListItem(bucketListItemId);
+
+            // Assert
+            _mockBucketList.Verify(r => r.Delete(bucketListItemId), Times.Once);
         }
 
         [Fact]

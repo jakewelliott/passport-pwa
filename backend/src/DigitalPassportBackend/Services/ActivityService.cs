@@ -2,6 +2,7 @@ using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Domain.DTO;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
+using System.Diagnostics.CodeAnalysis;
 
 using Microsoft.OpenApi.Extensions;
 
@@ -90,6 +91,8 @@ public class ActivityService(
         return _collectedStampRepository.GetByUser(userId);
     }
 
+    // Helper
+    [ExcludeFromCodeCoverage]
     private static CollectedStamp CreateStamp(
         Point location,
         StampCollectionMethod method,

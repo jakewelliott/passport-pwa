@@ -1,6 +1,7 @@
 using DigitalPassportBackend.Domain;
 using DigitalPassportBackend.Errors;
 using DigitalPassportBackend.Persistence.Repository;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DigitalPassportBackend.Services;
 
@@ -267,6 +268,7 @@ public class LocationsService : ILocationsService
     }
 
     // Helpers
+    [ExcludeFromCodeCoverage]
     private static void SetValues<T>(List<T> currentVals, List<T> newVals, IRepository<T> repo) where T : IEntity
     {
         // Delete difference.

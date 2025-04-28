@@ -35,6 +35,93 @@ public class AuthServiceTests
     }
 
     [Fact]
+    public void UpdatePassword_ValidUser_UpdatesPassword()
+    {
+        // Arrange
+        var userId = 1;
+        var newPassword = "NewP@ssw0rd!";
+        var user = new User { id = userId, username = "user1", password = "oldHash", role = UserRole.visitor };
+
+        _mockUserRepository.Setup(r => r.GetById(userId)).Returns(user);
+        _mockPasswordHasher.Setup(h => h.HashPassword(newPassword)).Returns("newHash");
+        _mockPasswordHasher.Setup(h => h.ValidatePassword(It.IsAny<User>()));
+        _mockUserRepository.Setup(r => r.Update(user));
+
+        // Act
+        _authService.UpdatePassword(userId, newPassword);
+
+        // Assert
+        Assert.Equal("newHash", user.password);
+        _mockPasswordHasher.Verify(h => h.ValidatePassword(user), Times.Once);
+        _mockUserRepository.Verify(r => r.Update(user), Times.Once);
+    }
+
+    [Fact]
+    public void UpdatePassword_InvalidUser_ThrowsNotFoundException()
+    {
+        // Arrange
+        var userId = 99;
+        _mockUserRepository.Setup(r => r.GetById(userId))
+            .Throws(new NotFoundException("User not found"));
+
+        // Act & Assert
+        Assert.Throws<NotFoundException>(() => _authService.UpdatePassword(userId, "newPassword"));
+    }
+
+    [Fact]
+    public void UpdateRole_ValidUser_UpdatesRole()
+    {
+        // Arrange
+        var userId = 2;
+        var user = new User { id = userId, username = "user2", password = "password", role = UserRole.visitor };
+        var newRole = "admin";
+
+        _mockUserRepository.Setup(r => r.GetById(userId)).Returns(user);
+        _mockUserRepository.Setup(r => r.Update(user));
+
+        // Act
+        _authService.UpdateRole(userId, newRole);
+
+        // Assert
+        Assert.Equal(UserRole.admin, user.role);
+        _mockUserRepository.Verify(r => r.Update(user), Times.Once);
+    }
+
+    [Fact]
+    public void UpdateRole_InvalidUser_ThrowsNotFoundException()
+    {
+        // Arrange
+        var userId = 100;
+        _mockUserRepository.Setup(r => r.GetById(userId))
+            .Throws(new NotFoundException("User not found"));
+
+        // Act & Assert
+        Assert.Throws<NotFoundException>(() => _authService.UpdateRole(userId, "admin"));
+    }
+
+    [Fact]
+    public void GetAllUsers_ReturnsAllUsers()
+    {
+        // Arrange
+        var users = new List<User>
+        {
+            new User { id = 1, username = "user1", password = "password1", role = UserRole.visitor },
+            new User { id = 2, username = "user2", password = "password2", role = UserRole.admin }
+        };
+        _mockUserRepository.Setup(r => r.GetAll()).Returns(users);
+
+        // Act
+        var result = _authService.GetAllUsers();
+
+        // Assert
+        Assert.Equal(2, result.Count);
+        Assert.Equal("user1", result[0].username);
+        Assert.Equal(UserRole.visitor, result[0].role);
+        Assert.Equal("user2", result[1].username);
+        Assert.Equal(UserRole.admin, result[1].role);
+    }
+
+    [Fact]
     public void GetUserById_ValidUserId_ReturnsUser()
     {
         // Arrange

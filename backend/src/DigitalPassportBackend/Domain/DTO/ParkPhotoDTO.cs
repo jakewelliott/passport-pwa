@@ -1,5 +1,7 @@
 namespace DigitalPassportBackend.Domain.DTO;
 
+using System.Diagnostics.CodeAnalysis;
+[ExcludeFromCodeCoverage]
 public record ParkPhotoDTO(
     int id,
     string photoPath,
