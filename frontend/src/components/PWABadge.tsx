@@ -1,5 +1,12 @@
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
+/**
+ * PWABadge
+ *
+ * Alerts the user that the app is ready to work offline, or that there is new content available. Useful for caching updates.
+ *
+ * @returns {React.ReactNode} The PWABadge
+ */
 function PWABadge() {
     // periodic sync is disabled, change the value to enable it, the period is in milliseconds
     // You can remove onRegisteredSW callback and registerPeriodicSync function

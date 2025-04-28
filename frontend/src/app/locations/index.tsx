@@ -31,6 +31,13 @@ const Row = ({ park }: { park: Park }) => {
     );
 };
 
+/**
+ * Locations screen
+ *
+ * Shows a list of parks with a search bar and filter options
+ *
+ * @returns {React.ReactNode} The locations screen
+ */
 export default function LocationsScreen() {
     dbg('RENDER', '/locations');
     const { data: parks, isLoading, isError, error, refetch: refetchParks } = useParks();

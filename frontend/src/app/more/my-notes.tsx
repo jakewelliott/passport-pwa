@@ -69,6 +69,13 @@ const NoteRow = ({
     );
 };
 
+/**
+ * My Notes screen
+ *
+ * Lists all the notes the user has created across all parks & the general notes
+ *
+ * @returns {React.ReactNode} The my notes screen
+ */
 export const MyNotes = () => {
     dbg('RENDER', '/notes');
     const navigate = useNavigate();

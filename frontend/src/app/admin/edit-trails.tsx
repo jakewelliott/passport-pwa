@@ -5,6 +5,13 @@ import type { Trail } from '@/types/tables';
 import { type MRT_ColumnDef, MaterialReactTable } from 'material-react-table';
 import { useEffect, useMemo, useState } from 'react';
 
+/**
+ * Edit Trails page
+ *
+ * This is the edit trails page for admins to edit trails
+ *
+ * @returns {React.ReactNode} The edit trails page
+ */
 const EditTrails = () => {
     const { data: trails } = useTrails();
     const [editedTrails, setEditedTrails] = useState<Trail[]>([]);

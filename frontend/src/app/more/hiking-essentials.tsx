@@ -86,6 +86,14 @@ const items: Item[] = [
         description: 'Make sure your knife or multitool has a locking blade to prevent any injuries.',
     },
 ];
+
+/**
+ * Hiking Essentials screen
+ *
+ * Page for hiking essentials from the passport
+ *
+ * @returns {React.ReactNode} The hiking essentials screen
+ */
 export const HikingEssentials = () => {
     dbg('RENDER', '/more/hiking-essentials');
     return (

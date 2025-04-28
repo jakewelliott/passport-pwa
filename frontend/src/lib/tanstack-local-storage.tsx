@@ -22,6 +22,13 @@ const queryClient = new QueryClient({
     },
 });
 
+/**
+ * Tanstack Query Provider
+ *
+ * Provides a Tanstack Query client to the app which is persisted to local storage
+ *
+ * @param {React.ReactNode} children - The children to render
+ */
 export const TanstackQueryProvider = ({ children }: { children: React.ReactNode }) => (
     <PersistQueryClientProvider client={queryClient} persistOptions={{ persister }}>
         {children}

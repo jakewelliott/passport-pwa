@@ -71,7 +71,13 @@ const parkCheck = (
     return undefined;
 };
 
-// make sure we check our park visits first so we don't have to make extra calls
+/**
+ * Use Park Check
+ *
+ * Hook for checking if the user is in a park
+ *
+ * @returns {ParkCheckResult} The park check result
+ */
 export const useParkCheck = (): ParkCheckResult => {
     const [currentPark, setCurrentPark] = useState<Park | undefined>(undefined);
     const { data: parks, isLoading: parksLoading } = useParks();

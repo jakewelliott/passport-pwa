@@ -24,6 +24,13 @@ const Content = () => {
     );
 };
 
+/**
+ * Main App component
+ *
+ * This is the main component for the app. It is used to render the app.
+ *
+ * @returns {React.ReactNode} The main component
+ */
 const App = () => {
     dbg('RENDER', 'App.tsx');
 

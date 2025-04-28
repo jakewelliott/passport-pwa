@@ -115,6 +115,13 @@ const APP_LOADERS: Loader[] = [
     },
 ];
 
+/**
+ * Use Splash Screen
+ *
+ * Hook for showing the splash screen, loading, and precaching data
+ *
+ * @returns {SplashScreen} The splash screen
+ */
 export const useSplashScreen = () => {
     const [finished, setFinished] = useState(false);
 

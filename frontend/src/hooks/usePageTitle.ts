@@ -27,6 +27,13 @@ const getTitle = (pathname: string) => {
     return routeTitles[pathname] || DEFAULT_TITLE;
 };
 
+/**
+ * Use Page Title
+ *
+ * Hook for getting the title to display in the header
+ *
+ * @returns {PageTitle} The page title
+ */
 export function usePageTitle() {
     const location = usePathLocation();
     // const [pageTitle, setPageTitle] = useState(DEFAULT_TITLE);

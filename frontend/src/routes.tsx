@@ -59,7 +59,13 @@ const ProtectedRoute = () => {
     return user ? <Outlet /> : <Navigate to='/login' replace />;
 };
 
-// exported so we can cache the routes in the service worker
+/**
+ * Routes for the app
+ *
+ * This is the main routes for the app. It is used to render the app.
+ *
+ * @returns {React.ReactNode} The main component
+ */
 export const routes: RouteObject[] = [
     {
         path: '/',

@@ -6,6 +6,13 @@ import { a11yOnClick } from '@/lib/a11y';
 import { dbg } from '@/lib/debug';
 import type { CollectStampRequest } from '@/types/api';
 
+/**
+ * Collect Stamp
+ *
+ * Shows a modal to collect a stamp, a hook will show this when the user is at a park that they haven't collected a stamp at yet
+ *
+ * @returns {React.ReactNode} The collect stamp modal
+ */
 export default function CollectStamp() {
     const { mutate: collectStamp } = useStampMutation();
     const { park, isLoading } = useParkCheck();

@@ -5,6 +5,13 @@ import type { BucketListItem } from '@/types/tables';
 import { type MRT_ColumnDef, MaterialReactTable } from 'material-react-table';
 import { useEffect, useMemo, useState } from 'react';
 
+/**
+ * Edit Bucket List page
+ *
+ * This is the edit bucket list page for admins to edit bucket list items
+ *
+ * @returns {React.ReactNode} The edit bucket list page
+ */
 const EditBucketList = () => {
     const { data: items } = useBucketListItems();
     const { data: parks } = useParks();

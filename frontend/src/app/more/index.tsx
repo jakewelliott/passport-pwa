@@ -1,6 +1,13 @@
 import { LinkRow } from '@/components/link-row';
 import { dbg } from '@/lib/debug';
 
+/**
+ * More page
+ *
+ * List of misc pages
+ *
+ * @returns {React.ReactNode} The more page
+ */
 export default function More() {
     dbg('RENDER', '/more');
     return (

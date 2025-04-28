@@ -1,5 +1,12 @@
 import type { Geopoint, Park } from '@/types';
 
+/**
+ * Calculate Distance
+ *
+ * Calculates the distance between a user's location and a park
+ *
+ * @param {Geopoint | null} geopoint - The user's location
+ */
 export const calculateDistance = (geopoint: Geopoint | null, park: Park): number => {
     if (!geopoint) return Infinity;
     const R = 6371; // Earth's radius in km

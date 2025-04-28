@@ -1,6 +1,13 @@
 import { dbg } from '@/lib/debug';
 import { NotesMiniTab } from '../locations/components/notes-minitab';
 
+/**
+ * General Notes screen
+ *
+ * Page for notes not associated with a specific park
+ *
+ * @returns {React.ReactNode} The general notes screen
+ */
 export const EditGeneralNotes = () => {
     dbg('RENDER', '/more/general-notes');
     return (

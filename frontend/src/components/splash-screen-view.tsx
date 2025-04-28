@@ -1,5 +1,12 @@
 import { dbg } from '@/lib/debug';
 
+/**
+ * Splash Screen View
+ *
+ * Renders the splash screen for the app when it's loading
+ *
+ * @param {SplashScreenViewProps} props - The props for the splash screen view
+ */
 export const SplashScreenView = ({ children }: { children?: React.ReactNode }) => {
     dbg('RENDER', '<SplashScreenView />');
 

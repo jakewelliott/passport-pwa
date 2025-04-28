@@ -40,6 +40,13 @@ const photos = [
     { photoPath: '/photos/DogWithPassport_ParkVisitor_KatieGriswold.jpg', alt: 'Dog with paper Passport' },
 ];
 
+/**
+ * Welcome Message screen
+ *
+ * Shows a welcome message and some photos
+ *
+ * @returns {React.ReactNode} The welcome message screen
+ */
 const WelcomeMessage: React.FC = () => {
     dbg('RENDER', '/more/welcome-message');
     const [selectedPhoto, setSelectedPhoto] = useState<{ photoPath: string; alt: string } | null>(null);

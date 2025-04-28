@@ -28,6 +28,13 @@ export interface GenericIconProps {
     testId?: string;
 }
 
+/**
+ * Generic Icon
+ *
+ * Shows a generic icon with a text label
+ *
+ * @param {GenericIconProps} props - The props for the generic icon
+ */
 export const GenericIcon = ({
     name,
     props = { strokeWidth: 3 },

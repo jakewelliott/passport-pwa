@@ -2,6 +2,13 @@ import { useLogout } from '@/hooks/auth/useLogout';
 import { dbg } from '@/lib/debug';
 import { useEffect } from 'react';
 
+/**
+ * Logout screen
+ *
+ * This is the logout screen for the app. Automatically logs out the user.
+ *
+ * @returns {React.ReactNode} The logout screen
+ */
 export const LogoutScreen = () => {
     dbg('RENDER', '/logout');
     const logout = useLogout();

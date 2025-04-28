@@ -8,6 +8,7 @@
         "docker:clear": "docker system prune"
     },
     "devDependencies": {
-        "@biomejs/biome": "^1.9.4"
+        "@biomejs/biome": "^1.9.4",
+        "jsdoc": "^4.0.4"
     }
 }

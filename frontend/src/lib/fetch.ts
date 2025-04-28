@@ -3,7 +3,13 @@ import Cookies from 'js-cookie';
 
 const env = import.meta.env;
 
-// since env vars suck we have to do this
+/**
+ * Determine Base URL
+ *
+ * Determines the base URL for the API since our env vars suck
+ *
+ * @returns {string} The base URL
+ */
 const determineBaseUrl = () => {
     // When running tests (MSW intercepts requests at any URL), use a consistent base URL
     if (import.meta.env.MODE === 'test') return '';
@@ -52,6 +58,13 @@ const getAuthHeaders = (): Record<string, string> => {
     return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
+/**
+ * Fetch Post
+ *
+ * Fetches a POST request
+ *
+ * @param {string} url - The URL to fetch
+ */
 export const fetchPost = async (url: string, body: any) => {
     dbg('FETCH', 'POST', { url, body });
     const headers: Record<string, string> = {
@@ -72,7 +85,13 @@ export const fetchPost = async (url: string, body: any) => {
     return response;
 };
 
-// TODO: add generic type arg and zod validation, throw might be tricky here
+/**
+ * Fetch Get
+ *
+ * Fetches a GET request
+ *
+ * @param {string} url - The URL to fetch
+ */
 export const fetchGet = async (url: string) => {
     dbg('FETCH', 'GET', url);
     const headers: Record<string, string> = {
@@ -95,6 +114,13 @@ export const fetchGet = async (url: string) => {
     return data;
 };
 
+/**
+ * Fetch Put
+ *
+ * Fetches a PUT request
+ *
+ * @param {string} url - The URL to fetch
+ */
 export const fetchPut = async (url: string, body: any) => {
     dbg('FETCH', 'PUT', { url, body });
     const headers: Record<string, string> = {
@@ -115,6 +141,13 @@ export const fetchPut = async (url: string, body: any) => {
     return response;
 };
 
+/**
+ * Fetch Delete
+ *
+ * Fetches a DELETE request
+ *
+ * @param {string} url - The URL to fetch
+ */
 export const fetchDelete = async (url: string) => {
     dbg('FETCH', 'DELETE', { url });
     const headers: Record<string, string> = {

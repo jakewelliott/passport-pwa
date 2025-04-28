@@ -1,0 +1,15 @@
+Create hihg level JSDOc comments for each file.
+
+Use the following format:
+
+/**
+ * File name thingy
+ *
+ * This file does X, Y, and Z. Used for being awesome and cool or whatever this does.
+ *
+ * @params {type} name - description
+ * @returns {type} description
+ * @example
+ * const example = doSomething(param1, param2);
+ *
+ */

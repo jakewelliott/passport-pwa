@@ -3,6 +3,13 @@ import ListRow from '@/components/list-row';
 import { dbg } from '@/lib/debug';
 import { API_UPLOADGEO_URL, fetchPost } from '@/lib/fetch';
 
+/**
+ * Admin page
+ *
+ * This is the admin page for admins to edit content on the app
+ *
+ * @returns {React.ReactNode} The admin page
+ */
 export const AdminPage = () => {
     dbg('RENDER', 'AdminPage');
 

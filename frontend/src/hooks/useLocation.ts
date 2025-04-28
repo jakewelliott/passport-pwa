@@ -19,6 +19,13 @@ interface LocationState {
 
 const SPOOF_LOCATION = null;
 
+/**
+ * Use Location
+ *
+ * Hook for getting the user's GPS location
+ *
+ * @returns {LocationState} The location state
+ */
 export const useLocation = () => {
     dbg('HOOK', 'useLocation');
 

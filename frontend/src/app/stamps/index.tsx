@@ -36,8 +36,13 @@ const StampView = ({ park, handleClick, greyed }: { park: Park; handleClick: () 
     );
 };
 
-// TODO: make this use a query instead of directly accessing dummy data
-// ADAM: BRUH
+/**
+ * Stamps screen
+ *
+ * Shows a list of stamps with a search bar and filter options
+ *
+ * @returns {React.ReactNode} The stamps screen
+ */
 export default function StampsScreen() {
     dbg('RENDER', '/stamps');
 

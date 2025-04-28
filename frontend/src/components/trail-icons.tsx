@@ -53,6 +53,13 @@ export const TrailIconView = ({
     );
 };
 
+/**
+ * Trail Icons
+ *
+ * Component for displaying a list of trail icons
+ *
+ * @param {TrailIconsProps} props - The props for the trail icons
+ */
 export const TrailIcons = ({
     icons,
     className = '',

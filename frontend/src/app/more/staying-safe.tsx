@@ -21,6 +21,13 @@ const safetyRules = [
     'Do not feed or try to touch the animals. Tell the park staff if you see any sick ones.',
 ];
 
+/**
+ * Staying Safe screen
+ *
+ * Shows safety rules for the parks
+ *
+ * @returns {React.ReactNode} The staying safe screen
+ */
 export default function StayingSafe() {
     dbg('RENDER', '/more/staying-safe');
 

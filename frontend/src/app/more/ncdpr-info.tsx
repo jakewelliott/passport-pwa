@@ -91,6 +91,13 @@ const ReservationsBox = () => {
     );
 };
 
+/**
+ * NCDPR Info screen
+ *
+ * Shows info about the NCDPR, this was the "App Info" page but its oxymornic to have a page about how to download the app when they already are using it...
+ *
+ * @returns {React.ReactNode} The NCDPR info screen
+ */
 export const NCDPRInfo = () => {
     dbg('RENDER', '/more/ncdpr-info');
     return (

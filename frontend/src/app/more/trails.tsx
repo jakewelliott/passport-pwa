@@ -23,6 +23,13 @@ const LogoAndLink = () => {
     );
 };
 
+/**
+ * Trails screen
+ *
+ * Shows a list of trails with a search bar and filter options
+ *
+ * @returns {React.ReactNode} The trails screen
+ */
 export const Trails = () => {
     dbg('RENDER', '/more/trails');
     const { data: trailDetails, isLoading } = useTrails();

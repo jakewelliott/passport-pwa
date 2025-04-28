@@ -6,8 +6,13 @@ import { type MRT_ColumnDef, MaterialReactTable } from 'material-react-table';
 import { useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
-//JAKE: need to add park type, city
-
+/**
+ * Edit Parks page
+ *
+ * This is the edit parks page for admins to edit parks
+ *
+ * @returns {React.ReactNode} The edit parks page
+ */
 const EditParks = () => {
     const { data: parks } = useParks();
     const [editedParks, setEditedParks] = useState<Park[]>([]);

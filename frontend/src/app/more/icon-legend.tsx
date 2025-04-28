@@ -1,6 +1,13 @@
 import { LegendSections } from '@/app/more/components/legend-sections';
 import { dbg } from '@/lib/debug';
 
+/**
+ * Icon Legend screen
+ *
+ * Legend for the park icons
+ *
+ * @returns {React.ReactNode} The icon legend screen
+ */
 export const IconLegend = () => {
     dbg('RENDER', '/more/icon-legend');
     return (

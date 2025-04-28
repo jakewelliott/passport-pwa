@@ -5,6 +5,7 @@ import { RouterProvider } from 'react-router';
 import { TanstackQueryProvider } from './lib/tanstack-local-storage';
 import { router } from './routes';
 
+/** App entry point, providers go here */
 // biome-ignore lint/style/noNonNullAssertion: this is fine
 createRoot(document.getElementById('root')!).render(
     <StrictMode>

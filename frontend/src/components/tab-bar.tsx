@@ -29,6 +29,13 @@ const Tab = ({ tab, selected }: { tab: TabProps; selected: boolean }) => {
     );
 };
 
+/**
+ * Tab Bar
+ *
+ * Bottom main tab bar for the app
+ *
+ * @returns {React.ReactNode} The tab bar
+ */
 const TabBar = () => {
     const { isLoggedIn, data: user } = useUser();
     const location = useLocation();

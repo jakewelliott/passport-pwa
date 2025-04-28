@@ -24,6 +24,13 @@ const AccountInfo = ({ user }: { user: UserProfile }) => {
     );
 };
 
+/**
+ * My Profile screen
+ *
+ * Shows user info and allows them to change their password, log out, etc.
+ *
+ * @returns {React.ReactNode} The my profile screen
+ */
 export default function MyProfileScreen() {
     dbg('RENDER', '/more/my-profile');
 

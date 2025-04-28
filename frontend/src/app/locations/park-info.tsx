@@ -26,6 +26,13 @@ const MiniTabs = ({ park }: { park: Park }) => (
     </div>
 );
 
+/**
+ * Park Info screen
+ *
+ * Shows detailed information about a park, state is in the URL
+ *
+ * @returns {React.ReactNode} The park info screen
+ */
 export default function ParkInfoScreen() {
     const { abbreviation } = useParams();
     const parkAbbreviation = abbreviation as Uppercase<string>;

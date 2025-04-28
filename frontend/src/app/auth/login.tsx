@@ -30,6 +30,13 @@ const getInputStyles = (isError: boolean) =>
 //     }, [isLoggedIn, navigate]);
 // };
 
+/**
+ * Login page
+ *
+ * This is the login page for the app. Users can login or register here.
+ *
+ * @returns {React.ReactNode} The login page
+ */
 export default function LoginPage() {
     dbg('RENDER', '/login');
     const { isLoggedIn } = useUser();

@@ -13,6 +13,13 @@ import { FaEllipsisV } from 'react-icons/fa';
 import { useLocation } from 'react-router';
 import { toast } from 'react-toastify';
 
+/**
+ * Header Menu Button
+ *
+ * Shows a menu button in the header, used to collect stamps, edit parks, etc.
+ *
+ * @returns {React.ReactNode} The header menu button
+ */
 export const HeaderMenuButton = () => {
     dbg('RENDER', 'ManualStampButton');
 

@@ -11,6 +11,12 @@ interface FormFieldProps {
     // bulleted?: boolean;
 }
 
+/**
+ * Generic form field component
+ *
+ * @param {FormFieldProps} props - The props for the form field
+ * @returns {React.ReactNode} The form field
+ */
 export function FormField({
     label,
     id,
