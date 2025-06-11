@@ -1,0 +1,1 @@
+add your wsl user to `docker` group then run `logout`: `sudo usermod -aG docker $USER` 
