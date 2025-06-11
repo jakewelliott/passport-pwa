@@ -13,6 +13,7 @@ const env = import.meta.env;
 const determineBaseUrl = () => {
     // When running tests (MSW intercepts requests at any URL), use a consistent base URL
     if (import.meta.env.MODE === 'test') return '';
+    console.log(import.meta.env);
 
     // when running outside of docker, we need to use HTTP port
     if (env.DEV) return `http://${env.VITE_API_HOSTNAME}:${env.VITE_API_HTTP_PORT}`;
@@ -23,7 +24,8 @@ const determineBaseUrl = () => {
     return `https://${env.VITE_API_HOSTNAME}:${env.VITE_API_HTTPS_PORT}`;
 };
 
-export const API_URL = `${determineBaseUrl()}/api`;
+// export const API_URL = `${determineBaseUrl()}/api`;
+export const API_URL = 'http://localhost:5001/api'; // for local development, use the local API URL
 
 // auth
 export const API_AUTH_URL = `${API_URL}/auth`;
